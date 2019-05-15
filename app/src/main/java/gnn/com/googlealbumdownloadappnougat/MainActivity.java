@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("goi", "goi");
 
                 Scope SCOPE_PHOTOS_READ =
-                        new Scope("https://www.googleapis.com/auth/contacts.readonly");
+                        new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
 
                 if (!GoogleSignIn.hasPermissions(
                         GoogleSignIn.getLastSignedInAccount(getActivity()),

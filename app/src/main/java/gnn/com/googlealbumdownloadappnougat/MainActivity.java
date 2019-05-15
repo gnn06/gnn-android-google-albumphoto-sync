@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             String concatAlbumName = "";
             try {
+                /* Need an Id client OAuth in the google developer console of type android
+                 * Put the package and the fingerprint (gradle signingReport)
+                 */
                 String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
                 OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
                         .setAccessToken(new AccessToken(token, null))

@@ -18,15 +18,6 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/INDEX.LIST'
-        exclude 'META-INF/io.netty.versions.properties'
     }
 }
 
@@ -38,16 +29,17 @@ dependencies {
     // Google Play services Auth split
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // Google Api Client library and Android extension
-    implementation 'com.google.api-client:google-api-client:1.22.0'
-    implementation 'com.google.api-client:google-api-client-android:1.22.0'
-    // Change to the API you want to access:
-    // Below is just an example for People REST API access
+    implementation ('com.google.api-client:google-api-client:1.22.0') {
+        // exclude to avoid duplicate class
+        exclude group: 'com.google.guava', module: 'guava-jdk5'
+    }
+
     implementation ('com.google.photos.library:google-photos-library-client:1.2.0')
 
-    //No functional channel service provider found. Try adding a dependency on the grpc-okhttp, grpc-netty, or grpc-netty-shaded artifact
-    // implementation 'io.grpc:grpc-okmhttp:1.10.1' => exception
+    // Dependency needed to avoid runtime exception when calling PhotosLibraryClient.initialize.
+    // "No functional channel service provider found. Try adding a dependency on the grpc-okhttp, grpc-netty, or grpc-netty-shaded artifact"
+    // For android, see remark https://github.com/grpc/grpc-java#download
     implementation 'io.grpc:grpc-okhttp:1.20.0'
-    // comment carduplication implementation 'io.grpc:grpc-protobuf-lite:1.20.0'
     implementation 'io.grpc:grpc-stub:1.20.0'
 
     testImplementation 'junit:junit:4.12'
@@ -56,6 +48,3 @@ dependencies {
 
 }
 
-configurations {
-    all*.exclude group: 'com.google.guava', module:'guava-jdk5'
-}

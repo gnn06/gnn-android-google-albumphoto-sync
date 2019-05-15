@@ -29,10 +29,6 @@ dependencies {
     // Google Play services Auth split
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     // Google Api Client library and Android extension
-    implementation ('com.google.api-client:google-api-client:1.22.0') {
-        // exclude to avoid duplicate class
-        exclude group: 'com.google.guava', module: 'guava-jdk5'
-    }
 
     implementation ('com.google.photos.library:google-photos-library-client:1.2.0')
 

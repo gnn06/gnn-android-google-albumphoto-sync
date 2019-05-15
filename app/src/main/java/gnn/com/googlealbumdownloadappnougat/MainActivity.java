@@ -16,7 +16,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.Scope;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.AccessToken;
@@ -30,7 +29,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_AUTHORIZE_CONTACTS = 500;
+    private static final int RC_AUTHORIZE_PHOTOS = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +41,19 @@ public class MainActivity extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Log.d("goi", "goi");
 
-                Scope SCOPE_CONTACTS_READ =
+                Scope SCOPE_PHOTOS_READ =
                         new Scope("https://www.googleapis.com/auth/contacts.readonly");
-                Scope SCOPE_EMAIL = new Scope(Scopes.EMAIL);
 
                 if (!GoogleSignIn.hasPermissions(
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
-                        SCOPE_CONTACTS_READ,
-                        SCOPE_EMAIL)) {
+                        SCOPE_PHOTOS_READ)) {
                     GoogleSignIn.requestPermissions(
                             MainActivity.this,
-                            RC_AUTHORIZE_CONTACTS,
+                            RC_AUTHORIZE_PHOTOS,
                             GoogleSignIn.getLastSignedInAccount(getActivity()),
-                            SCOPE_CONTACTS_READ,
-                            SCOPE_EMAIL);
+                            SCOPE_PHOTOS_READ);
                 } else {
-                    getContacts();
+                    getAlbumNames();
                 }
             }
         });
@@ -67,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (RC_AUTHORIZE_CONTACTS == requestCode) {
-                getContacts();
+            if (RC_AUTHORIZE_PHOTOS == requestCode) {
+                getAlbumNames();
             }
         }
     }
@@ -78,20 +74,20 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(result);
     }
 
-    private void getContacts() {
-        Log.d("goi", "getContacts");
+    private void getAlbumNames() {
+        Log.d("goi", "getAlbumNames");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         if (account != null) {
             Log.d("goi","call google");
-            GetContactsTask task = new GetContactsTask(account.getAccount());
+            GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
             task.execute();
         }
     }
 
-    private class GetContactsTask extends AsyncTask<Void, Void, String> {
+    private class GetAlbumsTask extends AsyncTask<Void, Void, String> {
 
         Account mAccount;
-        public GetContactsTask(Account account) {
+        public GetAlbumsTask(Account account) {
             mAccount = account;
         }
 

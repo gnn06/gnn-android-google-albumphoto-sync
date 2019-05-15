@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
             if (RC_AUTHORIZE_PHOTOS == requestCode) {
                 getAlbumNames();
             }
+        } else {
+            updateUI_Result("Cancel");
         }
     }
 

@@ -18,10 +18,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.Scope;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.AccessToken;
-import com.google.auth.oauth2.UserCredentials;
+import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
 import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
@@ -101,14 +100,8 @@ public class MainActivity extends AppCompatActivity {
             String concatAlbumName = "";
             try {
                 String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
-                GoogleCredential credential = new GoogleCredential().setAccessToken(token);
-                String clientId = "745624147612-7r3jfsn3o44a0gbd822d745avhmb77hk.apps.googleusercontent.com";
-                String clientSecret = "PHKbBrJvOr9CUswinBG3P91m";
-                UserCredentials userCredentials = UserCredentials.newBuilder()
-                        .setClientId(clientId)
-                        .setClientSecret(clientSecret)
-                        .setRefreshToken(credential.getRefreshToken())
-                        .setAccessToken(new AccessToken(credential.getAccessToken(), null))
+                OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                        .setAccessToken(new AccessToken(token, null))
                         .build();
                 PhotosLibrarySettings settings =
                         PhotosLibrarySettings.newBuilder()

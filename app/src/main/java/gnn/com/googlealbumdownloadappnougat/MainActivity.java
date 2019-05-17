@@ -16,8 +16,12 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.ApiException;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
@@ -30,11 +34,29 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_AUTHORIZE_PHOTOS = 500;
+    private static final int RC_SIGN_IN = 501;
+    private static final String TAG = "goi";
+
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Log.d("goi", "goi");
+                signIn();
+            }
+        });
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -60,18 +82,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI_User(account);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (RC_AUTHORIZE_PHOTOS == requestCode) {
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Log.i("goi", "sign in result");
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
+            if (resultCode == Activity.RESULT_OK) {
                 getAlbumNames();
+            } else {
+                updateUI_CallResult("Cancel");
             }
-        } else {
-            updateUI_Result("Cancel");
         }
     }
 
-    private void updateUI_Result(String result) {
+    private void signIn() {
+        updateUI_User(null);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            updateUI_User(account);
+            Log.i(TAG, "user sign-in to google api" + account.getEmail());
+
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI_User(null);
+        }
+    }
+
+    private void updateUI_User(GoogleSignInAccount account) {
+        TextView myAwesomeTextView = (TextView)findViewById(R.id.myAwesomeTextView);
+        String name = account != null ? account.getEmail() : "";
+        myAwesomeTextView.setText(name);
+        Log.d(TAG, "updateUI_User");
+    }
+
+    private void updateUI_CallResult(String result) {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
@@ -129,13 +194,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            updateUI_Result("in progress");
+            updateUI_CallResult("in progress");
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            updateUI_Result(s);
+            updateUI_CallResult(s);
         }
     }
 

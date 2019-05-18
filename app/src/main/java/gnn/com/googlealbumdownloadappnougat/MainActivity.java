@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
             handleSignInResult(task);
         } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
             if (resultCode == Activity.RESULT_OK) {
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                updateUI_User(account);
                 getAlbumNames();
             } else {
                 updateUI_CallResult("Cancel");
@@ -130,9 +132,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI_User(GoogleSignInAccount account) {
-        TextView myAwesomeTextView = (TextView)findViewById(R.id.myAwesomeTextView);
+        TextView myAwesomeTextView = findViewById(R.id.textUser);
         String name = account != null ? account.getEmail() : "";
         myAwesomeTextView.setText(name);
+        TextView autorisationText = findViewById(R.id.textAutorisation);
+        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
+        autorisationText.setText(autorisation);
         Log.d(TAG, "updateUI_User");
     }
 

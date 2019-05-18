@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_AUTHORIZE_PHOTOS = 500;
     private static final int RC_SIGN_IN = 501;
     private static final String TAG = "goi";
+    Scope SCOPE_PHOTOS_READ =
+            new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -52,31 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.d("goi", "goi");
-                signIn();
+                onSignInClick();
             }
         });
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                Log.d("goi", "goi");
-
-                Scope SCOPE_PHOTOS_READ =
-                        new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
-
-                if (!GoogleSignIn.hasPermissions(
-                        GoogleSignIn.getLastSignedInAccount(getActivity()),
-                        SCOPE_PHOTOS_READ)) {
-                    GoogleSignIn.requestPermissions(
-                            MainActivity.this,
-                            RC_AUTHORIZE_PHOTOS,
-                            GoogleSignIn.getLastSignedInAccount(getActivity()),
-                            SCOPE_PHOTOS_READ);
-                } else {
-                    getAlbumNames();
-                }
+                onGetAlbumsClick();
             }
         });
     }
@@ -95,21 +79,19 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
-            Log.i("goi", "sign in result");
+            Log.i(TAG, "sign in result");
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
             if (resultCode == Activity.RESULT_OK) {
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-                updateUI_User(account);
-                getAlbumNames();
+                handleAuthorizePhotos();
             } else {
                 updateUI_CallResult("Cancel");
             }
         }
     }
 
-    private void signIn() {
+    private void onSignInClick() {
         updateUI_User(null);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -141,19 +123,39 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "updateUI_User");
     }
 
-    private void updateUI_CallResult(String result) {
-        TextView textView = findViewById(R.id.result);
-        textView.setText(result);
+    private void onGetAlbumsClick() {
+        if (!GoogleSignIn.hasPermissions(
+                GoogleSignIn.getLastSignedInAccount(getActivity()),
+                SCOPE_PHOTOS_READ)) {
+            GoogleSignIn.requestPermissions(
+                    MainActivity.this,
+                    RC_AUTHORIZE_PHOTOS,
+                    GoogleSignIn.getLastSignedInAccount(getActivity()),
+                    SCOPE_PHOTOS_READ);
+        } else {
+            getAlbumNames();
+        }
+    }
+
+    private void handleAuthorizePhotos() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        updateUI_User(account);
+        getAlbumNames();
     }
 
     private void getAlbumNames() {
-        Log.d("goi", "getAlbumNames");
+        Log.d(TAG, "getAlbumNames");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         if (account != null) {
-            Log.d("goi","call google");
+            Log.d(TAG,"call google");
             GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
             task.execute();
         }
+    }
+
+    private void updateUI_CallResult(String result) {
+        TextView textView = findViewById(R.id.result);
+        textView.setText(result);
     }
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, String> {
@@ -187,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                        concatAlbumName += album.getTitle();
                 }
 
-                Log.d("goi","end");
+                Log.d(TAG,"end");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (GoogleAuthException e) {

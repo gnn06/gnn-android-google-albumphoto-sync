@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        Log.d(TAG, "onStart   ");
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI_User(account);
@@ -68,14 +69,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (RC_AUTHORIZE_PHOTOS == requestCode) {
+        if (requestCode == RC_SIGN_IN  && resultCode == Activity.RESULT_OK) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 handleAuthorizePhotos();
             } else {
                 updateUI_CallResult("Cancel");
             }
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d(TAG, "handleSignInResult");
+        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+        updateUI_User(account);
+        if (!GoogleSignIn.hasPermissions(
+                account,
+                SCOPE_PHOTOS_READ)) {
+            GoogleSignIn.requestPermissions(
+                    MainActivity.this,
+                    RC_AUTHORIZE_PHOTOS,
+                    account,
+                    SCOPE_PHOTOS_READ);
+            Log.d(TAG, "requestPermissions après SignIn");
+        } else {
+            getAlbumNames();
         }
     }
 
@@ -86,24 +109,35 @@ public class MainActivity extends AppCompatActivity {
         TextView autorisationText = findViewById(R.id.textAutorisation);
         String autorisation = account != null ? account.getGrantedScopes().toString() : "";
         autorisationText.setText(autorisation);
-        Log.d(TAG, "updateUI_User");
+        Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 
     private void onGetAlbumsClick() {
-        if (!GoogleSignIn.hasPermissions(
-                GoogleSignIn.getLastSignedInAccount(getActivity()),
-                SCOPE_PHOTOS_READ)) {
-            GoogleSignIn.requestPermissions(
-                    MainActivity.this,
-                    RC_AUTHORIZE_PHOTOS,
-                    GoogleSignIn.getLastSignedInAccount(getActivity()),
-                    SCOPE_PHOTOS_READ);
+        Log.d(TAG, "onGetAlbumsClick");
+        if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
+            updateUI_User(null);
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            Log.d(TAG, "start signin intent");
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         } else {
-            getAlbumNames();
+            if (!GoogleSignIn.hasPermissions(
+                    GoogleSignIn.getLastSignedInAccount(getActivity()),
+                    SCOPE_PHOTOS_READ)) {
+                Log.d(TAG,"requestPermissions");
+                GoogleSignIn.requestPermissions(
+                        MainActivity.this,
+                        RC_AUTHORIZE_PHOTOS,
+                        GoogleSignIn.getLastSignedInAccount(getActivity()),
+                        SCOPE_PHOTOS_READ);
+            } else {
+                getAlbumNames();
+            }
         }
+
     }
 
     private void handleAuthorizePhotos() {
+        Log.d(TAG, "handleAuthorizePhotos");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI_User(account);
         getAlbumNames();

@@ -84,37 +84,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        Log.d(TAG, "handleSignInResult");
-        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-        updateUI_User(account);
-        if (!GoogleSignIn.hasPermissions(
-                account,
-                SCOPE_PHOTOS_READ)) {
-            GoogleSignIn.requestPermissions(
-                    MainActivity.this,
-                    RC_AUTHORIZE_PHOTOS,
-                    account,
-                    SCOPE_PHOTOS_READ);
-            Log.d(TAG, "requestPermissions après SignIn");
-        } else {
-            getAlbumNames();
-        }
-    }
-
-    private void updateUI_User(GoogleSignInAccount account) {
-        TextView myAwesomeTextView = findViewById(R.id.textUser);
-        String name = account != null ? account.getEmail() : "";
-        myAwesomeTextView.setText(name);
-        TextView autorisationText = findViewById(R.id.textAutorisation);
-        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
-        autorisationText.setText(autorisation);
-        Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
-    }
-
     private void onGetAlbumsClick() {
         Log.d(TAG, "onGetAlbumsClick");
         if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
+            Log.d(TAG,"onGetAlbumsClick, user does not be connected => SignInIntent");
             updateUI_User(null);
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             Log.d(TAG, "start signin intent");
@@ -123,17 +96,35 @@ public class MainActivity extends AppCompatActivity {
             if (!GoogleSignIn.hasPermissions(
                     GoogleSignIn.getLastSignedInAccount(getActivity()),
                     SCOPE_PHOTOS_READ)) {
-                Log.d(TAG,"requestPermissions");
+                Log.d(TAG,"onGetAlbumsClick, user already signin, do not have permissions => requestPermissions");
                 GoogleSignIn.requestPermissions(
                         MainActivity.this,
                         RC_AUTHORIZE_PHOTOS,
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
                         SCOPE_PHOTOS_READ);
             } else {
+                Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => getAlbumNames()");
                 getAlbumNames();
             }
         }
 
+    }private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Log.d(TAG, "handleSignInResult");
+        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+        updateUI_User(account);
+        if (!GoogleSignIn.hasPermissions(
+                account,
+                SCOPE_PHOTOS_READ)) {
+            Log.d(TAG, "signin done, do not have permissions => request permissions");
+            GoogleSignIn.requestPermissions(
+                    MainActivity.this,
+                    RC_AUTHORIZE_PHOTOS,
+                    account,
+                    SCOPE_PHOTOS_READ);
+        } else {
+            Log.d(TAG, "signin done, have permissions => getAlbumNames()");
+            getAlbumNames();
+        }
     }
 
     private void handleAuthorizePhotos() {
@@ -151,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
             GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
             task.execute();
         }
+    }
+
+    private void updateUI_User(GoogleSignInAccount account) {
+        TextView myAwesomeTextView = findViewById(R.id.textUser);
+        String name = account != null ? account.getEmail() : "";
+        myAwesomeTextView.setText(name);
+        TextView autorisationText = findViewById(R.id.textAutorisation);
+        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
+        autorisationText.setText(autorisation);
+        Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 
     private void updateUI_CallResult(String result) {

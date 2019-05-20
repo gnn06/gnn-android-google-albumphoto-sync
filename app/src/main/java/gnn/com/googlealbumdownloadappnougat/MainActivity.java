@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     GoogleSignIn.getLastSignedInAccount(getActivity()),
                     SCOPE_PHOTOS_READ)) {
                 Log.d(TAG,"onGetAlbumsClick, user already signin, do not have permissions => requestPermissions");
+                // doc said that if account is null, should ask but instead cancel the request or create a bug.
                 GoogleSignIn.requestPermissions(
                         MainActivity.this,
                         RC_AUTHORIZE_PHOTOS,

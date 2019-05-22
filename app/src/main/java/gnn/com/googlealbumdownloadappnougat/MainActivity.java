@@ -1,10 +1,13 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,18 +29,23 @@ import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
-import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
-import com.google.photos.types.proto.Album;
 
+import java.io.File;
 import java.io.IOException;
+
+import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_AUTHORIZE_PHOTOS = 500;
     private static final int RC_SIGN_IN = 501;
+    private static final int RC_CHOOSE_FOLDER = 502;
+
     private static final String TAG = "goi";
+
     Scope SCOPE_PHOTOS_READ =
             new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
+    Scope SCOPE_WRITE = new Scope(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -52,9 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnGetAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onGetAlbumsClick();
+            }
+        });
+
+        findViewById(R.id.btnFolder).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onChooseFolder();
             }
         });
     }
@@ -81,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 updateUI_CallResult("Cancel");
             }
+        } else if (RC_CHOOSE_FOLDER == requestCode) {
+            handleChooseFolder(data.getData());
         }
     }
 
@@ -95,21 +111,43 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (!GoogleSignIn.hasPermissions(
                     GoogleSignIn.getLastSignedInAccount(getActivity()),
-                    SCOPE_PHOTOS_READ)) {
+                    SCOPE_PHOTOS_READ, SCOPE_WRITE)) {
                 Log.d(TAG,"onGetAlbumsClick, user already signin, do not have permissions => requestPermissions");
                 // doc said that if account is null, should ask but instead cancel the request or create a bug.
                 GoogleSignIn.requestPermissions(
                         MainActivity.this,
                         RC_AUTHORIZE_PHOTOS,
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
-                        SCOPE_PHOTOS_READ);
+                        SCOPE_PHOTOS_READ, SCOPE_WRITE);
             } else {
                 Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => getAlbumNames()");
                 getAlbumNames();
             }
         }
 
-    }private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    }
+
+    private void onChooseFolder() {
+        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        i.addCategory(Intent.CATEGORY_DEFAULT);
+        startActivityForResult(Intent.createChooser(i, "Choose directory"), RC_CHOOSE_FOLDER);
+    }
+
+    private void handleChooseFolder(Uri folder) {
+        updateUI_Folder(folder);
+    }
+
+    private void updateUI_Folder(Uri folder) {
+        TextView textView = findViewById(R.id.textFolder);
+        textView.setText(folder.getPath());
+    }
+
+    private CharSequence getFolder() {
+        TextView textView = findViewById(R.id.textFolder);
+        return textView.getText();
+    }
+
+    private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
         Log.d(TAG, "handleSignInResult");
         GoogleSignInAccount account = completedTask.getResult(ApiException.class);
         updateUI_User(account);
@@ -159,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
-
     private class GetAlbumsTask extends AsyncTask<Void, Void, String> {
 
         Account mAccount;
+
         public GetAlbumsTask(Account account) {
             mAccount = account;
         }
@@ -185,11 +223,10 @@ public class MainActivity extends AppCompatActivity {
                                                 userCredentials))
                                 .build();
                 PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
-                InternalPhotosLibraryClient.ListAlbumsPagedResponse response = client.listAlbums();
 
-                for (Album album : response.iterateAll()) {
-                       concatAlbumName += album.getTitle();
-                }
+                File destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+                new Synchronizer().sync("test", destination, client);
 
                 Log.d(TAG,"end");
             } catch (IOException e) {

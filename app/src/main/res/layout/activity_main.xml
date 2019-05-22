@@ -11,36 +11,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:text="user unknown"
+        android:text="@string/user_unknown"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Get albums"
-        app:layout_constraintTop_toBottomOf="@+id/textAutorisation"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Résultat"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="9dp" />
 
     <TextView
         android:id="@+id/textAutorisation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Autorisations"
-        app:layout_constraintTop_toBottomOf="@+id/textUser"
-        tools:layout_editor_absoluteX="16dp" />
+        android:text="@string/autorisations"
+        app:layout_constraintStart_toStartOf="@+id/textUser"
+        app:layout_constraintTop_toBottomOf="@+id/textUser" />
+
+    <EditText
+        android:id="@+id/textAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:singleLine="true"
+        android:text="@string/album"
+        app:layout_constraintStart_toStartOf="@+id/textAutorisation"
+        app:layout_constraintTop_toBottomOf="@+id/textAutorisation" />
+
+    <TextView
+        android:id="@+id/textFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/folder"
+        app:layout_constraintStart_toStartOf="@+id/textAlbum"
+        app:layout_constraintTop_toBottomOf="@+id/textAlbum" />
+
+    <Button
+        android:id="@+id/btnFolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/choose_folder"
+        app:layout_constraintStart_toStartOf="@+id/textFolder"
+        app:layout_constraintTop_toBottomOf="@+id/textFolder" />
+
+    <Button
+        android:id="@+id/btnGetAlbum"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/get_albums"
+        app:layout_constraintStart_toStartOf="@+id/btnFolder"
+        app:layout_constraintTop_toBottomOf="@+id/btnFolder" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/r_sultat"
+        app:layout_constraintStart_toStartOf="@+id/btnGetAlbum"
+        app:layout_constraintTop_toBottomOf="@+id/btnGetAlbum" />
 
 </android.support.constraint.ConstraintLayout>

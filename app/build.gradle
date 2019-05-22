@@ -38,6 +38,8 @@ dependencies {
     implementation 'io.grpc:grpc-okhttp:1.20.0'
     implementation 'io.grpc:grpc-stub:1.20.0'
 
+    implementation 'commons-io:commons-io:2.6'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

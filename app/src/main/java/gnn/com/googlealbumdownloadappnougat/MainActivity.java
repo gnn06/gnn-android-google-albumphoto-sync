@@ -5,9 +5,11 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,15 +39,15 @@ import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_AUTHORIZE_PHOTOS = 500;
     private static final int RC_SIGN_IN = 501;
     private static final int RC_CHOOSE_FOLDER = 502;
+    private static final int RC_AUTHORIZE_PHOTOS = 500;
+    private static final int RC_AUTHORIZE_WRITE = 503;
 
     private static final String TAG = "goi";
 
     Scope SCOPE_PHOTOS_READ =
             new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
-    Scope SCOPE_WRITE = new Scope(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -77,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         Log.d(TAG, "onStart   ");
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI_User(account);
+        updateUI_User();
     }
 
     @Override
@@ -100,25 +101,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (RC_AUTHORIZE_WRITE == requestCode) {
+            updateUI_User();
+            handleAuthorizeWrite();
+        }
+    }
+
     private void onGetAlbumsClick() {
         Log.d(TAG, "onGetAlbumsClick");
         if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
             Log.d(TAG,"onGetAlbumsClick, user does not be connected => SignInIntent");
-            updateUI_User(null);
+            updateUI_User();
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             Log.d(TAG, "start signin intent");
             startActivityForResult(signInIntent, RC_SIGN_IN);
         } else {
             if (!GoogleSignIn.hasPermissions(
                     GoogleSignIn.getLastSignedInAccount(getActivity()),
-                    SCOPE_PHOTOS_READ, SCOPE_WRITE)) {
+                    SCOPE_PHOTOS_READ)) {
                 Log.d(TAG,"onGetAlbumsClick, user already signin, do not have permissions => requestPermissions");
                 // doc said that if account is null, should ask but instead cancel the request or create a bug.
                 GoogleSignIn.requestPermissions(
                         MainActivity.this,
                         RC_AUTHORIZE_PHOTOS,
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
-                        SCOPE_PHOTOS_READ, SCOPE_WRITE);
+                        SCOPE_PHOTOS_READ);
             } else {
                 Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => getAlbumNames()");
                 getAlbumNames();
@@ -150,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
         Log.d(TAG, "handleSignInResult");
         GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-        updateUI_User(account);
+        updateUI_User();
         if (!GoogleSignIn.hasPermissions(
                 account,
                 SCOPE_PHOTOS_READ)) {
@@ -169,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleAuthorizePhotos() {
         Log.d(TAG, "handleAuthorizePhotos");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI_User(account);
+        updateUI_User();
         getAlbumNames();
     }
 
@@ -177,19 +187,33 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "getAlbumNames");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         if (account != null) {
-            Log.d(TAG,"call google");
-            GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
-            task.execute();
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG,"WRITE permission granted, call google");
+                GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
+                task.execute();
+            } else {
+                Log.d(TAG, "request WRITE permission");
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
+            }
         }
     }
 
-    private void updateUI_User(GoogleSignInAccount account) {
+    private void handleAuthorizeWrite() {
+        Log.d(TAG, "handle write permission");
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
+        task.execute();
+    }
+
+    private void updateUI_User() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         TextView myAwesomeTextView = findViewById(R.id.textUser);
         String name = account != null ? account.getEmail() : "";
         myAwesomeTextView.setText(name);
         TextView autorisationText = findViewById(R.id.textAutorisation);
         String autorisation = account != null ? account.getGrantedScopes().toString() : "";
-        autorisationText.setText(autorisation);
+        String writeAutorisation = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
+        autorisationText.setText(autorisation + ", " + writeAutorisation);
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 
@@ -207,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            String concatAlbumName = "";
             try {
                 /* Need an Id client OAuth in the google developer console of type android
                  * Put the package and the fingerprint (gradle signingReport)
@@ -226,7 +249,8 @@ public class MainActivity extends AppCompatActivity {
 
                 File destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-                new Synchronizer().sync("test", destination, client);
+                Synchronizer sync = new Synchronizer();
+                sync.sync("test", destination, client);
 
                 Log.d(TAG,"end");
             } catch (IOException e) {
@@ -234,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (GoogleAuthException e) {
                 e.printStackTrace();
             }
-            return concatAlbumName;
+            return "done";
         }
 
         @Override

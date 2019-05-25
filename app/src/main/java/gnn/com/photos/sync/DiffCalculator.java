@@ -26,7 +26,6 @@ public class DiffCalculator {
     public DiffCalculator(ArrayList remote, ArrayList local) {
         this.remote = remote;
         this.local = local;
-        // TODO: 06/05/2019 determine delta
         this.toDownload = calculToDownload();
         this.toDelete   = calculToDelete();
 

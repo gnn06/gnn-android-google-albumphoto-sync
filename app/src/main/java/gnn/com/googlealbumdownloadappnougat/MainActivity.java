@@ -1,3 +1,4 @@
+// TODO change package
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.Manifest;
@@ -111,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onGetAlbumsClick() {
+        // TODO try to simplify callback cascade :-/
         Log.d(TAG, "onGetAlbumsClick");
         if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
             Log.d(TAG,"onGetAlbumsClick, user does not be connected => SignInIntent");

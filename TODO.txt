@@ -1,0 +1,4 @@
+gérer bouton folder
+progress bar
+pouvoir changer de compte
+choisir l'album dans une liste

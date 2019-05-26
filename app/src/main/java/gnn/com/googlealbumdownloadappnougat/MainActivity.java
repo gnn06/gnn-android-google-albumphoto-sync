@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -63,17 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        findViewById(R.id.btnGetAlbum).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnSync).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onGetAlbumsClick();
             }
         });
 
-        findViewById(R.id.btnFolder).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onChooseFolder();
-            }
-        });
     }
 
     @Override
@@ -81,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onStart   ");
         super.onStart();
         updateUI_User();
+        updateUI_Album("test");
+        updateUI_Folder(folder);
     }
 
     @Override
@@ -97,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 updateUI_CallResult("Cancel");
             }
-        } else if (RC_CHOOSE_FOLDER == requestCode) {
-            handleChooseFolder(data.getData());
         }
     }
 
@@ -139,20 +133,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void onChooseFolder() {
-        Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        i.addCategory(Intent.CATEGORY_DEFAULT);
-        startActivityForResult(Intent.createChooser(i, "Choose directory"), RC_CHOOSE_FOLDER);
+    private void updateUI_Album(String albumName) {
+        TextView textView = findViewById(R.id.textAlbum);
+        textView.setText(albumName);
     }
 
-    private void handleChooseFolder(Uri folder) {
-        updateUI_Folder(folder);
-    }
-
-    private void updateUI_Folder(Uri folder) {
+    private void updateUI_Folder(File folder) {
         TextView textView = findViewById(R.id.textFolder);
         textView.setText(folder.getPath());
     }
+
+    private File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
     private CharSequence getFolderName() {
         TextView textView = findViewById(R.id.textFolder);
@@ -160,11 +151,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private File getFolder() {
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        return folder;
     }
 
-    private String getAlbum() {
-        return "test";
+    private CharSequence getAlbum() {
+        TextView textView = findViewById(R.id.textAlbum);
+        return textView.getText();
     }
 
     private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
@@ -234,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                                 .build();
                 PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
 
-                String album = getAlbum();
+                String album = getAlbum().toString();
                 File destination = getFolder();
 
                 Synchronizer sync = new Synchronizer();

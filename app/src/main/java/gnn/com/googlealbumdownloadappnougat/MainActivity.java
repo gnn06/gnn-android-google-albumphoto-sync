@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
                         SCOPE_PHOTOS_READ);
             } else {
-                Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => getAlbumNames()");
-                getAlbumNames();
+                Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => laucnhSync()");
+                laucnhSync();
             }
         }
 
@@ -181,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
                     account,
                     SCOPE_PHOTOS_READ);
         } else {
-            Log.d(TAG, "signin done, have permissions => getAlbumNames()");
-            getAlbumNames();
+            Log.d(TAG, "signin done, have permissions => laucnhSync()");
+            laucnhSync();
         }
     }
 
@@ -190,52 +190,29 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "handleAuthorizePhotos");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI_User();
-        getAlbumNames();
+        laucnhSync();
     }
 
-    private void getAlbumNames() {
-        Log.d(TAG, "getAlbumNames");
+    private void laucnhSync() {
+        Log.d(TAG, "laucnhSync");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         if (account != null) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG,"WRITE permission granted, call google");
-                GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
-                task.execute();
-            } else {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "request WRITE permission");
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
+            } else {
+                Log.d(TAG,"WRITE permission granted, call google");
+                SyncTask task = new SyncTask(account.getAccount());
+                task.execute();
             }
         }
     }
 
-    private void handleAuthorizeWrite() {
-        Log.d(TAG, "handle write permission");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-        GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
-        task.execute();
-    }
-    private void updateUI_User() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        TextView myAwesomeTextView = findViewById(R.id.textUser);
-        String name = account != null ? account.getEmail() : "";
-        myAwesomeTextView.setText(name);
-        TextView autorisationText = findViewById(R.id.textAutorisation);
-        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
-        String writeAutorisation = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
-        autorisationText.setText(autorisation + ", " + writeAutorisation);
-        Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
-    }
-    private void updateUI_CallResult(String result) {
-        TextView textView = findViewById(R.id.result);
-        textView.setText(result);
-    }
-    private class GetAlbumsTask extends AsyncTask<Void, Void, String> {
-
-
+    private class SyncTask extends AsyncTask<Void, Void, String> {
 
         Account mAccount;
 
-        public GetAlbumsTask(Account account) {
+        public SyncTask(Account account) {
             mAccount = account;
         }
 
@@ -283,6 +260,27 @@ public class MainActivity extends AppCompatActivity {
             updateUI_CallResult(s);
         }
 
+    }
+    private void handleAuthorizeWrite() {
+        Log.d(TAG, "handle write permission");
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        SyncTask task = new SyncTask(account.getAccount());
+        task.execute();
+    }
+    private void updateUI_User() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        TextView myAwesomeTextView = findViewById(R.id.textUser);
+        String name = account != null ? account.getEmail() : "";
+        myAwesomeTextView.setText(name);
+        TextView autorisationText = findViewById(R.id.textAutorisation);
+        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
+        String writeAutorisation = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
+        autorisationText.setText(autorisation + ", " + writeAutorisation);
+        Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
+    }
+    private void updateUI_CallResult(String result) {
+        TextView textView = findViewById(R.id.result);
+        textView.setText(result);
     }
 
     private Context getActivity() {

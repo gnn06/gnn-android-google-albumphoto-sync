@@ -154,9 +154,17 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(folder.getPath());
     }
 
-    private CharSequence getFolder() {
+    private CharSequence getFolderName() {
         TextView textView = findViewById(R.id.textFolder);
         return textView.getText();
+    }
+
+    private File getFolder() {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+    }
+
+    private String getAlbum() {
+        return "test";
     }
 
     private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
@@ -206,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
         GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
         task.execute();
     }
-
     private void updateUI_User() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         TextView myAwesomeTextView = findViewById(R.id.textUser);
@@ -218,12 +225,13 @@ public class MainActivity extends AppCompatActivity {
         autorisationText.setText(autorisation + ", " + writeAutorisation);
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
-
     private void updateUI_CallResult(String result) {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
     private class GetAlbumsTask extends AsyncTask<Void, Void, String> {
+
+
 
         Account mAccount;
 
@@ -249,10 +257,11 @@ public class MainActivity extends AppCompatActivity {
                                 .build();
                 PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
 
-                File destination = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                String album = getAlbum();
+                File destination = getFolder();
 
                 Synchronizer sync = new Synchronizer();
-                sync.sync("test", destination, client);
+                sync.sync(album, destination, client);
 
                 Log.d(TAG,"end");
             } catch (IOException e) {
@@ -262,7 +271,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return "done";
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -274,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             updateUI_CallResult(s);
         }
+
     }
 
     private Context getActivity() {

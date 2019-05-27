@@ -4,7 +4,9 @@ package gnn.com.googlealbumdownloadappnougat;
 import android.Manifest;
 import android.accounts.Account;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -15,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -64,7 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnSync).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onGetAlbumsClick();
+                onSyncClick();
+            }
+        });
+
+        findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onAlbumClick();
             }
         });
 
@@ -75,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onStart   ");
         super.onStart();
         updateUI_User();
-        updateUI_Album("test");
+        setUIAlbum("test");
         updateUI_Folder(folder);
     }
 
@@ -105,11 +114,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void onGetAlbumsClick() {
+    private String[] getAlbums() {
+
+        String[] items = {"élément 1", "élément 2 ", "élément 3"};
+        return items;
+    }
+
+    private void onAlbumClick() {
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getAlbums());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Choose album")
+            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                }
+            })
+            .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    String[] albums = getAlbums();
+                    String albumName = albums[which];
+                    setUIAlbum(albumName);
+                }
+            });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setUIAlbum(String albumName) {
+        TextView textView = findViewById(R.id.textAlbum);
+        textView.setText(albumName);
+    }
+
+    private CharSequence getUIAlbum() {
+        TextView textView = findViewById(R.id.textAlbum);
+        return textView.getText();
+    }
+
+    private void onSyncClick() {
         // TODO try to simplify callback cascade :-/
-        Log.d(TAG, "onGetAlbumsClick");
+        Log.d(TAG, "onSyncClick");
         if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
-            Log.d(TAG,"onGetAlbumsClick, user does not be connected => SignInIntent");
+            Log.d(TAG,"onSyncClick, user does not be connected => SignInIntent");
             updateUI_User();
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             Log.d(TAG, "start signin intent");
@@ -118,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             if (!GoogleSignIn.hasPermissions(
                     GoogleSignIn.getLastSignedInAccount(getActivity()),
                     SCOPE_PHOTOS_READ)) {
-                Log.d(TAG,"onGetAlbumsClick, user already signin, do not have permissions => requestPermissions");
+                Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
                 // doc said that if account is null, should ask but instead cancel the request or create a bug.
                 GoogleSignIn.requestPermissions(
                         MainActivity.this,
@@ -126,16 +173,11 @@ public class MainActivity extends AppCompatActivity {
                         GoogleSignIn.getLastSignedInAccount(getActivity()),
                         SCOPE_PHOTOS_READ);
             } else {
-                Log.d(TAG,"onGetAlbumsClick, user already signin, already have permissions => laucnhSync()");
+                Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
                 laucnhSync();
             }
         }
 
-    }
-
-    private void updateUI_Album(String albumName) {
-        TextView textView = findViewById(R.id.textAlbum);
-        textView.setText(albumName);
     }
 
     private void updateUI_Folder(File folder) {
@@ -152,11 +194,6 @@ public class MainActivity extends AppCompatActivity {
 
     private File getFolder() {
         return folder;
-    }
-
-    private CharSequence getAlbum() {
-        TextView textView = findViewById(R.id.textAlbum);
-        return textView.getText();
     }
 
     private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
@@ -226,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                                 .build();
                 PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
 
-                String album = getAlbum().toString();
+                String album = getUIAlbum().toString();
                 File destination = getFolder();
 
                 Synchronizer sync = new Synchronizer();

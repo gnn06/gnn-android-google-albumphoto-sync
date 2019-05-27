@@ -28,29 +28,41 @@
         android:id="@+id/textAlbum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:singleLine="true"
         android:text="@string/album"
-        app:layout_constraintStart_toStartOf="@+id/textAutorisation"
+        app:layout_constraintStart_toEndOf="@+id/btnChooseAlbum"
+        app:layout_constraintTop_toTopOf="@+id/btnChooseAlbum" />
+
+    <Button
+        android:id="@+id/btnChooseAlbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/choose_album"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textAutorisation" />
 
     <TextView
         android:id="@+id/textFolder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/folder"
-        app:layout_constraintStart_toStartOf="@+id/textAlbum"
-        app:layout_constraintTop_toBottomOf="@+id/textAlbum" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseAlbum" />
 
     <Button
         android:id="@+id/btnSync"
         android:layout_width="109dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/sync"
-        app:layout_constraintTop_toBottomOf="@+id/textFolder"
-        tools:layout_editor_absoluteX="9dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFolder" />
 
     <TextView
         android:id="@+id/result"

@@ -24,12 +24,11 @@
         app:layout_constraintStart_toStartOf="@+id/textUser"
         app:layout_constraintTop_toBottomOf="@+id/textUser" />
 
-    <EditText
+    <TextView
         android:id="@+id/textAlbum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:singleLine="true"
         android:text="@string/album"
         app:layout_constraintStart_toEndOf="@+id/btnChooseAlbum"
         app:layout_constraintTop_toTopOf="@+id/btnChooseAlbum" />

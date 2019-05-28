@@ -1,4 +1,9 @@
+choisir l'album dans une liste
+    ajouter un spinner
+    mise en cache pour éviter
+    éviter duplication ASyncTask
+    améliorer convertion list en String[]
+    mettre un placeHolder sur TextView
 gérer bouton folder
 progress bar
 pouvoir changer de compte
-choisir l'album dans une liste

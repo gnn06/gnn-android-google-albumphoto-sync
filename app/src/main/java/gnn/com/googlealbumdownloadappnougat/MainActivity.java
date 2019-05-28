@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +35,8 @@ import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
+import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
+import com.google.photos.types.proto.Album;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onStart   ");
         super.onStart();
         updateUI_User();
-        setUIAlbum("test");
         updateUI_Folder(folder);
     }
 
@@ -114,32 +116,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String[] getAlbums() {
-
-        String[] items = {"élément 1", "élément 2 ", "élément 3"};
-        return items;
-    }
-
     private void onAlbumClick() {
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getAlbums());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Choose album")
-            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                }
-            })
-            .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    String[] albums = getAlbums();
-                    String albumName = albums[which];
-                    setUIAlbum(albumName);
-                }
-            });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
+        task.execute();
     }
 
     private void setUIAlbum(String albumName) {
@@ -150,6 +130,66 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence getUIAlbum() {
         TextView textView = findViewById(R.id.textAlbum);
         return textView.getText();
+    }
+
+    private class GetAlbumsTask extends AsyncTask<Void, Void, String[]> {
+
+        private final MainActivity activity;
+        private Account mAccount;
+
+        public GetAlbumsTask(MainActivity activity, Account mAccount) {
+            this.activity = activity;
+            this.mAccount = mAccount;
+        }
+
+        @Override
+        protected String[] doInBackground(Void... voids) {
+            String[] albumNames = new String[100];
+            try {
+                String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
+                OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                        .setAccessToken(new AccessToken(token, null))
+                        .build();
+                PhotosLibrarySettings settings =
+                        PhotosLibrarySettings.newBuilder()
+                                .setCredentialsProvider(
+                                        FixedCredentialsProvider.create(
+                                                userCredentials))
+                                .build();
+                PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+                InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
+                int count = 0;
+                for (Album album : albums.iterateAll()) {
+                    albumNames[count] = album.getTitle();
+                    count += 1;
+                }
+            } catch (GoogleAuthException | IOException e) {
+                e.printStackTrace();
+            }
+            return albumNames;
+        }
+
+        @Override
+        protected void onPostExecute(final String[] albums) {
+            super.onPostExecute(albums);
+            ArrayAdapter<String> itemsAdapter =
+                        new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, albums);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Choose album")
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    })
+                    .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String albumName = albums[which];
+                            setUIAlbum(albumName);
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private void onSyncClick() {
@@ -177,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 laucnhSync();
             }
         }
-
     }
 
     private void updateUI_Folder(File folder) {
@@ -290,12 +329,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private void handleAuthorizeWrite() {
         Log.d(TAG, "handle write permission");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         SyncTask task = new SyncTask(account.getAccount());
         task.execute();
     }
+
     private void updateUI_User() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         TextView myAwesomeTextView = findViewById(R.id.textUser);
@@ -307,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
         autorisationText.setText(autorisation + ", " + writeAutorisation);
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
+
     private void updateUI_CallResult(String result) {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);

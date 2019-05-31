@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -117,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAlbumClick() {
+        ProgressBar pb = findViewById(R.id.pbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
         task.execute();
@@ -172,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final String[] albums) {
             super.onPostExecute(albums);
+            ProgressBar pb = findViewById(R.id.pbLoading);
+            pb.setVisibility(ProgressBar.INVISIBLE);
             ArrayAdapter<String> itemsAdapter =
                         new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, albums);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

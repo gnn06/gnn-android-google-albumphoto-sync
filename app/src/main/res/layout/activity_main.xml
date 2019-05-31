@@ -43,6 +43,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textAutorisation" />
 
+    <ProgressBar
+        android:id="@+id/pbChooseFolder"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/btnChooseAlbum"
+        app:layout_constraintTop_toTopOf="@+id/btnChooseAlbum" />
+
     <TextView
         android:id="@+id/textFolder"
         android:layout_width="wrap_content"
@@ -73,12 +83,13 @@
         app:layout_constraintTop_toBottomOf="@+id/btnSync" />
 
     <ProgressBar
-        android:id="@+id/pbLoading"
+        android:id="@+id/pbSync"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/btnChooseAlbum"
-        app:layout_constraintTop_toTopOf="@+id/btnChooseAlbum" />
+        app:layout_constraintStart_toEndOf="@+id/btnSync"
+        app:layout_constraintTop_toTopOf="@+id/btnSync" />
 
 </android.support.constraint.ConstraintLayout>

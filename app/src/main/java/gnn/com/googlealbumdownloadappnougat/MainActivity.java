@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAlbumClick() {
-        ProgressBar pb = findViewById(R.id.pbLoading);
+        ProgressBar pb = findViewById(R.id.pbChooseFolder);
         pb.setVisibility(ProgressBar.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final String[] albums) {
             super.onPostExecute(albums);
-            ProgressBar pb = findViewById(R.id.pbLoading);
+            ProgressBar pb = findViewById(R.id.pbChooseFolder);
             pb.setVisibility(ProgressBar.INVISIBLE);
             ArrayAdapter<String> itemsAdapter =
                         new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, albums);
@@ -324,12 +323,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            ProgressBar pb = findViewById(R.id.pbSync);
+            pb.setVisibility(ProgressBar.VISIBLE);
             updateUI_CallResult("in progress");
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            ProgressBar pb = findViewById(R.id.pbSync);
+            pb.setVisibility(ProgressBar.INVISIBLE);
             updateUI_CallResult(s);
         }
 

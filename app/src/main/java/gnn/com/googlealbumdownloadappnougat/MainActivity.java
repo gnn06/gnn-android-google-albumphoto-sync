@@ -117,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onAlbumClick() {
-        ProgressBar pb = findViewById(R.id.pbChooseFolder);
-        pb.setVisibility(ProgressBar.VISIBLE);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
         task.execute();
@@ -169,6 +167,13 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return albumNames;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            ProgressBar pb = findViewById(R.id.pbChooseFolder);
+            pb.setVisibility(ProgressBar.VISIBLE);
         }
 
         @Override

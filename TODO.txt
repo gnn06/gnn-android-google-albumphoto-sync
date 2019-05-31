@@ -1,5 +1,6 @@
+rajouter progress bar lors du sync
 choisir l'album dans une liste
-    ajouter un spinner
+    mettre une progress bar "propre"
     mise en cache pour éviter
     éviter duplication ASyncTask
     améliorer convertion list en String[]
@@ -7,3 +8,4 @@ choisir l'album dans une liste
 gérer bouton folder
 progress bar
 pouvoir changer de compte
+stocker les choix réalisés

@@ -46,7 +46,6 @@ import gnn.com.photos.sync.Synchronizer;
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 501;
-    private static final int RC_CHOOSE_FOLDER = 502;
     private static final int RC_AUTHORIZE_PHOTOS = 500;
     private static final int RC_AUTHORIZE_WRITE = 503;
 
@@ -118,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onAlbumClick() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        assert account != null;
         GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
         task.execute();
     }
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         private final MainActivity activity;
         private Account mAccount;
 
-        public GetAlbumsTask(MainActivity activity, Account mAccount) {
+        GetAlbumsTask(MainActivity activity, Account mAccount) {
             this.activity = activity;
             this.mAccount = mAccount;
         }
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             ProgressBar pb = findViewById(R.id.pbChooseFolder);
             pb.setVisibility(ProgressBar.INVISIBLE);
             ArrayAdapter<String> itemsAdapter =
-                        new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, albums);
+                    new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, albums);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Choose album")
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -265,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleAuthorizePhotos() {
         Log.d(TAG, "handleAuthorizePhotos");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI_User();
         laucnhSync();
     }
@@ -289,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
         Account mAccount;
 
-        public SyncTask(Account account) {
+        SyncTask(Account account) {
             mAccount = account;
         }
 
@@ -346,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleAuthorizeWrite() {
         Log.d(TAG, "handle write permission");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        assert account != null;
         SyncTask task = new SyncTask(account.getAccount());
         task.execute();
     }
@@ -358,7 +358,8 @@ public class MainActivity extends AppCompatActivity {
         TextView autorisationText = findViewById(R.id.textAutorisation);
         String autorisation = account != null ? account.getGrantedScopes().toString() : "";
         String writeAutorisation = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
-        autorisationText.setText(autorisation + ", " + writeAutorisation);
+        CharSequence autorisationLabel = autorisation + ", " + writeAutorisation;
+        autorisationText.setText(autorisationLabel);
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 

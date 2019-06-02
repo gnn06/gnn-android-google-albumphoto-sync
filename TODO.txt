@@ -1,5 +1,3 @@
-rajouter progress bar lors du sync
-empecher la synchro si acun album choisi
 choisir l'album dans une liste
     mettre une progress bar "propre"
     mise en cache pour éviter
@@ -7,7 +5,6 @@ choisir l'album dans une liste
     améliorer convertion list en String[]
     mettre un placeHolder sur TextView
 gérer bouton folder
-progress bar
 pouvoir changer de compte
 stocker les choix réalisés
 afficher message de synchro avec des ressources

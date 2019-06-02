@@ -270,29 +270,47 @@ public class MainActivity extends AppCompatActivity {
         laucnhSync();
     }
 
+    private void handleAuthorizeWrite() {
+        Log.d(TAG, "handle write permission");
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+        assert account != null;
+        launchSynchWithPermission(account);
+    }
+
     private void laucnhSync() {
         Log.d(TAG, "laucnhSync");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-        if (account != null) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "request WRITE permission");
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
-            } else {
-                Log.d(TAG,"WRITE permission granted, call google");
-                SyncTask task = new SyncTask(account.getAccount());
-                task.execute();
-            }
+        assert account != null;
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "request WRITE permission");
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
+        } else {
+            Log.d(TAG,"WRITE permission granted, call google");
+            launchSynchWithPermission(account);
+        }
+    }
+
+    private void launchSynchWithPermission(GoogleSignInAccount account) {
+        CharSequence album = getUIAlbum();
+        if (album.equals("")) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("You have to choose an album")
+                    .setNegativeButton(android.R.string.ok, null)
+                    .show();
+        } else {
+            SyncTask task = new SyncTask(account.getAccount());
+            task.execute();
         }
     }
 
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
+
 
         Account mAccount;
 
         SyncTask(Account account) {
             mAccount = account;
         }
-
         @Override
         protected DiffCalculator doInBackground(Void... voids) {
             DiffCalculator diff = null;
@@ -326,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return diff;
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -347,14 +366,6 @@ public class MainActivity extends AppCompatActivity {
             updateUI_CallResult(result);
         }
 
-    }
-
-    private void handleAuthorizeWrite() {
-        Log.d(TAG, "handle write permission");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-        assert account != null;
-        SyncTask task = new SyncTask(account.getAccount());
-        task.execute();
     }
 
     private void updateUI_User() {

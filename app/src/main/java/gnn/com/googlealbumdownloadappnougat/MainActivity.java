@@ -41,6 +41,7 @@ import com.google.photos.types.proto.Album;
 import java.io.File;
 import java.io.IOException;
 
+import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity {
@@ -284,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class SyncTask extends AsyncTask<Void, Void, String> {
+    private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
 
         Account mAccount;
 
@@ -293,7 +294,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(Void... voids) {
+        protected DiffCalculator doInBackground(Void... voids) {
+            DiffCalculator diff = null;
             try {
                 /* Need an Id client OAuth in the google developer console of type android
                  * Put the package and the fingerprint (gradle signingReport)
@@ -314,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 File destination = getFolder();
 
                 Synchronizer sync = new Synchronizer();
-                sync.sync(album, destination, client);
+                diff = sync.sync(album, destination, client);
 
                 Log.d(TAG,"end");
             } catch (IOException e) {
@@ -322,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (GoogleAuthException e) {
                 e.printStackTrace();
             }
-            return "done";
+            return diff;
         }
         @Override
         protected void onPreExecute() {
@@ -333,11 +335,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(DiffCalculator sync) {
+            super.onPostExecute(sync);
             ProgressBar pb = findViewById(R.id.pbSync);
             pb.setVisibility(ProgressBar.INVISIBLE);
-            updateUI_CallResult(s);
+            String result = "";
+            result += "synchronisation terminée avec succés\n";
+            result += "downloaded = " + sync.getToDownload().size();
+            result += "\n";
+            result += "deleted = " + sync.getToDelete().size();
+            updateUI_CallResult(result);
         }
 
     }

@@ -2,6 +2,8 @@ package gnn.com.photos.sync;
 
 import com.google.photos.library.v1.PhotosLibraryClient;
 
+import org.apache.commons.lang3.builder.Diff;
+
 import gnn.com.photos.local.PhotosLocalService;
 import gnn.com.photos.remote.PhotosRemoteService;
 
@@ -13,7 +15,8 @@ import java.util.ArrayList;
 public class Synchronizer {
 
     // TODO: 07/05/2019 managed updated photo if possible
-    public void sync(String albumName, File folder, PhotosLibraryClient client) {
+    public DiffCalculator sync(String albumName, File folder, PhotosLibraryClient client) {
+        DiffCalculator sync = null;
         try {
             PhotosRemoteService prs = new PhotosRemoteService(client);
             PhotosLocalService pls = new PhotosLocalService();
@@ -21,11 +24,12 @@ public class Synchronizer {
             System.out.println("download photos into folder : " + folder);
             ArrayList remote = prs.getRemotePhotos(albumName);
             ArrayList local = pls.getLocalPhotos(folder);
-            DiffCalculator sync = new DiffCalculator(remote, local);
+            sync = new DiffCalculator(remote, local);
             pls.delete(sync.getToDelete(), folder);
             DownloadManager.download(sync.getToDownload(), folder);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return sync;
     }
 }

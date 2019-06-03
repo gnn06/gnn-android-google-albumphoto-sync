@@ -1,10 +1,8 @@
 choisir l'album dans une liste
-    mettre une progress bar "propre"
-    mise en cache pour éviter
+    mettre une progress bar ergonomique
     éviter duplication ASyncTask
     améliorer convertion list en String[]
-    mettre un placeHolder sur TextView
-gérer bouton folder
 pouvoir changer de compte
 stocker les choix réalisés
+gérer bouton folder
 afficher message de synchro avec des ressources

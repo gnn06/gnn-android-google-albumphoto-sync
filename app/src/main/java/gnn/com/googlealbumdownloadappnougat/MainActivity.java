@@ -116,30 +116,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String[] mAlbums;
+
     private void onAlbumClick() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-        assert account != null;
-        GetAlbumsTask task = new GetAlbumsTask(this, account.getAccount());
-        task.execute();
-    }
-
-    private void setUIAlbum(String albumName) {
-        TextView textView = findViewById(R.id.textAlbum);
-        textView.setText(albumName);
-    }
-
-    private CharSequence getUIAlbum() {
-        TextView textView = findViewById(R.id.textAlbum);
-        return textView.getText();
+        if (mAlbums == null) {
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+            assert account != null;
+            GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
+            task.execute();
+        } else {
+            Log.d(TAG, "choose albums from cache");
+            showChooseAlbumDialog();
+        }
     }
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, String[]> {
 
-        private final MainActivity activity;
         private Account mAccount;
 
-        GetAlbumsTask(MainActivity activity, Account mAccount) {
-            this.activity = activity;
+        GetAlbumsTask(Account mAccount) {
             this.mAccount = mAccount;
         }
 
@@ -182,24 +177,39 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(albums);
             ProgressBar pb = findViewById(R.id.pbChooseFolder);
             pb.setVisibility(ProgressBar.INVISIBLE);
-            ArrayAdapter<String> itemsAdapter =
-                    new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, albums);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Choose album")
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User cancelled the dialog
-                        }
-                    })
-                    .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            String albumName = albums[which];
-                            setUIAlbum(albumName);
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            mAlbums = albums;
+            showChooseAlbumDialog();
         }
+    }
+
+    private void showChooseAlbumDialog() {
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mAlbums);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Choose album")
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                })
+                .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String albumName = mAlbums[which];
+                        setUIAlbum(albumName);
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setUIAlbum(String albumName) {
+        TextView textView = findViewById(R.id.textAlbum);
+        textView.setText(albumName);
+    }
+
+    private CharSequence getUIAlbum() {
+        TextView textView = findViewById(R.id.textAlbum);
+        return textView.getText();
     }
 
     private void onSyncClick() {

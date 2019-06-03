@@ -1,9 +1,0 @@
-pouvoir changer de compte
-gérer la connextion au début
-faire une UI propre
-mettre des progress bar ergonomique
-améliorer convertion album list en String[]
-éviter duplication ASyncTask
-stocker les choix réalisés
-gérer bouton folder
-utiliser des ressources pour les messages

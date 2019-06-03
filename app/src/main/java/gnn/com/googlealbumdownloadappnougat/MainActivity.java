@@ -1,4 +1,3 @@
-// TODO change package
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.Manifest;
@@ -40,6 +39,7 @@ import com.google.photos.types.proto.Album;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String[] mAlbums;
+    private ArrayList<String> mAlbums;
 
     private void onAlbumClick() {
         if (mAlbums == null) {
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class GetAlbumsTask extends AsyncTask<Void, Void, String[]> {
+    private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         private Account mAccount;
 
@@ -139,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String[] doInBackground(Void... voids) {
-            String[] albumNames = new String[100];
+        protected ArrayList<String> doInBackground(Void... voids) {
+            ArrayList<String> albumNames = new ArrayList<>();
             try {
                 String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
                 OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
@@ -154,10 +154,8 @@ public class MainActivity extends AppCompatActivity {
                                 .build();
                 PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
                 InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
-                int count = 0;
                 for (Album album : albums.iterateAll()) {
-                    albumNames[count] = album.getTitle();
-                    count += 1;
+                    albumNames.add(album.getTitle());
                 }
             } catch (GoogleAuthException | IOException e) {
                 e.printStackTrace();
@@ -173,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final String[] albums) {
+        protected void onPostExecute(final ArrayList<String> albums) {
             super.onPostExecute(albums);
             ProgressBar pb = findViewById(R.id.pbChooseFolder);
             pb.setVisibility(ProgressBar.INVISIBLE);
@@ -194,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        String albumName = mAlbums[which];
+                        String albumName = mAlbums.get(which);
                         setUIAlbum(albumName);
                     }
                 });
@@ -213,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onSyncClick() {
-        // TODO try to simplify callback cascade :-/
         Log.d(TAG, "onSyncClick");
         if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
             Log.d(TAG,"onSyncClick, user does not be connected => SignInIntent");

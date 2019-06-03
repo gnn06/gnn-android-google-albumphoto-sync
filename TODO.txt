@@ -1,8 +1,9 @@
-choisir l'album dans une liste
-    mettre une progress bar ergonomique
-    éviter duplication ASyncTask
-    améliorer convertion list en String[]
 pouvoir changer de compte
+gérer la connextion au début
+faire une UI propre
+mettre des progress bar ergonomique
+améliorer convertion album list en String[]
+éviter duplication ASyncTask
 stocker les choix réalisés
 gérer bouton folder
-afficher message de synchro avec des ressources
+utiliser des ressources pour les messages

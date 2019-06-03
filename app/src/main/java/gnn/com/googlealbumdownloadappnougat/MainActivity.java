@@ -130,6 +130,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private PhotosLibraryClient getPhotoLibraryClient(Account mAccount) throws IOException, GoogleAuthException {
+        /* Need an Id client OAuth in the google developer console of type android
+         * Put the package and the fingerprint (gradle signingReport)
+         */
+        String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
+        OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                .setAccessToken(new AccessToken(token, null))
+                .build();
+        PhotosLibrarySettings settings =
+                PhotosLibrarySettings.newBuilder()
+                        .setCredentialsProvider(
+                                FixedCredentialsProvider.create(
+                                        userCredentials))
+                        .build();
+        PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+        return client;
+    }
+
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         private Account mAccount;
@@ -142,17 +160,7 @@ public class MainActivity extends AppCompatActivity {
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
             try {
-                String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
-                OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                        .setAccessToken(new AccessToken(token, null))
-                        .build();
-                PhotosLibrarySettings settings =
-                        PhotosLibrarySettings.newBuilder()
-                                .setCredentialsProvider(
-                                        FixedCredentialsProvider.create(
-                                                userCredentials))
-                                .build();
-                PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+                PhotosLibraryClient client = getPhotoLibraryClient(mAccount);
                 InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
                 for (Album album : albums.iterateAll()) {
                     albumNames.add(album.getTitle());
@@ -312,34 +320,19 @@ public class MainActivity extends AppCompatActivity {
 
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
 
-
         Account mAccount;
 
         SyncTask(Account account) {
             mAccount = account;
         }
+
         @Override
         protected DiffCalculator doInBackground(Void... voids) {
             DiffCalculator diff = null;
             try {
-                /* Need an Id client OAuth in the google developer console of type android
-                 * Put the package and the fingerprint (gradle signingReport)
-                 */
-                String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
-                OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                        .setAccessToken(new AccessToken(token, null))
-                        .build();
-                PhotosLibrarySettings settings =
-                        PhotosLibrarySettings.newBuilder()
-                                .setCredentialsProvider(
-                                        FixedCredentialsProvider.create(
-                                                userCredentials))
-                                .build();
-                PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
-
                 String album = getUIAlbum().toString();
                 File destination = getFolder();
-
+                PhotosLibraryClient client = getPhotoLibraryClient(mAccount);
                 Synchronizer sync = new Synchronizer();
                 diff = sync.sync(album, destination, client);
 

@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.Manifest;
-import android.accounts.Account;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         if (mAlbums == null) {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
             assert account != null;
-            GetAlbumsTask task = new GetAlbumsTask(account.getAccount());
+            GetAlbumsTask task = new GetAlbumsTask();
             task.execute();
         } else {
             Log.d(TAG, "choose albums from cache");
@@ -130,43 +129,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private PhotosLibraryClient getPhotoLibraryClient(Account mAccount) throws IOException, GoogleAuthException {
-        /* Need an Id client OAuth in the google developer console of type android
-         * Put the package and the fingerprint (gradle signingReport)
-         */
-        String token = GoogleAuthUtil.getToken(getApplicationContext(), mAccount, "oauth2:profile email");
-        OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                .setAccessToken(new AccessToken(token, null))
-                .build();
-        PhotosLibrarySettings settings =
-                PhotosLibrarySettings.newBuilder()
-                        .setCredentialsProvider(
-                                FixedCredentialsProvider.create(
-                                        userCredentials))
-                        .build();
-        PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
-        return client;
+    private PhotosLibraryClient mClient;
+
+    private PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException {
+        if (mClient != null) {
+            Log.d(TAG, "get photo library client from cache");
+            return mClient;
+        } else {
+            /* Need an Id client OAuth in the google developer console of type android
+             * Put the package and the fingerprint (gradle signingReport)
+             */
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+            assert account != null;
+            assert account.getAccount() != null;
+            String token = GoogleAuthUtil.getToken(getApplicationContext(), account.getAccount(), "oauth2:profile email");
+            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                    .setAccessToken(new AccessToken(token, null))
+                    .build();
+            PhotosLibrarySettings settings =
+                    PhotosLibrarySettings.newBuilder()
+                            .setCredentialsProvider(
+                                    FixedCredentialsProvider.create(
+                                            userCredentials))
+                            .build();
+            PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+            this.mClient = client;
+            return client;
+        }
     }
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-        private Account mAccount;
-
-        GetAlbumsTask(Account mAccount) {
-            this.mAccount = mAccount;
-        }
 
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
             try {
-                PhotosLibraryClient client = getPhotoLibraryClient(mAccount);
+                PhotosLibraryClient client = getPhotoLibraryClient();
                 InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
                 for (Album album : albums.iterateAll()) {
                     albumNames.add(album.getTitle());
                 }
-            } catch (GoogleAuthException | IOException e) {
-                e.printStackTrace();
+            } catch (GoogleAuthException| IOException e) {
+                Log.e(TAG, "can't get photo library client");
             }
             return albumNames;
         }
@@ -289,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "handle write permission");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         assert account != null;
-        launchSynchWithPermission(account);
+        launchSynchWithPermission();
     }
 
     private void laucnhSync() {
@@ -301,11 +305,11 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
         } else {
             Log.d(TAG,"WRITE permission granted, call google");
-            launchSynchWithPermission(account);
+            launchSynchWithPermission();
         }
     }
 
-    private void launchSynchWithPermission(GoogleSignInAccount account) {
+    private void launchSynchWithPermission() {
         CharSequence album = getUIAlbum();
         if (album.equals("")) {
             new AlertDialog.Builder(getActivity())
@@ -313,18 +317,13 @@ public class MainActivity extends AppCompatActivity {
                     .setNegativeButton(android.R.string.ok, null)
                     .show();
         } else {
-            SyncTask task = new SyncTask(account.getAccount());
+            SyncTask task;
+            task = new SyncTask();
             task.execute();
         }
     }
 
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
-
-        Account mAccount;
-
-        SyncTask(Account account) {
-            mAccount = account;
-        }
 
         @Override
         protected DiffCalculator doInBackground(Void... voids) {
@@ -332,15 +331,11 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String album = getUIAlbum().toString();
                 File destination = getFolder();
-                PhotosLibraryClient client = getPhotoLibraryClient(mAccount);
                 Synchronizer sync = new Synchronizer();
+                PhotosLibraryClient client = getPhotoLibraryClient();
                 diff = sync.sync(album, destination, client);
-
-                Log.d(TAG,"end");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (GoogleAuthException e) {
-                e.printStackTrace();
+            } catch (GoogleAuthException | IOException e) {
+                Log.e(TAG, "can't get photo library client");
             }
             return diff;
         }

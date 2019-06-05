@@ -40,10 +40,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IView {
 
     private static final int RC_SIGN_IN = 501;
     private static final int RC_AUTHORIZE_PHOTOS = 500;
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
 
     private GoogleSignInClient mGoogleSignInClient;
+    private IPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,15 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        findViewById(R.id.btnSync).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onSyncClick();
-            }
-        });
+
+        presenter = new Presenter(this);
 
         findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onAlbumClick();
+            }
+        });
+
+        findViewById(R.id.btnSync).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onSyncClick();
             }
         });
 
@@ -204,21 +211,17 @@ public class MainActivity extends AppCompatActivity {
                 .setAdapter(itemsAdapter, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String albumName = mAlbums.get(which);
-                        setUIAlbum(albumName);
+                        presenter.onAlbumChoosen(albumName);
                     }
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-    private void setUIAlbum(String albumName) {
+    @Override
+    public void onAlbumChoosenResult(String albumName) {
         TextView textView = findViewById(R.id.textAlbum);
         textView.setText(albumName);
-    }
-
-    private CharSequence getUIAlbum() {
-        TextView textView = findViewById(R.id.textAlbum);
-        return textView.getText();
     }
 
     private void onSyncClick() {
@@ -309,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchSynchWithPermission() {
-        CharSequence album = getUIAlbum();
+        String album = presenter.getAlbum();
         if (album.equals("")) {
             new AlertDialog.Builder(getActivity())
                     .setTitle("You have to choose an album")
@@ -328,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         protected DiffCalculator doInBackground(Void... voids) {
             DiffCalculator diff = null;
             try {
-                String album = getUIAlbum().toString();
+                String album = presenter.getAlbum();
                 File destination = getFolder();
                 Synchronizer sync = new Synchronizer();
                 PhotosLibraryClient client = getPhotoLibraryClient();

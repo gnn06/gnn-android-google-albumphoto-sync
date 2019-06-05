@@ -33,8 +33,6 @@ import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
-import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
-import com.google.photos.types.proto.Album;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements IView {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
-        presenter = new Presenter(this);
+        presenter = new Presenter(this, this);
 
         findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onAlbumClick();
+                presenter.onAlbumChoose();
             }
         });
 
@@ -124,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private PhotosLibraryClient mClient;
 
-    private PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException {
+    public PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException {
         if (mClient != null) {
             Log.d(TAG, "get photo library client from cache");
             return mClient;
@@ -150,55 +148,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         }
     }
 
-    private ArrayList<String> mAlbums;
-
-    private void onAlbumClick() {
-        if (mAlbums == null) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-            assert account != null;
-            GetAlbumsTask task = new GetAlbumsTask();
-            task.execute();
-        } else {
-            Log.d(TAG, "choose albums from cache");
-            showChooseAlbumDialog();
-        }
-    }
-
-    private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(Void... voids) {
-            ArrayList<String> albumNames = new ArrayList<>();
-            try {
-                PhotosLibraryClient client = getPhotoLibraryClient();
-                InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
-                for (Album album : albums.iterateAll()) {
-                    albumNames.add(album.getTitle());
-                }
-            } catch (GoogleAuthException| IOException e) {
-                Log.e(TAG, "can't get photo library client");
-            }
-            return albumNames;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            ProgressBar pb = findViewById(R.id.pbChooseFolder);
-            pb.setVisibility(ProgressBar.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(final ArrayList<String> albums) {
-            super.onPostExecute(albums);
-            ProgressBar pb = findViewById(R.id.pbChooseFolder);
-            pb.setVisibility(ProgressBar.INVISIBLE);
-            mAlbums = albums;
-            showChooseAlbumDialog();
-        }
-    }
-
-    private void showChooseAlbumDialog() {
+    public void showChooseAlbumDialog(final ArrayList<String> mAlbums) {
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mAlbums);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -323,6 +273,12 @@ public class MainActivity extends AppCompatActivity implements IView {
             task = new SyncTask();
             task.execute();
         }
+    }
+
+    @Override
+    public void onGetAlbumsProgressBar(int visible) {
+        ProgressBar pb = findViewById(R.id.pbChooseFolder);
+        pb.setVisibility(visible);
     }
 
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {

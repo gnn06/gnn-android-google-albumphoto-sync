@@ -115,20 +115,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<String> mAlbums;
-
-    private void onAlbumClick() {
-        if (mAlbums == null) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-            assert account != null;
-            GetAlbumsTask task = new GetAlbumsTask();
-            task.execute();
-        } else {
-            Log.d(TAG, "choose albums from cache");
-            showChooseAlbumDialog();
-        }
-    }
-
     private PhotosLibraryClient mClient;
 
     private PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException {
@@ -140,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
              * Put the package and the fingerprint (gradle signingReport)
              */
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-            assert account != null;
-            assert account.getAccount() != null;
+            assert account != null && account.getAccount() != null;
             String token = GoogleAuthUtil.getToken(getApplicationContext(), account.getAccount(), "oauth2:profile email");
             OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
                     .setAccessToken(new AccessToken(token, null))
@@ -155,6 +140,20 @@ public class MainActivity extends AppCompatActivity {
             PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
             this.mClient = client;
             return client;
+        }
+    }
+
+    private ArrayList<String> mAlbums;
+
+    private void onAlbumClick() {
+        if (mAlbums == null) {
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+            assert account != null;
+            GetAlbumsTask task = new GetAlbumsTask();
+            task.execute();
+        } else {
+            Log.d(TAG, "choose albums from cache");
+            showChooseAlbumDialog();
         }
     }
 

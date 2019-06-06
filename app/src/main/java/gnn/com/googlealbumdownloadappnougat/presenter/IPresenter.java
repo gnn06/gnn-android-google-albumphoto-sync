@@ -15,7 +15,7 @@ public interface IPresenter {
 
     void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity);
 
-    void handleAuthorizeWrite(MainActivity mainActivity);
+    void handleAuthorizeWrite();
 
     void onSyncClick();
 

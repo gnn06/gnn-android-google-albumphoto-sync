@@ -113,7 +113,7 @@ public class Presenter implements IPresenter{
     public void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity) {
         Log.d(TAG, "handleSignInResult");
         GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-        mainActivity.updateUI_User();
+        view.updateUI_User();
         if (!GoogleSignIn.hasPermissions(
                 account,
                 mainActivity.SCOPE_PHOTOS_READ)) {
@@ -128,13 +128,15 @@ public class Presenter implements IPresenter{
             laucnhSync();
         }
     }
+
     @Override
-    public void handleAuthorizeWrite(MainActivity mainActivity) {
+    public void handleAuthorizeWrite() {
         Log.d(TAG, "handle write permission");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(mainActivity);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
         assert account != null;
         launchSynchWithPermission();
     }
+
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
 
@@ -157,13 +159,13 @@ public class Presenter implements IPresenter{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            view.onGetAlbumsProgressBar(ProgressBar.VISIBLE);
+            view.setChooseAlbumProgressBarVisibility(ProgressBar.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(final ArrayList<String> albums) {
             super.onPostExecute(albums);
-            view.onGetAlbumsProgressBar(ProgressBar.INVISIBLE);
+            view.setChooseAlbumProgressBarVisibility(ProgressBar.INVISIBLE);
             view.showChooseAlbumDialog(albums);
             mAlbums = albums;
         }
@@ -248,14 +250,14 @@ public class Presenter implements IPresenter{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            activity.setSyncProgresBarVisibility(ProgressBar.VISIBLE);
+            view.setSyncProgresBarVisibility(ProgressBar.VISIBLE);
             view.updateUI_CallResult("in progress");
         }
 
         @Override
         protected void onPostExecute(DiffCalculator sync) {
             super.onPostExecute(sync);
-            activity.setSyncProgresBarVisibility(ProgressBar.INVISIBLE);
+            view.setSyncProgresBarVisibility(ProgressBar.INVISIBLE);
             String result = "";
             result += "synchronisation terminée avec succés\n";
             result += "downloaded = " + sync.getToDownload().size();

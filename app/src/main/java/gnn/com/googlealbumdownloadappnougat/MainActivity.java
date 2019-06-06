@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (RC_AUTHORIZE_WRITE == requestCode) {
             updateUI_User();
-            presenter.handleAuthorizeWrite(this);
+            presenter.handleAuthorizeWrite();
         }
     }
 
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void onGetAlbumsProgressBar(int visible) {
+    public void setChooseAlbumProgressBarVisibility(int visible) {
         ProgressBar pb = findViewById(R.id.pbChooseFolder);
         pb.setVisibility(visible);
     }
@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(result);
     }
 
+    @Override
     public void setSyncProgresBarVisibility(int visible) {
         ProgressBar pb = findViewById(R.id.pbSync);
         pb.setVisibility(visible);

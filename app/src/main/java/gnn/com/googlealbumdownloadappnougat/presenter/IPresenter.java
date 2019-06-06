@@ -13,8 +13,6 @@ public interface IPresenter {
 
     void onChooseAlbum(String albumName);
 
-    String getAlbum();
-
     void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity);
 
     void handleAuthorizeWrite(MainActivity mainActivity);

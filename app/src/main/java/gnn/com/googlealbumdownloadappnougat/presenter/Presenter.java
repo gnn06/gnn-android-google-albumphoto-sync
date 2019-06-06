@@ -72,11 +72,6 @@ public class Presenter implements IPresenter{
         view.onAlbumChoosenResult(albumName);
     }
 
-    @Override
-    public String getAlbum() {
-        return album;
-    }
-
     private File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
     @Override
@@ -220,7 +215,7 @@ public class Presenter implements IPresenter{
     }
     @Override
     public void launchSynchWithPermission() {
-        String album = getAlbum();
+        String album = this.album;
         if (album.equals("")) {
             new AlertDialog.Builder(activity)
                     .setTitle("You have to choose an album")
@@ -239,7 +234,7 @@ public class Presenter implements IPresenter{
         protected DiffCalculator doInBackground(Void... voids) {
             DiffCalculator diff = null;
             try {
-                String album = getAlbum();
+                String album = Presenter.this.album;
                 File destination = getFolder();
                 Synchronizer sync = new Synchronizer();
                 PhotosLibraryClient client = getPhotoLibraryClient();

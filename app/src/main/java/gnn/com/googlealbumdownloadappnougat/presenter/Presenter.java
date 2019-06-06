@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -16,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.ApiException;
@@ -39,14 +39,16 @@ public class Presenter implements IPresenter{
 
     private static final String TAG = "goi";
 
+    public Scope SCOPE_PHOTOS_READ =
+            new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
+
+
     private final IView view;
     private final MainActivity activity;
-    private Context contextWrapper;
 
-    public Presenter(IView view, MainActivity activity, Context contextWrapper) {
+    public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
-        this.contextWrapper  = contextWrapper;
     }
 
     private ArrayList<String> mAlbums;
@@ -93,7 +95,7 @@ public class Presenter implements IPresenter{
              */
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
             assert account != null && account.getAccount() != null;
-            String token = GoogleAuthUtil.getToken(contextWrapper.getApplicationContext(), account.getAccount(), "oauth2:profile email");
+            String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
             OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
                     .setAccessToken(new AccessToken(token, null))
                     .build();
@@ -116,13 +118,13 @@ public class Presenter implements IPresenter{
         view.updateUI_User();
         if (!GoogleSignIn.hasPermissions(
                 account,
-                mainActivity.SCOPE_PHOTOS_READ)) {
+                SCOPE_PHOTOS_READ)) {
             Log.d(TAG, "signin done, do not have permissions => request permissions");
             GoogleSignIn.requestPermissions(
                     mainActivity,
                     MainActivity.RC_AUTHORIZE_PHOTOS,
                     account,
-                    mainActivity.SCOPE_PHOTOS_READ);
+                    SCOPE_PHOTOS_READ);
         } else {
             Log.d(TAG, "signin done, have permissions => laucnhSync()");
             laucnhSync();
@@ -188,14 +190,14 @@ public class Presenter implements IPresenter{
         } else {
             if (!GoogleSignIn.hasPermissions(
                     GoogleSignIn.getLastSignedInAccount(activity),
-                    activity.SCOPE_PHOTOS_READ)) {
+                    SCOPE_PHOTOS_READ)) {
                 Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
                 // doc said that if account is null, should ask but instead cancel the request or create a bug.
                 GoogleSignIn.requestPermissions(
                         activity,
                         MainActivity.RC_AUTHORIZE_PHOTOS,
                         GoogleSignIn.getLastSignedInAccount(activity),
-                        activity.SCOPE_PHOTOS_READ);
+                        SCOPE_PHOTOS_READ);
             } else {
                 Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
                 laucnhSync();
@@ -229,8 +231,6 @@ public class Presenter implements IPresenter{
         }
     }
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
-
-
 
         @Override
         protected DiffCalculator doInBackground(Void... voids) {

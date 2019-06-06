@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = "goi";
 
-    public Scope SCOPE_PHOTOS_READ =
-            new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
-
     public IPresenter presenter;
 
     @Override
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new Presenter(this, this, getApplicationContext());
+        presenter = new Presenter(this, this);
 
         findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

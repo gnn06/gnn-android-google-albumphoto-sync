@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +21,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -41,34 +37,24 @@ import java.util.ArrayList;
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
-import gnn.com.photos.sync.DiffCalculator;
-import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
-    private static final int RC_SIGN_IN = 501;
-    private static final int RC_AUTHORIZE_PHOTOS = 500;
-    private static final int RC_AUTHORIZE_WRITE = 503;
+    public static final int RC_SIGN_IN = 501;
+    public static final int RC_AUTHORIZE_PHOTOS = 500;
+    public static final int RC_AUTHORIZE_WRITE = 503;
 
     private static final String TAG = "goi";
 
-    Scope SCOPE_PHOTOS_READ =
+    public Scope SCOPE_PHOTOS_READ =
             new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
 
-    private GoogleSignInClient mGoogleSignInClient;
     private IPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
 
         presenter = new Presenter(this, this);
 
@@ -80,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         findViewById(R.id.btnSync).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onSyncClick();
+                presenter.onSyncClick();
             }
         });
 
@@ -91,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "onStart   ");
         super.onStart();
         updateUI_User();
-        updateUI_Folder(folder);
+        updateUI_Folder(presenter.getFolder());
     }
 
     @Override
@@ -174,46 +160,15 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(albumName);
     }
 
-    private void onSyncClick() {
-        Log.d(TAG, "onSyncClick");
-        if (GoogleSignIn.getLastSignedInAccount(getActivity()) == null) {
-            Log.d(TAG,"onSyncClick, user does not be connected => SignInIntent");
-            updateUI_User();
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            Log.d(TAG, "start signin intent");
-            startActivityForResult(signInIntent, RC_SIGN_IN);
-        } else {
-            if (!GoogleSignIn.hasPermissions(
-                    GoogleSignIn.getLastSignedInAccount(getActivity()),
-                    SCOPE_PHOTOS_READ)) {
-                Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
-                // doc said that if account is null, should ask but instead cancel the request or create a bug.
-                GoogleSignIn.requestPermissions(
-                        MainActivity.this,
-                        RC_AUTHORIZE_PHOTOS,
-                        GoogleSignIn.getLastSignedInAccount(getActivity()),
-                        SCOPE_PHOTOS_READ);
-            } else {
-                Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
-                laucnhSync();
-            }
-        }
-    }
-
     private void updateUI_Folder(File folder) {
         TextView textView = findViewById(R.id.textFolder);
         textView.setText(folder.getPath());
     }
 
-    private File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
     private CharSequence getFolderName() {
         TextView textView = findViewById(R.id.textFolder);
         return textView.getText();
-    }
-
-    private File getFolder() {
-        return folder;
     }
 
     private void handleSignInResult (Task<GoogleSignInAccount> completedTask) {
@@ -231,48 +186,21 @@ public class MainActivity extends AppCompatActivity implements IView {
                     SCOPE_PHOTOS_READ);
         } else {
             Log.d(TAG, "signin done, have permissions => laucnhSync()");
-            laucnhSync();
+            presenter.laucnhSync();
         }
     }
 
     private void handleAuthorizePhotos() {
         Log.d(TAG, "handleAuthorizePhotos");
         updateUI_User();
-        laucnhSync();
+        presenter.laucnhSync();
     }
 
     private void handleAuthorizeWrite() {
         Log.d(TAG, "handle write permission");
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
         assert account != null;
-        launchSynchWithPermission();
-    }
-
-    private void laucnhSync() {
-        Log.d(TAG, "laucnhSync");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
-        assert account != null;
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "request WRITE permission");
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RC_AUTHORIZE_WRITE);
-        } else {
-            Log.d(TAG,"WRITE permission granted, call google");
-            launchSynchWithPermission();
-        }
-    }
-
-    private void launchSynchWithPermission() {
-        String album = presenter.getAlbum();
-        if (album.equals("")) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("You have to choose an album")
-                    .setNegativeButton(android.R.string.ok, null)
-                    .show();
-        } else {
-            SyncTask task;
-            task = new SyncTask();
-            task.execute();
-        }
+        presenter.launchSynchWithPermission();
     }
 
     @Override
@@ -281,47 +209,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         pb.setVisibility(visible);
     }
 
-    private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
-
-        @Override
-        protected DiffCalculator doInBackground(Void... voids) {
-            DiffCalculator diff = null;
-            try {
-                String album = presenter.getAlbum();
-                File destination = getFolder();
-                Synchronizer sync = new Synchronizer();
-                PhotosLibraryClient client = getPhotoLibraryClient();
-                diff = sync.sync(album, destination, client);
-            } catch (GoogleAuthException | IOException e) {
-                Log.e(TAG, "can't get photo library client");
-            }
-            return diff;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            ProgressBar pb = findViewById(R.id.pbSync);
-            pb.setVisibility(ProgressBar.VISIBLE);
-            updateUI_CallResult("in progress");
-        }
-
-        @Override
-        protected void onPostExecute(DiffCalculator sync) {
-            super.onPostExecute(sync);
-            ProgressBar pb = findViewById(R.id.pbSync);
-            pb.setVisibility(ProgressBar.INVISIBLE);
-            String result = "";
-            result += "synchronisation terminée avec succés\n";
-            result += "downloaded = " + sync.getToDownload().size();
-            result += "\n";
-            result += "deleted = " + sync.getToDelete().size();
-            updateUI_CallResult(result);
-        }
-
-    }
-
-    private void updateUI_User() {
+    public void updateUI_User() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         TextView myAwesomeTextView = findViewById(R.id.textUser);
         String name = account != null ? account.getEmail() : "";
@@ -334,12 +222,18 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 
-    private void updateUI_CallResult(String result) {
+    @Override
+    public void updateUI_CallResult(String result) {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
 
     private Context getActivity() {
         return this;
+    }
+
+    public void setSyncProgresBarVisibility(int visible) {
+        ProgressBar pb = findViewById(R.id.pbSync);
+        pb.setVisibility(visible);
     }
 }

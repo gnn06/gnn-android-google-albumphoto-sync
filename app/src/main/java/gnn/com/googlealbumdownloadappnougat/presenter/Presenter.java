@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -10,11 +11,18 @@ import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.ApiException;
+import com.google.auth.oauth2.AccessToken;
+import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
+import com.google.photos.library.v1.PhotosLibrarySettings;
 import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
 import com.google.photos.types.proto.Album;
 
@@ -33,17 +41,19 @@ public class Presenter implements IPresenter{
 
     private final IView view;
     private final MainActivity activity;
+    private Context contextWrapper;
 
-    public Presenter(IView view, MainActivity activity) {
+    public Presenter(IView view, MainActivity activity, Context contextWrapper) {
         this.view = view;
         this.activity = activity;
+        this.contextWrapper  = contextWrapper;
     }
 
     private ArrayList<String> mAlbums;
     private String album;
 
     @Override
-    public void onAlbumChoose() {
+    public void onShowAlbumList() {
         if (mAlbums == null) {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this.activity);
             assert account != null;
@@ -55,6 +65,18 @@ public class Presenter implements IPresenter{
         }
     }
 
+    @Override
+    public void onChooseAlbum(String albumName) {
+        // TODO: 05/06/2019 call service
+        this.album = albumName;
+        view.onAlbumChoosenResult(albumName);
+    }
+
+    @Override
+    public String getAlbum() {
+        return album;
+    }
+
     private File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
     @Override
@@ -62,13 +84,71 @@ public class Presenter implements IPresenter{
         return folder;
     }
 
+    private PhotosLibraryClient mClient;
+
+    private PhotosLibraryClient getPhotoLibraryClient()
+            throws IOException, GoogleAuthException
+    {
+        if (mClient != null) {
+            Log.d(TAG, "get photo library client from cache");
+            return mClient;
+        } else {
+            /* Need an Id client OAuth in the google developer console of type android
+             * Put the package and the fingerprint (gradle signingReport)
+             */
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+            assert account != null && account.getAccount() != null;
+            String token = GoogleAuthUtil.getToken(contextWrapper.getApplicationContext(), account.getAccount(), "oauth2:profile email");
+            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                    .setAccessToken(new AccessToken(token, null))
+                    .build();
+            PhotosLibrarySettings settings =
+                    PhotosLibrarySettings.newBuilder()
+                            .setCredentialsProvider(
+                                    FixedCredentialsProvider.create(
+                                            userCredentials))
+                            .build();
+            PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+            mClient = client;
+            return client;
+        }
+    }
+
+    @Override
+    public void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity) {
+        Log.d(TAG, "handleSignInResult");
+        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+        mainActivity.updateUI_User();
+        if (!GoogleSignIn.hasPermissions(
+                account,
+                mainActivity.SCOPE_PHOTOS_READ)) {
+            Log.d(TAG, "signin done, do not have permissions => request permissions");
+            GoogleSignIn.requestPermissions(
+                    mainActivity,
+                    MainActivity.RC_AUTHORIZE_PHOTOS,
+                    account,
+                    mainActivity.SCOPE_PHOTOS_READ);
+        } else {
+            Log.d(TAG, "signin done, have permissions => laucnhSync()");
+            laucnhSync();
+        }
+    }
+    @Override
+    public void handleAuthorizeWrite(MainActivity mainActivity) {
+        Log.d(TAG, "handle write permission");
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(mainActivity);
+        assert account != null;
+        launchSynchWithPermission();
+    }
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
+
+
 
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
             try {
-                PhotosLibraryClient client = activity.getPhotoLibraryClient();
+                PhotosLibraryClient client = getPhotoLibraryClient();
                 InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
                 for (Album album : albums.iterateAll()) {
                     albumNames.add(album.getTitle());
@@ -138,7 +218,6 @@ public class Presenter implements IPresenter{
             launchSynchWithPermission();
         }
     }
-
     @Override
     public void launchSynchWithPermission() {
         String album = getAlbum();
@@ -152,8 +231,9 @@ public class Presenter implements IPresenter{
             task.execute();
         }
     }
-
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
+
+
 
         @Override
         protected DiffCalculator doInBackground(Void... voids) {
@@ -162,7 +242,7 @@ public class Presenter implements IPresenter{
                 String album = getAlbum();
                 File destination = getFolder();
                 Synchronizer sync = new Synchronizer();
-                PhotosLibraryClient client = activity.getPhotoLibraryClient();
+                PhotosLibraryClient client = getPhotoLibraryClient();
                 diff = sync.sync(album, destination, client);
             } catch (GoogleAuthException | IOException e) {
                 Log.e(TAG, "can't get photo library client");
@@ -189,18 +269,6 @@ public class Presenter implements IPresenter{
             view.updateUI_CallResult(result);
         }
 
-    }
-
-    @Override
-    public void onAlbumChoosen(String albumName) {
-        // TODO: 05/06/2019 call service
-        this.album = albumName;
-        view.onAlbumChoosenResult(albumName);
-    }
-
-    @Override
-    public String getAlbum() {
-        return album;
     }
 }
 

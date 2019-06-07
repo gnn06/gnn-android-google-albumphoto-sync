@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -13,8 +12,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -31,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
@@ -45,10 +43,12 @@ public class Presenter implements IPresenter{
 
     private final IView view;
     private final MainActivity activity;
+    private final AuthManager auth;
 
-    public Presenter(IView view, MainActivity activity) {
+    public Presenter(IView view, MainActivity activity, AuthManager auth) {
         this.view = view;
         this.activity = activity;
+        this.auth = auth;
     }
 
     private ArrayList<String> mAlbums;
@@ -112,6 +112,25 @@ public class Presenter implements IPresenter{
     }
 
     @Override
+    public void onSyncClick() {
+        Log.d(TAG, "onSyncClick");
+        if (auth.isSignIn()) {
+            Log.d(TAG,"onSyncClick, user does not be connected => start SignInIntent");
+            view.updateUI_User();
+            auth.signIn();
+        } else {
+            if (!auth.hasGooglePhotoPermission(this)) {
+                Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
+                // doc said that if account is null, should ask but instead cancel the request or create a bug.
+                auth.requestGooglePhotoPermission(this);
+            } else {
+                Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
+                laucnhSync();
+            }
+        }
+    }
+
+    @Override
     public void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity) {
         Log.d(TAG, "handleSignInResult");
         GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -139,8 +158,34 @@ public class Presenter implements IPresenter{
         launchSynchWithPermission();
     }
 
-    private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
+    public void laucnhSync() {
+        Log.d(TAG, "laucnhSync");
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        assert account != null;
+        if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "request WRITE permission");
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);
+        } else {
+            Log.d(TAG,"WRITE permission granted, call google");
+            launchSynchWithPermission();
+        }
+    }
 
+    @Override
+    public void launchSynchWithPermission() {
+        String album = this.album;
+        if (album.equals("")) {
+            new AlertDialog.Builder(activity)
+                    .setTitle("You have to choose an album")
+                    .setNegativeButton(android.R.string.ok, null)
+                    .show();
+        } else {
+            SyncTask task = new SyncTask();
+            task.execute();
+        }
+    }
+
+    private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
 
         @Override
@@ -170,64 +215,6 @@ public class Presenter implements IPresenter{
             view.setChooseAlbumProgressBarVisibility(ProgressBar.INVISIBLE);
             view.showChooseAlbumDialog(albums);
             mAlbums = albums;
-        }
-
-    }
-
-    @Override
-    public void onSyncClick() {
-        Log.d(TAG, "onSyncClick");
-        if (GoogleSignIn.getLastSignedInAccount(activity) == null) {
-            Log.d(TAG,"onSyncClick, user does not be connected => SignInIntent");
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build();
-            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            Log.d(TAG, "start signin intent");
-            view.updateUI_User();
-            activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
-        } else {
-            if (!GoogleSignIn.hasPermissions(
-                    GoogleSignIn.getLastSignedInAccount(activity),
-                    SCOPE_PHOTOS_READ)) {
-                Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
-                // doc said that if account is null, should ask but instead cancel the request or create a bug.
-                GoogleSignIn.requestPermissions(
-                        activity,
-                        MainActivity.RC_AUTHORIZE_PHOTOS,
-                        GoogleSignIn.getLastSignedInAccount(activity),
-                        SCOPE_PHOTOS_READ);
-            } else {
-                Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
-                laucnhSync();
-            }
-        }
-    }
-
-    public void laucnhSync() {
-        Log.d(TAG, "laucnhSync");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        assert account != null;
-        if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "request WRITE permission");
-            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);
-        } else {
-            Log.d(TAG,"WRITE permission granted, call google");
-            launchSynchWithPermission();
-        }
-    }
-    @Override
-    public void launchSynchWithPermission() {
-        String album = this.album;
-        if (album.equals("")) {
-            new AlertDialog.Builder(activity)
-                    .setTitle("You have to choose an album")
-                    .setNegativeButton(android.R.string.ok, null)
-                    .show();
-        } else {
-            SyncTask task = new SyncTask();
-            task.execute();
         }
     }
     private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {

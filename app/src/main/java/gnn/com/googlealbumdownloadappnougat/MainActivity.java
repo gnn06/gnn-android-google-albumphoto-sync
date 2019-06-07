@@ -121,6 +121,14 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(albumName);
     }
 
+    @Override
+    public void alertNoAlbum() {
+        new AlertDialog.Builder(this)
+                .setTitle("You have to choose an album")
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+    }
+
     private void updateUI_Folder(File folder) {
         TextView textView = findViewById(R.id.textFolder);
         textView.setText(folder.getPath());

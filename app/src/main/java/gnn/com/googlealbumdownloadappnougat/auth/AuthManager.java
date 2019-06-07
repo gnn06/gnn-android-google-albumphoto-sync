@@ -1,6 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -47,5 +49,13 @@ public class AuthManager {
         return GoogleSignIn.hasPermissions(
                 GoogleSignIn.getLastSignedInAccount(activity),
                 SCOPE_PHOTOS_READ);
+    }
+
+    public boolean hasWritePermission() {
+        return activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void requestWritePermission() {
+        activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);
     }
 }

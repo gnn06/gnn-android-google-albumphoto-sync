@@ -2,6 +2,8 @@ package gnn.com.googlealbumdownloadappnougat.view;
 
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+
 public interface IView {
 
     void showChooseAlbumDialog(final ArrayList<String> mAlbums);
@@ -9,6 +11,8 @@ public interface IView {
     void onAlbumChoosenResult(String albumName);
 
     void setChooseAlbumProgressBarVisibility(int visible);
+
+    void alertNoAlbum();
 
     void setSyncProgresBarVisibility(int visible);
 

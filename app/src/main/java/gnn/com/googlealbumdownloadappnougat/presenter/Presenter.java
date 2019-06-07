@@ -1,8 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.presenter;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
@@ -14,7 +11,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
-import com.google.api.gax.rpc.ApiException;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
@@ -146,9 +142,9 @@ public class Presenter implements IPresenter{
 
     public void laucnhSync() {
         Log.d(TAG, "laucnhSync");
-        if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (!auth.hasWritePermission()) {
             Log.d(TAG, "request WRITE permission");
-            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);
+            auth.requestWritePermission();
         } else {
             Log.d(TAG,"WRITE permission granted, call google");
             launchSynchWithPermission();
@@ -159,10 +155,7 @@ public class Presenter implements IPresenter{
     public void launchSynchWithPermission() {
         String album = this.album;
         if (album.equals("")) {
-            new AlertDialog.Builder(activity)
-                    .setTitle("You have to choose an album")
-                    .setNegativeButton(android.R.string.ok, null)
-                    .show();
+            view.alertNoAlbum();
         } else {
             SyncTask task = new SyncTask();
             task.execute();

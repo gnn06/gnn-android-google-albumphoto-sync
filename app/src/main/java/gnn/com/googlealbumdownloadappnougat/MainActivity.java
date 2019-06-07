@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN  && resultCode == Activity.RESULT_OK) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            presenter.handleSignInResult(task, this);
+            presenter.handleSignInResult();
         } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.d(TAG, "handleAuthorizePhotos");

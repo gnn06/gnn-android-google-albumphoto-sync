@@ -9,7 +9,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
@@ -122,7 +121,7 @@ public class Presenter implements IPresenter{
     }
 
     @Override
-    public void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity) {
+    public void handleSignInResult() {
         Log.d(TAG, "handleSignInResult");
         view.updateUI_User();
         if (!auth.hasGooglePhotoPermission()) {

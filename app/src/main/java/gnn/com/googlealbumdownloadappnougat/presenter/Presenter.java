@@ -134,12 +134,6 @@ public class Presenter implements IPresenter{
         }
     }
 
-    @Override
-    public void handleAuthorizeWrite() {
-        Log.d(TAG, "handle write permission");
-        launchSynchWithPermission();
-    }
-
     public void laucnhSync() {
         Log.d(TAG, "laucnhSync");
         if (!auth.hasWritePermission()) {

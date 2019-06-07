@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (RC_AUTHORIZE_WRITE == requestCode) {
             updateUI_User();
-            presenter.handleAuthorizeWrite();
+            Log.d(TAG, "handle write permission");
+            presenter.launchSynchWithPermission();
         }
     }
 

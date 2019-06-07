@@ -12,7 +12,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.ApiException;
@@ -36,10 +35,6 @@ import gnn.com.photos.sync.Synchronizer;
 public class Presenter implements IPresenter{
 
     private static final String TAG = "goi";
-
-    public Scope SCOPE_PHOTOS_READ =
-            new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
-
 
     private final IView view;
     private final MainActivity activity;
@@ -114,15 +109,15 @@ public class Presenter implements IPresenter{
     @Override
     public void onSyncClick() {
         Log.d(TAG, "onSyncClick");
-        if (auth.isSignIn()) {
+        if (!auth.isSignIn()) {
             Log.d(TAG,"onSyncClick, user does not be connected => start SignInIntent");
             view.updateUI_User();
             auth.signIn();
         } else {
-            if (!auth.hasGooglePhotoPermission(this)) {
+            if (!auth.hasGooglePhotoPermission()) {
                 Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
                 // doc said that if account is null, should ask but instead cancel the request or create a bug.
-                auth.requestGooglePhotoPermission(this);
+                auth.requestGooglePhotoPermission();
             } else {
                 Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
                 laucnhSync();
@@ -133,17 +128,10 @@ public class Presenter implements IPresenter{
     @Override
     public void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity mainActivity) {
         Log.d(TAG, "handleSignInResult");
-        GoogleSignInAccount account = completedTask.getResult(ApiException.class);
         view.updateUI_User();
-        if (!GoogleSignIn.hasPermissions(
-                account,
-                SCOPE_PHOTOS_READ)) {
+        if (!auth.hasGooglePhotoPermission()) {
             Log.d(TAG, "signin done, do not have permissions => request permissions");
-            GoogleSignIn.requestPermissions(
-                    mainActivity,
-                    MainActivity.RC_AUTHORIZE_PHOTOS,
-                    account,
-                    SCOPE_PHOTOS_READ);
+            auth.requestGooglePhotoPermission();
         } else {
             Log.d(TAG, "signin done, have permissions => laucnhSync()");
             laucnhSync();
@@ -153,15 +141,11 @@ public class Presenter implements IPresenter{
     @Override
     public void handleAuthorizeWrite() {
         Log.d(TAG, "handle write permission");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        assert account != null;
         launchSynchWithPermission();
     }
 
     public void laucnhSync() {
         Log.d(TAG, "laucnhSync");
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        assert account != null;
         if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "request WRITE permission");
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);

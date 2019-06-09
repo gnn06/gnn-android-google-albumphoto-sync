@@ -8,13 +8,9 @@ public interface IPresenter {
 
     void onChooseAlbum(String albumName);
 
-    void handleSignInResult();
-
     void onSyncClick();
 
-    void laucnhSync();
-
-    void launchSynchWithPermission();
+    void handlePermission();
 
     File getFolder();
 }

@@ -23,6 +23,10 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
+import gnn.com.googlealbumdownloadappnougat.auth.GooglePhotoAPI_Requirement;
+import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignRquirement;
+import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
@@ -101,57 +105,60 @@ public class Presenter implements IPresenter{
         }
     }
 
+    public void setPermissionRequirement(PermissionRequirement permissionRequirement) {
+        this.permissionRequirement = permissionRequirement;
+    }
+
+    private PermissionRequirement permissionRequirement;
+
+    class TaskExec extends PermissionRequirement {
+        public TaskExec() {
+            super(null, null, null);
+        }
+
+        @Override
+        public boolean checkRequirement() {
+            return true;
+        }
+
+        @Override
+        public void askAsyncRequirement() {
+
+        }
+
+        @Override
+        public void exec() {
+            Presenter.SyncTask task = new Presenter.SyncTask();
+            task.execute();
+        }
+    }
+
+    public PermissionRequirement buildNewSyncRequirement() {
+        PermissionRequirement taskExeq  = new TaskExec();
+        PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
+        PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, auth, view);
+        PermissionRequirement signInReq = new SignRquirement(photoReq, auth, view);
+        return signInReq;
+    }
+
     @Override
     public void onSyncClick() {
         Log.d(TAG, "onSyncClick");
-        if (!auth.isSignIn()) {
-            Log.d(TAG,"onSyncClick, user does not be connected => start SignInIntent");
-            view.updateUI_User();
-            auth.signIn();
-        } else {
-            if (!auth.hasGooglePhotoPermission()) {
-                Log.d(TAG,"onSyncClick, user already signin, do not have permissions => requestPermissions");
-                // doc said that if account is null, should ask but instead cancel the request or create a bug.
-                auth.requestGooglePhotoPermission();
-            } else {
-                Log.d(TAG,"onSyncClick, user already signin, already have permissions => laucnhSync()");
-                laucnhSync();
-            }
-        }
-    }
-
-    @Override
-    public void handleSignInResult() {
-        Log.d(TAG, "handleSignInResult");
-        view.updateUI_User();
-        if (!auth.hasGooglePhotoPermission()) {
-            Log.d(TAG, "signin done, do not have permissions => request permissions");
-            auth.requestGooglePhotoPermission();
-        } else {
-            Log.d(TAG, "signin done, have permissions => laucnhSync()");
-            laucnhSync();
-        }
-    }
-
-    public void laucnhSync() {
-        Log.d(TAG, "laucnhSync");
-        if (!auth.hasWritePermission()) {
-            Log.d(TAG, "request WRITE permission");
-            auth.requestWritePermission();
-        } else {
-            Log.d(TAG,"WRITE permission granted, call google");
-            launchSynchWithPermission();
-        }
-    }
-
-    @Override
-    public void launchSynchWithPermission() {
         String album = this.album;
         if (album.equals("")) {
             view.alertNoAlbum();
         } else {
-            SyncTask task = new SyncTask();
-            task.execute();
+            setPermissionRequirement(buildNewSyncRequirement());
+            permissionRequirement = permissionRequirement.checkAndExec();
+        }
+    }
+
+    @Override
+    public void handlePermission() {
+        // TODO: 09/06/2019 manage cancel, error
+        // TODO: 09/06/2019 call update User ()
+        if (permissionRequirement != null) {
+            permissionRequirement = permissionRequirement.checkAndExec();
         }
     }
 
@@ -187,7 +194,8 @@ public class Presenter implements IPresenter{
             mAlbums = albums;
         }
     }
-    private class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
+
+    public class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
 
         @Override
         protected DiffCalculator doInBackground(Void... voids) {

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.tasks.Task;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,17 +71,8 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN  && resultCode == Activity.RESULT_OK) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            presenter.handleSignInResult();
-        } else if (RC_AUTHORIZE_PHOTOS == requestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-                Log.d(TAG, "handleAuthorizePhotos");
-                updateUI_User();
-                presenter.laucnhSync();
-            } else {
-                updateUI_CallResult("Cancel");
-            }
+        if (requestCode == RC_SIGN_IN  || RC_AUTHORIZE_PHOTOS == requestCode) {
+            presenter.handlePermission();
         }
     }
 
@@ -90,9 +80,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (RC_AUTHORIZE_WRITE == requestCode) {
-            updateUI_User();
             Log.d(TAG, "handle write permission");
-            presenter.launchSynchWithPermission();
+            presenter.handlePermission();
         }
     }
 

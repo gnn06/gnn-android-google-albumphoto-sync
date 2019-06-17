@@ -8,6 +8,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
+import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignRquirement;
+import gnn.com.googlealbumdownloadappnougat.view.IView;
+
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
@@ -56,13 +61,32 @@ public class PresenterTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         AuthManager auth = Mockito.mock(AuthManager.class);
         Presenter presenter = Mockito.spy(new Presenter(activity, activity, auth));
+        Whitebox.setInternalState(presenter, "album", "test");
         Mockito.when(auth.isSignIn()).thenReturn(true);
         Mockito.when(auth.hasGooglePhotoPermission()).thenReturn(true);
-        Mockito.when(auth.hasWritePermission()).thenReturn(true);
-        presenter.onSyncClick();
+        Mockito.when(auth.hasWritePermission()).thenReturn(false);
+        PermissionRequirement req2 = new PermissionRequirement(null, auth, null) {
+            @Override
+            public boolean checkRequirement() {
+                return true;
+            }
 
-        Mockito.verify(auth, Mockito.never()).signIn();
-//        Mockito.verify(presenter).laucnhSync();
+            @Override
+            public void askAsyncRequirement() {
+
+            }
+
+            @Override
+            public void exec() {
+                System.out.println("execute req3");
+            }
+        };
+        IView iView = Mockito.mock(IView.class);
+        PermissionRequirement req1 = new SignRquirement(req2, auth, iView);
+        Mockito.when(presenter.buildNewSyncRequirement()).thenReturn(req1);
+        presenter.onSyncClick();
+        PermissionRequirement req = (PermissionRequirement)Whitebox.getInternalState(presenter, "permissionRequirement");
+        assertNull(req);
     }
 
 }

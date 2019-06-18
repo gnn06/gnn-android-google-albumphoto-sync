@@ -3,7 +3,7 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 public class WritePermission extends PermissionRequirement {
 
     public WritePermission(PermissionRequirement nextRequirement, AuthManager auth) {
-        super(nextRequirement, auth, null);
+        super(nextRequirement, null, auth);
     }
 
     @Override

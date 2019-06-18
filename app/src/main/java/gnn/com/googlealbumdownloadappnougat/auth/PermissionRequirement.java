@@ -7,7 +7,7 @@ public abstract class PermissionRequirement {
     AuthManager auth;
     IView view;
 
-    public PermissionRequirement(PermissionRequirement nextRequirement, AuthManager auth, IView view) {
+    protected PermissionRequirement(PermissionRequirement nextRequirement, IView view, AuthManager auth) {
         this.nextRequirement = nextRequirement;
         this.auth = auth;
         this.view = view;

@@ -4,8 +4,8 @@ import gnn.com.googlealbumdownloadappnougat.view.IView;
 
 public class SignRquirement extends PermissionRequirement {
 
-    public SignRquirement(PermissionRequirement nextRequirement, AuthManager auth, IView view) {
-        super(nextRequirement, auth, view);
+    public SignRquirement(PermissionRequirement nextRequirement, IView view, AuthManager auth) {
+        super(nextRequirement, view, auth);
     }
 
     @Override

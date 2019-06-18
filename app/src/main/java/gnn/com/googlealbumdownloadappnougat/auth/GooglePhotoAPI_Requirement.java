@@ -4,8 +4,8 @@ import gnn.com.googlealbumdownloadappnougat.view.IView;
 
 public class GooglePhotoAPI_Requirement extends PermissionRequirement {
 
-    public GooglePhotoAPI_Requirement(PermissionRequirement nextRequirement, AuthManager auth, IView view) {
-        super(nextRequirement, auth, view);
+    public GooglePhotoAPI_Requirement(PermissionRequirement nextRequirement, IView view, AuthManager auth) {
+            super(nextRequirement, view, auth);
     }
 
     @Override

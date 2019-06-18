@@ -22,7 +22,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.io.File;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new Presenter(this, this, new AuthManager(this));
+        presenter = new Presenter(this, this);
 
         findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

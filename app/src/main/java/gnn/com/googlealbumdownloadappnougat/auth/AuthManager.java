@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
@@ -10,7 +11,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 
 public class AuthManager {
 
@@ -18,11 +18,11 @@ public class AuthManager {
             new Scope("https://www.googleapis.com/auth/photoslibrary.readonly");
 
 
-    public AuthManager(MainActivity activity) {
+    public AuthManager(Activity activity) {
         this.activity = activity;
     }
 
-    private MainActivity activity;
+    private Activity activity;
 
     public boolean isSignIn() {
         return GoogleSignIn.getLastSignedInAccount(activity) != null;

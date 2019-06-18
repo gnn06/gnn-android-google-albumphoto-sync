@@ -37,12 +37,10 @@ public class Presenter implements IPresenter{
 
     private final IView view;
     private final MainActivity activity;
-    private final AuthManager auth;
 
-    public Presenter(IView view, MainActivity activity, AuthManager auth) {
+    public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
-        this.auth = auth;
     }
 
     private ArrayList<String> mAlbums;
@@ -111,7 +109,7 @@ public class Presenter implements IPresenter{
 
     private PermissionRequirement permissionRequirement;
 
-    class TaskExec extends PermissionRequirement {
+    public class TaskExec extends PermissionRequirement {
         public TaskExec() {
             super(null, null, null);
         }
@@ -133,14 +131,6 @@ public class Presenter implements IPresenter{
         }
     }
 
-    public PermissionRequirement buildNewSyncRequirement() {
-        PermissionRequirement taskExeq  = new TaskExec();
-        PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-        PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, auth, view);
-        PermissionRequirement signInReq = new SignRquirement(photoReq, auth, view);
-        return signInReq;
-    }
-
     @Override
     public void onSyncClick() {
         Log.d(TAG, "onSyncClick");
@@ -148,7 +138,12 @@ public class Presenter implements IPresenter{
         if (album.equals("")) {
             view.alertNoAlbum();
         } else {
-            setPermissionRequirement(buildNewSyncRequirement());
+            AuthManager auth = new AuthManager(this.activity);
+            PermissionRequirement taskExeq  = new TaskExec();
+            PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
+            PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
+            PermissionRequirement signInReq = new SignRquirement(photoReq, view, auth);
+            setPermissionRequirement(signInReq);
             permissionRequirement = permissionRequirement.checkAndExec();
         }
     }

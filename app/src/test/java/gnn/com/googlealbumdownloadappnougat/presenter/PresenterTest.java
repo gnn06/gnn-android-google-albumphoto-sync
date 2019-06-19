@@ -3,7 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.internal.configuration.injection.MockInjection;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -24,11 +23,20 @@ public class PresenterTest {
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
-        Whitebox.setInternalState(presenter, "album", "");
+        Whitebox.setInternalState(presenter, "album", null);
         IView view = Mockito.spy(IView.class);
         presenter.onSyncClick();
         Mockito.verify(view, Mockito.never()).alertNoAlbum();
     }
+
+//    @Test
+//    public void onSyncClick_init() {
+//        MainActivity activity = Mockito.mock(MainActivity.class);
+//        Presenter presenter = Mockito.spy(new Presenter(activity, activity));
+//        Whitebox.setInternalState(presenter, "album", "test");
+//        presenter.onSyncClick();
+//
+//    }
 
     @Test
     public void onSyncClick_AllPermissionGranted() {

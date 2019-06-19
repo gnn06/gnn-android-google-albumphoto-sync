@@ -135,10 +135,10 @@ public class Presenter implements IPresenter{
     public void onSyncClick() {
         Log.d(TAG, "onSyncClick");
         String album = this.album;
-        if (album.equals("")) {
+        if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            AuthManager auth = new AuthManager(this.activity);
+            AuthManager auth = getAuth();
             PermissionRequirement taskExeq  = new TaskExec();
             PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
             PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
@@ -146,6 +146,10 @@ public class Presenter implements IPresenter{
             setPermissionRequirement(signInReq);
             permissionRequirement = permissionRequirement.checkAndExec();
         }
+    }
+
+    private AuthManager getAuth() {
+        return new AuthManager(this.activity);
     }
 
     @Override

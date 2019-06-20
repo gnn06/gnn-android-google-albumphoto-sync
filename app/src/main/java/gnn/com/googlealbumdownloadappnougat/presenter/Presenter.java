@@ -37,10 +37,16 @@ public class Presenter implements IPresenter{
 
     private final IView view;
     private final MainActivity activity;
+    private AuthManager auth;
 
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
+        this.auth = new AuthManager(activity);
+    }
+
+    public void setAuth(AuthManager auth) {
+        this.auth = auth;
     }
 
     private ArrayList<String> mAlbums;
@@ -138,18 +144,13 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            AuthManager auth = getAuth();
             PermissionRequirement taskExeq  = new TaskExec();
             PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
             PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
             PermissionRequirement signInReq = new SignRquirement(photoReq, view, auth);
             setPermissionRequirement(signInReq);
-            permissionRequirement = permissionRequirement.checkAndExec();
+            setPermissionRequirement(permissionRequirement.checkAndExec());
         }
-    }
-
-    private AuthManager getAuth() {
-        return new AuthManager(this.activity);
     }
 
     @Override

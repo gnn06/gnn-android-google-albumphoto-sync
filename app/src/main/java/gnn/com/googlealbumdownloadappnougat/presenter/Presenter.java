@@ -52,13 +52,36 @@ public class Presenter implements IPresenter{
     private ArrayList<String> mAlbums;
     private String album;
 
+    public class ShowAlbumListExec extends PermissionRequirement {
+        public ShowAlbumListExec() {
+            super(null, null, null);
+        }
+
+        @Override
+        public boolean checkRequirement() {
+            return true;
+        }
+
+        @Override
+        public void askAsyncRequirement() {
+
+        }
+
+        @Override
+        public void exec() {
+            GetAlbumsTask task = new GetAlbumsTask();
+            task.execute();
+        }
+    }
+
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this.activity);
-            assert account != null;
-            GetAlbumsTask task = new GetAlbumsTask();
-            task.execute();
+            PermissionRequirement taskExeq  = new ShowAlbumListExec();
+            PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(taskExeq, view, auth);
+            PermissionRequirement signInReq = new SignRquirement(photoReq, view, auth);
+            setPermissionRequirement(signInReq);
+            setPermissionRequirement(permissionRequirement.checkAndExec());
         } else {
             Log.d(TAG, "choose albums from cache");
             view.showChooseAlbumDialog(mAlbums);

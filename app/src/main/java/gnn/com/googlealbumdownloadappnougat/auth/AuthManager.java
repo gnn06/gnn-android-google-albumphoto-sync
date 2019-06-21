@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
@@ -25,7 +26,8 @@ public class AuthManager {
     private Activity activity;
 
     public boolean isSignIn() {
-        return GoogleSignIn.getLastSignedInAccount(activity) != null;
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        return account != null && account.getAccount() != null;
     }
 
     public void signIn() {

@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/common_signin_button_text" />
+
+    <Button
+        android:id="@+id/btnSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="sign out"
+        app:layout_constraintStart_toEndOf="@+id/btnSignIn" />
+
     <TextView
         android:id="@+id/textUser"
         android:layout_width="wrap_content"
@@ -13,6 +27,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/user_unknown"
         android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
         tools:layout_editor_absoluteX="9dp" />
 
     <TextView

@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.Scopes;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 
@@ -35,6 +36,24 @@ public class AuthManager {
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
+    }
+
+    public void signInWithPermission() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ)
+                .build();
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
+    }
+
+    public void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(activity, gso);
+        googleSignInClient.revokeAccess();
+        googleSignInClient.signOut();
     }
 
     public void requestGooglePhotoPermission() {

@@ -2,9 +2,9 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
-public class SignRquirement extends PermissionRequirement {
+public class SignInRquirement extends PermissionRequirement {
 
-    public SignRquirement(PermissionRequirement nextRequirement, IView view, AuthManager auth) {
+    public SignInRquirement(PermissionRequirement nextRequirement, IView view, AuthManager auth) {
         super(nextRequirement, view, auth);
     }
 
@@ -16,7 +16,7 @@ public class SignRquirement extends PermissionRequirement {
     @Override
     public void askAsyncRequirement() {
         view.updateUI_User();
-        auth.signIn();
+        auth.signInWithPermission();
     }
 
     @Override

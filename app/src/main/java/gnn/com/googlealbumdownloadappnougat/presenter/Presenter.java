@@ -25,7 +25,7 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.GooglePhotoAPI_Requirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
-import gnn.com.googlealbumdownloadappnougat.auth.SignRquirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInRquirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.sync.DiffCalculator;
@@ -53,6 +53,18 @@ public class Presenter implements IPresenter{
     private String album;
 
     @Override
+    public void onSignIn() {
+        PermissionRequirement signInReq = new SignInRquirement(null, view, auth);
+        setPermissionRequirement(signInReq.checkAndExec());
+    }
+
+    @Override
+    public void onSignOut() {
+        auth.signOut();
+        view.updateUI_User();
+    }
+
+    @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this.activity);
@@ -78,6 +90,7 @@ public class Presenter implements IPresenter{
     public File getFolder() {
         return folder;
     }
+
 
     private PhotosLibraryClient mClient;
 
@@ -147,7 +160,7 @@ public class Presenter implements IPresenter{
             PermissionRequirement taskExeq  = new TaskExec();
             PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
             PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-            PermissionRequirement signInReq = new SignRquirement(photoReq, view, auth);
+            PermissionRequirement signInReq = new SignInRquirement(photoReq, view, auth);
             setPermissionRequirement(signInReq);
             setPermissionRequirement(permissionRequirement.checkAndExec());
         }
@@ -160,6 +173,7 @@ public class Presenter implements IPresenter{
         if (permissionRequirement != null) {
             permissionRequirement = permissionRequirement.checkAndExec();
         }
+        view.updateUI_User();
     }
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {

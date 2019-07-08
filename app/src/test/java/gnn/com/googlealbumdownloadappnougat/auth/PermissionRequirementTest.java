@@ -4,8 +4,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
 import static org.junit.Assert.*;
@@ -37,7 +35,7 @@ public class PermissionRequirementTest {
         });
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
         PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement requirement = new SignRquirement(photoReq, view, auth);
+        PermissionRequirement requirement = new SignInRquirement(photoReq, view, auth);
 
         PermissionRequirement resulRequirement = requirement.checkAndExec();
 
@@ -80,7 +78,7 @@ public class PermissionRequirementTest {
         });
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
         PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement firstReq  = new SignRquirement(photoReq, view, auth);
+        PermissionRequirement firstReq  = new SignInRquirement(photoReq, view, auth);
 
         /*
          * assert that :
@@ -134,7 +132,7 @@ public class PermissionRequirementTest {
         };
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
         PermissionRequirement secondReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement firstReq  = new SignRquirement(secondReq, view, auth);
+        PermissionRequirement firstReq  = new SignInRquirement(secondReq, view, auth);
 
         PermissionRequirement resulRequirement = firstReq.checkAndExec();
 

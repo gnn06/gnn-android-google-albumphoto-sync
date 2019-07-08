@@ -8,10 +8,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
-import gnn.com.googlealbumdownloadappnougat.auth.GooglePhotoAPI_Requirement;
-import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
-import gnn.com.googlealbumdownloadappnougat.auth.SignRquirement;
-import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
 import static org.junit.Assert.*;

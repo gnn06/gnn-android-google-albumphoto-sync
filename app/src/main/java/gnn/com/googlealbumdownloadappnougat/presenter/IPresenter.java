@@ -4,6 +4,10 @@ import java.io.File;
 
 public interface IPresenter {
 
+    void onSignIn();
+
+    void onSignOut();
+
     void onShowAlbumList();
 
     void onChooseAlbum(String albumName);

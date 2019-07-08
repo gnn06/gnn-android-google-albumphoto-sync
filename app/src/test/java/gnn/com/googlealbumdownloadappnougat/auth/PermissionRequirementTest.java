@@ -14,7 +14,6 @@ public class PermissionRequirementTest {
     public void onSyncClick_AllPermissionGranted() {
         final AuthManager auth = Mockito.mock(AuthManager.class);
         Mockito.when(auth.isSignIn()).thenReturn(true);
-        Mockito.when(auth.hasGooglePhotoPermission()).thenReturn(true);
         Mockito.when(auth.hasWritePermission()).thenReturn(true);
         IView view = Mockito.mock(IView.class);
         PermissionRequirement taskExeq  = Mockito.spy(new PermissionRequirement(null, null, auth) {
@@ -34,8 +33,7 @@ public class PermissionRequirementTest {
             }
         });
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-        PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement requirement = new SignInRquirement(photoReq, view, auth);
+        PermissionRequirement requirement = new SignInRquirement(writeReq, view, auth);
 
         PermissionRequirement resulRequirement = requirement.checkAndExec();
 
@@ -46,8 +44,7 @@ public class PermissionRequirementTest {
          * - the final task was executed
          */
         assertNull(resulRequirement);
-        Mockito.verify(auth, Mockito.never()).signIn();
-        Mockito.verify(auth, Mockito.never()).requestGooglePhotoPermission();
+        Mockito.verify(auth, Mockito.never()).signInWithPermission();
         Mockito.verify(auth, Mockito.never()).requestWritePermission();
         Mockito.verify(taskExeq, Mockito.times(1)).exec();
     }
@@ -56,7 +53,6 @@ public class PermissionRequirementTest {
     public void onSyncClick_LastPermissionMissing() {
         AuthManager auth = Mockito.mock(AuthManager.class);
         Mockito.when(auth.isSignIn()).thenReturn(true);
-        Mockito.when(auth.hasGooglePhotoPermission()).thenReturn(true);
         Mockito.when(auth.hasWritePermission()).thenReturn(false);
 
         IView view = Mockito.mock(IView.class);
@@ -77,8 +73,7 @@ public class PermissionRequirementTest {
             }
         });
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-        PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement firstReq  = new SignInRquirement(photoReq, view, auth);
+        PermissionRequirement firstReq  = new SignInRquirement(writeReq, view, auth);
 
         /*
          * assert that :
@@ -88,8 +83,7 @@ public class PermissionRequirementTest {
          */
         PermissionRequirement resulRequirement = firstReq.checkAndExec();
         assertEquals(taskExeq, resulRequirement);
-        Mockito.verify(auth, Mockito.never()).signIn();
-        Mockito.verify(auth, Mockito.never()).requestGooglePhotoPermission();
+        Mockito.verify(auth, Mockito.never()).signInWithPermission();
         Mockito.verify(auth, Mockito.times(1)).requestWritePermission();
 
         /*
@@ -99,8 +93,7 @@ public class PermissionRequirementTest {
          */
         PermissionRequirement finalRequirement = resulRequirement.checkAndExec();
         assertNull(finalRequirement);
-        Mockito.verify(auth, Mockito.never()).signIn();
-        Mockito.verify(auth, Mockito.never()).requestGooglePhotoPermission();
+        Mockito.verify(auth, Mockito.never()).signInWithPermission();
         Mockito.verify(auth, Mockito.times(1)).requestWritePermission();
         Mockito.verify(taskExeq, Mockito.times(1)).exec();
 
@@ -110,7 +103,6 @@ public class PermissionRequirementTest {
     public void onSyncClick_AllPermissionMissing() {
         AuthManager auth = Mockito.mock(AuthManager.class);
         Mockito.when(auth.isSignIn()).thenReturn(false);
-        Mockito.when(auth.hasGooglePhotoPermission()).thenReturn(false);
         Mockito.when(auth.hasWritePermission()).thenReturn(false);
 
         IView view = Mockito.mock(IView.class);
@@ -131,14 +123,12 @@ public class PermissionRequirementTest {
             }
         };
         PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-        PermissionRequirement secondReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-        PermissionRequirement firstReq  = new SignInRquirement(secondReq, view, auth);
+        PermissionRequirement firstReq  = new SignInRquirement(writeReq, view, auth);
 
         PermissionRequirement resulRequirement = firstReq.checkAndExec();
 
-        assertEquals(secondReq, resulRequirement);
-        Mockito.verify(auth, Mockito.times(1)).signIn();
-        Mockito.verify(auth, Mockito.never()).requestGooglePhotoPermission();
+        assertEquals(writeReq, resulRequirement);
+        Mockito.verify(auth, Mockito.times(1)).signInWithPermission();
         Mockito.verify(auth, Mockito.never()).requestWritePermission();
 
     }

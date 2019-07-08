@@ -32,7 +32,6 @@ public class PresenterTest {
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
-        Mockito.when(authMock.hasGooglePhotoPermission()).thenReturn(true);
         Mockito.when(authMock.hasWritePermission()).thenReturn(true);
         presenter.setAuth(authMock);
         presenter.onSyncClick();
@@ -46,7 +45,6 @@ public class PresenterTest {
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
-        Mockito.when(authMock.hasGooglePhotoPermission()).thenReturn(false);
         Mockito.when(authMock.hasWritePermission()).thenReturn(false);
         presenter.setAuth(authMock);
         presenter.onSyncClick();

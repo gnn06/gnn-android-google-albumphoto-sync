@@ -29,15 +29,6 @@ public class AuthManager {
         return GoogleSignIn.getLastSignedInAccount(activity) != null;
     }
 
-    public void signIn() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
-    }
-
     public void signInWithPermission() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ)
@@ -54,20 +45,6 @@ public class AuthManager {
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(activity, gso);
         googleSignInClient.revokeAccess();
         googleSignInClient.signOut();
-    }
-
-    public void requestGooglePhotoPermission() {
-        GoogleSignIn.requestPermissions(
-                activity,
-                MainActivity.RC_AUTHORIZE_PHOTOS,
-                GoogleSignIn.getLastSignedInAccount(activity),
-                SCOPE_PHOTOS_READ);
-    }
-
-    public boolean hasGooglePhotoPermission() {
-        return GoogleSignIn.hasPermissions(
-                GoogleSignIn.getLastSignedInAccount(activity),
-                SCOPE_PHOTOS_READ);
     }
 
     public boolean hasWritePermission() {

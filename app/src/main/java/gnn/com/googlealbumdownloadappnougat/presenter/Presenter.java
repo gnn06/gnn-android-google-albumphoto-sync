@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
-import gnn.com.googlealbumdownloadappnougat.auth.GooglePhotoAPI_Requirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRquirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
@@ -159,8 +158,7 @@ public class Presenter implements IPresenter{
         } else {
             PermissionRequirement taskExeq  = new TaskExec();
             PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-            PermissionRequirement photoReq  = new GooglePhotoAPI_Requirement(writeReq, view, auth);
-            PermissionRequirement signInReq = new SignInRquirement(photoReq, view, auth);
+            PermissionRequirement signInReq = new SignInRquirement(writeReq, view, auth);
             setPermissionRequirement(signInReq);
             setPermissionRequirement(permissionRequirement.checkAndExec());
         }

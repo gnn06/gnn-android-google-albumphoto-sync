@@ -27,7 +27,7 @@ public class PermissionRequirementBisTest {
         Exec exec = new Exec() {
             @Override
             public void exec() {
-
+                System.out.println("exec");
             }
         };
         Require req1 = new Require(exec){
@@ -44,6 +44,7 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
+                super.postRequireSuccess();
             }
 
             @Override
@@ -60,12 +61,12 @@ public class PermissionRequirementBisTest {
 
     @Test
     public void requirement_NotGranted_Success() {
-        Exec exec = new Exec() {
+        Exec exec = Mockito.spy(new Exec() {
             @Override
             public void exec() {
-
+                System.out.println("exec");
             }
-        };
+        });
         Require req1 = new Require(exec){
             @Override
             public boolean check() {
@@ -80,6 +81,7 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
+                super.postRequireSuccess();
             }
 
             @Override
@@ -89,10 +91,11 @@ public class PermissionRequirementBisTest {
         };
         Require spy1 = spy(req1);
         spy1.exec();
-        spy1.postRequireSuccess();
         verify(spy1).require();
+        spy1.postRequireSuccess();
         verify(spy1).postRequireSuccess();
         verify(spy1, Mockito.never()).postRequireFailure();
+        verify(exec).exec();
     }
 
     @Test
@@ -100,7 +103,7 @@ public class PermissionRequirementBisTest {
         Exec exec = new Exec() {
             @Override
             public void exec() {
-
+                System.out.println("exec");
             }
         };
         Require req1 = new Require(exec){
@@ -117,6 +120,7 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
+                super.postRequireSuccess();
             }
 
             @Override
@@ -137,7 +141,7 @@ public class PermissionRequirementBisTest {
         Exec exec = Mockito.spy(new Exec() {
             @Override
             public void exec() {
-
+                System.out.println("exec");
             }
         });
         Require chain2 = Mockito.spy(new Require(exec) {
@@ -148,12 +152,18 @@ public class PermissionRequirementBisTest {
 
             @Override
             public void require() {
+                System.out.println("require");
+            }
 
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+                super.postRequireSuccess();
             }
 
             @Override
             public void postRequireFailure() {
-
+                System.out.println("failure");
             }
         });
         Require chain1 = Mockito.spy(new Require(chain2) {
@@ -184,7 +194,7 @@ public class PermissionRequirementBisTest {
         Exec exec = Mockito.spy(new Exec() {
             @Override
             public void exec() {
-
+                System.out.println("exec");
             }
         });
         Require chain2 = Mockito.spy(new Require(exec) {
@@ -195,12 +205,18 @@ public class PermissionRequirementBisTest {
 
             @Override
             public void require() {
+                System.out.println("require chain2");
+            }
 
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success chain2");
+                super.postRequireSuccess();
             }
 
             @Override
             public void postRequireFailure() {
-
+                System.out.println("failure");
             }
         });
         Require chain1 = Mockito.spy(new Require(chain2) {
@@ -211,12 +227,18 @@ public class PermissionRequirementBisTest {
 
             @Override
             public void require() {
+                System.out.println("require chain1");
+            }
 
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success chain1");
+                super.postRequireSuccess();
             }
 
             @Override
             public void postRequireFailure() {
-
+                System.out.println("failure chain1");
             }
         });
         chain1.exec();

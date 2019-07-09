@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
@@ -22,8 +23,14 @@ public class PermissionRequirementBisTest {
     }
 
     @Test
-    public void reqAndExec_granted() {
-        Require req1 = new Require(){
+    public void requirement_granted() {
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+
+            }
+        };
+        Require req1 = new Require(exec){
             @Override
             public boolean check() {
                 return true;
@@ -52,8 +59,14 @@ public class PermissionRequirementBisTest {
     }
 
     @Test
-    public void reaAndExec_NotGranted_Success() {
-        Require req1 = new Require(){
+    public void requirement_NotGranted_Success() {
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+
+            }
+        };
+        Require req1 = new Require(exec){
             @Override
             public boolean check() {
                 return false;
@@ -83,8 +96,14 @@ public class PermissionRequirementBisTest {
     }
 
     @Test
-    public void reqAndExec_NotGranted_Failure() {
-        Require req1 = new Require(){
+    public void requirement_NotGranted_Failure() {
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+
+            }
+        };
+        Require req1 = new Require(exec){
             @Override
             public boolean check() {
                 return false;
@@ -111,6 +130,104 @@ public class PermissionRequirementBisTest {
         verify(spy1).require();
         verify(spy1, Mockito.never()).postRequireSuccess();
         verify(spy1, Mockito.times(1)).postRequireFailure();
+    }
+
+    @Test
+    public void chain_satisfaid_requirement() {
+        Exec exec = Mockito.spy(new Exec() {
+            @Override
+            public void exec() {
+
+            }
+        });
+        Require chain2 = Mockito.spy(new Require(exec) {
+            @Override
+            public boolean check() {
+                return true;
+            }
+
+            @Override
+            public void require() {
+
+            }
+
+            @Override
+            public void postRequireFailure() {
+
+            }
+        });
+        Require chain1 = Mockito.spy(new Require(chain2) {
+            @Override
+            public boolean check() {
+                return true;
+            }
+
+            @Override
+            public void require() {
+
+            }
+
+            @Override
+            public void postRequireFailure() {
+
+            }
+        });
+        chain1.exec();
+        Mockito.verify(chain1, Mockito.never()).require();
+        Mockito.verify(chain2, Mockito.never()).require();
+        Mockito.verify(chain2, Mockito.times(1)).exec();
+        Mockito.verify(exec, Mockito.times(1)).exec();
+    }
+
+    @Test
+    public void chain_unsatisfaid_requirement() {
+        Exec exec = Mockito.spy(new Exec() {
+            @Override
+            public void exec() {
+
+            }
+        });
+        Require chain2 = Mockito.spy(new Require(exec) {
+            @Override
+            public boolean check() {
+                return false;
+            }
+
+            @Override
+            public void require() {
+
+            }
+
+            @Override
+            public void postRequireFailure() {
+
+            }
+        });
+        Require chain1 = Mockito.spy(new Require(chain2) {
+            @Override
+            public boolean check() {
+                return false;
+            }
+
+            @Override
+            public void require() {
+
+            }
+
+            @Override
+            public void postRequireFailure() {
+
+            }
+        });
+        chain1.exec();
+        Mockito.verify(chain1, Mockito.times(1)).require();
+        Mockito.verify(chain2, Mockito.never()).exec();
+        Mockito.verify(exec, Mockito.never()).exec();
+        chain1.postRequireSuccess();
+        Mockito.verify(chain2, Mockito.times(1)).exec();
+        Mockito.verify(exec, Mockito.never()).exec();
+        chain2.postRequireSuccess();
+        Mockito.verify(exec, Mockito.times(1)).exec();
     }
 
 }

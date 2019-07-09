@@ -33,6 +33,16 @@ public class PermissionRequirementBisTest {
             public void require() {
                 System.out.println("require");
             }
+
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void postRequireFailure() {
+                System.out.println("failure");
+            }
         };
         Require spy1 = spy(req1);
         spy1.exec();
@@ -40,7 +50,7 @@ public class PermissionRequirementBisTest {
     }
 
     @Test
-    public void reqAndExec_NotGranted() {
+    public void reaAndExec_NotGranted_Success() {
         Require req1 = new Require(){
             @Override
             public boolean check() {
@@ -51,10 +61,54 @@ public class PermissionRequirementBisTest {
             public void require() {
                 System.out.println("require");
             }
+
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void postRequireFailure() {
+                System.out.println("failure");
+            }
         };
         Require spy1 = spy(req1);
         spy1.exec();
+        spy1.postRequireSuccess();
         verify(spy1).require();
+        verify(spy1).postRequireSuccess();
+        verify(spy1, Mockito.never()).postRequireFailure();
+    }
+
+    @Test
+    public void reqAndExec_NotGranted_Failure() {
+        Require req1 = new Require(){
+            @Override
+            public boolean check() {
+                return false;
+            }
+
+            @Override
+            public void require() {
+                System.out.println("require");
+            }
+
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void postRequireFailure() {
+                System.out.println("failure");
+            }
+        };
+        Require spy1 = spy(req1);
+        spy1.exec();
+        spy1.postRequireFailure();
+        verify(spy1).require();
+        verify(spy1, Mockito.never()).postRequireSuccess();
+        verify(spy1, Mockito.times(1)).postRequireFailure();
     }
 
 }

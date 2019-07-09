@@ -47,6 +47,8 @@ public class PermissionRequirementBisTest {
         Require spy1 = spy(req1);
         spy1.exec();
         verify(spy1, Mockito.never()).require();
+        verify(spy1, Mockito.never()).postRequireSuccess();
+        verify(spy1, Mockito.never()).postRequireFailure();
     }
 
     @Test

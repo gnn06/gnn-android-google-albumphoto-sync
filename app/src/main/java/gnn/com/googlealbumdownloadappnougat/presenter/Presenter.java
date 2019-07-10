@@ -53,13 +53,7 @@ public class Presenter implements IPresenter{
 
     @Override
     public void onSignIn() {
-        Exec exec = new Exec() {
-            @Override
-            public void exec() {
-                // do nothing
-            }
-        };
-        Require require = new SignInRequirement(exec, auth, view);
+        Require require = new SignInRequirement(null, auth, view);
         setPendingRequirement(require);
         require.exec();
     }

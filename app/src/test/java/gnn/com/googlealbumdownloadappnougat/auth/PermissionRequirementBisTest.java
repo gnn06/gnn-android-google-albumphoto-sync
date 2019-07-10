@@ -19,6 +19,59 @@ public class PermissionRequirementBisTest {
     }
 
     @Test
+    public void requirement_satisfaid_nullEXec() {
+        Require req = new Require(null) {
+            @Override
+            public boolean check() {
+                return true;
+            }
+
+            @Override
+            public void require() {
+                System.out.println("require");
+            }
+
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void postRequireFailure() {
+                System.out.println("failure");
+            }
+        };
+        req.exec();
+    }
+
+    @Test
+    public void requirement_unsatisfaid_nullExec() {
+        Require req = new Require(null) {
+            @Override
+            public boolean check() {
+                return false;
+            }
+
+            @Override
+            public void require() {
+                System.out.println("require");
+            }
+
+            @Override
+            public void postRequireSuccess() {
+                System.out.println("success");
+            }
+
+            @Override
+            public void postRequireFailure() {
+                System.out.println("failure");
+            }
+        };
+        req.exec();
+        req.resumeRequirement();
+    }
+
+    @Test
     public void requirement_granted() {
         Exec exec = new Exec() {
             @Override

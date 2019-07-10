@@ -1,11 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import static org.mockito.Mockito.*;
 
@@ -44,7 +40,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -81,7 +76,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -92,7 +86,7 @@ public class PermissionRequirementBisTest {
         Require spy1 = spy(req1);
         spy1.exec();
         verify(spy1).require();
-        spy1.postRequireSuccess();
+        spy1.handleRequirement();
         verify(spy1).postRequireSuccess();
         verify(spy1, Mockito.never()).postRequireFailure();
         verify(exec).exec();
@@ -120,7 +114,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -158,7 +151,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -174,12 +166,17 @@ public class PermissionRequirementBisTest {
 
             @Override
             public void require() {
+                System.out.println("require");
+            }
 
+            @Override
+            void postRequireSuccess() {
+                System.out.println("success");
             }
 
             @Override
             public void postRequireFailure() {
-
+                System.out.println("failure");
             }
         });
         chain1.exec();
@@ -211,7 +208,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success chain2");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -233,7 +229,6 @@ public class PermissionRequirementBisTest {
             @Override
             public void postRequireSuccess() {
                 System.out.println("success chain1");
-                super.postRequireSuccess();
             }
 
             @Override
@@ -245,10 +240,10 @@ public class PermissionRequirementBisTest {
         Mockito.verify(chain1, Mockito.times(1)).require();
         Mockito.verify(chain2, Mockito.never()).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain1.postRequireSuccess();
+        chain1.handleRequirement();
         Mockito.verify(chain2, Mockito.times(1)).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain2.postRequireSuccess();
+        chain2.handleRequirement();
         Mockito.verify(exec, Mockito.times(1)).exec();
     }
 

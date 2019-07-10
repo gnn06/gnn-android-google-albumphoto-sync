@@ -15,9 +15,7 @@ abstract class Require extends Exec {
 
     abstract public void require();
 
-    public void postRequireSuccess() {
-        exec.exec();
-    }
+    abstract void postRequireSuccess();
 
     abstract public void postRequireFailure();
 
@@ -27,5 +25,10 @@ abstract class Require extends Exec {
         } else {
             exec.exec();
         }
+    }
+
+    public void handleRequirement() {
+        postRequireSuccess();
+        exec.exec();
     }
 }

@@ -2,7 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 
 import javax.annotation.Nonnull;
 
-abstract class Require extends Exec {
+public abstract class Require extends Exec {
 
     private Exec exec;
 
@@ -15,7 +15,7 @@ abstract class Require extends Exec {
 
     abstract public void require();
 
-    abstract void postRequireSuccess();
+    abstract public void postRequireSuccess();
 
     abstract public void postRequireFailure();
 
@@ -27,7 +27,7 @@ abstract class Require extends Exec {
         }
     }
 
-    public void handleRequirement() {
+    public void resumeRequirement() {
         postRequireSuccess();
         exec.exec();
     }

@@ -35,7 +35,7 @@ public class PresenterTest {
         Mockito.when(authMock.hasWritePermission()).thenReturn(true);
         presenter.setAuth(authMock);
         presenter.onSyncClick();
-        assertNull(null, Whitebox.getInternalState(presenter, "permissionRequirement"));
+//        assertNull(null, Whitebox.getInternalState(presenter, "pendingRequirement"));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class PresenterTest {
         Mockito.when(authMock.hasWritePermission()).thenReturn(false);
         presenter.setAuth(authMock);
         presenter.onSyncClick();
-        assertNotNull(Whitebox.getInternalState(presenter, "permissionRequirement"));
+        assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
     }
 
 }

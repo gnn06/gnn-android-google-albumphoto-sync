@@ -1,6 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
-abstract class Exec {
+public abstract class Exec {
 
     abstract public void exec();
 }

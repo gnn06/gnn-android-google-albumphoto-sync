@@ -23,8 +23,9 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
-import gnn.com.googlealbumdownloadappnougat.auth.PermissionRequirement;
-import gnn.com.googlealbumdownloadappnougat.auth.SignInRquirement;
+import gnn.com.googlealbumdownloadappnougat.auth.Exec;
+import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.sync.DiffCalculator;
@@ -37,7 +38,6 @@ public class Presenter implements IPresenter{
     private final IView view;
     private final MainActivity activity;
     private AuthManager auth;
-
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
@@ -53,8 +53,15 @@ public class Presenter implements IPresenter{
 
     @Override
     public void onSignIn() {
-        PermissionRequirement signInReq = new SignInRquirement(null, view, auth);
-        setPermissionRequirement(signInReq.checkAndExec());
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+                // do nothing
+            }
+        };
+        Require require = new SignInRequirement(exec, auth, view);
+        setPendingRequirement(require);
+        require.exec();
     }
 
     @Override
@@ -66,10 +73,16 @@ public class Presenter implements IPresenter{
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this.activity);
-            assert account != null;
-            GetAlbumsTask task = new GetAlbumsTask();
-            task.execute();
+            Exec exec = new Exec() {
+                @Override
+                public void exec() {
+                    GetAlbumsTask task = new GetAlbumsTask();
+                    task.execute();
+                }
+            };
+            Require signInReq = new SignInRequirement(exec, auth, view);
+            setPendingRequirement(signInReq);
+            signInReq.exec();
         } else {
             Log.d(TAG, "choose albums from cache");
             view.showChooseAlbumDialog(mAlbums);
@@ -89,7 +102,6 @@ public class Presenter implements IPresenter{
     public File getFolder() {
         return folder;
     }
-
 
     private PhotosLibraryClient mClient;
 
@@ -121,33 +133,11 @@ public class Presenter implements IPresenter{
         }
     }
 
-    public void setPermissionRequirement(PermissionRequirement permissionRequirement) {
-        this.permissionRequirement = permissionRequirement;
+    private void setPendingRequirement(Require require) {
+        this.pendingRequirement = require;
     }
 
-    private PermissionRequirement permissionRequirement;
-
-    public class TaskExec extends PermissionRequirement {
-        public TaskExec() {
-            super(null, null, null);
-        }
-
-        @Override
-        public boolean checkRequirement() {
-            return true;
-        }
-
-        @Override
-        public void askAsyncRequirement() {
-
-        }
-
-        @Override
-        public void exec() {
-            Presenter.SyncTask task = new Presenter.SyncTask();
-            task.execute();
-        }
-    }
+    private Require pendingRequirement;
 
     @Override
     public void onSyncClick() {
@@ -156,11 +146,17 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            PermissionRequirement taskExeq  = new TaskExec();
-            PermissionRequirement writeReq  = new WritePermission(taskExeq, auth);
-            PermissionRequirement signInReq = new SignInRquirement(writeReq, view, auth);
-            setPermissionRequirement(signInReq);
-            setPermissionRequirement(permissionRequirement.checkAndExec());
+            Exec exec = new Exec() {
+                @Override
+                public void exec() {
+                    SyncTask task = new SyncTask();
+                    task.execute();
+                }
+            };
+            Require writeReq = new WritePermission(exec, auth, view);
+            Require signInReq = new SignInRequirement(writeReq, auth, view);
+            setPendingRequirement(signInReq);
+            signInReq.exec();
         }
     }
 
@@ -168,10 +164,9 @@ public class Presenter implements IPresenter{
     public void handlePermission() {
         // TODO: 09/06/2019 manage cancel, error
         // TODO: 09/06/2019 call update User ()
-        if (permissionRequirement != null) {
-            permissionRequirement = permissionRequirement.checkAndExec();
+        if (pendingRequirement != null) {
+            pendingRequirement.resumeRequirement();
         }
-        view.updateUI_User();
     }
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {

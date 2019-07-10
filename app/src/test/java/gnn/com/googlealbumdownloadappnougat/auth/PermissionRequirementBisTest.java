@@ -87,7 +87,7 @@ public class PermissionRequirementBisTest {
         spy1.exec();
         verify(spy1).require();
         verify(exec, Mockito.never()).exec();
-        spy1.handleRequirement();
+        spy1.resumeRequirement();
         verify(spy1).postRequireSuccess();
         verify(spy1, Mockito.never()).postRequireFailure();
         verify(exec).exec();
@@ -171,7 +171,7 @@ public class PermissionRequirementBisTest {
             }
 
             @Override
-            void postRequireSuccess() {
+            public void postRequireSuccess() {
                 System.out.println("success");
             }
 
@@ -241,11 +241,11 @@ public class PermissionRequirementBisTest {
         Mockito.verify(chain1, Mockito.times(1)).require();
         Mockito.verify(chain2, Mockito.never()).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain1.handleRequirement();
+        chain1.resumeRequirement();
         Mockito.verify(chain1, Mockito.times(1)).exec();
         Mockito.verify(chain2, Mockito.times(1)).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain2.handleRequirement();
+        chain2.resumeRequirement();
         Mockito.verify(exec, Mockito.times(1)).exec();
     }
 

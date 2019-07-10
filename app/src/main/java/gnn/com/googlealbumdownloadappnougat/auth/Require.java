@@ -1,13 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
-import javax.annotation.Nonnull;
-
 public abstract class Require extends Exec {
 
     private Exec exec;
 
-    protected Require(@Nonnull Exec exec) {
-        assert exec != null;
+    protected Require(Exec exec) {
         this.exec = exec;
     }
 
@@ -23,12 +20,16 @@ public abstract class Require extends Exec {
         if (!check()) {
             require();
         } else {
-            exec.exec();
+            if (exec != null) {
+                exec.exec();
+            }
         }
     }
 
     public void resumeRequirement() {
         postRequireSuccess();
-        exec.exec();
+        if (exec != null) {
+            exec.exec();
+        }
     }
 }

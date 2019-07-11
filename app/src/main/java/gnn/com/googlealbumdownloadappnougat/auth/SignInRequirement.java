@@ -16,23 +16,23 @@ public class SignInRequirement extends Require {
     }
 
     @Override
-    public boolean check() {
+    boolean check() {
         return auth.isSignIn();
     }
 
     @Override
-    public void require() {
+    void require() {
         view.updateUI_User();
         auth.signInWithPermission();
     }
 
     @Override
-    public void postRequireSuccess() {
+    void postRequireSuccess() {
         view.updateUI_User();
     }
 
     @Override
-    public void postRequireFailure() {
+    void postRequireFailure() {
         view.updateUI_User();
     }
 }

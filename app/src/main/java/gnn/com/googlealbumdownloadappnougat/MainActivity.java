@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.io.File;
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN  || RC_AUTHORIZE_PHOTOS == requestCode) {
-            presenter.handlePermission();
+            presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         }
     }
 
@@ -91,7 +93,13 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (RC_AUTHORIZE_WRITE == requestCode) {
             Log.d(TAG, "handle write permission");
-            presenter.handlePermission();
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                presenter.handlePermission(Require.SUCCESS);
+            } else {
+                presenter.handlePermission(Require.FAILURE);            }
+
+            ;
         }
     }
 

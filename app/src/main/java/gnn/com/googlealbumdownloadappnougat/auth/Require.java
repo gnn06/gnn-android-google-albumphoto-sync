@@ -2,19 +2,22 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 
 public abstract class Require extends Exec {
 
+    public static final int SUCCESS = 1;
+    public static final int FAILURE = -1;
+
     private Exec exec;
 
     protected Require(Exec exec) {
         this.exec = exec;
     }
 
-    abstract public boolean check();
+    abstract boolean check();
 
-    abstract public void require();
+    abstract void require();
 
-    abstract public void postRequireSuccess();
+    abstract void postRequireSuccess();
 
-    abstract public void postRequireFailure();
+    abstract void postRequireFailure();
 
     public void exec() {
         if (!check()) {
@@ -26,10 +29,14 @@ public abstract class Require extends Exec {
         }
     }
 
-    public void resumeRequirement() {
-        postRequireSuccess();
-        if (exec != null) {
-            exec.exec();
+    public void resumeRequirement(int result) {
+        if (result == SUCCESS) {
+            postRequireSuccess();
+            if (exec != null) {
+                exec.exec();
+            }
+        } else {
+            postRequireFailure();
         }
     }
 }

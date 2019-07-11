@@ -22,22 +22,22 @@ public class PermissionRequirementBisTest {
     public void requirement_satisfaid_nullEXec() {
         Require req = new Require(null) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return true;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         };
@@ -48,27 +48,27 @@ public class PermissionRequirementBisTest {
     public void requirement_unsatisfaid_nullExec() {
         Require req = new Require(null) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return false;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         };
         req.exec();
-        req.resumeRequirement();
+        req.resumeRequirement(Require.SUCCESS);
     }
 
     @Test
@@ -81,22 +81,22 @@ public class PermissionRequirementBisTest {
         };
         Require req1 = new Require(exec){
             @Override
-            public boolean check() {
+            boolean check() {
                 return true;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         };
@@ -117,22 +117,22 @@ public class PermissionRequirementBisTest {
         });
         Require req1 = new Require(exec){
             @Override
-            public boolean check() {
+            boolean check() {
                 return false;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         };
@@ -140,7 +140,7 @@ public class PermissionRequirementBisTest {
         spy1.exec();
         verify(spy1).require();
         verify(exec, Mockito.never()).exec();
-        spy1.resumeRequirement();
+        spy1.resumeRequirement(Require.SUCCESS);
         verify(spy1).postRequireSuccess();
         verify(spy1, Mockito.never()).postRequireFailure();
         verify(exec).exec();
@@ -156,28 +156,28 @@ public class PermissionRequirementBisTest {
         };
         Require req1 = new Require(exec){
             @Override
-            public boolean check() {
+            boolean check() {
                 return false;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         };
         Require spy1 = spy(req1);
         spy1.exec();
-        spy1.postRequireFailure();
+        spy1.resumeRequirement(Require.FAILURE);
         verify(spy1).require();
         verify(spy1, Mockito.never()).postRequireSuccess();
         verify(spy1, Mockito.times(1)).postRequireFailure();
@@ -193,43 +193,43 @@ public class PermissionRequirementBisTest {
         });
         Require chain2 = Mockito.spy(new Require(exec) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return true;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         });
         Require chain1 = Mockito.spy(new Require(chain2) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return true;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         });
@@ -250,43 +250,43 @@ public class PermissionRequirementBisTest {
         });
         Require chain2 = Mockito.spy(new Require(exec) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return false;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require chain2");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success chain2");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure");
             }
         });
         Require chain1 = Mockito.spy(new Require(chain2) {
             @Override
-            public boolean check() {
+            boolean check() {
                 return false;
             }
 
             @Override
-            public void require() {
+            void require() {
                 System.out.println("require chain1");
             }
 
             @Override
-            public void postRequireSuccess() {
+            void postRequireSuccess() {
                 System.out.println("success chain1");
             }
 
             @Override
-            public void postRequireFailure() {
+            void postRequireFailure() {
                 System.out.println("failure chain1");
             }
         });
@@ -294,11 +294,11 @@ public class PermissionRequirementBisTest {
         Mockito.verify(chain1, Mockito.times(1)).require();
         Mockito.verify(chain2, Mockito.never()).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain1.resumeRequirement();
+        chain1.resumeRequirement(Require.SUCCESS);
         Mockito.verify(chain1, Mockito.times(1)).exec();
         Mockito.verify(chain2, Mockito.times(1)).exec();
         Mockito.verify(exec, Mockito.never()).exec();
-        chain2.resumeRequirement();
+        chain2.resumeRequirement(Require.SUCCESS);
         Mockito.verify(exec, Mockito.times(1)).exec();
     }
 

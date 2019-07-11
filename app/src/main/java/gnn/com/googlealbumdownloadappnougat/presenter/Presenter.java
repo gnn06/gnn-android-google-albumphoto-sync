@@ -155,11 +155,11 @@ public class Presenter implements IPresenter{
     }
 
     @Override
-    public void handlePermission() {
+    public void handlePermission(int result) {
         // TODO: 09/06/2019 manage cancel, error
         // TODO: 09/06/2019 call update User ()
         if (pendingRequirement != null) {
-            pendingRequirement.resumeRequirement();
+            pendingRequirement.resumeRequirement(result);
         }
     }
 

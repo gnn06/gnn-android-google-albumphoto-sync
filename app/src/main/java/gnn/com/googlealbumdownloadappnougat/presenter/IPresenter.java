@@ -14,7 +14,7 @@ public interface IPresenter {
 
     void onSyncClick();
 
-    void handlePermission();
+    void handlePermission(int i);
 
     File getFolder();
 }

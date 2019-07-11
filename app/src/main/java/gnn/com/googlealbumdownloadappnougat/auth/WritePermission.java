@@ -16,22 +16,22 @@ public class WritePermission extends Require {
     }
 
     @Override
-    public boolean check() {
+    boolean check() {
         return auth.hasWritePermission();
     }
 
     @Override
-    public void require() {
+    void require() {
         auth.requestWritePermission();
     }
 
     @Override
-    public void postRequireSuccess() {
+    void postRequireSuccess() {
         view.updateUI_User();
     }
 
     @Override
-    public void postRequireFailure() {
+    void postRequireFailure() {
         view.updateUI_User();
     }
 

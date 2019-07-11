@@ -57,13 +57,12 @@ public class PresenterTest {
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
-        Mockito.when(authMock.hasGooglePhotoPermission()).thenReturn(false);
         Mockito.when(authMock.hasWritePermission()).thenReturn(false);
         presenter.setAuth(authMock);
 
         presenter.onShowAlbumList();
 
-        assertNotNull(Whitebox.getInternalState(presenter, "permissionRequirement"));
+        assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
     }
 
 }

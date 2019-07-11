@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.Scopes;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 
@@ -30,27 +31,22 @@ public class AuthManager {
         return account != null && account.getAccount() != null;
     }
 
-    public void signIn() {
+    public void signInWithPermission() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
+                .requestScopes(new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ)
                 .build();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
     }
 
-    public void requestGooglePhotoPermission() {
-        GoogleSignIn.requestPermissions(
-                activity,
-                MainActivity.RC_AUTHORIZE_PHOTOS,
-                GoogleSignIn.getLastSignedInAccount(activity),
-                SCOPE_PHOTOS_READ);
-    }
-
-    public boolean hasGooglePhotoPermission() {
-        return GoogleSignIn.hasPermissions(
-                GoogleSignIn.getLastSignedInAccount(activity),
-                SCOPE_PHOTOS_READ);
+    public void signOut() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(activity, gso);
+        googleSignInClient.revokeAccess();
+        googleSignInClient.signOut();
     }
 
     public boolean hasWritePermission() {

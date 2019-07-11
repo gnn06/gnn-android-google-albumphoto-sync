@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,6 +41,18 @@ public class MainActivity extends AppCompatActivity implements IView {
         setContentView(R.layout.activity_main);
 
         presenter = new Presenter(this, this);
+
+        findViewById(R.id.btnSignIn).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onSignIn();
+            }
+        });
+
+        findViewById(R.id.btnSignOut).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onSignOut();
+            }
+        });
 
         findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

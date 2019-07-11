@@ -4,12 +4,12 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
-public class WritePermission extends Require {
+public class SignInRequirement extends Require {
 
     private AuthManager auth;
     private IView view;
 
-    public WritePermission(@Nonnull Exec exec, AuthManager auth, IView view) {
+    public SignInRequirement(@Nonnull Exec exec, AuthManager auth, IView view) {
         super(exec);
         this.auth = auth;
         this.view = view;
@@ -17,12 +17,13 @@ public class WritePermission extends Require {
 
     @Override
     public boolean check() {
-        return auth.hasWritePermission();
+        return auth.isSignIn();
     }
 
     @Override
     public void require() {
-        auth.requestWritePermission();
+        view.updateUI_User();
+        auth.signInWithPermission();
     }
 
     @Override
@@ -34,5 +35,4 @@ public class WritePermission extends Require {
     public void postRequireFailure() {
         view.updateUI_User();
     }
-
 }

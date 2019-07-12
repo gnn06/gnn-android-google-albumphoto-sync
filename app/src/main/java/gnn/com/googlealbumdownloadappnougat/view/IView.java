@@ -10,11 +10,9 @@ public interface IView {
 
     void onAlbumChoosenResult(String albumName);
 
-    void setChooseAlbumProgressBarVisibility(int visible);
+    void setProgressBarVisibility(int visible);
 
     void alertNoAlbum();
-
-    void setSyncProgresBarVisibility(int visible);
 
     void updateUI_User();
 

@@ -66,7 +66,7 @@ public class Presenter implements IPresenter{
 
     @Override
     public void onShowAlbumList() {
-        if (mAlbums == null) {
+        if (true) {
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
@@ -184,13 +184,13 @@ public class Presenter implements IPresenter{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            view.setChooseAlbumProgressBarVisibility(ProgressBar.VISIBLE);
+            view.setProgressBarVisibility(ProgressBar.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(final ArrayList<String> albums) {
             super.onPostExecute(albums);
-            view.setChooseAlbumProgressBarVisibility(ProgressBar.INVISIBLE);
+            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             view.showChooseAlbumDialog(albums);
             mAlbums = albums;
         }
@@ -216,14 +216,14 @@ public class Presenter implements IPresenter{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            view.setSyncProgresBarVisibility(ProgressBar.VISIBLE);
+            view.setProgressBarVisibility(ProgressBar.VISIBLE);
             view.updateUI_CallResult("in progress");
         }
 
         @Override
         protected void onPostExecute(DiffCalculator sync) {
             super.onPostExecute(sync);
-            view.setSyncProgresBarVisibility(ProgressBar.INVISIBLE);
+            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             String result = "";
             result += "synchronisation terminée avec succés\n";
             result += "downloaded = " + sync.getToDownload().size();

@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -148,8 +147,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void setChooseAlbumProgressBarVisibility(int visible) {
-        ProgressBar pb = findViewById(R.id.pbChooseFolder);
+    public void setProgressBarVisibility(int visible) {
+        View pb = findViewById(R.id.pb_layout);
         pb.setVisibility(visible);
     }
 
@@ -172,9 +171,4 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(result);
     }
 
-    @Override
-    public void setSyncProgresBarVisibility(int visible) {
-        ProgressBar pb = findViewById(R.id.pbSync);
-        pb.setVisibility(visible);
-    }
 }

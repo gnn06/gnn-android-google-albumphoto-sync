@@ -1,13 +1,16 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Google Album Photo Sync</string>
+    <string name="titleUser">User</string>
     <string name="autorisations">Autorisations</string>
     <string name="user_unknown">user unknown</string>
     <string name="get_albums">Get albums</string>
-    <string name="choose_folder">Choose folder</string>
     <string name="album">Album</string>
-    <string name="folder">folder</string>
-    <string name="r_sultat">Résultat</string>
+    <string name="no_album">No album</string>
+    <string name="choose_album">Choose an album</string>
+    <string name="choose_folder">Choose folder</string>
+    <string name="folder">Folder</string>
+    <string name="titleSync">Synchronisation</string>
     <string name="sync">sync</string>
-    <string name="choose_album">Choose Album</string>
+    <string name="result">No result</string>
     <string name="cancel">Cancel</string>
 </resources>

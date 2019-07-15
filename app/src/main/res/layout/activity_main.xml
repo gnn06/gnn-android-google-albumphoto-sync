@@ -14,73 +14,127 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
 
-            <Button
-                android:id="@+id/btnSignOut"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+                <TextView
+                    android:id="@+id/titleUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titleUser"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/textUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleUser"
+                    android:text="@string/user_unknown"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textAutorisation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/autorisations"
+                    android:layout_below="@id/textUser"/>
+
+                <Button
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/common_signin_button_text"
+                    android:layout_toLeftOf="@id/btnSignOut"/>
+
+                <Button
+                    android:id="@+id/btnSignOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sign out"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="sign out" />
+                android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/textAutorisation"
+                <Button
+                    android:id="@+id/btnChooseAlbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/choose_album" />
+
+                <TextView
+                    android:id="@+id/titleAlbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/album"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/textAlbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleAlbum"
+                    android:text="@string/no_album" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/autorisations" />
+                android:layout_marginTop="16dp">
 
-            <Button
-                android:id="@+id/btnChooseAlbum"
+                <TextView
+                    android:id="@+id/titleFolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/folder"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/textFolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleFolder"
+                    android:text="@string/folder" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/choose_album" />
+                android:layout_marginTop="16dp">
 
-            <TextView
-                android:id="@+id/textAlbum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:hint="@string/choose_album" />
+                <TextView
+                    android:id="@+id/titleSync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/titleSync"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <TextView
-                android:id="@+id/textUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:text="@string/user_unknown"
-                android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleSync"
+                    android:text="@string/result" />
 
-            <TextView
-                android:id="@+id/textFolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/folder" />
+                <Button
+                    android:id="@+id/btnSync"
+                    android:layout_width="109dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/sync" />
+            </RelativeLayout>
 
-            <Button
-                android:id="@+id/btnSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/common_signin_button_text" />
 
-            <TextView
-                android:id="@+id/result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/r_sultat" />
-
-            <Button
-                android:id="@+id/btnSync"
-                android:layout_width="109dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/sync" />
 
         </LinearLayout>
 

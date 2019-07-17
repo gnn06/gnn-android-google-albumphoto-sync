@@ -6,6 +6,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     public static final int RC_SIGN_IN = 501;
     public static final int RC_AUTHORIZE_PHOTOS = 500;
     public static final int RC_AUTHORIZE_WRITE = 503;
+    public static final int RC_CHOOSE_FOLDER = 504;
 
     private static final String TAG = "goi";
 
@@ -67,6 +70,13 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
+        findViewById(R.id.btnFolder).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                startActivityForResult(intent, RC_CHOOSE_FOLDER);
+            }
+        });
+
     }
 
     @Override
@@ -84,6 +94,18 @@ public class MainActivity extends AppCompatActivity implements IView {
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN  || RC_AUTHORIZE_PHOTOS == requestCode) {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
+        } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
+            Log.d(TAG, "RC_CHOOSE_FOLDER, resultCode=" + resultCode);
+            try {
+                Uri uri = data.getData();
+                Uri docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
+                        DocumentsContract.getTreeDocumentId(uri));
+                final String path = Folder.getPath(this, docUri);
+                final String humanPath = Folder.getHumanPath(uri);
+                Log.d(TAG,"path="+path + ", humanPath=" + humanPath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,9 +118,8 @@ public class MainActivity extends AppCompatActivity implements IView {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 presenter.handlePermission(Require.SUCCESS);
             } else {
-                presenter.handlePermission(Require.FAILURE);            }
-
-            ;
+                presenter.handlePermission(Require.FAILURE);
+            }
         }
     }
 

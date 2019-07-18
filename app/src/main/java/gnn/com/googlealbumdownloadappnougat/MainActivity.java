@@ -6,8 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.provider.DocumentsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
@@ -72,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         findViewById(R.id.btnFolder).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                startActivityForResult(intent, RC_CHOOSE_FOLDER);
+                presenter.chooseFolder();
             }
         });
 
@@ -84,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "onStart   ");
         super.onStart();
         updateUI_User();
-        updateUI_Folder(presenter.getFolder());
+        updateUI_Folder(presenter.getFolderHuman());
     }
 
     @Override
@@ -96,16 +92,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
             Log.d(TAG, "RC_CHOOSE_FOLDER, resultCode=" + resultCode);
-            try {
-                Uri uri = data.getData();
-                Uri docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
-                        DocumentsContract.getTreeDocumentId(uri));
-                final String path = Folder.getPath(this, docUri);
-                final String humanPath = Folder.getHumanPath(uri);
-                Log.d(TAG,"path="+path + ", humanPath=" + humanPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            presenter.chooseFolderResult(data);
         }
     }
 
@@ -157,16 +144,6 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .show();
     }
 
-    private void updateUI_Folder(File folder) {
-        TextView textView = findViewById(R.id.textFolder);
-        textView.setText(folder.getPath());
-    }
-
-    private CharSequence getFolderName() {
-        TextView textView = findViewById(R.id.textFolder);
-        return textView.getText();
-    }
-
     @Override
     public void setProgressBarVisibility(int visible) {
         View pb = findViewById(R.id.pb_layout);
@@ -190,6 +167,12 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void updateUI_CallResult(String result) {
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
+    }
+
+    @Override
+    public void updateUI_Folder(String humanPath) {
+        TextView textView = findViewById(R.id.textFolder);
+        textView.setText(humanPath);
     }
 
 }

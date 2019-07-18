@@ -1,6 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.presenter;
 
-import java.io.File;
+import android.content.Intent;
 
 public interface IPresenter {
 
@@ -16,5 +16,9 @@ public interface IPresenter {
 
     void handlePermission(int i);
 
-    File getFolder();
+    String getFolderHuman();
+
+    void chooseFolder();
+
+    void chooseFolderResult(Intent data);
 }

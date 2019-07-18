@@ -17,4 +17,6 @@ public interface IView {
     void updateUI_User();
 
     void updateUI_CallResult(String result);
+
+    void updateUI_Folder(String humanPath);
 }

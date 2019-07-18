@@ -1,7 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.presenter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -48,9 +51,9 @@ public class Presenter implements IPresenter{
         this.auth = auth;
     }
 
+
     private ArrayList<String> mAlbums;
     private String album;
-
     @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view);
@@ -90,11 +93,34 @@ public class Presenter implements IPresenter{
         view.onAlbumChoosenResult(albumName);
     }
 
-    private File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+    private String folderHuman = Environment.DIRECTORY_PICTURES;
+
+    private File getFolder() {
+        return Environment.getExternalStoragePublicDirectory(folderHuman);
+    }
 
     @Override
-    public File getFolder() {
-        return folder;
+    public String getFolderHuman() {
+        return this.folderHuman;
+    }
+
+    @Override
+    public void chooseFolder() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        this.activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
+    }
+
+    @Override
+    public void chooseFolderResult(Intent data) {
+        try {
+            Uri uri = data.getData();
+            final String humanPath = Folder.getHumanPath(uri);
+            Log.d(TAG,"humanPath=" + humanPath);
+            this.folderHuman = humanPath;
+            view.updateUI_Folder(humanPath);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     private PhotosLibraryClient mClient;

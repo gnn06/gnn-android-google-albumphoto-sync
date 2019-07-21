@@ -3,8 +3,10 @@ package gnn.com.googlealbumdownloadappnougat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements IView {
     public static final int RC_AUTHORIZE_WRITE = 503;
     public static final int RC_CHOOSE_FOLDER = 504;
 
+    private static final String PREF_ALBUM_KEY = "album";
+    private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
+
     private static final String TAG = "goi";
 
     public IPresenter presenter;
@@ -42,6 +47,21 @@ public class MainActivity extends AppCompatActivity implements IView {
         setContentView(R.layout.activity_main);
 
         presenter = new Presenter(this, this);
+
+        // Restore data
+        SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
+        if (preferences != null) {
+            String album = preferences.getString(PREF_ALBUM_KEY, null);
+            if (album != null) {
+                presenter.setAlbum(album);
+            }
+            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, null);
+            if (folderHuman != null) {
+                presenter.setFolderHuman(folderHuman);
+            }
+        }
+
+        updateUI_User();
 
         findViewById(R.id.btnSignIn).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -72,15 +92,18 @@ public class MainActivity extends AppCompatActivity implements IView {
                 presenter.chooseFolder();
             }
         });
-
     }
 
     @Override
-    protected void onStart() {
-        Log.d(TAG, "onStart   ");
-        super.onStart();
-        updateUI_User();
-        updateUI_Folder(presenter.getFolderHuman());
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        String album = presenter.getAlbum();
+        editor.putString(PREF_ALBUM_KEY, album);
+        String folderHuman = presenter.getFolderHuman();
+        editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
+        editor.commit();
     }
 
     @Override

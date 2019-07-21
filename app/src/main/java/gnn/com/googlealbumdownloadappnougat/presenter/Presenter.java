@@ -52,8 +52,6 @@ public class Presenter implements IPresenter{
     }
 
 
-    private ArrayList<String> mAlbums;
-    private String album;
     @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view);
@@ -65,6 +63,24 @@ public class Presenter implements IPresenter{
     public void onSignOut() {
         auth.signOut();
         view.updateUI_User();
+    }
+
+    private ArrayList<String> mAlbums;
+
+    /**
+     * default value = null
+     */
+    private String album;
+
+    @Override
+    public String getAlbum() {
+        return album;
+    }
+
+    @Override
+    public void setAlbum(String album) {
+        this.album = album;
+        view.onAlbumChoosenResult(album);
     }
 
     @Override
@@ -102,6 +118,12 @@ public class Presenter implements IPresenter{
     @Override
     public String getFolderHuman() {
         return this.folderHuman;
+    }
+
+    @Override
+    public void setFolderHuman(String folderHuman) {
+        this.folderHuman = folderHuman;
+        view.updateUI_Folder(folderHuman);
     }
 
     @Override

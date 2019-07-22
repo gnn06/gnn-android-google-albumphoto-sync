@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.btnChooseAlbum).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.SectionAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onShowAlbumList();
             }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.btnFolder).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.SectionFolder).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.chooseFolder();
             }

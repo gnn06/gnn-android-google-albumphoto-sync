@@ -13,15 +13,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="#AAA"
             android:orientation="vertical"
-            android:visibility="visible"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:showDividers="middle"
+            android:visibility="visible">
 
             <RelativeLayout
+                android:id="@+id/SectionUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
+
                 <TextView
                     android:id="@+id/titleUser"
                     android:layout_width="wrap_content"
@@ -35,41 +40,39 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/titleUser"
                     android:text="@string/user_unknown"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textAutorisation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/autorisations"
-                    android:layout_below="@id/textUser"/>
+                    android:layout_below="@id/textUser"
+                    android:text="@string/autorisations" />
 
                 <Button
                     android:id="@+id/btnSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/common_signin_button_text"
-                    android:layout_toLeftOf="@id/btnSignOut"/>
+                    android:layout_toLeftOf="@id/btnSignOut"
+                    android:text="@string/common_signin_button_text" />
 
                 <Button
                     android:id="@+id/btnSignOut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="sign out"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true"
+                    android:text="sign out" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/SectionAlbum"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <Button
-                    android:id="@+id/btnChooseAlbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/choose_album" />
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:id="@+id/titleAlbum"
@@ -87,10 +90,14 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/btnFolder"
-                android:layout_width="wrap_content"
+                android:id="@+id/SectionFolder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:id="@+id/titleFolder"
@@ -109,9 +116,13 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/SectionSync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:id="@+id/titleSync"
@@ -134,7 +145,6 @@
                     android:layout_alignParentRight="true"
                     android:text="@string/sync" />
             </RelativeLayout>
-
 
 
         </LinearLayout>

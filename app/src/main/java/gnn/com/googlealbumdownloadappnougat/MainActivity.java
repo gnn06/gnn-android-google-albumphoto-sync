@@ -49,13 +49,15 @@ public class MainActivity extends AppCompatActivity implements IView {
         presenter = new Presenter(this, this);
 
         // Restore data
+        // default values are taken from presenter
+        // presenter.setXXX update TextViews
         SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
         if (preferences != null) {
-            String album = preferences.getString(PREF_ALBUM_KEY, null);
+            String album = preferences.getString(PREF_ALBUM_KEY, presenter.getAlbum());
             if (album != null) {
                 presenter.setAlbum(album);
             }
-            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, null);
+            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, presenter.getFolderHuman());
             if (folderHuman != null) {
                 presenter.setFolderHuman(folderHuman);
             }

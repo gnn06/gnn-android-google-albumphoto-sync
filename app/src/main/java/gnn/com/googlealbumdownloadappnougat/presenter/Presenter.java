@@ -41,6 +41,7 @@ public class Presenter implements IPresenter{
     private final IView view;
     private final MainActivity activity;
     private AuthManager auth;
+
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
@@ -69,6 +70,7 @@ public class Presenter implements IPresenter{
 
     /**
      * default value = null
+     * persistent data
      */
     private String album;
 
@@ -109,6 +111,10 @@ public class Presenter implements IPresenter{
         view.onAlbumChoosenResult(albumName);
     }
 
+    /**
+     * default value = "Pictures"
+     * persistant data
+     */
     private String folderHuman = Environment.DIRECTORY_PICTURES;
 
     private File getFolder() {

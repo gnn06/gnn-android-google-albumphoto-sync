@@ -3,15 +3,13 @@ package gnn.com.googlealbumdownloadappnougat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,6 +22,7 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
@@ -34,12 +33,10 @@ public class MainActivity extends AppCompatActivity implements IView {
     public static final int RC_AUTHORIZE_WRITE = 503;
     public static final int RC_CHOOSE_FOLDER = 504;
 
-    private static final String PREF_ALBUM_KEY = "album";
-    private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
-
     private static final String TAG = "goi";
 
     public IPresenter presenter;
+    private Persistence persistence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +45,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new Presenter(this, this);
 
-        // Restore data
-        // default values are taken from presenter
-        // presenter.setXXX update TextViews
-        SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
-        if (preferences != null) {
-            String album = preferences.getString(PREF_ALBUM_KEY, presenter.getAlbum());
-            if (album != null) {
-                presenter.setAlbum(album);
-            }
-            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, presenter.getFolderHuman());
-            if (folderHuman != null) {
-                presenter.setFolderHuman(folderHuman);
-            }
-        }
+        this.persistence = new Persistence(this, presenter);
+        persistence.restoreData();
 
         updateUI_User();
 
@@ -99,13 +84,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences preferences = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        String album = presenter.getAlbum();
-        editor.putString(PREF_ALBUM_KEY, album);
-        String folderHuman = presenter.getFolderHuman();
-        editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
-        editor.commit();
+        persistence.saveData();
     }
 
     @Override

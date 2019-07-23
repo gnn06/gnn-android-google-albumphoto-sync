@@ -30,7 +30,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
-import gnn.com.photos.sync.DiffCalculator;
 import gnn.com.photos.sync.Synchronizer;
 
 public class Presenter implements IPresenter{
@@ -86,7 +85,7 @@ public class Presenter implements IPresenter{
 
     @Override
     public void onShowAlbumList() {
-        if (true) {
+        if (mAlbums == null) {
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
@@ -249,40 +248,68 @@ public class Presenter implements IPresenter{
         }
     }
 
-    public class SyncTask extends AsyncTask<Void, Void, DiffCalculator> {
+    public class SyncTask extends AsyncTask<Void, Void, Void> {
+
+        private int currentDownloaded;
+        private int currentDeleted;
 
         @Override
-        protected DiffCalculator doInBackground(Void... voids) {
-            DiffCalculator diff = null;
+        protected Void doInBackground(Void... voids) {
+            this.currentDownloaded = 0;
+            this.currentDeleted = 0;
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
                 Synchronizer sync = new Synchronizer();
                 PhotosLibraryClient client = getPhotoLibraryClient();
-                diff = sync.sync(album, destination, client);
+                sync.sync(album, destination, client, this);
             } catch (GoogleAuthException | IOException e) {
                 Log.e(TAG, "can't get photo library client");
             }
-            return diff;
+            return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             view.setProgressBarVisibility(ProgressBar.VISIBLE);
-            view.updateUI_CallResult("in progress");
+            String result = "start sync";
+            view.updateUI_CallResult(result);
         }
 
         @Override
-        protected void onPostExecute(DiffCalculator sync) {
-            super.onPostExecute(sync);
-            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            String result = "";
-            result += "synchronisation terminée avec succés\n";
-            result += "downloaded = " + sync.getToDownload().size();
-            result += "\n";
-            result += "deleted = " + sync.getToDelete().size();
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            String result = "in progress\n";
+            result += getResultText();
             view.updateUI_CallResult(result);
+        }
+
+        public void incrementCurrentDownloaded() {
+            this.currentDownloaded += 1;
+            this.publishProgress();
+        }
+
+        public void incrementCurrentDeleted() {
+            this.currentDeleted += 1;
+            this.publishProgress();
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            super.onPostExecute(voids);
+            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
+            String result = "synchronisation terminée avec succés\n";
+            result += getResultText();
+            view.updateUI_CallResult(result);
+        }
+
+        private String getResultText() {
+            String result = "";
+            result += "downloaded = " + this.currentDownloaded;
+            result += "\n";
+            result += "deleted = " + this.currentDeleted;
+            return result;
         }
 
     }

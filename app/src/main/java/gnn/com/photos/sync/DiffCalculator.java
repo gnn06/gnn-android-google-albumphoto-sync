@@ -1,11 +1,13 @@
 package gnn.com.photos.sync;
 
-import gnn.com.photos.model.Photo;
-
 import java.util.ArrayList;
+
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+import gnn.com.photos.model.Photo;
 
 public class DiffCalculator {
 
+    private final Presenter.SyncTask syncTask;
     private ArrayList remote;
     private ArrayList local;
     private ArrayList toDownload;
@@ -21,13 +23,15 @@ public class DiffCalculator {
      * photo.id is used
      * @param remote
      * @param  local
+     * @param syncTask
      * @return
      */
-    public DiffCalculator(ArrayList remote, ArrayList local) {
+    public DiffCalculator(ArrayList remote, ArrayList local, Presenter.SyncTask syncTask) {
         this.remote = remote;
         this.local = local;
         this.toDownload = calculToDownload();
         this.toDelete   = calculToDelete();
+        this.syncTask   = syncTask;
 
         System.out.println("remote count = " + this.remote.size());
         System.out.println("local count = " + this.local.size());

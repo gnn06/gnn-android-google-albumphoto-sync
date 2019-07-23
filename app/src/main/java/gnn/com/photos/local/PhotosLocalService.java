@@ -1,11 +1,13 @@
 package gnn.com.photos.local;
 
-import gnn.com.photos.sync.DownloadManager;
-import gnn.com.photos.model.Photo;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+import gnn.com.photos.model.Photo;
+import gnn.com.photos.sync.DownloadManager;
 
 public class PhotosLocalService {
 
@@ -29,12 +31,13 @@ public class PhotosLocalService {
 
     }
 
-    public void delete(ArrayList<Photo> toDelete, File folder) {
+    public void delete(ArrayList<Photo> toDelete, File folder, Presenter.SyncTask syncTask) {
         int delete = 0;
         for (Photo photo : toDelete) {
             File file = new File(folder, photo.getId() + DownloadManager.getFileExtension());
             file.delete();
             delete++;
+            syncTask.incrementCurrentDeleted();
         }
         System.out.println("deleted count = " + delete);
     }

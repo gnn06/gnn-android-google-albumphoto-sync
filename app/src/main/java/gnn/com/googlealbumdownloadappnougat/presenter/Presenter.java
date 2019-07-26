@@ -217,7 +217,6 @@ public class Presenter implements IPresenter{
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
-
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
@@ -252,6 +251,7 @@ public class Presenter implements IPresenter{
 
         private int currentDownloaded;
         private int currentDeleted;
+        Synchronizer sync = new Synchronizer();
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -260,7 +260,6 @@ public class Presenter implements IPresenter{
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
-                Synchronizer sync = new Synchronizer();
                 PhotosLibraryClient client = getPhotoLibraryClient();
                 sync.sync(album, destination, client, this);
             } catch (GoogleAuthException | IOException e) {
@@ -281,7 +280,7 @@ public class Presenter implements IPresenter{
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
             String result = "in progress\n";
-            result += getResultText();
+            result += getResultText(false);
             view.updateUI_CallResult(result);
         }
 
@@ -300,15 +299,21 @@ public class Presenter implements IPresenter{
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             String result = "synchronisation terminée avec succés\n";
-            result += getResultText();
+            result += getResultText(true);
             view.updateUI_CallResult(result);
         }
 
-        private String getResultText() {
+        private String getResultText(boolean finished) {
             String result = "";
             result += "downloaded = " + this.currentDownloaded;
+            if (!finished) {
+                result += " / " + this.sync.getDownloadCount();
+            }
             result += "\n";
             result += "deleted = " + this.currentDeleted;
+            if (!finished) {
+                result += " / " + this.sync.getDeleteCount();
+            }
             return result;
         }
 

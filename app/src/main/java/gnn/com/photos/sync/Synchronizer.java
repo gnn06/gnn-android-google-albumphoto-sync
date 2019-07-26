@@ -12,9 +12,10 @@ import gnn.com.photos.remote.PhotosRemoteService;
 
 public class Synchronizer {
 
+    DiffCalculator diffCalculator = null;
+
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder, PhotosLibraryClient client, Presenter.SyncTask syncTask) {
-        DiffCalculator diffCalculator = null;
         try {
             PhotosRemoteService prs = new PhotosRemoteService(client);
             PhotosLocalService pls = new PhotosLocalService();
@@ -28,5 +29,13 @@ public class Synchronizer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getDownloadCount() {
+        return diffCalculator.getToDownload().size();
+    }
+
+    public int getDeleteCount() {
+        return diffCalculator.getToDelete().size();
     }
 }

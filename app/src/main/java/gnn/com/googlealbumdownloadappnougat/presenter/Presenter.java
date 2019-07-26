@@ -249,12 +249,10 @@ public class Presenter implements IPresenter{
 
     public class SyncTask extends AsyncTask<Void, Void, Void> {
 
-        private int currentDeleted;
         Synchronizer sync = new Synchronizer(this);
 
         @Override
         protected Void doInBackground(Void... voids) {
-            this.currentDeleted = 0;
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
@@ -302,7 +300,7 @@ public class Presenter implements IPresenter{
                 result += " / " + this.sync.getTotalDownload();
             }
             result += "\n";
-            result += "deleted = " + this.currentDeleted;
+            result += "deleted = " + this.sync.getCurrentDelete();
             if (!finished) {
                 result += " / " + this.sync.getTotalDelete();
             }

@@ -8,14 +8,18 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.local.PhotosLocalService;
+import gnn.com.photos.model.Photo;
 import gnn.com.photos.remote.PhotosRemoteService;
 
 public class Synchronizer {
 
-    DiffCalculator diffCalculator = null;
     private final Presenter.SyncTask syncTask;
     private int currentDownload;
     private int currentDelete;
+    private ArrayList remote;
+    private ArrayList local;
+    private ArrayList toDownload;
+    private ArrayList toDelete;
 
     public Synchronizer(Presenter.SyncTask syncTask) {
         this.syncTask = syncTask;
@@ -28,26 +32,35 @@ public class Synchronizer {
             PhotosLocalService pls = new PhotosLocalService();
             System.out.println("get photos of album : " + albumName);
             System.out.println("download photos into folder : " + folder);
-            ArrayList remote = prs.getRemotePhotos(albumName);
-            ArrayList local = pls.getLocalPhotos(folder);
-            diffCalculator = new DiffCalculator(remote, local);
-            pls.delete(diffCalculator.getToDelete(), folder, this);
-            DownloadManager.download(diffCalculator.getToDownload(), folder, this);
+            this.remote = prs.getRemotePhotos(albumName);
+            this.local = pls.getLocalPhotos(folder);
+            this.toDownload = calculToDownload();
+            this.toDelete   = calculToDelete();
+            System.out.println("remote count = " + this.remote.size());
+            System.out.println("local count = " + this.local.size());
+            System.out.println("to download count = " + this.toDownload.size());
+            System.out.println("to delete count = " + this.toDelete.size());
+            pls.delete(this.getToDelete(), folder, this);
+            DownloadManager.download(this.getToDownload(), folder, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public int getTotalDownload() {
-        return diffCalculator.getToDownload().size();
+        return this.getToDownload().size();
     }
 
     public int getTotalDelete() {
-        return diffCalculator.getToDelete().size();
+        return this.getToDelete().size();
     }
 
     public int getCurrentDownload() {
         return this.currentDownload;
+    }
+
+    public int getCurrentDelete() {
+        return this.currentDelete;
     }
 
     void incDownloadCurrent() {
@@ -58,5 +71,25 @@ public class Synchronizer {
     public void incCurrentDelete() {
         this.currentDelete += 1;
         this.syncTask.publicPublish();
+    }
+
+    public ArrayList<Photo> calculToDownload() {
+        ArrayList result = ((ArrayList)this.remote.clone());
+        result.removeAll(this.local);
+        return result;
+    }
+
+    private ArrayList calculToDelete() {
+        ArrayList result = ((ArrayList)this.local.clone());
+        result.removeAll(this.remote);
+        return result;
+    }
+
+    public ArrayList getToDownload() {
+        return toDownload;
+    }
+
+    public ArrayList getToDelete() {
+        return toDelete;
     }
 }

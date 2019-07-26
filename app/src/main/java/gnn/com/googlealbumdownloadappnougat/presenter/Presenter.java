@@ -217,7 +217,6 @@ public class Presenter implements IPresenter{
 
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
-
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
@@ -250,23 +249,25 @@ public class Presenter implements IPresenter{
 
     public class SyncTask extends AsyncTask<Void, Void, Void> {
 
-        private int currentDownloaded;
         private int currentDeleted;
+        Synchronizer sync = new Synchronizer(this);
 
         @Override
         protected Void doInBackground(Void... voids) {
-            this.currentDownloaded = 0;
             this.currentDeleted = 0;
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
-                Synchronizer sync = new Synchronizer();
                 PhotosLibraryClient client = getPhotoLibraryClient();
-                sync.sync(album, destination, client, this);
+                sync.sync(album, destination, client);
             } catch (GoogleAuthException | IOException e) {
                 Log.e(TAG, "can't get photo library client");
             }
             return null;
+        }
+
+        public void publicPublish() {
+            this.publishProgress();
         }
 
         @Override
@@ -281,18 +282,8 @@ public class Presenter implements IPresenter{
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
             String result = "in progress\n";
-            result += getResultText();
+            result += getResultText(false);
             view.updateUI_CallResult(result);
-        }
-
-        public void incrementCurrentDownloaded() {
-            this.currentDownloaded += 1;
-            this.publishProgress();
-        }
-
-        public void incrementCurrentDeleted() {
-            this.currentDeleted += 1;
-            this.publishProgress();
         }
 
         @Override
@@ -300,15 +291,21 @@ public class Presenter implements IPresenter{
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             String result = "synchronisation terminée avec succés\n";
-            result += getResultText();
+            result += getResultText(true);
             view.updateUI_CallResult(result);
         }
 
-        private String getResultText() {
+        private String getResultText(boolean finished) {
             String result = "";
-            result += "downloaded = " + this.currentDownloaded;
+            result += "downloaded = " + this.sync.getCurrentDownload();
+            if (!finished) {
+                result += " / " + this.sync.getTotalDownload();
+            }
             result += "\n";
             result += "deleted = " + this.currentDeleted;
+            if (!finished) {
+                result += " / " + this.sync.getTotalDelete();
+            }
             return result;
         }
 

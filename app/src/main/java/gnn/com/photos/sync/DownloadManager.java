@@ -8,12 +8,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.model.Photo;
 
 public class DownloadManager {
 
-    public static void download(ArrayList<Photo> toDownload, File folder, Presenter.SyncTask syncTask) throws IOException {
+    public static void download(ArrayList<Photo> toDownload, File folder, Synchronizer synchronizer) throws IOException {
         int count = 0;
         for (Photo photo : toDownload) {
             URL source;
@@ -23,7 +22,7 @@ public class DownloadManager {
                 File destination = new File(folder, photo.getId() + getFileExtension());
                 FileUtils.copyURLToFile(source, destination);
                 count++;
-                syncTask.incrementCurrentDownloaded();
+                synchronizer.incDownloadCurrent();
             } catch (MalformedURLException e) {
                 // TODO: 06/05/2019 log instead of stderr
                 System.err.println("erreur " + photo + e.getMessage());

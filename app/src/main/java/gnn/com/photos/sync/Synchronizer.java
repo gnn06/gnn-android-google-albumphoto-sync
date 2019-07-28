@@ -14,6 +14,7 @@ import gnn.com.photos.remote.PhotosRemoteService;
 public class Synchronizer {
 
     private final Presenter.SyncTask syncTask;
+
     private int currentDownload;
     private int currentDelete;
     private ArrayList remote;
@@ -32,6 +33,7 @@ public class Synchronizer {
             PhotosLocalService pls = new PhotosLocalService();
             System.out.println("get photos of album : " + albumName);
             System.out.println("download photos into folder : " + folder);
+            this.resetCurrent();
             this.remote = prs.getRemotePhotos(albumName);
             this.local = pls.getLocalPhotos(folder);
             this.toDownload = calculToDownload();
@@ -63,7 +65,7 @@ public class Synchronizer {
         return this.currentDelete;
     }
 
-    void incDownloadCurrent() {
+    void incCurrentDownload() {
         this.currentDownload += 1;
         this.syncTask.publicPublish();
     }
@@ -71,6 +73,11 @@ public class Synchronizer {
     public void incCurrentDelete() {
         this.currentDelete += 1;
         this.syncTask.publicPublish();
+    }
+
+    void resetCurrent() {
+        this.currentDownload = 0;
+        this.currentDelete= 0;
     }
 
     public ArrayList<Photo> calculToDownload() {

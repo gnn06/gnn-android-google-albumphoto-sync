@@ -22,7 +22,7 @@ public class DownloadManager {
                 File destination = new File(folder, photo.getId() + getFileExtension());
                 FileUtils.copyURLToFile(source, destination);
                 count++;
-                synchronizer.incDownloadCurrent();
+                synchronizer.incCurrentDownload();
             } catch (MalformedURLException e) {
                 // TODO: 06/05/2019 log instead of stderr
                 System.err.println("erreur " + photo + e.getMessage());

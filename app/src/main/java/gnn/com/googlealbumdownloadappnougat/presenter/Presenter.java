@@ -272,25 +272,20 @@ public class Presenter implements IPresenter{
         protected void onPreExecute() {
             super.onPreExecute();
             view.setProgressBarVisibility(ProgressBar.VISIBLE);
-            String result = "start sync";
-            view.updateUI_CallResult(result);
+            view.updateUI_CallResult(sync, true, 1);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            String result = "in progress\n";
-            result += sync.getResultText(false);
-            view.updateUI_CallResult(result);
+            view.updateUI_CallResult(sync, false, 2);
         }
 
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            String result = "synchronisation terminée avec succés\n";
-            result += sync.getResultText(true);
-            view.updateUI_CallResult(result);
+            view.updateUI_CallResult(sync, true, 3);
         }
 
     }

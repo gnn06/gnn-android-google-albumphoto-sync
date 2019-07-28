@@ -25,6 +25,7 @@ import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -168,9 +169,40 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_CallResult(String result) {
+    public void updateUI_CallResult(Synchronizer synchronizer, boolean finished, int step) {
         TextView textView = findViewById(R.id.result);
+        String result = "";
+        switch (step) {
+            case 1:
+                result += "synchronisation starting";
+                break;
+            case 2:
+                result += "synchronisation in progress\n";
+                result += getResultText(synchronizer, finished);
+                break;
+            case 3:
+                result += "synchronisation finished\n";
+                result += getResultText(synchronizer, finished);
+                break;
+        }
+
         textView.setText(result);
+    }
+
+    public String getResultText(Synchronizer synchronizer, boolean finished) {
+        String result = "";
+        result += "downloaded = ";
+        if (!finished) {
+            result += synchronizer.getCurrentDownload() + " / ";
+        }
+        result += synchronizer.getTotalDownload();
+        result += "\n";
+        result += "deleted = ";
+        if (!finished) {
+            result += synchronizer.getCurrentDelete() + " / ";
+        }
+        result += synchronizer.getTotalDelete();
+        return result;
     }
 
     @Override

@@ -280,7 +280,7 @@ public class Presenter implements IPresenter{
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
             String result = "in progress\n";
-            result += getResultText(false);
+            result += sync.getResultText(false);
             view.updateUI_CallResult(result);
         }
 
@@ -289,22 +289,8 @@ public class Presenter implements IPresenter{
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             String result = "synchronisation terminée avec succés\n";
-            result += getResultText(true);
+            result += sync.getResultText(true);
             view.updateUI_CallResult(result);
-        }
-
-        private String getResultText(boolean finished) {
-            String result = "";
-            result += "downloaded = " + this.sync.getCurrentDownload();
-            if (!finished) {
-                result += " / " + this.sync.getTotalDownload();
-            }
-            result += "\n";
-            result += "deleted = " + this.sync.getCurrentDelete();
-            if (!finished) {
-                result += " / " + this.sync.getTotalDelete();
-            }
-            return result;
         }
 
     }

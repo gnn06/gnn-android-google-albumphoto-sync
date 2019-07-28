@@ -99,4 +99,21 @@ public class Synchronizer {
     public ArrayList getToDelete() {
         return toDelete;
     }
+
+    public String getResultText(boolean finished) {
+        String result = "";
+        result += "downloaded = ";
+        if (!finished) {
+            result += getCurrentDownload() + " / ";
+        }
+        result += getTotalDownload();
+        result += "\n";
+        result += "deleted = ";
+        if (!finished) {
+            result += getCurrentDelete() + " / ";
+        }
+        result += getTotalDelete();
+        return result;
+    }
+
 }

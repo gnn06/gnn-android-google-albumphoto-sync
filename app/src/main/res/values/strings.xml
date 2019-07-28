@@ -10,6 +10,7 @@
     <string name="choose_folder">Choose folder</string>
     <string name="folder">Folder</string>
     <string name="titleSync">Synchronisation</string>
+    <string name="sync_now">Synchroniser maintenant</string>
     <string name="sync">sync</string>
     <string name="result">No result</string>
     <string name="cancel">Cancel</string>

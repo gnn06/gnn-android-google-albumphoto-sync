@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             String writeAuthorization = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
             name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
         } else {
-            name = "Login ...";
+            name = getResources().getString(R.string.login);
         }
 
         TextView myAwesomeTextView = findViewById(R.id.textUser);
@@ -191,14 +191,14 @@ public class MainActivity extends AppCompatActivity implements IView {
         String result = "";
         switch (step) {
             case STARTING:
-                result += "synchronisation starting";
+                result += getResources().getString(R.string.sync_starting);
                 break;
             case IN_PRORGESS:
-                result += "synchronisation in progress\n";
+                result += getResources().getString(R.string.sync_in_progress) + "\n";
                 result += getResultText(synchronizer, false);
                 break;
             case FINISHED:
-                result += "synchronisation finished\n";
+                result += getResources().getString(R.string.sync_finished) + "\n";
                 result += getResultText(synchronizer, true);
                 break;
         }

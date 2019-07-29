@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
@@ -272,20 +273,20 @@ public class Presenter implements IPresenter{
         protected void onPreExecute() {
             super.onPreExecute();
             view.setProgressBarVisibility(ProgressBar.VISIBLE);
-            view.updateUI_CallResult(sync, 1);
+            view.updateUI_CallResult(sync, SyncStep.STARTING);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            view.updateUI_CallResult(sync, 2);
+            view.updateUI_CallResult(sync, SyncStep.IN_PRORGESS);
         }
 
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            view.updateUI_CallResult(sync, 3);
+            view.updateUI_CallResult(sync, SyncStep.FINISHED);
         }
 
     }

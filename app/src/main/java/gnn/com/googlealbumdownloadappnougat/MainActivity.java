@@ -169,18 +169,18 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_CallResult(Synchronizer synchronizer, int step) {
+    public void updateUI_CallResult(Synchronizer synchronizer, SyncStep step) {
         TextView textView = findViewById(R.id.result);
         String result = "";
         switch (step) {
-            case 1:
+            case STARTING:
                 result += "synchronisation starting";
                 break;
-            case 2:
+            case IN_PRORGESS:
                 result += "synchronisation in progress\n";
                 result += getResultText(synchronizer, false);
                 break;
-            case 3:
+            case FINISHED:
                 result += "synchronisation finished\n";
                 result += getResultText(synchronizer, true);
                 break;

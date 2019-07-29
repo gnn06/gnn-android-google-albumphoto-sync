@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -51,15 +53,9 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         updateUI_User();
 
-        findViewById(R.id.btnSignIn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();
-            }
-        });
-
-        findViewById(R.id.btnSignOut).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.onSignOut();
             }
         });
 
@@ -80,6 +76,22 @@ public class MainActivity extends AppCompatActivity implements IView {
                 presenter.chooseFolder();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                presenter.onSignOut();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -157,14 +169,19 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     public void updateUI_User() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        String name;
+        if (account != null) {
+            name = account.getEmail();
+            String GoogleAuthorization = account.getGrantedScopes().toString();
+            String writeAuthorization = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
+            name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
+        } else {
+            name = "Login ...";
+        }
+
         TextView myAwesomeTextView = findViewById(R.id.textUser);
-        String name = account != null ? account.getEmail() : "";
         myAwesomeTextView.setText(name);
-        TextView autorisationText = findViewById(R.id.textAutorisation);
-        String autorisation = account != null ? account.getGrantedScopes().toString() : "";
-        String writeAutorisation = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
-        CharSequence autorisationLabel = autorisation + ", " + writeAutorisation;
-        autorisationText.setText(autorisationLabel);
+
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }
 

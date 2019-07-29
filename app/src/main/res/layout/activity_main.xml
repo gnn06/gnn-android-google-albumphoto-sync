@@ -24,7 +24,8 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="8dp">
+                android:paddingBottom="8dp"
+                android:background="?android:attr/selectableItemBackground">
 
                 <TextView
                     android:id="@+id/titleUser"
@@ -38,29 +39,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/titleUser"
-                    android:text="@string/user_unknown"
-                    android:textStyle="bold" />
+                    android:text="@string/user_unknown"/>
 
-                <TextView
-                    android:id="@+id/textAutorisation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textUser"
-                    android:text="@string/autorisations" />
-
-                <Button
-                    android:id="@+id/btnSignIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/btnSignOut"
-                    android:text="@string/common_signin_button_text" />
-
-                <Button
-                    android:id="@+id/btnSignOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="sign out" />
             </RelativeLayout>
 
             <RelativeLayout

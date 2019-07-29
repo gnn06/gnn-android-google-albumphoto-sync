@@ -16,7 +16,7 @@ public interface IView {
 
     void updateUI_User();
 
-    void updateUI_CallResult(Synchronizer synchronizer, boolean finished, int step);
+    void updateUI_CallResult(Synchronizer synchronizer, int step);
 
     void updateUI_Folder(String humanPath);
 }

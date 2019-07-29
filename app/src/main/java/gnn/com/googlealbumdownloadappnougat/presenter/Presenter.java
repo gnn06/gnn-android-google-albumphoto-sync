@@ -272,20 +272,20 @@ public class Presenter implements IPresenter{
         protected void onPreExecute() {
             super.onPreExecute();
             view.setProgressBarVisibility(ProgressBar.VISIBLE);
-            view.updateUI_CallResult(sync, true, 1);
+            view.updateUI_CallResult(sync, 1);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            view.updateUI_CallResult(sync, false, 2);
+            view.updateUI_CallResult(sync, 2);
         }
 
         @Override
         protected void onPostExecute(Void voids) {
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            view.updateUI_CallResult(sync, true, 3);
+            view.updateUI_CallResult(sync, 3);
         }
 
     }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private static final String TAG = "goi";
 
-    public IPresenter presenter;
+    private IPresenter presenter;
     private Persistence persistence;
 
     @Override
@@ -105,10 +105,10 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN  || RC_AUTHORIZE_PHOTOS == requestCode) {
+        if (requestCode == RC_SIGN_IN  || requestCode == RC_AUTHORIZE_PHOTOS) {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
-            Log.d(TAG, "RC_CHOOSE_FOLDER, resultCode=" + resultCode);
+            // TODO: 30/07/2019 manage resultCode != OK
             presenter.chooseFolderResult(data);
         }
     }
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mAlbums);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose album")
+        builder.setTitle(getResources().getString(R.string.choose_album))
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     public void alertNoAlbum() {
         new AlertDialog.Builder(this)
-                .setTitle("You have to choose an album")
+                .setTitle(getResources().getString(R.string.need_album))
                 .setNegativeButton(android.R.string.ok, null)
                 .show();
     }
@@ -173,7 +173,10 @@ public class MainActivity extends AppCompatActivity implements IView {
         if (account != null) {
             name = account.getEmail();
             String GoogleAuthorization = account.getGrantedScopes().toString();
-            String writeAuthorization = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ? "write" : "no write";
+            String writeAuthorization;
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                writeAuthorization = "write";
+            else writeAuthorization = "no write";
             name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
         } else {
             name = getResources().getString(R.string.login);
@@ -187,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public void updateUI_CallResult(Synchronizer synchronizer, SyncStep step) {
-        TextView textView = findViewById(R.id.result);
         String result = "";
         switch (step) {
             case STARTING:
@@ -203,10 +205,11 @@ public class MainActivity extends AppCompatActivity implements IView {
                 break;
         }
 
+        TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
 
-    public String getResultText(Synchronizer synchronizer, boolean finished) {
+    private String getResultText(Synchronizer synchronizer, boolean finished) {
         String result = "";
         result += "downloaded = ";
         if (!finished) {

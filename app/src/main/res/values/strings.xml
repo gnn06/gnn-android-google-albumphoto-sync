@@ -9,6 +9,7 @@
     <string name="album">Album</string>
     <string name="no_album">No album</string>
     <string name="choose_album">Choose an album</string>
+    <string name="need_album">You have to choose an album</string>
     <string name="choose_folder">Choose folder</string>
     <string name="folder">Folder</string>
     <string name="titleSync">Synchronisation</string>

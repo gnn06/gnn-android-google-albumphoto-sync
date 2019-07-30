@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * Default values are keeped from Presenter
+ */
 public class Persistence {
 
     private static final String PREF_ALBUM_KEY = "album";

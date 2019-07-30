@@ -47,6 +47,7 @@ public class Presenter implements IPresenter{
         this.auth = new AuthManager(activity);
     }
 
+    // For test
     public void setAuth(AuthManager auth) {
         this.auth = auth;
     }
@@ -65,6 +66,8 @@ public class Presenter implements IPresenter{
         view.updateUI_User();
     }
 
+    // --- Album ---
+
     private ArrayList<String> mAlbums;
 
     /**
@@ -78,6 +81,7 @@ public class Presenter implements IPresenter{
         return album;
     }
 
+    // Use from persistence
     @Override
     public void setAlbum(String album) {
         this.album = album;
@@ -103,12 +107,17 @@ public class Presenter implements IPresenter{
         }
     }
 
+    /**
+     * Called from alertDialog showing album list
+     * @param albumName
+     */
     @Override
     public void onChooseAlbum(String albumName) {
-        // TODO: 05/06/2019 call service
         this.album = albumName;
         view.onAlbumChoosenResult(albumName);
     }
+
+    // --- folder ---
 
     /**
      * default value = "Pictures"
@@ -116,6 +125,10 @@ public class Presenter implements IPresenter{
      */
     private String folderHuman = Environment.DIRECTORY_PICTURES;
 
+    /**
+     * Get File from human version of folder
+     * @return File
+     */
     private File getFolder() {
         return Environment.getExternalStoragePublicDirectory(folderHuman);
     }
@@ -125,6 +138,7 @@ public class Presenter implements IPresenter{
         return this.folderHuman;
     }
 
+    // Use from Persistence
     @Override
     public void setFolderHuman(String folderHuman) {
         this.folderHuman = folderHuman;
@@ -146,45 +160,12 @@ public class Presenter implements IPresenter{
             this.folderHuman = humanPath;
             view.updateUI_Folder(humanPath);
         } catch (Exception e) {
+            // TODO: 30/07/2019 manage error
             Log.e(TAG, e.getMessage());
         }
     }
 
-    private PhotosLibraryClient mClient;
-
-    private PhotosLibraryClient getPhotoLibraryClient()
-            throws IOException, GoogleAuthException
-    {
-        if (mClient != null) {
-            Log.d(TAG, "get photo library client from cache");
-            return mClient;
-        } else {
-            /* Need an Id client OAuth in the google developer console of type android
-             * Put the package and the fingerprint (gradle signingReport)
-             */
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-            assert account != null && account.getAccount() != null;
-            String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
-            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                    .setAccessToken(new AccessToken(token, null))
-                    .build();
-            PhotosLibrarySettings settings =
-                    PhotosLibrarySettings.newBuilder()
-                            .setCredentialsProvider(
-                                    FixedCredentialsProvider.create(
-                                            userCredentials))
-                            .build();
-            PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
-            mClient = client;
-            return client;
-        }
-    }
-
-    private void setPendingRequirement(Require require) {
-        this.pendingRequirement = require;
-    }
-
-    private Require pendingRequirement;
+    // --- sync ---
 
     @Override
     public void onSyncClick() {
@@ -202,25 +183,21 @@ public class Presenter implements IPresenter{
             };
             Require writeReq = new WritePermission(exec, auth, view);
             Require signInReq = new SignInRequirement(writeReq, auth, view);
+            // TODO: 30/07/2019 peut-on mémoriser le requirement et le lancer
             setPendingRequirement(signInReq);
             signInReq.exec();
         }
     }
 
-    @Override
-    public void handlePermission(int result) {
-        // TODO: 09/06/2019 manage cancel, error
-        // TODO: 09/06/2019 call update User ()
-        if (pendingRequirement != null) {
-            pendingRequirement.resumeRequirement(result);
-        }
-    }
+    // --- Async Task ---
 
+    // TODO: 30/07/2019 mutualise code pour récupérer GoogleClient
     private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
         @Override
         protected ArrayList<String> doInBackground(Void... voids) {
             ArrayList<String> albumNames = new ArrayList<>();
+            // TODO: 30/07/2019 manage exceptions
             try {
                 PhotosLibraryClient client = getPhotoLibraryClient();
                 InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
@@ -254,6 +231,7 @@ public class Presenter implements IPresenter{
 
         @Override
         protected Void doInBackground(Void... voids) {
+            // TODO: 30/07/2019 manage exceptions
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
@@ -287,8 +265,55 @@ public class Presenter implements IPresenter{
             super.onPostExecute(voids);
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             view.updateUI_CallResult(sync, SyncStep.FINISHED);
+            // TODO: 30/07/2019 Does it isusefull to store syncrhonizer to store result ?
         }
+    }
 
+    // TODO: 30/07/2019 singleton
+    private PhotosLibraryClient mClient;
+
+    private PhotosLibraryClient getPhotoLibraryClient()
+            throws IOException, GoogleAuthException
+    {
+        if (mClient != null) {
+            Log.d(TAG, "get photo library client from cache");
+            return mClient;
+        } else {
+            /* Need an Id client OAuth in the google developer console of type android
+             * Put the package and the fingerprint (gradle signingReport)
+             */
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+            assert account != null && account.getAccount() != null;
+            String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
+            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                    .setAccessToken(new AccessToken(token, null))
+                    .build();
+            PhotosLibrarySettings settings =
+                    PhotosLibrarySettings.newBuilder()
+                            .setCredentialsProvider(
+                                    FixedCredentialsProvider.create(
+                                            userCredentials))
+                            .build();
+            PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
+            mClient = client;
+            return client;
+        }
+    }
+
+    // --- Requirement ---
+
+    private Require pendingRequirement;
+
+    private void setPendingRequirement(Require require) {
+        this.pendingRequirement = require;
+    }
+
+    @Override
+    public void handlePermission(int result) {
+        // TODO: 09/06/2019 manage cancel, error
+        if (pendingRequirement != null) {
+            pendingRequirement.resumeRequirement(result);
+        }
     }
 }
 

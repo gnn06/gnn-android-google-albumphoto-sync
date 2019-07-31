@@ -235,6 +235,7 @@ public class Presenter implements IPresenter{
             try {
                 String album = Presenter.this.album;
                 File destination = getFolder();
+                assert album != null && destination != null;
                 PhotosLibraryClient client = getPhotoLibraryClient();
                 sync.sync(album, destination, client);
             } catch (GoogleAuthException | IOException e) {
@@ -282,6 +283,7 @@ public class Presenter implements IPresenter{
             /* Need an Id client OAuth in the google developer console of type android
              * Put the package and the fingerprint (gradle signingReport)
              */
+            // TODO: 31/07/2019 manager error
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
             assert account != null && account.getAccount() != null;
             String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");

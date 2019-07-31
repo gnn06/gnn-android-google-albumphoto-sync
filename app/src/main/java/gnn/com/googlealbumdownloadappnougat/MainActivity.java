@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(result);
     }
 
-    private String getResultText(Synchronizer synchronizer, boolean finished) {
+    String getResultText(Synchronizer synchronizer, boolean finished) {
         String result = "";
         result += "downloaded = ";
         if (!finished) {

@@ -153,16 +153,11 @@ public class Presenter implements IPresenter{
 
     @Override
     public void chooseFolderResult(Intent data) {
-        try {
             Uri uri = data.getData();
             final String humanPath = Folder.getHumanPath(uri);
             Log.d(TAG,"humanPath=" + humanPath);
             this.folderHuman = humanPath;
             view.updateUI_Folder(humanPath);
-        } catch (Exception e) {
-            // TODO: 30/07/2019 manage error
-            Log.e(TAG, e.getMessage());
-        }
     }
 
     // --- sync ---

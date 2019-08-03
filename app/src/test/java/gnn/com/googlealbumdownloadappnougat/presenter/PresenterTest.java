@@ -10,7 +10,7 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
@@ -64,5 +64,6 @@ public class PresenterTest {
 
         assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
     }
+
 
 }

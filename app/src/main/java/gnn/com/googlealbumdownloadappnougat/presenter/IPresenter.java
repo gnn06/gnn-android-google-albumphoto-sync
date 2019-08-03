@@ -2,6 +2,8 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 public interface IPresenter {
 
     String getAlbum();
@@ -15,6 +17,8 @@ public interface IPresenter {
     void onShowAlbumList();
 
     void onChooseAlbum(String albumName);
+
+    void setAlbums(ArrayList<String> mAlbums);
 
     void onSyncClick();
 

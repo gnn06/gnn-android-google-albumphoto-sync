@@ -231,4 +231,12 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(humanPath);
     }
 
+    @Override
+    public void showError() {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.error))
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+    }
+
 }

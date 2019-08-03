@@ -17,7 +17,8 @@ public class MainActivityTest {
     @Test
     public void getResultText_inProgress() {
         Presenter.SyncTask syncTaskSpy = Mockito.mock(Presenter.SyncTask.class);
-        Synchronizer synchronizer = new Synchronizer(syncTaskSpy);
+        MainActivity activity = new MainActivity();
+        Synchronizer synchronizer = new Synchronizer(syncTaskSpy, activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));
@@ -28,8 +29,6 @@ public class MainActivityTest {
         Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
         Whitebox.setInternalState(synchronizer, "currentDownload", 2);
         Whitebox.setInternalState(synchronizer, "currentDelete", 1);
-        MainActivity activity = new MainActivity();
-
 
         String resultText = activity.getResultText(synchronizer,false);
 
@@ -39,7 +38,8 @@ public class MainActivityTest {
     @Test
     public void getResultText_finish() {
         Presenter.SyncTask syncTaskSpy = Mockito.mock(Presenter.SyncTask.class);
-        Synchronizer synchronizer = new Synchronizer(syncTaskSpy);
+        MainActivity activity = new MainActivity();
+        Synchronizer synchronizer = new Synchronizer(syncTaskSpy, activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));
@@ -50,7 +50,6 @@ public class MainActivityTest {
         Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
         Whitebox.setInternalState(synchronizer, "currentDownload", 2);
         Whitebox.setInternalState(synchronizer, "currentDelete", 1);
-        MainActivity activity = new MainActivity();
 
         String resultText = activity.getResultText(synchronizer,true);
 

@@ -20,4 +20,5 @@
     <string name="sync">sync</string>
     <string name="result">No result</string>
     <string name="cancel">Cancel</string>
+    <string name="error">An error occurred</string>
 </resources>

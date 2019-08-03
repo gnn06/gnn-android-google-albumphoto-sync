@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.model.Photo;
 
@@ -15,12 +16,14 @@ public class DownloadManagerTest {
     @Test
     public void download() {
         // check incCurrentDownload is called
+        MainActivity activity = Mockito.mock(MainActivity.class);
 
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         Photo photo = new Photo("http://gn.com/", "id12");
         toDownloadList.add(photo);
         File folder = new File("c:/temp/");
-        Synchronizer synchronizerSpy = Mockito.spy(new Synchronizer(Mockito.mock(Presenter.SyncTask.class)));
+
+        Synchronizer synchronizerSpy = Mockito.spy(new Synchronizer(Mockito.mock(Presenter.SyncTask.class), activity));
         try {
             DownloadManager.download(toDownloadList,
                     folder,

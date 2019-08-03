@@ -1,11 +1,12 @@
 package gnn.com.photos.sync;
 
-import com.google.photos.library.v1.PhotosLibraryClient;
+import com.google.android.gms.auth.GoogleAuthException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.local.PhotosLocalService;
 import gnn.com.photos.model.Photo;
@@ -14,6 +15,7 @@ import gnn.com.photos.remote.PhotosRemoteService;
 public class Synchronizer {
 
     private final Presenter.SyncTask syncTask;
+    private final MainActivity activity;
 
     private int currentDownload;
     private int currentDelete;
@@ -22,14 +24,15 @@ public class Synchronizer {
     private ArrayList toDownload;
     private ArrayList toDelete;
 
-    public Synchronizer(Presenter.SyncTask syncTask) {
+    public Synchronizer(Presenter.SyncTask syncTask, MainActivity activity) {
         this.syncTask = syncTask;
+        this.activity = activity;
     }
 
     // TODO: 07/05/2019 managed updated photo if possible
-    public void sync(String albumName, File folder, PhotosLibraryClient client) {
+    public void sync(String albumName, File folder) {
         try {
-            PhotosRemoteService prs = new PhotosRemoteService(client);
+            PhotosRemoteService prs = new PhotosRemoteService(activity);
             PhotosLocalService pls = new PhotosLocalService();
             System.out.println("get photos of album : " + albumName);
             System.out.println("download photos into folder : " + folder);
@@ -44,7 +47,7 @@ public class Synchronizer {
             System.out.println("to delete count = " + this.toDelete.size());
             pls.delete(this.getToDelete(), folder, this);
             DownloadManager.download(this.getToDownload(), folder, this);
-        } catch (IOException e) {
+        } catch (GoogleAuthException | IOException e) {
             e.printStackTrace();
         }
     }

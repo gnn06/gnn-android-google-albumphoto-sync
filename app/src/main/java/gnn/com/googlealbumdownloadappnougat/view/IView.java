@@ -20,4 +20,6 @@ public interface IView {
     void updateUI_CallResult(Synchronizer synchronizer, SyncStep step);
 
     void updateUI_Folder(String humanPath);
+
+    void showError();
 }

@@ -7,20 +7,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.api.gax.core.FixedCredentialsProvider;
-import com.google.auth.oauth2.AccessToken;
-import com.google.auth.oauth2.OAuth2Credentials;
-import com.google.photos.library.v1.PhotosLibraryClient;
-import com.google.photos.library.v1.PhotosLibrarySettings;
-import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
-import com.google.photos.types.proto.Album;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -31,6 +18,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.photos.remote.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 
 public class Presenter implements IPresenter{
@@ -91,10 +79,11 @@ public class Presenter implements IPresenter{
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
+            PhotosRemoteService prs = new PhotosRemoteService(activity);
+            final GetAlbumsTask task = new GetAlbumsTask(activity, this, prs);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
-                    GetAlbumsTask task = new GetAlbumsTask();
                     task.execute();
                 }
             };
@@ -117,6 +106,12 @@ public class Presenter implements IPresenter{
         view.onAlbumChoosenResult(albumName);
     }
 
+    @Override
+    public void setAlbums(ArrayList<String> albums) {
+        this.mAlbums = albums;
+        view.showChooseAlbumDialog(albums);
+    }
+
     // --- folder ---
 
     /**
@@ -137,8 +132,8 @@ public class Presenter implements IPresenter{
     public String getFolderHuman() {
         return this.folderHuman;
     }
-
     // Use from Persistence
+
     @Override
     public void setFolderHuman(String folderHuman) {
         this.folderHuman = folderHuman;
@@ -186,56 +181,17 @@ public class Presenter implements IPresenter{
 
     // --- Async Task ---
 
-    // TODO: 30/07/2019 mutualise code pour récupérer GoogleClient
-    private class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(Void... voids) {
-            ArrayList<String> albumNames = new ArrayList<>();
-            // TODO: 30/07/2019 manage exceptions
-            try {
-                PhotosLibraryClient client = getPhotoLibraryClient();
-                InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = client.listAlbums();
-                for (Album album : albums.iterateAll()) {
-                    albumNames.add(album.getTitle());
-                }
-            } catch (GoogleAuthException | IOException e) {
-                Log.e(TAG, "can't get photo library client");
-            }
-            return albumNames;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            view.setProgressBarVisibility(ProgressBar.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(final ArrayList<String> albums) {
-            super.onPostExecute(albums);
-            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            view.showChooseAlbumDialog(albums);
-            mAlbums = albums;
-        }
-    }
-
     public class SyncTask extends AsyncTask<Void, Void, Void> {
 
-        Synchronizer sync = new Synchronizer(this);
+        Synchronizer sync = new Synchronizer(this, activity);
 
         @Override
         protected Void doInBackground(Void... voids) {
             // TODO: 30/07/2019 manage exceptions
-            try {
-                String album = Presenter.this.album;
-                File destination = getFolder();
-                assert album != null && destination != null;
-                PhotosLibraryClient client = getPhotoLibraryClient();
-                sync.sync(album, destination, client);
-            } catch (GoogleAuthException | IOException e) {
-                Log.e(TAG, "can't get photo library client");
-            }
+            String album = Presenter.this.album;
+            File destination = getFolder();
+            assert album != null && destination != null;
+            sync.sync(album, destination);
             return null;
         }
 
@@ -262,38 +218,6 @@ public class Presenter implements IPresenter{
             view.setProgressBarVisibility(ProgressBar.INVISIBLE);
             view.updateUI_CallResult(sync, SyncStep.FINISHED);
             // TODO: 30/07/2019 Does it isusefull to store syncrhonizer to store result ?
-        }
-    }
-
-    // TODO: 30/07/2019 singleton
-    private PhotosLibraryClient mClient;
-
-    private PhotosLibraryClient getPhotoLibraryClient()
-            throws IOException, GoogleAuthException
-    {
-        if (mClient != null) {
-            Log.d(TAG, "get photo library client from cache");
-            return mClient;
-        } else {
-            /* Need an Id client OAuth in the google developer console of type android
-             * Put the package and the fingerprint (gradle signingReport)
-             */
-            // TODO: 31/07/2019 manager error
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-            assert account != null && account.getAccount() != null;
-            String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
-            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                    .setAccessToken(new AccessToken(token, null))
-                    .build();
-            PhotosLibrarySettings settings =
-                    PhotosLibrarySettings.newBuilder()
-                            .setCredentialsProvider(
-                                    FixedCredentialsProvider.create(
-                                            userCredentials))
-                            .build();
-            PhotosLibraryClient client = PhotosLibraryClient.initialize(settings);
-            mClient = client;
-            return client;
         }
     }
 

@@ -32,7 +32,7 @@ public class GetAlbumsTaskTest {
 
         when(prs.getAlbums()).thenReturn(resultExpected);
 
-        GetAlbumsTask task = new GetAlbumsTask(activity, presenter, prs);
+        GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
         ArrayList<String> resultActual = task.doInBackground();
         assertFalse(task.error);
         assertEquals(resultExpected, resultActual);
@@ -49,7 +49,7 @@ public class GetAlbumsTaskTest {
         PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
 
         when(prs.getAlbums()).thenThrow(new GoogleAuthException("test"));
-        GetAlbumsTask task = new GetAlbumsTask(activity, presenter, prs);
+        GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
         ArrayList<String> result = task.doInBackground();
         assertTrue(task.error);
         assertNull(result);

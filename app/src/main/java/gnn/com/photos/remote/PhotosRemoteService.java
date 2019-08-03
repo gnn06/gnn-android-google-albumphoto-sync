@@ -78,7 +78,7 @@ public class PhotosRemoteService {
             if (albumName.equals(title)) {
                 String albumId = album.getId();
                 //System.out.println("albumId=" + albumId);
-                InternalPhotosLibraryClient.SearchMediaItemsPagedResponse responsePhotos = client.searchMediaItems(albumId);
+                InternalPhotosLibraryClient.SearchMediaItemsPagedResponse responsePhotos = getPhotoLibraryClient().searchMediaItems(albumId);
                 int count = 0;
                 ArrayList result = new ArrayList();
                 for (MediaItem item : responsePhotos.iterateAll()) {

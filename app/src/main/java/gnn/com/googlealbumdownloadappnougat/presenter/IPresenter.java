@@ -31,4 +31,8 @@ public interface IPresenter {
     void chooseFolder();
 
     void chooseFolderResult(Intent data);
+
+    void showError();
+
+    void setProgressBarVisibility(int visible);
 }

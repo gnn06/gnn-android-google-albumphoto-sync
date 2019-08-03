@@ -80,7 +80,7 @@ public class Presenter implements IPresenter{
     public void onShowAlbumList() {
         if (mAlbums == null) {
             PhotosRemoteService prs = new PhotosRemoteService(activity);
-            final GetAlbumsTask task = new GetAlbumsTask(activity, this, prs);
+            final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
@@ -236,5 +236,17 @@ public class Presenter implements IPresenter{
             pendingRequirement.resumeRequirement(result);
         }
     }
+
+    @Override
+    public void showError() {
+        view.showError();
+    }
+
+    @Override
+    public void setProgressBarVisibility(int visible) {
+        view.setProgressBarVisibility(visible);
+    }
+
+
 }
 

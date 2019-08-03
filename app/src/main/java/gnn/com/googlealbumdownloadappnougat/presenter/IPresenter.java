@@ -4,6 +4,9 @@ import android.content.Intent;
 
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.photos.sync.Synchronizer;
+
 public interface IPresenter {
 
     String getAlbum();
@@ -35,4 +38,6 @@ public interface IPresenter {
     void showError();
 
     void setProgressBarVisibility(int visible);
+
+    void updateUI_CallResult(Synchronizer sync, SyncStep starting);
 }

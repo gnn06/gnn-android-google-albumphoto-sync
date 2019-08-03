@@ -2,12 +2,9 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.ProgressBar;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -120,14 +117,6 @@ public class Presenter implements IPresenter{
      */
     private String folderHuman = Environment.DIRECTORY_PICTURES;
 
-    /**
-     * Get File from human version of folder
-     * @return File
-     */
-    private File getFolder() {
-        return Environment.getExternalStoragePublicDirectory(folderHuman);
-    }
-
     @Override
     public String getFolderHuman() {
         return this.folderHuman;
@@ -164,10 +153,10 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
+            final SyncTask task = new SyncTask(this, activity);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
-                    SyncTask task = new SyncTask();
                     task.execute();
                 }
             };
@@ -176,48 +165,6 @@ public class Presenter implements IPresenter{
             // TODO: 30/07/2019 peut-on mémoriser le requirement et le lancer
             setPendingRequirement(signInReq);
             signInReq.exec();
-        }
-    }
-
-    // --- Async Task ---
-
-    public class SyncTask extends AsyncTask<Void, Void, Void> {
-
-        Synchronizer sync = new Synchronizer(this, activity);
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            // TODO: 30/07/2019 manage exceptions
-            String album = Presenter.this.album;
-            File destination = getFolder();
-            assert album != null && destination != null;
-            sync.sync(album, destination);
-            return null;
-        }
-
-        public void publicPublish() {
-            this.publishProgress();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            view.setProgressBarVisibility(ProgressBar.VISIBLE);
-            view.updateUI_CallResult(sync, SyncStep.STARTING);
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-            view.updateUI_CallResult(sync, SyncStep.IN_PRORGESS);
-        }
-
-        @Override
-        protected void onPostExecute(Void voids) {
-            super.onPostExecute(voids);
-            view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-            view.updateUI_CallResult(sync, SyncStep.FINISHED);
-            // TODO: 30/07/2019 Does it isusefull to store syncrhonizer to store result ?
         }
     }
 
@@ -245,6 +192,11 @@ public class Presenter implements IPresenter{
     @Override
     public void setProgressBarVisibility(int visible) {
         view.setProgressBarVisibility(visible);
+    }
+
+    @Override
+    public void updateUI_CallResult(Synchronizer sync, SyncStep starting) {
+        view.updateUI_CallResult(sync, starting);
     }
 
 

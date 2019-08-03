@@ -42,7 +42,6 @@ public class PhotosRemoteService {
             /* Need an Id client OAuth in the google developer console of type android
              * Put the package and the fingerprint (gradle signingReport)
              */
-            // TODO: 31/07/2019 manager error
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
             assert account != null && account.getAccount() != null;
             String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");

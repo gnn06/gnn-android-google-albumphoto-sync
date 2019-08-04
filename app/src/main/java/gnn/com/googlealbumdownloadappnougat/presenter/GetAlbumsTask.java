@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import gnn.com.photos.remote.PhotosRemoteService;
 
-// TODO: 30/07/2019 mutualise code pour récupérer GoogleClient
 public class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     private static final String TAG = "goi";
@@ -28,7 +27,6 @@ public class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
 
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
-        // TODO: 30/07/2019 manage exceptions
         ArrayList<String> albumNames = null;
         try {
             albumNames = prs.getAlbums();

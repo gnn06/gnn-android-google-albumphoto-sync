@@ -30,7 +30,6 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        // TODO: 30/07/2019 manage exceptions
         String album = presenter.getAlbum();
         File destination = presenter.getFolder();
         assert album != null && destination != null;

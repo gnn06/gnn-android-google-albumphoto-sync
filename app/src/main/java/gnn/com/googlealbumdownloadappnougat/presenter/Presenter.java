@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -123,6 +124,15 @@ public class Presenter implements IPresenter{
     }
     // Use from Persistence
 
+    /**
+     * Get File from human version of folder
+     * @return File
+     */
+    @Override
+    public File getFolder() {
+        return Environment.getExternalStoragePublicDirectory(this.getFolderHuman());
+    }
+
     @Override
     public void setFolderHuman(String folderHuman) {
         this.folderHuman = folderHuman;
@@ -153,7 +163,9 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            final SyncTask task = new SyncTask(this, activity);
+            Synchronizer synchro = new Synchronizer(activity);
+            final SyncTask task = new SyncTask(this, synchro);
+            synchro.setSyncTask(task);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {

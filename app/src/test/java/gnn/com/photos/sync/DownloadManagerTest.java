@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.SyncTask;
 import gnn.com.photos.model.Photo;
 
 public class DownloadManagerTest {
@@ -23,7 +23,8 @@ public class DownloadManagerTest {
         toDownloadList.add(photo);
         File folder = new File("c:/temp/");
 
-        Synchronizer synchronizerSpy = Mockito.spy(new Synchronizer(Mockito.mock(Presenter.SyncTask.class), activity));
+        Synchronizer synchronizerSpy = Mockito.spy(new Synchronizer(activity));
+        synchronizerSpy.setSyncTask(Mockito.mock(SyncTask.class));
         try {
             DownloadManager.download(toDownloadList,
                     folder,

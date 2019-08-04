@@ -33,7 +33,9 @@ public class GetAlbumsTaskTest {
         when(prs.getAlbums()).thenReturn(resultExpected);
 
         GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
+
         ArrayList<String> resultActual = task.doInBackground();
+
         assertFalse(task.error);
         assertEquals(resultExpected, resultActual);
 
@@ -55,7 +57,7 @@ public class GetAlbumsTaskTest {
         assertNull(result);
 
         task.onPostExecute(null);
-        verify(activity).showError();
+        verify(presenter).showError();
         verify(presenter, never()).setAlbums(null);
     }
 

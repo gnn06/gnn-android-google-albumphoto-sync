@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.presenter;
 
 import android.content.Intent;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
@@ -28,6 +29,8 @@ public interface IPresenter {
     void handlePermission(int i);
 
     String getFolderHuman();
+
+    File getFolder();
 
     void setFolderHuman(String folderHuman);
 

@@ -6,7 +6,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.SyncTask;
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -16,9 +16,9 @@ public class MainActivityTest {
 
     @Test
     public void getResultText_inProgress() {
-        Presenter.SyncTask syncTaskSpy = Mockito.mock(Presenter.SyncTask.class);
+        SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        Synchronizer synchronizer = new Synchronizer(syncTaskSpy, activity);
+        Synchronizer synchronizer = new Synchronizer(activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));
@@ -37,9 +37,9 @@ public class MainActivityTest {
 
     @Test
     public void getResultText_finish() {
-        Presenter.SyncTask syncTaskSpy = Mockito.mock(Presenter.SyncTask.class);
+        SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        Synchronizer synchronizer = new Synchronizer(syncTaskSpy, activity);
+        Synchronizer synchronizer = new Synchronizer(activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));

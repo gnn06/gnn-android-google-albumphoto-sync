@@ -14,7 +14,7 @@ import gnn.com.photos.remote.PhotosRemoteService;
 
 public class Synchronizer {
 
-    private final SyncTask syncTask;
+    private SyncTask syncTask;
     private MainActivity activity;
 
     private int currentDownload;
@@ -24,9 +24,12 @@ public class Synchronizer {
     private ArrayList toDownload;
     private ArrayList toDelete;
 
-    public Synchronizer(SyncTask syncTask, MainActivity activity) {
-        this.syncTask = syncTask;
+    public Synchronizer(MainActivity activity) {
         this.activity = activity;
+    }
+
+    public void setSyncTask(SyncTask syncTask) {
+        this.syncTask = syncTask;
     }
 
     // TODO: 07/05/2019 managed updated photo if possible

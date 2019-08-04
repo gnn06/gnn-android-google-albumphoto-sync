@@ -165,7 +165,6 @@ public class Presenter implements IPresenter{
         } else {
             Synchronizer synchro = new Synchronizer(activity);
             final SyncTask task = new SyncTask(this, synchro);
-            synchro.setSyncTask(task);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {

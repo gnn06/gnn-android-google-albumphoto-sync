@@ -32,7 +32,6 @@ public class SyncTaskTest {
         when(((Presenter) presenter).getFolder()).thenReturn(file);
 
         SyncTask task = new SyncTask(presenter, sync);
-        sync.setSyncTask(task);
 
         task.doInBackground();
 
@@ -57,7 +56,6 @@ public class SyncTaskTest {
         doThrow(new GoogleAuthException()).when(sync).sync("album", file);
 
         SyncTask task = new SyncTask(presenter, sync);
-        sync.setSyncTask(task);
 
         task.doInBackground();
 

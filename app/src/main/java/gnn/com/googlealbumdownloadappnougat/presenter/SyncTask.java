@@ -19,6 +19,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
     public SyncTask(IPresenter presenter, Synchronizer sync) {
         this.presenter = presenter;
         this.sync = sync;
+        sync.setSyncTask(this);
     }
 
     private IPresenter presenter;

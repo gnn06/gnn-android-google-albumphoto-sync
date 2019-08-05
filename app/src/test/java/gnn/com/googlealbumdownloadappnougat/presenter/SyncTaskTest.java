@@ -12,8 +12,6 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.photos.sync.Synchronizer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -34,8 +32,6 @@ public class SyncTaskTest {
         SyncTask task = new SyncTask(presenter, sync);
 
         task.doInBackground();
-
-        assertFalse(task.error);
 
         task.onPostExecute(null);
 
@@ -58,8 +54,6 @@ public class SyncTaskTest {
         SyncTask task = new SyncTask(presenter, sync);
 
         task.doInBackground();
-
-        assertTrue(task.error);
 
         task.onPostExecute(null);
 

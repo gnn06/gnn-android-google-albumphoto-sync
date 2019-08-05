@@ -12,9 +12,7 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.remote.PhotosRemoteService;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,7 +34,6 @@ public class GetAlbumsTaskTest {
 
         ArrayList<String> resultActual = task.doInBackground();
 
-        assertFalse(task.error);
         assertEquals(resultExpected, resultActual);
 
         task.onPostExecute(resultActual);
@@ -53,7 +50,6 @@ public class GetAlbumsTaskTest {
         when(prs.getAlbums()).thenThrow(new GoogleAuthException("test"));
         GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
         ArrayList<String> result = task.doInBackground();
-        assertTrue(task.error);
         assertNull(result);
 
         task.onPostExecute(null);

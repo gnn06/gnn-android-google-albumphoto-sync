@@ -1,8 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.presenter;
 
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
@@ -12,21 +10,15 @@ import java.io.IOException;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.photos.sync.Synchronizer;
 
-public class SyncTask extends AsyncTask<Void, Void, Void> {
-
-    private static final String TAG = "goi";
-
-    public SyncTask(IPresenter presenter, Synchronizer sync) {
-        this.presenter = presenter;
-        this.sync = sync;
-        sync.setSyncTask(this);
-    }
-
-    private IPresenter presenter;
+public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
 
     private Synchronizer sync;
 
-    public boolean error;
+    SyncTask(IPresenter presenter, Synchronizer sync) {
+        super(presenter);
+        this.sync = sync;
+        sync.setSyncTask(this);
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -37,7 +29,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
             sync.sync(album, destination);
         } catch (GoogleAuthException | IOException e) {
             Log.e(TAG, e.getMessage());
-            this.error = true;
+            markAsError();
         }
         return null;
     }
@@ -49,8 +41,6 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        this.error = false;
-        presenter.setProgressBarVisibility(ProgressBar.VISIBLE);
         presenter.updateUI_CallResult(sync, SyncStep.STARTING);
     }
 
@@ -63,10 +53,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void voids) {
         super.onPostExecute(voids);
-        if (error) {
-            presenter.showError();
-        } else {
-            presenter.setProgressBarVisibility(ProgressBar.INVISIBLE);
+        if (isSuccessful()) {
             presenter.updateUI_CallResult(sync, SyncStep.FINISHED);
         }
     }

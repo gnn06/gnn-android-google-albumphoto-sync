@@ -1,8 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.presenter;
 
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
@@ -11,19 +9,14 @@ import java.util.ArrayList;
 
 import gnn.com.photos.remote.PhotosRemoteService;
 
-public class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
-
-    private static final String TAG = "goi";
-
-    GetAlbumsTask(IPresenter presenter, PhotosRemoteService prs) {
-        this.presenter = presenter;
-        this.prs = prs;
-    }
+public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>> {
 
     private PhotosRemoteService prs;
-    private IPresenter presenter;
 
-    boolean error = false;
+    GetAlbumsTask(IPresenter presenter, PhotosRemoteService prs) {
+        super(presenter);
+        this.prs = prs;
+    }
 
     @Override
     protected ArrayList<String> doInBackground(Void... voids) {
@@ -32,7 +25,7 @@ public class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
             albumNames = prs.getAlbums();
         } catch (IOException | GoogleAuthException e) {
             Log.e(TAG, e.getMessage());
-            this.error = true;
+            markAsError();
         }
         return albumNames;
     }
@@ -40,17 +33,12 @@ public class GetAlbumsTask extends AsyncTask<Void, Void, ArrayList<String>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        presenter.setProgressBarVisibility(ProgressBar.VISIBLE);
-        this.error = false;
     }
 
     @Override
     protected void onPostExecute(final ArrayList<String> albums) {
         super.onPostExecute(albums);
-        presenter.setProgressBarVisibility(ProgressBar.INVISIBLE);
-        if (error) {
-            presenter.showError();
-        } else {
+        if (isSuccessful()) {
             presenter.setAlbums(albums);
         }
     }

@@ -8,53 +8,27 @@ import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.remote.PhotosRemoteService;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class GetAlbumsTaskTest {
 
     @Test
-    public void doInBackground() throws IOException, GoogleAuthException {
-        MainActivity activity = Mockito.mock(MainActivity.class);
-        Presenter presenter = Mockito.mock(Presenter.class);
-        PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
-
-        ArrayList<String> resultExpected = new ArrayList<>();
-        resultExpected.add("id1");
-
-        when(prs.getAlbums()).thenReturn(resultExpected);
-
-        GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
-
-        ArrayList<String> resultActual = task.doInBackground();
-
-        assertEquals(resultExpected, resultActual);
-
-        task.onPostExecute(resultActual);
-        verify(activity, never()).showError();
-        verify(presenter).setAlbums(resultActual);
-    }
-
-    @Test
     public void doInBackground_Error() throws IOException, GoogleAuthException {
-        MainActivity activity = Mockito.mock(MainActivity.class);
         Presenter presenter = Mockito.mock(Presenter.class);
         PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
 
         when(prs.getAlbums()).thenThrow(new GoogleAuthException("test"));
-        GetAlbumsTask task = new GetAlbumsTask(presenter, prs);
-        ArrayList<String> result = task.doInBackground();
-        assertNull(result);
 
-        task.onPostExecute(null);
-        verify(presenter).showError();
-        verify(presenter, never()).setAlbums(null);
+        GetAlbumsTask task = Mockito.spy(new GetAlbumsTask(presenter, prs));
+
+        ArrayList<String> result = task.doInBackground();
+
+        assertNull(result);
+        verify(task).markAsError();
     }
 
 }

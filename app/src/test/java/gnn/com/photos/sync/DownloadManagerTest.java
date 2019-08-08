@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.presenter.SyncTask;
+import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
 import gnn.com.photos.model.Photo;
 
 public class DownloadManagerTest {

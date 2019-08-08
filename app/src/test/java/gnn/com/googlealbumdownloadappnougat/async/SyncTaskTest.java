@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.presenter;
+package gnn.com.googlealbumdownloadappnougat.async;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import java.io.File;
 import java.io.IOException;
 
+import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.sync.Synchronizer;
 
 import static org.mockito.Mockito.doThrow;

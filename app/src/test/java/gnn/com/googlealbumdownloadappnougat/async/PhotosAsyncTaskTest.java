@@ -1,9 +1,11 @@
-package gnn.com.googlealbumdownloadappnougat.presenter;
+package gnn.com.googlealbumdownloadappnougat.async;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.photos.sync.Synchronizer;
 
 import static org.mockito.Mockito.never;

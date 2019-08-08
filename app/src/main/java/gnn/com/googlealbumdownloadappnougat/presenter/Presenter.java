@@ -12,6 +12,8 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.googlealbumdownloadappnougat.async.GetAlbumsTask;
+import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;

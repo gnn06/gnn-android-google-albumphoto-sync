@@ -8,9 +8,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
+import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
@@ -22,7 +25,7 @@ public class PresenterTest {
         Whitebox.setInternalState(presenter, "album", null);
         IView view = Mockito.spy(IView.class);
         presenter.onSyncClick();
-        Mockito.verify(view, Mockito.never()).alertNoAlbum();
+        verify(view, Mockito.never()).alertNoAlbum();
     }
 
     @Test
@@ -63,6 +66,23 @@ public class PresenterTest {
         presenter.onShowAlbumList();
 
         assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
+    }
+
+    @Test
+    public void startRequirement () {
+        // given
+        MainActivity view = Mockito.mock(MainActivity.class);
+        Presenter presenter = new Presenter(view, view);
+        Require require = Mockito.mock(Require.class);
+
+        // when
+        presenter.startRequirement(require);
+
+        // then
+        // verify that the require is stored and started
+        assertEquals(require, Whitebox.getInternalState(presenter, "pendingRequirement"));
+        verify(require).exec();
+
     }
 
 

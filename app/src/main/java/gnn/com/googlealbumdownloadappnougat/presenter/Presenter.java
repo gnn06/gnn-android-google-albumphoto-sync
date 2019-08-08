@@ -44,8 +44,7 @@ public class Presenter implements IPresenter{
     @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view);
-        setPendingRequirement(require);
-        require.exec();
+        startRequirement(require);
     }
 
     @Override
@@ -88,8 +87,7 @@ public class Presenter implements IPresenter{
                 }
             };
             Require signInReq = new SignInRequirement(exec, auth, view);
-            setPendingRequirement(signInReq);
-            signInReq.exec();
+            startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
             view.showChooseAlbumDialog(mAlbums);
@@ -176,9 +174,7 @@ view.updateUI_Folder(humanPath);
             };
             Require writeReq = new WritePermission(exec, auth, view);
             Require signInReq = new SignInRequirement(writeReq, auth, view);
-            // TODO: 30/07/2019 peut-on mémoriser le requirement et le lancer
-            setPendingRequirement(signInReq);
-            signInReq.exec();
+            startRequirement(signInReq);
         }
     }
 
@@ -186,8 +182,9 @@ view.updateUI_Folder(humanPath);
 
     private Require pendingRequirement;
 
-    private void setPendingRequirement(Require require) {
+    void startRequirement(Require require) {
         this.pendingRequirement = require;
+        require.exec();
     }
 
     @Override
@@ -211,7 +208,6 @@ view.updateUI_Folder(humanPath);
     public void updateUI_CallResult(Synchronizer sync, SyncStep starting) {
         view.updateUI_CallResult(sync, starting);
     }
-
 
 }
 

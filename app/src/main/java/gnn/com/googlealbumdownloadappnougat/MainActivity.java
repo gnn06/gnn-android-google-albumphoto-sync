@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
             // return to app without choosing a folder : data == null && resultCode == 0
-            // TODO: 30/07/2019 manage resultCode != OK
             presenter.chooseFolderResult(data);
         }
     }

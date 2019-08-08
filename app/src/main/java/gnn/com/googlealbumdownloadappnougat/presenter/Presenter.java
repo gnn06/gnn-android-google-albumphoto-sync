@@ -192,7 +192,6 @@ view.updateUI_Folder(humanPath);
 
     @Override
     public void handlePermission(int result) {
-        // TODO: 09/06/2019 manage cancel, error
         if (pendingRequirement != null) {
             pendingRequirement.resumeRequirement(result);
         }

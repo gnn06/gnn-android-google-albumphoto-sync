@@ -8,6 +8,8 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -71,7 +73,7 @@ public class Presenter implements IPresenter{
     @Override
     public void setAlbum(String album) {
         this.album = album;
-        view.onAlbumChoosenResult(album);
+        view.onAlbumChosenResult(album);
     }
 
     @Override
@@ -96,12 +98,12 @@ public class Presenter implements IPresenter{
 
     /**
      * Called from alertDialog showing album list
-     * @param albumName
+     * @param albumName chosen album
      */
     @Override
     public void onChooseAlbum(String albumName) {
         this.album = albumName;
-        view.onAlbumChoosenResult(albumName);
+        view.onAlbumChosenResult(albumName);
     }
 
     @Override
@@ -146,12 +148,13 @@ public class Presenter implements IPresenter{
     }
 
     @Override
-    public void chooseFolderResult(Intent data) {
-            Uri uri = data.getData();
-            final String humanPath = Folder.getHumanPath(uri);
-            Log.d(TAG,"humanPath=" + humanPath);
-            this.folderHuman = humanPath;
-            view.updateUI_Folder(humanPath);
+    public void chooseFolderResult(@Nonnull Intent data) {
+        Uri uri = data.getData();
+        assert uri != null;
+        final String humanPath = Folder.getHumanPath(uri);
+        Log.d(TAG,"humanPath=" + humanPath);
+        this.folderHuman = humanPath;
+view.updateUI_Folder(humanPath);
     }
 
     // --- sync ---

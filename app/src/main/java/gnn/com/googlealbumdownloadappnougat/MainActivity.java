@@ -86,10 +86,9 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout:
-                presenter.onSignOut();
-                return true;
+        if (item.getItemId() == R.id.logout) {
+            presenter.onSignOut();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         if (requestCode == RC_SIGN_IN  || requestCode == RC_AUTHORIZE_PHOTOS) {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
+            // return to app without choosing a folder : data == null && resultCode == 0
             // TODO: 30/07/2019 manage resultCode != OK
             presenter.chooseFolderResult(data);
         }
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void onAlbumChoosenResult(String albumName) {
+    public void onAlbumChosenResult(String albumName) {
         TextView textView = findViewById(R.id.textAlbum);
         textView.setText(albumName);
     }

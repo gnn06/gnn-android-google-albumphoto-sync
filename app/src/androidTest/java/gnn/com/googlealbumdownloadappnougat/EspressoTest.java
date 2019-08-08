@@ -24,7 +24,7 @@ public class EspressoTest {
             new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void AlbumClick() throws Throwable {
+    public void AlbumClick() {
         onView(withId(R.id.SectionAlbum)).perform(click());
     }
 

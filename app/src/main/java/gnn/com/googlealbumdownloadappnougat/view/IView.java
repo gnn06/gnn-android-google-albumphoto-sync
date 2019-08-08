@@ -9,7 +9,7 @@ public interface IView {
 
     void showChooseAlbumDialog(final ArrayList<String> mAlbums);
 
-    void onAlbumChoosenResult(String albumName);
+    void onAlbumChosenResult(String albumName);
 
     void setProgressBarVisibility(int visible);
 

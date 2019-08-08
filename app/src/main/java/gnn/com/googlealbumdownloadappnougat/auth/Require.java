@@ -7,7 +7,7 @@ public abstract class Require extends Exec {
 
     private Exec exec;
 
-    protected Require(Exec exec) {
+    Require(Exec exec) {
         this.exec = exec;
     }
 

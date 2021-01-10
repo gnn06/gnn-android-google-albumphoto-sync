@@ -34,8 +34,27 @@ public abstract class Synchronizer {
         this.resetCurrent();
         this.remote = prs.getRemotePhotos(albumName);
         this.local = pls.getLocalPhotos(folder);
-        this.toDownload = calculToDownload();
+        this.toDownload = RemoteSelector.calculToDownload(this.remote, this.local);
         this.toDelete   = calculToDelete();
+        System.out.println("remote count = " + this.remote.size());
+        System.out.println("local count = " + this.local.size());
+        System.out.println("to download count = " + this.toDownload.size());
+        System.out.println("to delete count = " + this.toDelete.size());
+        pls.delete(this.getToDelete(), folder, this);
+        DownloadManager.download(this.getToDownload(), folder, this);
+    }
+
+    /**
+     * choose one photo and download it, delete previous downloaded photo.
+     */
+    public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
+        PhotosRemoteService prs = getRemoteService();
+        PhotosLocalService pls = new PhotosLocalService();
+        this.resetCurrent();
+        this.remote = prs.getRemotePhotos(albumName);
+        this.local = pls.getLocalPhotos(folder);
+        this.toDelete   = local;
+        this.toDownload = RemoteSelector.chooseOneToDownload(this.remote);
         System.out.println("remote count = " + this.remote.size());
         System.out.println("local count = " + this.local.size());
         System.out.println("to download count = " + this.toDownload.size());
@@ -70,15 +89,9 @@ public abstract class Synchronizer {
         this.currentDelete += 1;
     }
 
-    void resetCurrent() {
+    private void resetCurrent() {
         this.currentDownload = 0;
         this.currentDelete= 0;
-    }
-
-    public ArrayList<Photo> calculToDownload() {
-        ArrayList<Photo> result = new ArrayList<>(this.remote);
-        result.removeAll(this.local);
-        return result;
     }
 
     private ArrayList<Photo> calculToDelete() {
@@ -87,11 +100,11 @@ public abstract class Synchronizer {
         return result;
     }
 
-    public ArrayList<Photo> getToDownload() {
+    private ArrayList<Photo> getToDownload() {
         return toDownload;
     }
 
-    public ArrayList<Photo> getToDelete() {
+    private ArrayList<Photo> getToDelete() {
         return toDelete;
     }
 }

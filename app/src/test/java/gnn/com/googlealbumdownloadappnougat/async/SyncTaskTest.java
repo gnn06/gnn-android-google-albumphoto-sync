@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -21,7 +21,7 @@ public class SyncTaskTest {
     @Test
     public void doInBackground_Error() throws IOException, GoogleAuthException {
         IPresenter presenter = Mockito.mock(Presenter.class);
-        Synchronizer sync = Mockito.mock(Synchronizer.class);
+        SynchronizerAndroid sync = Mockito.mock(SynchronizerAndroid.class);
         File file = Mockito.mock(File.class);
 
         when(presenter.getAlbum()).thenReturn("album");

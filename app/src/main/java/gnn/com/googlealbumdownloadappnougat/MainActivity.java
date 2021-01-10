@@ -27,7 +27,7 @@ import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_CallResult(Synchronizer synchronizer, SyncStep step) {
+    public void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step) {
         String result = "";
         switch (step) {
             case STARTING:
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(result);
     }
 
-    String getResultText(Synchronizer synchronizer, boolean finished) {
+    String getResultText(SynchronizerAndroid synchronizer, boolean finished) {
         String result = "";
         result += "downloaded = ";
         if (!finished) {

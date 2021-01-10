@@ -6,16 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
 import gnn.com.photos.local.PhotosLocalService;
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.remote.PhotosRemoteService;
 
-public class Synchronizer {
-
-    private SyncTask syncTask;
-    private final MainActivity activity;
+public abstract class Synchronizer {
 
     private int currentDownload;
     private int currentDelete;
@@ -23,14 +18,6 @@ public class Synchronizer {
     private ArrayList<Photo> local;
     private ArrayList<Photo> toDownload;
     private ArrayList<Photo> toDelete;
-
-    public Synchronizer(MainActivity activity) {
-        this.activity = activity;
-    }
-
-    public void setSyncTask(SyncTask syncTask) {
-        this.syncTask = syncTask;
-    }
 
     /**
      * Main method.
@@ -40,7 +27,7 @@ public class Synchronizer {
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
-        PhotosRemoteService prs = new PhotosRemoteService(activity);
+        PhotosRemoteService prs = getRemoteService();
         PhotosLocalService pls = new PhotosLocalService();
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
@@ -56,6 +43,8 @@ public class Synchronizer {
         pls.delete(this.getToDelete(), folder, this);
         DownloadManager.download(this.getToDownload(), folder, this);
     }
+
+    abstract protected PhotosRemoteService getRemoteService();
 
     public int getTotalDownload() {
         return this.getToDownload().size();
@@ -73,14 +62,12 @@ public class Synchronizer {
         return this.currentDelete;
     }
 
-    void incCurrentDownload() {
+    protected void incCurrentDownload() {
         this.currentDownload += 1;
-        this.syncTask.publicPublish();
     }
 
     public void incCurrentDelete() {
         this.currentDelete += 1;
-        this.syncTask.publicPublish();
     }
 
     void resetCurrent() {
@@ -107,5 +94,4 @@ public class Synchronizer {
     public ArrayList<Photo> getToDelete() {
         return toDelete;
     }
-
 }

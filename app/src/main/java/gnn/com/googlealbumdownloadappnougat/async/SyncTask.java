@@ -9,13 +9,13 @@ import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
 
-    private Synchronizer sync;
+    private SynchronizerAndroid sync;
 
-    public SyncTask(IPresenter presenter, Synchronizer sync) {
+    public SyncTask(IPresenter presenter, SynchronizerAndroid sync) {
         super(presenter);
         this.sync = sync;
         sync.setSyncTask(this);

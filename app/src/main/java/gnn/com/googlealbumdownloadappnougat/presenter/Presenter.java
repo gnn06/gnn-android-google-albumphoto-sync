@@ -21,7 +21,8 @@ import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.view.IView;
 import gnn.com.photos.remote.PhotosRemoteService;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class Presenter implements IPresenter{
 
@@ -80,7 +81,7 @@ public class Presenter implements IPresenter{
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteService(activity);
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity);
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -166,7 +167,7 @@ view.updateUI_Folder(humanPath);
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            Synchronizer synchro = new Synchronizer(activity);
+            SynchronizerAndroid synchro = new SynchronizerAndroid(activity);
             final SyncTask task = new SyncTask(this, synchro);
             Exec exec = new Exec() {
                 @Override
@@ -207,7 +208,7 @@ view.updateUI_Folder(humanPath);
     }
 
     @Override
-    public void updateUI_CallResult(Synchronizer sync, SyncStep starting) {
+    public void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting) {
         view.updateUI_CallResult(sync, starting);
     }
 

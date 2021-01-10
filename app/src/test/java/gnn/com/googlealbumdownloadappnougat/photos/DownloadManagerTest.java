@@ -1,4 +1,4 @@
-package gnn.com.photos.sync;
+package gnn.com.googlealbumdownloadappnougat.photos;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.sync.DownloadManager;
 
 public class DownloadManagerTest {
 
@@ -23,7 +25,7 @@ public class DownloadManagerTest {
         toDownloadList.add(photo);
         File folder = new File("c:/temp/");
 
-        Synchronizer synchronizerSpy = Mockito.spy(new Synchronizer(activity));
+        SynchronizerAndroid synchronizerSpy = Mockito.spy(new SynchronizerAndroid(activity));
         synchronizerSpy.setSyncTask(Mockito.mock(SyncTask.class));
         try {
             DownloadManager.download(toDownloadList,

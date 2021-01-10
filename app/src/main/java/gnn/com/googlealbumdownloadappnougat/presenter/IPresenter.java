@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public interface IPresenter {
 
@@ -42,5 +42,5 @@ public interface IPresenter {
 
     void setProgressBarVisibility(int visible);
 
-    void updateUI_CallResult(Synchronizer sync, SyncStep starting);
+    void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting);
 }

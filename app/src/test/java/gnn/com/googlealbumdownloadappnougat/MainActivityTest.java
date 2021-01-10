@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +18,7 @@ public class MainActivityTest {
     public void getResultText_inProgress() {
         SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        Synchronizer synchronizer = new Synchronizer(activity);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));
@@ -39,7 +39,7 @@ public class MainActivityTest {
     public void getResultText_finish() {
         SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        Synchronizer synchronizer = new Synchronizer(activity);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));

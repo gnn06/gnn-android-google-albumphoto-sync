@@ -2,8 +2,12 @@ package gnn.com.photos.model;
 
 public class Photo {
 
-    private String url;
-    private String id;
+    /**
+     * Remote Url don't contain extension ".jpg"
+     */
+    private final String url;
+    
+    private final String id;
 
     public String getUrl() {
         return url;

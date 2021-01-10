@@ -15,14 +15,14 @@ import gnn.com.photos.remote.PhotosRemoteService;
 public class Synchronizer {
 
     private SyncTask syncTask;
-    private MainActivity activity;
+    private final MainActivity activity;
 
     private int currentDownload;
     private int currentDelete;
-    private ArrayList remote;
-    private ArrayList local;
-    private ArrayList toDownload;
-    private ArrayList toDelete;
+    private ArrayList<Photo> remote;
+    private ArrayList<Photo> local;
+    private ArrayList<Photo> toDownload;
+    private ArrayList<Photo> toDelete;
 
     public Synchronizer(MainActivity activity) {
         this.activity = activity;
@@ -32,6 +32,12 @@ public class Synchronizer {
         this.syncTask = syncTask;
     }
 
+    /**
+     * Main method.
+     * Synchronize local folder with given album name.
+     * Retrieve photo list from Google, retrieve already donwloaded photo from local folder
+     * Determine new photo to download and photo to be deleled.
+     */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
         PhotosRemoteService prs = new PhotosRemoteService(activity);
@@ -83,22 +89,22 @@ public class Synchronizer {
     }
 
     public ArrayList<Photo> calculToDownload() {
-        ArrayList result = ((ArrayList)this.remote.clone());
+        ArrayList<Photo> result = new ArrayList<>(this.remote);
         result.removeAll(this.local);
         return result;
     }
 
-    private ArrayList calculToDelete() {
-        ArrayList result = ((ArrayList)this.local.clone());
+    private ArrayList<Photo> calculToDelete() {
+        ArrayList<Photo> result = new ArrayList<>(this.local);
         result.removeAll(this.remote);
         return result;
     }
 
-    public ArrayList getToDownload() {
+    public ArrayList<Photo> getToDownload() {
         return toDownload;
     }
 
-    public ArrayList getToDelete() {
+    public ArrayList<Photo> getToDelete() {
         return toDelete;
     }
 

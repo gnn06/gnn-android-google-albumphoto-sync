@@ -26,10 +26,44 @@ public class PhotosRemoteService {
 
     private static final String TAG = "goi";
     private PhotosLibraryClient client;
-    private Context activity;
+    private final Context activity;
 
     public PhotosRemoteService(MainActivity activity) {
         this.activity = activity;
+    }
+
+    /**
+     * Retrieve remote album list
+     */
+    public ArrayList<String> getAlbums() throws IOException, GoogleAuthException {
+        ArrayList<String> albumNames = new ArrayList<>();
+        InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = getPhotoLibraryClient().listAlbums();
+        for (Album album : albums.iterateAll()) {
+            albumNames.add(album.getTitle());
+        }
+        return albumNames;
+    }
+
+    /**
+     * Retrieve remote photo list.
+     */
+    public ArrayList<Photo> getRemotePhotos(String albumName) throws IOException, GoogleAuthException {
+
+        InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getPhotoLibraryClient().listAlbums();
+        for (Album album : response.iterateAll()) {
+            String title = album.getTitle();
+            if (albumName.equals(title)) {
+                String albumId = album.getId();
+                //System.out.println("albumId=" + albumId);
+                InternalPhotosLibraryClient.SearchMediaItemsPagedResponse responsePhotos = getPhotoLibraryClient().searchMediaItems(albumId);
+                ArrayList<Photo> result = new ArrayList<>();
+                for (MediaItem item : responsePhotos.iterateAll()) {
+                    result.add(new Photo(item.getBaseUrl(), item.getId()));
+                }
+                return result;
+            }
+        }
+        return null;
     }
 
     private PhotosLibraryClient getPhotoLibraryClient()
@@ -59,36 +93,4 @@ public class PhotosRemoteService {
             return client;
         }
     }
-
-    public ArrayList<String> getAlbums() throws IOException, GoogleAuthException {
-        ArrayList<String> albumNames = new ArrayList<>();
-        InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = getPhotoLibraryClient().listAlbums();
-        for (Album album : albums.iterateAll()) {
-            albumNames.add(album.getTitle());
-        }
-        return albumNames;
-    }
-
-    public ArrayList getRemotePhotos(String albumName) throws IOException, GoogleAuthException {
-
-        InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getPhotoLibraryClient().listAlbums();
-        for (Album album : response.iterateAll()) {
-            String title = album.getTitle();
-            if (albumName.equals(title)) {
-                String albumId = album.getId();
-                //System.out.println("albumId=" + albumId);
-                InternalPhotosLibraryClient.SearchMediaItemsPagedResponse responsePhotos = getPhotoLibraryClient().searchMediaItems(albumId);
-                int count = 0;
-                ArrayList result = new ArrayList();
-                for (MediaItem item : responsePhotos.iterateAll()) {
-                    String filename = item.getFilename();
-                    result.add(new Photo(item.getBaseUrl(), item.getId()));
-                    count++;
-                }
-                return result;
-            }
-        }
-        return null;
-    }
-
 }

@@ -12,6 +12,11 @@ import gnn.com.photos.model.Photo;
 
 public class DownloadManager {
 
+    /**
+     * Download given photo into given folder.
+     * Add .jpg to filename.
+     * manage progress status bar
+     */
     public static void download(ArrayList<Photo> toDownload, File folder, Synchronizer synchronizer) throws IOException {
         int count = 0;
         for (Photo photo : toDownload) {

@@ -22,4 +22,20 @@ public class RemoteSelectorTest {
         assertEquals(1, result1.size());
         System.out.print(result1.get(0).getId());
     }
+
+    @Test
+    public void firstMinusSecond() {
+        ArrayList<Photo> remote = new ArrayList<>();
+        remote.add(new Photo("url1", "id1"));
+        remote.add(new Photo("url2", "id2"));
+        remote.add(new Photo("url3", "id3"));
+
+        ArrayList<Photo> local = new ArrayList<>();
+        local.add(new Photo("url3", "id3"));
+
+        ArrayList<Photo> result = RemoteSelector.firstMinusSecond(remote, local);
+
+        assertEquals(2, result.size());
+        assertFalse(result.contains(new Photo("url3", "id3")));
+    }
 }

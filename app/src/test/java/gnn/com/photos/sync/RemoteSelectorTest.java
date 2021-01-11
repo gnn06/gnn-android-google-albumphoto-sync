@@ -11,13 +11,13 @@ import static org.junit.Assert.*;
 public class RemoteSelectorTest {
 
     @Test
-    public void chooseOneToDownload() {
+    public void chooseOne() {
         ArrayList<Photo> remote = new ArrayList<>();
         remote.add(new Photo("url1", "id1"));
         remote.add(new Photo("url2", "id2"));
         remote.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result1 = RemoteSelector.chooseOneToDownload(remote);
+        ArrayList<Photo> result1 = RemoteSelector.chooseOne(remote);
 
         assertEquals(1, result1.size());
         System.out.print(result1.get(0).getId());

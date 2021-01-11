@@ -14,8 +14,7 @@ public abstract class Synchronizer {
 
     private int currentDownload;
     private int currentDelete;
-    private ArrayList<Photo> remote;
-    private ArrayList<Photo> local;
+
     private ArrayList<Photo> toDownload;
     private ArrayList<Photo> toDelete;
 
@@ -32,12 +31,12 @@ public abstract class Synchronizer {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         this.resetCurrent();
-        this.remote = prs.getRemotePhotos(albumName);
-        this.local = pls.getLocalPhotos(folder);
-        this.toDownload = RemoteSelector.calculToDownload(this.remote, this.local);
-        this.toDelete   = calculToDelete();
-        System.out.println("remote count = " + this.remote.size());
-        System.out.println("local count = " + this.local.size());
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
+        ArrayList<Photo> local = pls.getLocalPhotos(folder);
+        this.toDownload = RemoteSelector.firstMinusSecond(remote, local);
+        this.toDelete   = RemoteSelector.firstMinusSecond(local, remote);
+        System.out.println("remote count = " + remote.size());
+        System.out.println("local count = " + local.size());
         System.out.println("to download count = " + this.toDownload.size());
         System.out.println("to delete count = " + this.toDelete.size());
         pls.delete(this.getToDelete(), folder, this);
@@ -51,12 +50,12 @@ public abstract class Synchronizer {
         PhotosRemoteService prs = getRemoteService();
         PhotosLocalService pls = new PhotosLocalService();
         this.resetCurrent();
-        this.remote = prs.getRemotePhotos(albumName);
-        this.local = pls.getLocalPhotos(folder);
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
+        ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
-        this.toDownload = RemoteSelector.chooseOneToDownload(this.remote);
-        System.out.println("remote count = " + this.remote.size());
-        System.out.println("local count = " + this.local.size());
+        this.toDownload = RemoteSelector.chooseOne(remote);
+        System.out.println("remote count = " + remote.size());
+        System.out.println("local count = " + local.size());
         System.out.println("to download count = " + this.toDownload.size());
         System.out.println("to delete count = " + this.toDelete.size());
         pls.delete(this.getToDelete(), folder, this);
@@ -92,12 +91,6 @@ public abstract class Synchronizer {
     private void resetCurrent() {
         this.currentDownload = 0;
         this.currentDelete= 0;
-    }
-
-    private ArrayList<Photo> calculToDelete() {
-        ArrayList<Photo> result = new ArrayList<>(this.local);
-        result.removeAll(this.remote);
-        return result;
     }
 
     private ArrayList<Photo> getToDownload() {

@@ -27,7 +27,7 @@ public abstract class Synchronizer {
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
         PhotosRemoteService prs = getRemoteService();
-        PhotosLocalService pls = new PhotosLocalService();
+        PhotosLocalService pls = getLocalService();
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         this.resetCurrent();
@@ -40,7 +40,7 @@ public abstract class Synchronizer {
         System.out.println("to download count = " + this.toDownload.size());
         System.out.println("to delete count = " + this.toDelete.size());
         pls.delete(this.getToDelete(), folder, this);
-        DownloadManager.download(this.getToDownload(), folder, this);
+        prs.download(this.getToDownload(), folder, this);
     }
 
     /**
@@ -48,21 +48,26 @@ public abstract class Synchronizer {
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
         PhotosRemoteService prs = getRemoteService();
-        PhotosLocalService pls = new PhotosLocalService();
+        PhotosLocalService pls = getLocalService();
         this.resetCurrent();
         ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
+        //this.toDownload = RemoteSelector.chooseOne(remote);
         this.toDownload = RemoteSelector.chooseOne(remote);
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());
         System.out.println("to download count = " + this.toDownload.size());
         System.out.println("to delete count = " + this.toDelete.size());
         pls.delete(this.getToDelete(), folder, this);
-        DownloadManager.download(this.getToDownload(), folder, this);
+        prs.download(this.getToDownload(), folder, this);
     }
 
-    abstract protected PhotosRemoteService getRemoteService();
+    protected PhotosLocalService getLocalService() {
+        return new PhotosLocalService();
+    }
+
+    abstract protected PhotosRemoteService getRemoteService() throws IOException, GoogleAuthException;
 
     public int getTotalDownload() {
         return this.getToDownload().size();

@@ -6,10 +6,13 @@ import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
 import com.google.photos.types.proto.Album;
 import com.google.photos.types.proto.MediaItem;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.sync.DownloadManager;
+import gnn.com.photos.sync.Synchronizer;
 
 public abstract class PhotosRemoteService {
 
@@ -47,6 +50,10 @@ public abstract class PhotosRemoteService {
             }
         }
         return null;
+    }
+
+    public void download(ArrayList<Photo> list, File folder, Synchronizer sync) throws IOException {
+        DownloadManager.download(list, folder, sync);
     }
 
     protected abstract PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException;

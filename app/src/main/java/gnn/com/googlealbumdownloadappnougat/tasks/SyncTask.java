@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.async;
+package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {

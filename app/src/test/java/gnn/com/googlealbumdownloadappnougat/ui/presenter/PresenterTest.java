@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.presenter;
+package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

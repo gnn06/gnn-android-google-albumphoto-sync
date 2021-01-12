@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.sync.DownloadManager;
 

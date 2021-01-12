@@ -23,10 +23,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
-import gnn.com.googlealbumdownloadappnougat.presenter.Persistence;
-import gnn.com.googlealbumdownloadappnougat.presenter.Presenter;
-import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class MainActivity extends AppCompatActivity implements IView {

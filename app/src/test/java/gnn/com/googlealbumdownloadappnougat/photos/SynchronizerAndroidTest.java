@@ -4,8 +4,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 
 public class SynchronizerAndroidTest {
 

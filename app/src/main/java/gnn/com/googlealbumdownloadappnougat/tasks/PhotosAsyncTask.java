@@ -1,9 +1,9 @@
-package gnn.com.googlealbumdownloadappnougat.async;
+package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
-import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
 
 abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 

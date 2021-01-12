@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.async;
+package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import android.util.Log;
 
@@ -7,7 +7,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
 import gnn.com.photos.remote.PhotosRemoteService;
 
 public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>> {

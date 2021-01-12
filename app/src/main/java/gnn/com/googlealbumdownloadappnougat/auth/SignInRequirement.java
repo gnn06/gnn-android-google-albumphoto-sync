@@ -1,6 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
-import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 public class SignInRequirement extends Require {
 

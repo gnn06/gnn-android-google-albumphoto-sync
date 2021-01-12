@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.view;
+package gnn.com.googlealbumdownloadappnougat.ui.view;
 
 import java.util.ArrayList;
 

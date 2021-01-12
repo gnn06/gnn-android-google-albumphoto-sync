@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.presenter;
+package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,14 +12,14 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.async.GetAlbumsTask;
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
+import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
+import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
-import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.photos.remote.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;

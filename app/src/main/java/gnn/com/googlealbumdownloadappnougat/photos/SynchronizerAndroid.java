@@ -1,8 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
-import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
+import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.remote.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 

@@ -2,7 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 
 import javax.annotation.Nonnull;
 
-import gnn.com.googlealbumdownloadappnougat.view.IView;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 public class WritePermission extends Require {
 

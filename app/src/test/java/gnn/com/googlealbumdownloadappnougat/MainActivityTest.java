@@ -6,7 +6,7 @@ import org.mockito.internal.util.reflection.Whitebox;
 
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.async.SyncTask;
+import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.model.Photo;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 

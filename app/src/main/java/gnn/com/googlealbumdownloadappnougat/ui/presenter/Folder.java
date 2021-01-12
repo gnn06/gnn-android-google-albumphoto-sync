@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.presenter;
+package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.net.Uri;
 

@@ -53,7 +53,6 @@ public abstract class Synchronizer {
         ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
-        //this.toDownload = RemoteSelector.chooseOne(remote);
         this.toDownload = RemoteSelector.chooseOne(remote);
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());

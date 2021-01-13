@@ -13,7 +13,7 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
 
-    private SynchronizerAndroid sync;
+    protected SynchronizerAndroid sync;
 
     public SyncTask(IPresenter presenter, SynchronizerAndroid sync) {
         super(presenter);

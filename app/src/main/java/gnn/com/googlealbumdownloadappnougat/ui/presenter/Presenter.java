@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.googlealbumdownloadappnougat.tasks.ChooseTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -168,17 +169,32 @@ view.updateUI_Folder(humanPath);
             view.alertNoAlbum();
         } else {
             SynchronizerAndroid synchro = new SynchronizerAndroid(activity);
-            final SyncTask task = new SyncTask(this, synchro);
-            Exec exec = new Exec() {
-                @Override
-                public void exec() {
-                    task.execute();
-                }
-            };
-            Require writeReq = new WritePermission(exec, auth, view);
-            Require signInReq = new SignInRequirement(writeReq, auth, view);
-            startRequirement(signInReq);
+            taskWithPermissions(new SyncTask(this, synchro));
         }
+    }
+
+    @Override
+    public void onChooseSync() {
+        Log.d(TAG, "onChooseOneClick");
+        String album = this.album;
+        if (album == null || album.equals("")) {
+            view.alertNoAlbum();
+        } else {
+            SynchronizerAndroid synchro = new SynchronizerAndroid(activity);
+            taskWithPermissions(new ChooseTask(this, synchro));
+        }
+    }
+
+    private void taskWithPermissions(final SyncTask task) {
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+                task.execute();
+            }
+        };
+        Require writeReq = new WritePermission(exec, auth, view);
+        Require signInReq = new SignInRequirement(writeReq, auth, view);
+        startRequirement(signInReq);
     }
 
     // --- Requirement ---

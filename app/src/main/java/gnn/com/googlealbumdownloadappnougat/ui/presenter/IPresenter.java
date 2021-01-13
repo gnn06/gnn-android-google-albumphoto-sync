@@ -26,6 +26,8 @@ public interface IPresenter {
 
     void onSyncClick();
 
+    void onChooseSync();
+
     void handlePermission(int i);
 
     String getFolderHuman();

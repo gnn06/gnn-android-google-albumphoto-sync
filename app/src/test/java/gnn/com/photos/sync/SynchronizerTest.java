@@ -5,6 +5,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import gnn.com.photos.local.PhotosLocalService;
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.remote.Cache;
 import gnn.com.photos.remote.PhotosRemoteService;
 
 import static org.junit.Assert.assertEquals;
@@ -33,9 +35,10 @@ public class SynchronizerTest {
         localPhotos.add(new Photo("url2", "id2"));
 
         final File folder = Mockito.mock(File.class);
+        Cache cache = new Cache();
 
         final PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
-        when(prs.getRemotePhotos("album")).thenReturn(remotePhotos);
+        when(prs.getRemotePhotosWithCache(Mockito.anyString(), (Cache) Mockito.anyObject())).thenReturn(remotePhotos);
 
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);

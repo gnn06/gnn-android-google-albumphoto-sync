@@ -30,10 +30,19 @@ public abstract class PhotosRemoteService {
         return albumNames;
     }
 
+    public ArrayList<Photo> getRemotePhotosWithCache(String album, Cache cache) throws IOException, GoogleAuthException {
+        ArrayList<Photo> photos = cache.get();
+        if (photos == null) {
+            photos = getRemotePhotos(album);
+            cache.put(photos);
+        }
+        return photos;
+    }
+
     /**
      * Retrieve remote photo list.
      */
-    public ArrayList<Photo> getRemotePhotos(String albumName) throws IOException, GoogleAuthException {
+    ArrayList<Photo> getRemotePhotos(String albumName) throws IOException, GoogleAuthException {
 
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getPhotoLibraryClient().listAlbums();
         for (Album album : response.iterateAll()) {
@@ -57,5 +66,4 @@ public abstract class PhotosRemoteService {
     }
 
     protected abstract PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException;
-
 }

@@ -1,5 +1,7 @@
 package gnn.com.photos.remote;
 
+import android.util.Log;
+
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
@@ -16,6 +18,7 @@ import gnn.com.photos.sync.Synchronizer;
 
 public abstract class PhotosRemoteService {
 
+    private static final String TAG = "PhotosRemoteService";
     protected PhotosLibraryClient client;
 
     /**
@@ -35,6 +38,8 @@ public abstract class PhotosRemoteService {
         if (photos == null) {
             photos = getRemotePhotos(album);
             cache.put(photos);
+        } else {
+            Log.i(TAG, "use cache");
         }
         return photos;
     }

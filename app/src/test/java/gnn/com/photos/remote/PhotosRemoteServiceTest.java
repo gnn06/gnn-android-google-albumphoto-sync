@@ -34,17 +34,16 @@ public class PhotosRemoteServiceTest {
     @Test
     public void testGetRemotePhotos_notEmptyCache() throws IOException, GoogleAuthException {
         // given, an not empty cache
-        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
-        Cache cache = new Cache();
-        cache.put(photos);
         PhotosRemoteService service = Mockito.mock(PhotosRemoteService.class);
         Mockito.when(service.getRemotePhotos("album")).thenCallRealMethod();
+        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
+        PhotosRemoteService.getCache().put(photos);
 
         // when call remotePhotos
         ArrayList<Photo> result = service.getRemotePhotos("album");
 
         // then check that obtains an answer without calling the service
-        assertNotNull(result);
+        assertEquals(photos, result);
         Mockito.verify(service, Mockito.times(0)).getRemotePhotosInternal("album");
     }
 }

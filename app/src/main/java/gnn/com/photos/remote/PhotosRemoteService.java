@@ -22,7 +22,7 @@ public abstract class PhotosRemoteService {
     protected PhotosLibraryClient client;
 
     // Used to Unit test
-    public static Cache getCache() {
+    static Cache getCache() {
         return cache;
     }
 

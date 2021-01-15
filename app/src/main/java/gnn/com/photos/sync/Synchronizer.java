@@ -8,12 +8,10 @@ import java.util.ArrayList;
 
 import gnn.com.photos.local.PhotosLocalService;
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.remote.Cache;
 import gnn.com.photos.remote.PhotosRemoteService;
 
 public abstract class Synchronizer {
 
-    private static final Cache cache = new Cache();
     private int currentDownload;
     private int currentDelete;
 
@@ -33,7 +31,7 @@ public abstract class Synchronizer {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotosWithCache(albumName, Synchronizer.cache);
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDownload = RemoteSelector.firstMinusSecond(remote, local);
         this.toDelete   = RemoteSelector.firstMinusSecond(local, remote);
@@ -52,7 +50,7 @@ public abstract class Synchronizer {
         PhotosRemoteService prs = getRemoteService();
         PhotosLocalService pls = getLocalService();
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotosWithCache(albumName, Synchronizer.cache);
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
         this.toDownload = RemoteSelector.chooseOne(remote);

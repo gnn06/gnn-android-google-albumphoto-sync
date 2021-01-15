@@ -21,6 +21,13 @@ public abstract class PhotosRemoteService {
     private static final String TAG = "PhotosRemoteService";
     protected PhotosLibraryClient client;
 
+    // Used to Unit test
+    public static Cache getCache() {
+        return cache;
+    }
+
+    private static final Cache cache = new Cache();
+
     /**
      * Retrieve remote album list
      */
@@ -33,10 +40,10 @@ public abstract class PhotosRemoteService {
         return albumNames;
     }
 
-    public ArrayList<Photo> getRemotePhotosWithCache(String album, Cache cache) throws IOException, GoogleAuthException {
+    public ArrayList<Photo> getRemotePhotos(String album) throws IOException, GoogleAuthException {
         ArrayList<Photo> photos = cache.get();
         if (photos == null) {
-            photos = getRemotePhotos(album);
+            photos = getRemotePhotosInternal(album);
             cache.put(photos);
         } else {
             Log.i(TAG, "use cache");
@@ -47,7 +54,7 @@ public abstract class PhotosRemoteService {
     /**
      * Retrieve remote photo list.
      */
-    ArrayList<Photo> getRemotePhotos(String albumName) throws IOException, GoogleAuthException {
+    ArrayList<Photo> getRemotePhotosInternal(String albumName) throws IOException, GoogleAuthException {
 
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getPhotoLibraryClient().listAlbums();
         for (Album album : response.iterateAll()) {

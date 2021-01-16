@@ -31,4 +31,12 @@ public class SynchronizerAndroid extends Synchronizer {
         super.incCurrentDelete();
         this.syncTask.publicPublish();
     }
+
+    @Override
+    public void incAlbumSize() {
+        this.albumSize++;
+        this.syncTask.publicPublish();
+    }
+
+
 }

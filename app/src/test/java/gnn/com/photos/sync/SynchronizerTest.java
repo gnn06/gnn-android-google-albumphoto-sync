@@ -35,7 +35,7 @@ public class SynchronizerTest {
         final File folder = Mockito.mock(File.class);
 
         final PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
-        when(prs.getRemotePhotos(Mockito.anyString())).thenReturn(remotePhotos);
+        when(prs.getRemotePhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
 
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
@@ -44,6 +44,11 @@ public class SynchronizerTest {
             @Override
             protected PhotosRemoteService getRemoteService() {
                 return prs;
+            }
+
+            @Override
+            public void incAlbumSize() {
+
             }
 
             @Override

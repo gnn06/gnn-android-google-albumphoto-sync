@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     String getResultText(SynchronizerAndroid synchronizer, boolean finished) {
         String result = "";
+        result += "album size = " + synchronizer.getAlbumSize() + "\n";
         result += "downloaded = ";
         if (!finished) {
             result += synchronizer.getCurrentDownload() + " / ";

@@ -29,10 +29,11 @@ public class MainActivityTest {
         Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
         Whitebox.setInternalState(synchronizer, "currentDownload", 2);
         Whitebox.setInternalState(synchronizer, "currentDelete", 1);
+        Whitebox.setInternalState(synchronizer, "albumSize", 2);
 
         String resultText = activity.getResultText(synchronizer,false);
 
-        assertEquals("downloaded = 2 / 3\ndeleted = 1 / 1", resultText);
+        assertEquals("album size = 2\ndownloaded = 2 / 3\ndeleted = 1 / 1", resultText);
     }
 
     @Test
@@ -50,10 +51,11 @@ public class MainActivityTest {
         Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
         Whitebox.setInternalState(synchronizer, "currentDownload", 2);
         Whitebox.setInternalState(synchronizer, "currentDelete", 1);
+        Whitebox.setInternalState(synchronizer, "albumSize", 2);
 
         String resultText = activity.getResultText(synchronizer,true);
 
-        assertEquals("downloaded = 3\ndeleted = 1", resultText);
+        assertEquals("album size = 2\ndownloaded = 3\ndeleted = 1", resultText);
     }
 
 }

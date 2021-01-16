@@ -224,8 +224,8 @@ view.updateUI_Folder(humanPath);
     }
 
     @Override
-    public void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting) {
-        view.updateUI_CallResult(sync, starting);
+    public void updateUI_CallResult(SynchronizerAndroid sync, SyncStep step) {
+        view.updateUI_CallResult(sync, step);
     }
 
 }

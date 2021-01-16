@@ -40,21 +40,22 @@ public abstract class PhotosRemoteService {
         return albumNames;
     }
 
-    public ArrayList<Photo> getRemotePhotos(String album) throws IOException, GoogleAuthException {
+    public ArrayList<Photo> getRemotePhotos(String album, Synchronizer synchronizer) throws IOException, GoogleAuthException {
         ArrayList<Photo> photos = cache.get();
         if (photos == null) {
-            photos = getRemotePhotosInternal(album);
+            photos = getRemotePhotosInternal(album, synchronizer);
             cache.put(photos);
         } else {
             Log.i(TAG, "use cache");
         }
+        synchronizer.setAlbumSize(photos.size());
         return photos;
     }
 
     /**
      * Retrieve remote photo list.
      */
-    ArrayList<Photo> getRemotePhotosInternal(String albumName) throws IOException, GoogleAuthException {
+    ArrayList<Photo> getRemotePhotosInternal(String albumName, Synchronizer sync) throws IOException, GoogleAuthException {
 
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getPhotoLibraryClient().listAlbums();
         for (Album album : response.iterateAll()) {
@@ -66,6 +67,7 @@ public abstract class PhotosRemoteService {
                 ArrayList<Photo> result = new ArrayList<>();
                 for (MediaItem item : responsePhotos.iterateAll()) {
                     result.add(new Photo(item.getBaseUrl(), item.getId()));
+                    sync.incAlbumSize();
                 }
                 return result;
             }

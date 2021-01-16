@@ -17,6 +17,7 @@ public abstract class Synchronizer {
 
     private ArrayList<Photo> toDownload;
     private ArrayList<Photo> toDelete;
+    protected int albumSize = 0;
 
     /**
      * Main method.
@@ -31,7 +32,7 @@ public abstract class Synchronizer {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName, this);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDownload = RemoteSelector.firstMinusSecond(remote, local);
         this.toDelete   = RemoteSelector.firstMinusSecond(local, remote);
@@ -50,7 +51,7 @@ public abstract class Synchronizer {
         PhotosRemoteService prs = getRemoteService();
         PhotosLocalService pls = getLocalService();
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotos(albumName);
+        ArrayList<Photo> remote = prs.getRemotePhotos(albumName, this);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
         this.toDownload = RemoteSelector.chooseOne(remote);
@@ -92,9 +93,22 @@ public abstract class Synchronizer {
         this.currentDelete += 1;
     }
 
+    abstract public void incAlbumSize();
+
+    public int getAlbumSize() {
+        return this.albumSize;
+    }
+
+    public void setAlbumSize(int size) {
+        this.albumSize = size;
+    }
+
     private void resetCurrent() {
         this.currentDownload = 0;
         this.currentDelete= 0;
+        this.toDownload = new ArrayList<>();
+        this.toDelete = new ArrayList<>();
+        this.albumSize = 0;
     }
 
     private ArrayList<Photo> getToDownload() {

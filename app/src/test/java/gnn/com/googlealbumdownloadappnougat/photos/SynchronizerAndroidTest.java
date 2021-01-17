@@ -12,7 +12,7 @@ public class SynchronizerAndroidTest {
     public void incDownloadCurrent() {
         SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = Mockito.mock(MainActivity.class);
-        SynchronizerAndroid synchronizerSpy = new SynchronizerAndroid(activity);
+        SynchronizerAndroid synchronizerSpy = new SynchronizerAndroid(activity, null);
         synchronizerSpy.setSyncTask(syncTaskSpy);
         synchronizerSpy.incCurrentDownload();
         Mockito.verify(syncTaskSpy, Mockito.times(1)).publicPublish();

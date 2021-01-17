@@ -40,7 +40,7 @@ public class SynchronizerTest {
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
-        Synchronizer sync = new Synchronizer() {
+        Synchronizer sync = new Synchronizer(null) {
             @Override
             protected PhotosRemoteService getRemoteService() {
                 return prs;

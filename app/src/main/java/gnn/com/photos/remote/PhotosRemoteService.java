@@ -21,6 +21,10 @@ public abstract class PhotosRemoteService {
     private static final String TAG = "PhotosRemoteService";
     protected PhotosLibraryClient client;
 
+    public PhotosRemoteService() {
+        cache = new Cache(null);
+    }
+
     // Used to Unit test
     static Cache getCache() {
         return cache;

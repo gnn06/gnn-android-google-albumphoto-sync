@@ -18,7 +18,7 @@ public class MainActivityTest {
     public void getResultText_inProgress() {
         SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));
@@ -40,7 +40,7 @@ public class MainActivityTest {
     public void getResultText_finish() {
         SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze","12"));
         toDownloadList.add(new Photo("ZER","13"));

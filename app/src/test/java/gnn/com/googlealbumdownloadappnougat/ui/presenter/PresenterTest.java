@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.content.ContextWrapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -13,7 +15,9 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
@@ -31,6 +35,7 @@ public class PresenterTest {
     @Test
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
+        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
@@ -44,6 +49,7 @@ public class PresenterTest {
     @Test
     public void onSyncClick_MissingPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
+        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);

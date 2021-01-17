@@ -14,7 +14,6 @@ import gnn.com.photos.model.Photo;
 
 public class Cache {
     private ArrayList<Photo> photos;
-    // TODO manage file = null
     private File file;
 
     /**
@@ -27,7 +26,7 @@ public class Cache {
     public ArrayList<Photo> get() throws IOException {
         // TODO create UT
         ArrayList<Photo> photos = null;
-        if (file.exists()) {
+        if (file != null && file.exists()) {
             photos = read();
             Log.i("Cache", "use cache");
         } else {
@@ -38,7 +37,9 @@ public class Cache {
 
     public void put(ArrayList<Photo> photos) throws IOException {
         this.photos = photos;
-        write();
+        if (file != null) {
+            write();
+        }
     }
 
     void write() throws IOException {

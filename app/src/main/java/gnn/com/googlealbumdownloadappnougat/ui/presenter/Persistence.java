@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Default values are keeped from Presenter
+ * Default values are taken from Presenter
  */
 public class Persistence {
 

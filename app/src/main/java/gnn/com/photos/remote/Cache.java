@@ -24,7 +24,6 @@ public class Cache {
     }
 
     public ArrayList<Photo> get() throws IOException {
-        // TODO create UT
         ArrayList<Photo> photos = null;
         if (file != null && file.exists()) {
             photos = read();

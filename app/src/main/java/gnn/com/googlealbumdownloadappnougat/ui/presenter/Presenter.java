@@ -32,6 +32,7 @@ public class Presenter implements IPresenter{
     private final IView view;
     private final MainActivity activity;
     private AuthManager auth;
+    private File cacheFile;
 
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
@@ -82,7 +83,7 @@ public class Presenter implements IPresenter{
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity);
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, null);
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -143,6 +144,20 @@ public class Presenter implements IPresenter{
         view.updateUI_Folder(folderHuman);
     }
 
+    /**
+     * Get File to store cache
+     * @return File
+     */
+    private File getFileCache() {
+        if (this.cacheFile == null) {
+            File dir = activity.getApplicationContext().getFilesDir();
+            // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
+            this.cacheFile = new File(dir, "cache");
+            Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
+        }
+        return this.cacheFile;
+    }
+
     @Override
     public void chooseFolder() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
@@ -156,7 +171,7 @@ public class Presenter implements IPresenter{
         final String humanPath = Folder.getHumanPath(uri);
         Log.d(TAG,"humanPath=" + humanPath);
         this.folderHuman = humanPath;
-view.updateUI_Folder(humanPath);
+        view.updateUI_Folder(humanPath);
     }
 
     // --- sync ---
@@ -168,7 +183,7 @@ view.updateUI_Folder(humanPath);
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            SynchronizerAndroid synchro = new SynchronizerAndroid(activity);
+            SynchronizerAndroid synchro = new SynchronizerAndroid(activity, getFileCache());
             taskWithPermissions(new SyncTask(this, synchro));
         }
     }
@@ -180,7 +195,7 @@ view.updateUI_Folder(humanPath);
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            SynchronizerAndroid synchro = new SynchronizerAndroid(activity);
+            SynchronizerAndroid synchro = new SynchronizerAndroid(activity, getFileCache());
             taskWithPermissions(new ChooseTask(this, synchro));
         }
     }

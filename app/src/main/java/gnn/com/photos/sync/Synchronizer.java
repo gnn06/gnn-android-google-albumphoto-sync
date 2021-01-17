@@ -12,12 +12,17 @@ import gnn.com.photos.remote.PhotosRemoteService;
 
 public abstract class Synchronizer {
 
+    protected final File fileCache;
     private int currentDownload;
     private int currentDelete;
 
     private ArrayList<Photo> toDownload;
     private ArrayList<Photo> toDelete;
     protected int albumSize = 0;
+
+    public Synchronizer(File cacheFile) {
+        this.fileCache = cacheFile;
+    }
 
     /**
      * Main method.
@@ -63,6 +68,7 @@ public abstract class Synchronizer {
         prs.download(this.getToDownload(), folder, this);
     }
 
+    // TODO instance services in constructor
     protected PhotosLocalService getLocalService() {
         return new PhotosLocalService();
     }

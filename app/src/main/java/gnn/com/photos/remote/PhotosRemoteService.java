@@ -26,7 +26,14 @@ public abstract class PhotosRemoteService {
         return cache;
     }
 
-    private static final Cache cache = new Cache();
+    /**
+     * As class var, cache is common between PhotosRemoteService instances.
+     */
+    private static Cache cache;
+
+    public PhotosRemoteService(File cacheFile) {
+        cache = new Cache(cacheFile);
+    }
 
     /**
      * Retrieve remote album list

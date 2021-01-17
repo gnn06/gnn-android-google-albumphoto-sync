@@ -13,6 +13,7 @@ import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
 
+import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -23,7 +24,8 @@ public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
     private static final String TAG = "goi";
     private final Context activity;
 
-    public PhotosRemoteServiceAndroid(MainActivity activity) {
+    public PhotosRemoteServiceAndroid(MainActivity activity, File cacheFile) {
+        super(cacheFile);
         this.activity = activity;
     }
 

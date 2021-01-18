@@ -228,5 +228,10 @@ view.updateUI_Folder(humanPath);
         view.updateUI_CallResult(sync, step);
     }
 
+    @Override
+    public void onResetCache() {
+
+    }
+
 }
 

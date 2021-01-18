@@ -248,5 +248,10 @@ public class Presenter implements IPresenter{
         view.updateUI_CallResult(sync, step);
     }
 
+    @Override
+    public void onResetCache() {
+
+    }
+
 }
 

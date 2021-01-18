@@ -23,4 +23,5 @@
     <string name="error">An error occurred</string>
     <string name="titleChooseOne">Choose one</string>
     <string name="choose_now">Choose now</string>
+    <string name="reset_cache">Reset cache</string>
 </resources>

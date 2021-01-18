@@ -95,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         if (item.getItemId() == R.id.logout) {
             presenter.onSignOut();
             return true;
+        } else if (item.getItemId() == R.id.reset_cache) {
+            presenter.onResetCache();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

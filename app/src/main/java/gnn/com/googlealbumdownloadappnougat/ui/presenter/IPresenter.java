@@ -45,4 +45,6 @@ public interface IPresenter {
     void setProgressBarVisibility(int visible);
 
     void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting);
+
+    void onResetCache();
 }

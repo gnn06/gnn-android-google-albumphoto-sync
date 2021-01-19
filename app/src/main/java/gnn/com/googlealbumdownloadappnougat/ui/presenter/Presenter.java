@@ -33,6 +33,7 @@ public class Presenter implements IPresenter{
     private final MainActivity activity;
     private AuthManager auth;
     private File cacheFile;
+    private SynchronizerAndroid sync;
 
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
@@ -183,8 +184,10 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            SynchronizerAndroid synchro = new SynchronizerAndroid(activity, getFileCache());
-            taskWithPermissions(new SyncTask(this, synchro));
+            if (this.sync == null) {
+                this.sync = new SynchronizerAndroid(activity, getFileCache());
+            }
+            taskWithPermissions(new SyncTask(this, this.sync));
         }
     }
 
@@ -195,8 +198,10 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            SynchronizerAndroid synchro = new SynchronizerAndroid(activity, getFileCache());
-            taskWithPermissions(new ChooseTask(this, synchro));
+            if (sync == null) {
+                this.sync = new SynchronizerAndroid(activity, getFileCache());
+            }
+            taskWithPermissions(new ChooseTask(this, this.sync));
         }
     }
 

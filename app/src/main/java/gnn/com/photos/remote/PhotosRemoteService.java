@@ -21,6 +21,11 @@ public abstract class PhotosRemoteService {
     private static final String TAG = "PhotosRemoteService";
     protected PhotosLibraryClient client;
 
+    /**
+     * As class var, cache is common between PhotosRemoteService instances.
+     */
+    private static Cache cache;
+
     public PhotosRemoteService() {
         cache = new Cache(null);
     }
@@ -29,11 +34,6 @@ public abstract class PhotosRemoteService {
     static Cache getCache() {
         return cache;
     }
-
-    /**
-     * As class var, cache is common between PhotosRemoteService instances.
-     */
-    private static Cache cache;
 
     public PhotosRemoteService(File cacheFile) {
         cache = new Cache(cacheFile);

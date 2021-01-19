@@ -42,7 +42,7 @@ public class SynchronizerTest {
 
         Synchronizer sync = new Synchronizer(null) {
             @Override
-            protected PhotosRemoteService getRemoteService() {
+            protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
             }
 

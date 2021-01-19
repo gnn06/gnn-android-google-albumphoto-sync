@@ -29,7 +29,7 @@ public class SynchronizerAndroid extends Synchronizer {
     }
 
     @Override
-    protected PhotosRemoteService getRemoteService() throws IOException, GoogleAuthException {
+    protected PhotosRemoteService getRemoteServiceImpl() throws IOException, GoogleAuthException {
         return new PhotosRemoteServiceAndroid(activity, fileCache);
     }
 

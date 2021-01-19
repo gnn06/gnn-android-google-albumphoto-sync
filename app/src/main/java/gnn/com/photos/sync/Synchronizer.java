@@ -13,6 +13,10 @@ import gnn.com.photos.remote.PhotosRemoteService;
 public abstract class Synchronizer {
 
     protected final File fileCache;
+
+    private PhotosRemoteService remoteService;
+    private PhotosLocalService localService;
+
     private int currentDownload;
     private int currentDelete;
 
@@ -68,12 +72,22 @@ public abstract class Synchronizer {
         prs.download(this.getToDownload(), folder, this);
     }
 
-    // TODO instance services in constructor
+    private PhotosRemoteService getRemoteService() throws IOException, GoogleAuthException {
+        if (this.remoteService == null) {
+            return getRemoteServiceImpl();
+        } else {
+            return this.remoteService;
+        }
+    }
     protected PhotosLocalService getLocalService() {
-        return new PhotosLocalService();
+        if (this.localService == null) {
+            return new PhotosLocalService();
+        } else {
+            return this.localService;
+        }
     }
 
-    abstract protected PhotosRemoteService getRemoteService() throws IOException, GoogleAuthException;
+    abstract protected PhotosRemoteService getRemoteServiceImpl() throws IOException, GoogleAuthException;
 
     public int getTotalDownload() {
         return this.getToDownload().size();

@@ -4,7 +4,6 @@ import com.google.android.gms.auth.GoogleAuthException;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +21,10 @@ public class PhotosRemoteServiceTest {
         // given, an empty cache
         PhotosRemoteService service = Mockito.spy(PhotosRemoteService.class);
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
-        Mockito.doReturn(photos).when(service).getRemotePhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
+        Mockito.doReturn(photos).when(service).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getRemotePhotos("album", Mockito.mock(Synchronizer.class));
+        ArrayList<Photo> result = service.getPhotos("album", Mockito.mock(Synchronizer.class));
 
         // then check that obtains an answer and put result into cache
         assertEquals(photos, result);
@@ -38,13 +37,13 @@ public class PhotosRemoteServiceTest {
         PhotosRemoteService service = Mockito.spy(PhotosRemoteService.class);
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
         PhotosRemoteService.getCache().put(photos);
-        Mockito.doReturn(photos).when(service).getRemotePhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
+        Mockito.doReturn(photos).when(service).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getRemotePhotos("album", Mockito.mock(Synchronizer.class));
+        ArrayList<Photo> result = service.getPhotos("album", Mockito.mock(Synchronizer.class));
 
         // then check that obtains an answer without calling the service
         assertEquals(photos, result);
-        Mockito.verify(service, Mockito.times(0)).getRemotePhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
+        Mockito.verify(service, Mockito.times(0)).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
     }
 }

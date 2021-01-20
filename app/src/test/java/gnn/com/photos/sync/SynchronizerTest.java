@@ -35,7 +35,7 @@ public class SynchronizerTest {
         final File folder = Mockito.mock(File.class);
 
         final PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
-        when(prs.getRemotePhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
+        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
 
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);

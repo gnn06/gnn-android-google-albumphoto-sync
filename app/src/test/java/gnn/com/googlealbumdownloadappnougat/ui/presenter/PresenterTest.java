@@ -25,6 +25,7 @@ public class PresenterTest {
     @Test
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
+        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", null);
         IView view = Mockito.spy(IView.class);
@@ -63,6 +64,7 @@ public class PresenterTest {
     @Test
     public void onShowAlbumList_NoCache_NoPermission () {
         MainActivity activity = Mockito.mock(MainActivity.class);
+        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         Presenter presenter = Mockito.spy(new Presenter(activity, activity));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -78,6 +80,7 @@ public class PresenterTest {
     public void startRequirement () {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
+        when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         Presenter presenter = new Presenter(view, view);
         Require require = Mockito.mock(Require.class);
 
@@ -89,6 +92,17 @@ public class PresenterTest {
         assertEquals(require, Whitebox.getInternalState(presenter, "pendingRequirement"));
         verify(require).exec();
 
+    }
+
+    @Test
+    public void test_resetCache() {
+        // given
+        MainActivity view = Mockito.mock(MainActivity.class);
+        when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
+        Presenter presenter = new Presenter(view, view);
+        // when
+        presenter.onResetCache();
+        // then
     }
 
 

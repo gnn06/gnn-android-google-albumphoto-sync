@@ -29,6 +29,32 @@ public abstract class Synchronizer {
     }
 
     /**
+     * need an init because constructor can't call getRemoteService as this.activity will be null.
+     */
+    public void init() {
+        this.remoteService = getRemoteService();
+        this.localService  = getLocalService();
+    }
+
+    private PhotosRemoteService getRemoteService() {
+        if (this.remoteService == null) {
+            return getRemoteServiceImpl();
+        } else {
+            return this.remoteService;
+        }
+    }
+
+    abstract protected PhotosRemoteService getRemoteServiceImpl();
+
+    protected PhotosLocalService getLocalService() {
+        if (this.localService == null) {
+            return new PhotosLocalService();
+        } else {
+            return this.localService;
+        }
+    }
+
+    /**
      * Main method.
      * Synchronize local folder with given album name.
      * Retrieve photo list from Google, retrieve already donwloaded photo from local folder
@@ -41,7 +67,7 @@ public abstract class Synchronizer {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotos(albumName, this);
+        ArrayList<Photo> remote = prs.getPhotos(albumName, this);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDownload = RemoteSelector.firstMinusSecond(remote, local);
         this.toDelete   = RemoteSelector.firstMinusSecond(local, remote);
@@ -60,7 +86,7 @@ public abstract class Synchronizer {
         PhotosRemoteService prs = getRemoteService();
         PhotosLocalService pls = getLocalService();
         this.resetCurrent();
-        ArrayList<Photo> remote = prs.getRemotePhotos(albumName, this);
+        ArrayList<Photo> remote = prs.getPhotos(albumName, this);
         ArrayList<Photo> local = pls.getLocalPhotos(folder);
         this.toDelete   = local;
         this.toDownload = RemoteSelector.chooseOne(remote);
@@ -71,23 +97,6 @@ public abstract class Synchronizer {
         pls.delete(this.getToDelete(), folder, this);
         prs.download(this.getToDownload(), folder, this);
     }
-
-    private PhotosRemoteService getRemoteService() throws IOException, GoogleAuthException {
-        if (this.remoteService == null) {
-            return getRemoteServiceImpl();
-        } else {
-            return this.remoteService;
-        }
-    }
-    protected PhotosLocalService getLocalService() {
-        if (this.localService == null) {
-            return new PhotosLocalService();
-        } else {
-            return this.localService;
-        }
-    }
-
-    abstract protected PhotosRemoteService getRemoteServiceImpl() throws IOException, GoogleAuthException;
 
     public int getTotalDownload() {
         return this.getToDownload().size();
@@ -137,5 +146,11 @@ public abstract class Synchronizer {
 
     private ArrayList<Photo> getToDelete() {
         return toDelete;
+    }
+
+    public void resetCache() {
+        if (this.remoteService != null) {
+            this.remoteService.resetCache();
+        }
     }
 }

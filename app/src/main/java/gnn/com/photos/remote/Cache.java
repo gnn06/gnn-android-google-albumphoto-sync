@@ -56,4 +56,11 @@ public class Cache {
         }
         return result;
     }
+
+    public void reset() {
+        this.photos = null;
+        if (this.file != null) {
+            file.delete();
+        }
+    }
 }

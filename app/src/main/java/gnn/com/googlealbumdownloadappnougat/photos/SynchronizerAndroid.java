@@ -15,8 +15,8 @@ public class SynchronizerAndroid extends Synchronizer {
     private SyncTask syncTask;
     private final MainActivity activity;
 
-    public SynchronizerAndroid(MainActivity activity, File file) {
-        super(file);
+    public SynchronizerAndroid(MainActivity activity, File cacheFile) {
+        super(cacheFile);
         this.activity = activity;
     }
 
@@ -29,7 +29,7 @@ public class SynchronizerAndroid extends Synchronizer {
     }
 
     @Override
-    protected PhotosRemoteService getRemoteServiceImpl() throws IOException, GoogleAuthException {
+    protected PhotosRemoteService getRemoteServiceImpl() {
         return new PhotosRemoteServiceAndroid(activity, fileCache);
     }
 

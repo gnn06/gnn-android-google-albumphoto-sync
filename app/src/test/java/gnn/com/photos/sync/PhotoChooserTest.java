@@ -8,7 +8,7 @@ import gnn.com.photos.model.Photo;
 
 import static org.junit.Assert.*;
 
-public class RemoteSelectorTest {
+public class PhotoChooserTest {
 
     @Test
     public void chooseOne() {
@@ -17,7 +17,7 @@ public class RemoteSelectorTest {
         remote.add(new Photo("url2", "id2"));
         remote.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result1 = RemoteSelector.chooseOne(remote);
+        ArrayList<Photo> result1 = PhotoChooser.chooseOne(remote);
 
         assertEquals(1, result1.size());
         System.out.print(result1.get(0).getId());
@@ -33,7 +33,7 @@ public class RemoteSelectorTest {
         ArrayList<Photo> local = new ArrayList<>();
         local.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result = RemoteSelector.firstMinusSecond(remote, local);
+        ArrayList<Photo> result = PhotoChooser.firstMinusSecond(remote, local);
 
         assertEquals(2, result.size());
         assertFalse(result.contains(new Photo("url3", "id3")));

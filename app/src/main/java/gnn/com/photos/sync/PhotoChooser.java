@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import gnn.com.photos.model.Photo;
 
-public class RemoteSelector {
+class PhotoChooser {
 
     static ArrayList<Photo> chooseOne(ArrayList<Photo> remoteLst) {
         ArrayList<Photo> result = new ArrayList<>();

@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.photos.remote.PhotosRemoteService;
+import gnn.com.photos.service.PhotosRemoteService;
 
 public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
 

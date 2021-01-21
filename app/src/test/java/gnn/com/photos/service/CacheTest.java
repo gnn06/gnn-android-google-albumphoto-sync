@@ -1,11 +1,11 @@
-package gnn.com.photos.remote;
+package gnn.com.photos.service;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.Mockito;
+
 import static org.mockito.Mockito.*;
 
 import java.io.File;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.service.Cache;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CacheTest {

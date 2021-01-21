@@ -10,9 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.photos.local.PhotosLocalService;
+import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.remote.PhotosRemoteService;
+import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;

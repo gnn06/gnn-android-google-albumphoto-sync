@@ -1,4 +1,4 @@
-package gnn.com.photos.local;
+package gnn.com.photos.service;
 
 import org.apache.commons.io.FilenameUtils;
 

@@ -1,4 +1,4 @@
-package gnn.com.photos.remote;
+package gnn.com.photos.service;
 
 import android.util.Log;
 

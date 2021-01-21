@@ -1,4 +1,4 @@
-package gnn.com.photos.remote;
+package gnn.com.photos.service;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 
 import static org.junit.Assert.*;

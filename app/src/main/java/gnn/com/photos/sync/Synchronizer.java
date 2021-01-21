@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.photos.local.PhotosLocalService;
+import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.remote.PhotosRemoteService;
+import gnn.com.photos.service.PhotosRemoteService;
 
 public abstract class Synchronizer {
 

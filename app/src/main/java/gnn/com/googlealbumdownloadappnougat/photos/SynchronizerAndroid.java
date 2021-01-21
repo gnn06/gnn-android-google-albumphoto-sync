@@ -1,13 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
-import com.google.android.gms.auth.GoogleAuthException;
-
 import java.io.File;
-import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
-import gnn.com.photos.remote.PhotosRemoteService;
+import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 
 public class SynchronizerAndroid extends Synchronizer {

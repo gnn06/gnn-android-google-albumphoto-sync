@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
-import gnn.com.photos.remote.PhotosRemoteService;
+import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;

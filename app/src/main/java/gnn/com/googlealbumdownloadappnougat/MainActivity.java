@@ -71,13 +71,13 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.SectionSync).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.SyncButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSyncClick();
             }
         });
 
-        findViewById(R.id.SectionChooseOne).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ChooseOneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onChooseSync();
             }

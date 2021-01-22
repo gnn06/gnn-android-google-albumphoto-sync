@@ -97,27 +97,25 @@
                 android:id="@+id/SectionSync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
+                android:paddingLeft="12dp"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp">
-
-                <TextView
-                    android:id="@+id/titleSync"
+                <Button
+                    android:id="@+id/SyncButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/titleSync"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                <TextView
-                    android:id="@+id/result"
+                    android:text="@string/full_album" />
+                <Button
+                    android:id="@+id/ChooseOneButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/titleSync"
-                    android:text="@string/sync_now" />
+                    android:layout_toRightOf="@id/SyncButton"
+                    android:text="@string/choose_one" />
+
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/SectionChooseOne"
+                android:id="@+id/SectionResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
@@ -125,20 +123,18 @@
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp">
                 <TextView
-                    android:id="@+id/titleChooseOne"
+                    android:id="@+id/titleResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/titleChooseOne"
+                    android:text="@string/titleResult"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                 <TextView
-                    android:id="@+id/resultChooseOne"
+                    android:id="@+id/result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/titleChooseOne"
-                    android:text="@string/choose_now" />
+                    android:layout_below="@id/titleResult"
+                    android:text="@string/result" />
             </RelativeLayout>
-
-
         </LinearLayout>
 
         <RelativeLayout

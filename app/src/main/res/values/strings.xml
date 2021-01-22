@@ -12,16 +12,22 @@
     <string name="need_album">You have to choose an album</string>
     <string name="choose_folder">Choose folder</string>
     <string name="folder">Folder</string>
+
     <string name="titleSync">Synchronisation</string>
     <string name="sync_now">Sync now</string>
     <string name="sync_starting">Sync starting</string>
     <string name="sync_in_progress">Sync in progress</string>
     <string name="sync_finished">Sync terminated</string>
     <string name="sync">sync</string>
+
+    <string name="titleResult">Sync results</string>
     <string name="result">No result</string>
     <string name="cancel">Cancel</string>
     <string name="error">An error occurred</string>
-    <string name="titleChooseOne">Choose one</string>
+
+    <string name="full_album">Sync full album</string>
+    <string name="choose_one">Sync random</string>
     <string name="choose_now">Choose now</string>
+
     <string name="reset_cache">Reset cache</string>
 </resources>

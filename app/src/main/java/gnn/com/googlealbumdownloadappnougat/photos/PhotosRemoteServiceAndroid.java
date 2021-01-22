@@ -22,6 +22,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
 
     private static final String TAG = "goi";
+
     private final Context activity;
 
     public PhotosRemoteServiceAndroid(MainActivity activity, File cacheFile) {

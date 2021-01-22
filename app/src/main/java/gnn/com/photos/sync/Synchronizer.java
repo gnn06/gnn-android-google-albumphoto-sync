@@ -14,45 +14,34 @@ public abstract class Synchronizer {
 
     protected final File fileCache;
 
-    private PhotosRemoteService remoteService;
-    private PhotosLocalService localService;
-
-    private int currentDownload;
-    private int currentDelete;
-
-    private ArrayList<Photo> toDownload;
-    private ArrayList<Photo> toDelete;
-    protected int albumSize = 0;
-
     public Synchronizer(File cacheFile) {
         this.fileCache = cacheFile;
     }
 
-    /**
-     * need an init because constructor can't call getRemoteService as this.activity will be null.
-     */
-    public void init() {
-        this.remoteService = getRemoteService();
-        this.localService  = getLocalService();
-    }
+    private PhotosRemoteService remoteService;
+    private PhotosLocalService localService;
 
     private PhotosRemoteService getRemoteService() {
         if (this.remoteService == null) {
-            return getRemoteServiceImpl();
-        } else {
-            return this.remoteService;
+            this.remoteService = getRemoteServiceImpl();
         }
+        return this.remoteService;
     }
 
     abstract protected PhotosRemoteService getRemoteServiceImpl();
 
     protected PhotosLocalService getLocalService() {
         if (this.localService == null) {
-            return new PhotosLocalService();
-        } else {
-            return this.localService;
+            this.localService = new PhotosLocalService();
         }
+        return this.localService;
     }
+
+    private int currentDownload;
+    private int currentDelete;
+    private ArrayList<Photo> toDownload;
+    private ArrayList<Photo> toDelete;
+    protected int albumSize = 0;
 
     /**
      * Main method.
@@ -149,7 +138,7 @@ public abstract class Synchronizer {
     }
 
     public void resetCache() {
-        if (this.remoteService != null) {
+        if (getRemoteService() != null) {
             this.remoteService.resetCache();
         }
     }

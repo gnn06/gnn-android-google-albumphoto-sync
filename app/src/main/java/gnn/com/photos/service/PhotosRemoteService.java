@@ -19,25 +19,26 @@ import gnn.com.photos.sync.Synchronizer;
 public abstract class PhotosRemoteService {
 
     private static final String TAG = "PhotosRemoteService";
-    protected PhotosLibraryClient client;
 
     /**
      * As class var, cache is common between PhotosRemoteService instances.
      */
     private static Cache cache;
 
-    public PhotosRemoteService() {
-        cache = new Cache(null);
-    }
-
     // Used to Unit test
     static Cache getCache() {
         return cache;
     }
 
+    public PhotosRemoteService() {
+        cache = new Cache(null);
+    }
+
     public PhotosRemoteService(File cacheFile) {
         cache = new Cache(cacheFile);
     }
+
+    protected PhotosLibraryClient client;
 
     /**
      * Retrieve remote album list

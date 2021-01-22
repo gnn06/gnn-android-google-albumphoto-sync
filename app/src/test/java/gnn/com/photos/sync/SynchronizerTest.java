@@ -16,8 +16,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SynchronizerTest {
 
@@ -68,5 +67,39 @@ public class SynchronizerTest {
 
         // check delete all
         verify(pls).delete(localPhotos, folder, sync);
+    }
+
+    @Test
+    public void resetCache() {
+        Synchronizer sync = new Synchronizer(null) {
+            @Override
+            protected PhotosRemoteService getRemoteServiceImpl() {
+                return mock(PhotosRemoteService.class);
+            }
+
+            @Override
+            public void incAlbumSize() {
+
+            }
+        };
+        sync.resetCache();
+    }
+
+    @Test
+    public void sync() throws IOException, GoogleAuthException {
+        Synchronizer sync = new Synchronizer(null) {
+
+            @Override
+            protected PhotosRemoteService getRemoteServiceImpl() {
+                return mock(PhotosRemoteService.class);
+            }
+
+            @Override
+            public void incAlbumSize() {
+
+            }
+        };
+        File folder = mock(File.class);
+        sync.sync("album", folder);
     }
 }

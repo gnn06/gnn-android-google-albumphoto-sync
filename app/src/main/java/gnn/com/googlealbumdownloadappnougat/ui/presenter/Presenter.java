@@ -31,23 +31,28 @@ public class Presenter implements IPresenter{
 
     private final IView view;
     private final MainActivity activity;
-    private AuthManager auth;
-    private File cacheFile;
-    private SynchronizerAndroid sync;
 
     public Presenter(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
-        this.sync = new SynchronizerAndroid(activity, getFileCache());
-        this.sync.init();
     }
+
+    private AuthManager auth;
 
     // For test
     public void setAuth(AuthManager auth) {
         this.auth = auth;
     }
 
+    private SynchronizerAndroid sync;
+
+    public SynchronizerAndroid getSync() {
+        if (this.sync == null) {
+            this.sync = new SynchronizerAndroid(activity, getFileCache());
+        }
+        return sync;
+    }
 
     @Override
     public void onSignIn() {
@@ -61,6 +66,7 @@ public class Presenter implements IPresenter{
         view.updateUI_User();
     }
 
+
     // --- Album ---
 
     private ArrayList<String> mAlbums;
@@ -70,19 +76,18 @@ public class Presenter implements IPresenter{
      * persistent data
      */
     private String album;
-
     @Override
     public String getAlbum() {
         return album;
     }
 
     // Use from persistence
+
     @Override
     public void setAlbum(String album) {
         this.album = album;
         view.onAlbumChosenResult(album);
     }
-
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
@@ -118,6 +123,7 @@ public class Presenter implements IPresenter{
         view.showChooseAlbumDialog(albums);
     }
 
+
     // --- folder ---
 
     /**
@@ -125,13 +131,12 @@ public class Presenter implements IPresenter{
      * persistant data
      */
     private String folderHuman = Environment.DIRECTORY_PICTURES;
-
     @Override
     public String getFolderHuman() {
         return this.folderHuman;
     }
-    // Use from Persistence
 
+    // Use from Persistence
     /**
      * Get File from human version of folder
      * @return File
@@ -147,6 +152,8 @@ public class Presenter implements IPresenter{
         view.updateUI_Folder(folderHuman);
     }
 
+
+    private File cacheFile;
     /**
      * Get File to store cache
      * @return File
@@ -177,6 +184,7 @@ public class Presenter implements IPresenter{
         view.updateUI_Folder(humanPath);
     }
 
+
     // --- sync ---
 
     @Override
@@ -186,7 +194,7 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            taskWithPermissions(new SyncTask(this, this.sync));
+            taskWithPermissions(new SyncTask(this, getSync()));
         }
     }
 
@@ -197,13 +205,13 @@ public class Presenter implements IPresenter{
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            taskWithPermissions(new ChooseTask(this, this.sync));
+            taskWithPermissions(new ChooseTask(this, getSync()));
         }
     }
 
     @Override
     public void onResetCache() {
-        this.sync.resetCache();
+        getSync().resetCache();
     }
 
     private void taskWithPermissions(final SyncTask task) {

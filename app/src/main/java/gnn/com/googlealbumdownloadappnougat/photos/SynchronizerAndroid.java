@@ -9,7 +9,6 @@ import gnn.com.photos.sync.Synchronizer;
 
 public class SynchronizerAndroid extends Synchronizer {
 
-    private SyncTask syncTask;
     private final MainActivity activity;
 
     public SynchronizerAndroid(MainActivity activity, File cacheFile) {
@@ -17,12 +16,10 @@ public class SynchronizerAndroid extends Synchronizer {
         this.activity = activity;
     }
 
+    private SyncTask syncTask;
+
     public void setSyncTask(SyncTask syncTask) {
         this.syncTask = syncTask;
-    }
-
-    protected PhotosRemoteService getRemoteService(File cacheFile) {
-        return new PhotosRemoteServiceAndroid(activity, cacheFile);
     }
 
     @Override

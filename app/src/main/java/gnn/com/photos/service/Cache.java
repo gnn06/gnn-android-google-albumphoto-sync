@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import gnn.com.photos.model.Photo;
 
 public class Cache {
+
+    private final File file;
+
     private ArrayList<Photo> photos;
-    private File file;
 
     /**
      * @param file File to use to store and retrieve cache

@@ -25,7 +25,7 @@ class SyncFull extends SyncMethod {
      * Determine new photo to download and photo to be deleled.
      */
     // TODO: 07/05/2019 managed updated photo if possible
-    public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
+    void sync(String albumName, File folder) throws IOException, GoogleAuthException {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         synchronizer.resetCurrent();

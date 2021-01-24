@@ -22,6 +22,6 @@ abstract class SyncMethod {
         this.localService = localService;
     }
 
-    abstract public void sync (String albumName, File folder) throws IOException, GoogleAuthException;
+    abstract void sync (String albumName, File folder) throws IOException, GoogleAuthException;
 
 }

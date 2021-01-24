@@ -21,7 +21,7 @@ class SyncRandom extends SyncMethod {
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
-    public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
+    void sync(String albumName, File folder) throws IOException, GoogleAuthException {
         synchronizer.resetCurrent();
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(folder);

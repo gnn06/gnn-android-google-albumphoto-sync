@@ -12,6 +12,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 
 public abstract class Synchronizer {
 
+    private final SyncMethod syncMethod = new SyncMethod(this);
     protected final File fileCache;
 
     public Synchronizer(File cacheFile) {
@@ -21,7 +22,7 @@ public abstract class Synchronizer {
     private PhotosRemoteService remoteService;
     private PhotosLocalService localService;
 
-    private PhotosRemoteService getRemoteService() {
+    PhotosRemoteService getRemoteService() {
         if (this.remoteService == null) {
             this.remoteService = getRemoteServiceImpl();
         }
@@ -51,40 +52,14 @@ public abstract class Synchronizer {
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
-        PhotosRemoteService prs = getRemoteService();
-        PhotosLocalService pls = getLocalService();
-        System.out.println("get photos of album : " + albumName);
-        System.out.println("download photos into folder : " + folder);
-        this.resetCurrent();
-        ArrayList<Photo> remote = prs.getPhotos(albumName, this);
-        ArrayList<Photo> local = pls.getLocalPhotos(folder);
-        this.toDownload = PhotoChooser.firstMinusSecond(remote, local);
-        this.toDelete   = PhotoChooser.firstMinusSecond(local, remote);
-        System.out.println("remote count = " + remote.size());
-        System.out.println("local count = " + local.size());
-        System.out.println("to download count = " + this.toDownload.size());
-        System.out.println("to delete count = " + this.toDelete.size());
-        pls.delete(this.getToDelete(), folder, this);
-        prs.download(this.getToDownload(), folder, this);
+        syncMethod.sync(albumName, folder);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
-        PhotosRemoteService prs = getRemoteService();
-        PhotosLocalService pls = getLocalService();
-        this.resetCurrent();
-        ArrayList<Photo> remote = prs.getPhotos(albumName, this);
-        ArrayList<Photo> local = pls.getLocalPhotos(folder);
-        this.toDelete   = local;
-        this.toDownload = PhotoChooser.chooseOne(remote);
-        System.out.println("remote count = " + remote.size());
-        System.out.println("local count = " + local.size());
-        System.out.println("to download count = " + this.toDownload.size());
-        System.out.println("to delete count = " + this.toDelete.size());
-        pls.delete(this.getToDelete(), folder, this);
-        prs.download(this.getToDownload(), folder, this);
+        syncMethod.chooseOne(albumName, folder);
     }
 
     public int getTotalDownload() {
@@ -113,6 +88,14 @@ public abstract class Synchronizer {
 
     abstract public void incAlbumSize();
 
+    void setToDownload(ArrayList<Photo> toDownload) {
+        this.toDownload = toDownload;
+    }
+
+    void setToDelete(ArrayList<Photo> toDelete) {
+        this.toDelete = toDelete;
+    }
+
     public int getAlbumSize() {
         return this.albumSize;
     }
@@ -121,7 +104,7 @@ public abstract class Synchronizer {
         this.albumSize = size;
     }
 
-    private void resetCurrent() {
+    void resetCurrent() {
         this.currentDownload = 0;
         this.currentDelete= 0;
         this.toDownload = new ArrayList<>();
@@ -129,11 +112,11 @@ public abstract class Synchronizer {
         this.albumSize = 0;
     }
 
-    private ArrayList<Photo> getToDownload() {
+    ArrayList<Photo> getToDownload() {
         return toDownload;
     }
 
-    private ArrayList<Photo> getToDelete() {
+    ArrayList<Photo> getToDelete() {
         return toDelete;
     }
 

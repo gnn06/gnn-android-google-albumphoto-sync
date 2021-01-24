@@ -14,8 +14,8 @@ class SyncFull extends SyncMethod {
 
     public SyncFull(Synchronizer synchronizer,
                     PhotosRemoteService remoteService,
-                    PhotosLocalService localService, File processFolder) {
-        super(synchronizer, remoteService, localService, processFolder);
+                    PhotosLocalService localService) {
+        super(synchronizer, remoteService, localService);
     }
 
     /**

@@ -14,8 +14,8 @@ class SyncRandom extends SyncMethod {
 
     public SyncRandom(Synchronizer synchronizer,
                       PhotosRemoteService remoteService,
-                      PhotosLocalService localService, File processFolder) {
-        super(synchronizer, remoteService, localService, processFolder);
+                      PhotosLocalService localService) {
+        super(synchronizer, remoteService, localService);
     }
 
     /**

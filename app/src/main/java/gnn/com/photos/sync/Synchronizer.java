@@ -1,8 +1,11 @@
 package gnn.com.photos.sync;
 
+import android.util.Log;
+
 import com.google.android.gms.auth.GoogleAuthException;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -53,7 +56,7 @@ public abstract class Synchronizer {
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
-        new SyncFull(this, getRemoteService(), getLocalService(), processFolder)
+        new SyncFull(this, getRemoteService(), getLocalService())
                 .sync(albumName, folder);
     }
 
@@ -61,7 +64,7 @@ public abstract class Synchronizer {
      * choose one photo and download it, delete previous downloaded photo.
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
-        new SyncRandom(this, getRemoteService(), this.getLocalService(), processFolder)
+        new SyncRandom(this, getRemoteService(), this.getLocalService())
                 .sync(albumName, folder);
     }
 
@@ -115,6 +118,12 @@ public abstract class Synchronizer {
         this.albumSize = size;
     }
 
+    public void resetCache() {
+        if (getRemoteService() != null) {
+            this.remoteService.resetCache();
+        }
+    }
+
     void resetCurrent() {
         this.currentDownload = 0;
         this.currentDelete= 0;
@@ -123,9 +132,15 @@ public abstract class Synchronizer {
         this.albumSize = 0;
     }
 
-    public void resetCache() {
-        if (getRemoteService() != null) {
-            this.remoteService.resetCache();
+    void storeSyncTime() throws IOException {
+        if (processFolder != null) {
+            File file = new File(processFolder, "last_sync");
+            System.out.println(file.getAbsolutePath());
+            Log.i("SyncMethod", "write " + file.getAbsolutePath());
+            FileWriter writer = new FileWriter(file);
+            // TODO get current time and write it
+            writer.write("sync time");
+            writer.close();
         }
     }
 }

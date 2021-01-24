@@ -31,7 +31,7 @@ public class SyncMethodTest {
         Synchronizer sync = mock(Synchronizer.class);
         SyncMethod syncMethod = new SyncFull(sync,
                 mock(PhotosRemoteService.class),
-                mock(PhotosLocalService.class), null);
+                mock(PhotosLocalService.class));
         File folder = mock(File.class);
         File processFolder = mock(File.class);
         syncMethod.sync("album", folder);
@@ -64,7 +64,7 @@ public class SyncMethodTest {
 
             }
         };
-        SyncMethod syncMethod = new SyncRandom(synchronizer, prs, pls, null);
+        SyncMethod syncMethod = new SyncRandom(synchronizer, prs, pls);
 
         // when
         syncMethod.sync("album", folder);
@@ -83,7 +83,7 @@ public class SyncMethodTest {
     public void test_write_last_sync_time() throws IOException, GoogleAuthException {
         String temp_path = System.getProperty("java.io.tmpdir");
         File processFolder = new File(temp_path);
-        SyncFull syncFull = new SyncFull(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class), processFolder);
+        SyncFull syncFull = new SyncFull(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
         SyncMethod syncMethod = spy(syncFull);
         syncMethod.sync("album", mock(File.class));
     }

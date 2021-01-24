@@ -27,19 +27,10 @@ public class SyncMethodTest {
 
     @Test
     public void sync() throws IOException, GoogleAuthException {
-        Synchronizer sync = new Synchronizer(null) {
-
-            @Override
-            protected PhotosRemoteService getRemoteServiceImpl() {
-                return mock(PhotosRemoteService.class);
-            }
-
-            @Override
-            public void incAlbumSize() {
-
-            }
-        };
-        SyncMethod syncMethod = new SyncMethod(sync);
+        Synchronizer sync = mock(Synchronizer.class);
+        SyncMethod syncMethod = new SyncFull(sync,
+                mock(PhotosRemoteService.class),
+                mock(PhotosLocalService.class));
         File folder = mock(File.class);
         syncMethod.sync("album", folder);
     }
@@ -70,16 +61,13 @@ public class SyncMethodTest {
             public void incAlbumSize() {
 
             }
-
-            @Override
-            protected PhotosLocalService getLocalService() {
-                return pls;
-            }
         };
-        SyncMethod syncMethod = new SyncMethod(synchronizer);
+        SyncMethod syncMethod = new SyncRandom(synchronizer,
+                prs,
+                pls);
 
         // when
-        syncMethod.chooseOne("album", folder);
+        syncMethod.sync("album", folder);
 
         // then
         // check download one

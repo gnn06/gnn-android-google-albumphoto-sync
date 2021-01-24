@@ -12,7 +12,6 @@ import gnn.com.photos.service.PhotosRemoteService;
 
 public abstract class Synchronizer {
 
-    private final SyncMethod syncMethod = new SyncMethod(this);
     protected final File fileCache;
 
     public Synchronizer(File cacheFile) {
@@ -52,14 +51,16 @@ public abstract class Synchronizer {
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
-        syncMethod.sync(albumName, folder);
+        new SyncFull(this, getRemoteService(), getLocalService())
+                .sync(albumName, folder);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
-        syncMethod.chooseOne(albumName, folder);
+        new SyncRandom(this, getRemoteService(), this.getLocalService())
+                .sync(albumName, folder);
     }
 
     public int getTotalDownload() {
@@ -92,8 +93,16 @@ public abstract class Synchronizer {
         this.toDownload = toDownload;
     }
 
+    ArrayList<Photo> getToDownload() {
+        return toDownload;
+    }
+
     void setToDelete(ArrayList<Photo> toDelete) {
         this.toDelete = toDelete;
+    }
+
+    ArrayList<Photo> getToDelete() {
+        return toDelete;
     }
 
     public int getAlbumSize() {
@@ -110,14 +119,6 @@ public abstract class Synchronizer {
         this.toDownload = new ArrayList<>();
         this.toDelete = new ArrayList<>();
         this.albumSize = 0;
-    }
-
-    ArrayList<Photo> getToDownload() {
-        return toDownload;
-    }
-
-    ArrayList<Photo> getToDelete() {
-        return toDelete;
     }
 
     public void resetCache() {

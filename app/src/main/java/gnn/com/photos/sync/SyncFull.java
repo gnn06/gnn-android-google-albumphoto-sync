@@ -28,7 +28,6 @@ class SyncFull extends SyncMethod {
     void syncImpl(String albumName, File folder) throws IOException, GoogleAuthException {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
-        synchronizer.resetCurrent();
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(folder);
         synchronizer.setToDownload(PhotoChooser.firstMinusSecond(remote, local));

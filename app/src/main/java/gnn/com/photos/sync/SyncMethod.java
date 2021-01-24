@@ -3,13 +3,10 @@ package gnn.com.photos.sync;
 import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthException;
-import com.google.api.client.util.DateTime;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
@@ -27,6 +24,7 @@ abstract class SyncMethod {
     }
 
     void sync(String albumName, File imageFolder, File processFolder) throws IOException, GoogleAuthException {
+        synchronizer.resetCurrent();
         syncImpl(albumName, imageFolder);
         storeSyncTime(processFolder);
     }

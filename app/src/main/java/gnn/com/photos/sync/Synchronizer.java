@@ -53,16 +53,16 @@ public abstract class Synchronizer {
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
-        new SyncFull(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder, processFolder);
+        new SyncFull(this, getRemoteService(), getLocalService(), processFolder)
+                .sync(albumName, folder);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
-        new SyncRandom(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder, processFolder);
+        new SyncRandom(this, getRemoteService(), this.getLocalService(), processFolder)
+                .sync(albumName, folder);
     }
 
     public int getTotalDownload() {

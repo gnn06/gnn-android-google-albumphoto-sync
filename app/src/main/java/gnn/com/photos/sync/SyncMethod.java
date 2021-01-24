@@ -16,14 +16,16 @@ abstract class SyncMethod {
     protected final Synchronizer synchronizer;
     protected final PhotosRemoteService remoteService;
     protected final PhotosLocalService localService;
+    private final File processFolder;
 
-    public SyncMethod(Synchronizer synchronizer, PhotosRemoteService remoteService, PhotosLocalService localService) {
+    public SyncMethod(Synchronizer synchronizer, PhotosRemoteService remoteService, PhotosLocalService localService, File processFolder) {
         this.synchronizer = synchronizer;
         this.remoteService = remoteService;
         this.localService = localService;
+        this.processFolder = processFolder;
     }
 
-    void sync(String albumName, File imageFolder, File processFolder) throws IOException, GoogleAuthException {
+    void sync(String albumName, File imageFolder) throws IOException, GoogleAuthException {
         synchronizer.resetCurrent();
         syncImpl(albumName, imageFolder);
         storeSyncTime(processFolder);

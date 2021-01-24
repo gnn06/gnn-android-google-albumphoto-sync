@@ -11,8 +11,8 @@ public class SynchronizerAndroid extends Synchronizer {
 
     private final MainActivity activity;
 
-    public SynchronizerAndroid(MainActivity activity, File cacheFile) {
-        super(cacheFile);
+    public SynchronizerAndroid(MainActivity activity, File cacheFile, File processFolder) {
+        super(cacheFile, processFolder);
         this.activity = activity;
     }
 

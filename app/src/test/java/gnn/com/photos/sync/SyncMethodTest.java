@@ -17,6 +17,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,7 +33,8 @@ public class SyncMethodTest {
                 mock(PhotosRemoteService.class),
                 mock(PhotosLocalService.class));
         File folder = mock(File.class);
-        syncMethod.sync("album", folder);
+        File processFolder = mock(File.class);
+        syncMethod.sync("album", folder, null);
     }
 
     @Test
@@ -51,7 +53,7 @@ public class SyncMethodTest {
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
-        Synchronizer synchronizer = new Synchronizer(null) {
+        Synchronizer synchronizer = new Synchronizer(null, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -67,7 +69,7 @@ public class SyncMethodTest {
                 pls);
 
         // when
-        syncMethod.sync("album", folder);
+        syncMethod.sync("album", folder, null);
 
         // then
         // check download one
@@ -78,4 +80,14 @@ public class SyncMethodTest {
         // check delete all
         verify(pls).delete(localPhotos, folder, synchronizer);
     }
+
+    @Test
+    public void test_write_last_sync_time() throws IOException, GoogleAuthException {
+        SyncFull syncFull = new SyncFull(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
+        SyncMethod syncMethod = spy(syncFull);
+        String temp_path = System.getProperty("java.io.tmpdir");
+        File processFolder = new File(temp_path);
+        syncMethod.sync("album", mock(File.class), processFolder);
+    }
+
 }

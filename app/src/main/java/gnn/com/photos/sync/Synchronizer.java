@@ -13,9 +13,11 @@ import gnn.com.photos.service.PhotosRemoteService;
 public abstract class Synchronizer {
 
     protected final File fileCache;
+    private final File processFolder;
 
-    public Synchronizer(File cacheFile) {
+    public Synchronizer(File cacheFile, File processFolder) {
         this.fileCache = cacheFile;
+        this.processFolder = processFolder;
     }
 
     private PhotosRemoteService remoteService;
@@ -52,7 +54,7 @@ public abstract class Synchronizer {
     // TODO: 07/05/2019 managed updated photo if possible
     public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
         new SyncFull(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder);
+                .sync(albumName, folder, processFolder);
     }
 
     /**
@@ -60,7 +62,7 @@ public abstract class Synchronizer {
      */
     public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
         new SyncRandom(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder);
+                .sync(albumName, folder, processFolder);
     }
 
     public int getTotalDownload() {

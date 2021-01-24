@@ -49,7 +49,7 @@ public class Presenter implements IPresenter{
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getFileCache());
+            this.sync = new SynchronizerAndroid(activity, getFileCache(), getProcessFolder());
         }
         return sync;
     }
@@ -166,6 +166,12 @@ public class Presenter implements IPresenter{
             Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
         }
         return this.cacheFile;
+    }
+
+    private File getProcessFolder() {
+        File dir = activity.getApplicationContext().getFilesDir();
+        // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
+        return dir;
     }
 
     @Override

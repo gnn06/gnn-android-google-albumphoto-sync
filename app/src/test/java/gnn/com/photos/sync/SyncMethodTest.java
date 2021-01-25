@@ -2,12 +2,15 @@ package gnn.com.photos.sync;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import gnn.com.photos.model.Photo;
@@ -86,6 +89,34 @@ public class SyncMethodTest {
         SyncFull syncFull = new SyncFull(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
         SyncMethod syncMethod = spy(syncFull);
         syncMethod.sync("album", mock(File.class));
+    }
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+
+    @Test
+    public void test_read_lastSyncTime() throws IOException {
+        // given a synchronizer with a processFolder containing a last_sync file
+        File tempFile = folder.newFile("last_sync");
+
+        Synchronizer synchronizer = new Synchronizer(null, folder.getRoot()) {
+            @Override
+            protected PhotosRemoteService getRemoteServiceImpl() {
+                return null;
+            }
+            @Override
+            public void incAlbumSize() {
+            }
+        };
+
+        // when call method
+        String stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+
+        // then assert we gave the DateTime of the given file
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String stringLastModifiedExpected = sdf.format(tempFile.lastModified());
+        assertEquals(stringLastModifiedExpected, stringLastSyncTimeActual);
     }
 
 }

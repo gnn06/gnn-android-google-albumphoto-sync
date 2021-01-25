@@ -7,6 +7,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import gnn.com.photos.service.PhotosLocalService;
@@ -142,5 +143,15 @@ public abstract class Synchronizer {
             writer.write("sync time");
             writer.close();
         }
+    }
+
+    public String retrieveLastSyncTime() {
+        String stringLastModified = null;
+        if (processFolder != null) {
+            File file = new File(processFolder, "last_sync");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            stringLastModified = sdf.format(file.lastModified());
+        }
+        return stringLastModified;
     }
 }

@@ -47,4 +47,6 @@ public interface IPresenter {
     void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting);
 
     void onResetCache();
+
+    void init();
 }

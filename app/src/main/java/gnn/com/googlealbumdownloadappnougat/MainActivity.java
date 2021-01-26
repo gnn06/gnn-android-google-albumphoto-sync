@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         this.persistence = new Persistence(this, presenter);
         persistence.restoreData();
 
-        updateUI_User();
-
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();
@@ -82,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements IView {
                 presenter.onChooseSync();
             }
         });
+
+        presenter.init();
     }
 
     @Override
@@ -213,6 +213,13 @@ public class MainActivity extends AppCompatActivity implements IView {
                 break;
         }
 
+        TextView textView = findViewById(R.id.result);
+        textView.setText(result);
+    }
+
+    @Override
+    public void updateUI_lastSyncTime(String lastSyncTime) {
+        String result = getResources().getString(R.string.last_sync_time, lastSyncTime);
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }

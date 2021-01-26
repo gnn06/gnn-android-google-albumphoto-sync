@@ -55,6 +55,14 @@ public class Presenter implements IPresenter{
     }
 
     @Override
+    public void init() {
+        view.updateUI_User();
+
+        String lastSyncTime = getSync().retrieveLastSyncTime();
+        view.updateUI_lastSyncTime(lastSyncTime);
+    }
+
+    @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view);
         startRequirement(require);

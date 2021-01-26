@@ -19,6 +19,8 @@ public interface IView {
 
     void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step);
 
+    void updateUI_lastSyncTime(String lastSyncTime);
+
     void updateUI_Folder(String humanPath);
 
     void showError();

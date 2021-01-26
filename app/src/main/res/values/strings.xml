@@ -19,6 +19,7 @@
     <string name="sync_in_progress">Sync in progress</string>
     <string name="sync_finished">Sync terminated</string>
     <string name="sync">sync</string>
+    <string name="last_sync_time">Last sync time %s.</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>

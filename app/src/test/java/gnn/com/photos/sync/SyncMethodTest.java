@@ -119,4 +119,24 @@ public class SyncMethodTest {
         assertEquals(stringLastModifiedExpected, stringLastSyncTimeActual);
     }
 
+    @Test
+    public void test_readLastSyncTime_null() {
+        // given
+        Synchronizer synchronizer = new Synchronizer(null, folder.getRoot()) {
+            @Override
+            protected PhotosRemoteService getRemoteServiceImpl() {
+                return null;
+            }
+            @Override
+            public void incAlbumSize() {
+            }
+        };
+
+        // when
+        String stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+
+        // then
+        assertNull(stringLastSyncTimeActual);
+    }
+
 }

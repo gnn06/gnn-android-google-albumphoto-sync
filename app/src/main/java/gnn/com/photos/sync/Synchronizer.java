@@ -145,12 +145,17 @@ public abstract class Synchronizer {
         }
     }
 
+    /**
+     * @return null if no previous sync
+     */
     public String retrieveLastSyncTime() {
         String stringLastModified = null;
         if (processFolder != null) {
             File file = new File(processFolder, "last_sync");
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            stringLastModified = sdf.format(file.lastModified());
+            if (file.exists()) {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                stringLastModified = sdf.format(file.lastModified());
+            }
         }
         return stringLastModified;
     }

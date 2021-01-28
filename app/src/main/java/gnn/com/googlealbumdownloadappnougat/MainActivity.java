@@ -28,7 +28,6 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -38,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     public static final int RC_CHOOSE_FOLDER = 504;
 
     private static final String TAG = "goi";
+
+    private final UITextHelper UITextHelper = new UITextHelper(this);
 
     private IPresenter presenter;
     private Persistence persistence;
@@ -199,47 +200,15 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step) {
-        String result = "";
-        switch (step) {
-            case STARTING:
-                result += getResources().getString(R.string.sync_starting);
-                break;
-            case IN_PRORGESS:
-                result += getResources().getString(R.string.sync_in_progress) + "\n";
-                result += getResultText(synchronizer, false);
-                break;
-            case FINISHED:
-                result += getResources().getString(R.string.sync_finished) + "\n";
-                result += getResultText(synchronizer, true);
-                break;
-        }
-
+        String result = UITextHelper.getResultString(synchronizer, step, this);
         TextView textView = findViewById(R.id.result);
         textView.setText(result);
     }
 
     @Override
     public void updateUI_lastSyncTime(String lastSyncTime) {
-        String result = getResources().getString(R.string.last_sync_time, lastSyncTime);
         TextView textView = findViewById(R.id.result);
-        textView.setText(result);
-    }
-
-    String getResultText(Synchronizer synchronizer, boolean finished) {
-        String result = "";
-        result += "album size = " + synchronizer.getAlbumSize() + "\n";
-        result += "downloaded = ";
-        if (!finished) {
-            result += synchronizer.getCurrentDownload() + " / ";
-        }
-        result += synchronizer.getTotalDownload();
-        result += "\n";
-        result += "deleted = ";
-        if (!finished) {
-            result += synchronizer.getCurrentDelete() + " / ";
-        }
-        result += synchronizer.getTotalDelete();
-        return result;
+        textView.setText(UITextHelper.getLastSyncTimeString(lastSyncTime));
     }
 
     @Override

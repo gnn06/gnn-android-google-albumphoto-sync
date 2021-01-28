@@ -177,9 +177,8 @@ public class Presenter implements IPresenter{
     }
 
     private File getProcessFolder() {
-        File dir = activity.getApplicationContext().getFilesDir();
         // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
-        return dir;
+        return activity.getApplicationContext().getFilesDir();
     }
 
     @Override

@@ -146,7 +146,8 @@ public abstract class Synchronizer {
     }
 
     /**
-     * @return null if no previous sync
+     * @return format = MM/dd/yyyy HH:mm:ss
+     *         null if no previous sync
      */
     public String retrieveLastSyncTime() {
         String stringLastModified = null;

@@ -11,13 +11,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
+import gnn.com.photos.sync.Synchronizer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
@@ -26,9 +25,9 @@ public class PresenterTest {
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = Mockito.spy(new Presenter(activity, activity));
+        Presenter presenter = spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", null);
-        IView view = Mockito.spy(IView.class);
+        IView view = spy(IView.class);
         presenter.onSyncClick();
         verify(view, Mockito.never()).alertNoAlbum();
     }
@@ -37,7 +36,7 @@ public class PresenterTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = Mockito.spy(new Presenter(activity, activity));
+        Presenter presenter = spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -51,7 +50,7 @@ public class PresenterTest {
     public void onSyncClick_MissingPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = Mockito.spy(new Presenter(activity, activity));
+        Presenter presenter = spy(new Presenter(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -65,7 +64,7 @@ public class PresenterTest {
     public void onShowAlbumList_NoCache_NoPermission () {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = Mockito.spy(new Presenter(activity, activity));
+        Presenter presenter = spy(new Presenter(activity, activity));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         Mockito.when(authMock.hasWritePermission()).thenReturn(false);
@@ -106,4 +105,22 @@ public class PresenterTest {
     }
 
 
+    @Test
+    public void init() {
+        // given a mocked Presenter
+        IView view = mock(IView.class);
+        MainActivity activity = mock(MainActivity.class);
+
+        Presenter presenter = spy(new Presenter(view, activity));
+
+        SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
+        doReturn(synchronizer).when(presenter).getSync();
+
+        // when call init
+        presenter.init();
+
+        // then have called update_UI and updateUI_lastSyncTime
+        verify(view, times(1)).updateUI_User();
+        verify(view, times(1)).updateUI_lastSyncTime(anyString());
+    }
 }

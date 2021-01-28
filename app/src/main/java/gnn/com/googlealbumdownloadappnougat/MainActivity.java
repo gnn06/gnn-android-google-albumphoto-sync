@@ -28,6 +28,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.sync.Synchronizer;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         textView.setText(result);
     }
 
-    String getResultText(SynchronizerAndroid synchronizer, boolean finished) {
+    String getResultText(Synchronizer synchronizer, boolean finished) {
         String result = "";
         result += "album size = " + synchronizer.getAlbumSize() + "\n";
         result += "downloaded = ";

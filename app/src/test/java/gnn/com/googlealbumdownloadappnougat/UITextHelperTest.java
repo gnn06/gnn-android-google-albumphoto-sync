@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import android.content.res.Resources;
+
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -11,6 +13,7 @@ import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.model.Photo;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class UITextHelperTest {
 
@@ -58,5 +61,20 @@ public class UITextHelperTest {
         String resultText = UITextHelper.getDetailResultText(synchronizer,true);
 
         assertEquals("album size = 2\ndownloaded = 3\ndeleted = 1", resultText);
+    }
+
+    @Test
+    public void getLastSyncTimeString_null() {
+        MainActivity activity = mock(MainActivity.class);
+
+        Resources ressources = mock(Resources.class);
+        when(activity.getResources()).thenReturn(ressources);
+        when(ressources.getString(anyInt())).thenReturn("nono");
+
+        UITextHelper uiTextHelper = new UITextHelper(activity);
+
+        String actual = uiTextHelper.getLastSyncTimeString(null);
+
+        assertEquals("nono", actual);
     }
 }

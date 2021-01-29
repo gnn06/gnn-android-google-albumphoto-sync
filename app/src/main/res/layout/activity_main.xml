@@ -97,9 +97,9 @@
                 android:id="@+id/SectionSync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
+                android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
                 android:paddingBottom="8dp">
                 <Button
                     android:id="@+id/SyncButton"
@@ -110,7 +110,7 @@
                     android:id="@+id/ChooseOneButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/SyncButton"
+                    android:layout_toEndOf="@id/SyncButton"
                     android:text="@string/choose_one" />
 
             </RelativeLayout>

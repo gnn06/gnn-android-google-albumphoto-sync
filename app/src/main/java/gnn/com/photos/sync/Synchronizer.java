@@ -7,6 +7,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -154,7 +155,7 @@ public abstract class Synchronizer {
         if (processFolder != null) {
             File file = new File(processFolder, "last_sync");
             if (file.exists()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                DateFormat sdf = SimpleDateFormat.getInstance();
                 stringLastModified = sdf.format(file.lastModified());
             }
         }

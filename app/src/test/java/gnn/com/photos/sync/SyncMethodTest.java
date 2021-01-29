@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -114,7 +115,7 @@ public class SyncMethodTest {
         String stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
 
         // then assert we gave the DateTime of the given file
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat sdf =  SimpleDateFormat.getInstance();
         String stringLastModifiedExpected = sdf.format(tempFile.lastModified());
         assertEquals(stringLastModifiedExpected, stringLastSyncTimeActual);
     }

@@ -1,6 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.sync.Synchronizer;
 
 public class UITextHelper {
@@ -15,10 +14,9 @@ public class UITextHelper {
      * @param lastSyncTime can be null
      */
     String getLastSyncTimeString(String lastSyncTime) {
-        String result = lastSyncTime == null ?
+        return lastSyncTime == null ?
                 activity.getResources().getString(R.string.no_previous_sync)
                 : activity.getResources().getString(R.string.last_sync_time, lastSyncTime);
-        return result;
     }
 
     String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {

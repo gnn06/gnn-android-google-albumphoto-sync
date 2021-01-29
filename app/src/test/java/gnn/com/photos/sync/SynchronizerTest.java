@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import gnn.com.photos.service.PhotosRemoteService;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class SynchronizerTest {

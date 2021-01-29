@@ -13,7 +13,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-import gnn.com.photos.sync.Synchronizer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

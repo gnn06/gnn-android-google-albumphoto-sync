@@ -41,6 +41,8 @@ dependencies {
     // For android, see remark https://github.com/grpc/grpc-java#download
     implementation 'io.grpc:grpc-okhttp:1.20.0'
     implementation 'io.grpc:grpc-stub:1.20.0'
+    // needed by offline mode when running test
+    implementation 'io.grpc:grpc-core:1.19.0'
 
     implementation 'commons-io:commons-io:2.6'
 

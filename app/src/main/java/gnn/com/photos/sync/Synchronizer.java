@@ -15,7 +15,7 @@ import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.service.PhotosRemoteService;
 
-public abstract class Synchronizer {
+public abstract class Synchronizer implements SyncData {
 
     protected final File fileCache;
     private final File processFolder;
@@ -96,7 +96,7 @@ public abstract class Synchronizer {
 
     abstract public void incAlbumSize();
 
-    void setToDownload(ArrayList<Photo> toDownload) {
+    public void setToDownload(ArrayList<Photo> toDownload) {
         this.toDownload = toDownload;
     }
 
@@ -104,7 +104,7 @@ public abstract class Synchronizer {
         return toDownload;
     }
 
-    void setToDelete(ArrayList<Photo> toDelete) {
+    public void setToDelete(ArrayList<Photo> toDelete) {
         this.toDelete = toDelete;
     }
 

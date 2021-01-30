@@ -30,8 +30,7 @@ class SyncFull extends SyncMethod {
         System.out.println("download photos into folder : " + folder);
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(folder);
-        synchronizer.setToDownload(PhotoChooser.firstMinusSecond(remote, local));
-        synchronizer.setToDelete(PhotoChooser.firstMinusSecond(local, remote));
+        PhotoChooser.chooseFull(synchronizer, local, remote);
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());
         System.out.println("to download count = " + synchronizer.getToDownload().size());

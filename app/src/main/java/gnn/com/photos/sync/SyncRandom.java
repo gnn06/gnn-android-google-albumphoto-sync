@@ -24,9 +24,7 @@ class SyncRandom extends SyncMethod {
     void syncImpl(String albumName, File folder) throws IOException, GoogleAuthException {
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(folder);
-        synchronizer.setToDelete(local);
-        ArrayList<Photo> chosen = PhotoChooser.chooseOne(remote);
-        synchronizer.setToDownload(chosen);
+        PhotoChooser.chooseRandom(synchronizer, local, remote);
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());
         System.out.println("to download count = " + synchronizer.getToDownload().size());

@@ -7,6 +7,17 @@ import gnn.com.photos.model.Photo;
 
 class PhotoChooser {
 
+    static void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote) {
+        synchronizer.setToDelete(local);
+        ArrayList<Photo> chosen = PhotoChooser.chooseOne(remote);
+        synchronizer.setToDownload(chosen);
+    }
+
+    static void chooseFull(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote) {
+        synchronizer.setToDownload(PhotoChooser.firstMinusSecond(remote, local));
+        synchronizer.setToDelete(PhotoChooser.firstMinusSecond(local, remote));
+    }
+
     static ArrayList<Photo> chooseOne(ArrayList<Photo> remoteLst) {
         ArrayList<Photo> result = new ArrayList<>();
         int choose = ThreadLocalRandom.current().nextInt(remoteLst.size());

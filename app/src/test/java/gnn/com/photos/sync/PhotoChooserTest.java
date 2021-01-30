@@ -3,15 +3,18 @@ package gnn.com.photos.sync;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import gnn.com.photos.model.Photo;
+import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.*;
 
 public class PhotoChooserTest {
 
     @Test
-    public void chooseOne() {
+    public void chooseOneList() {
         ArrayList<Photo> remote = new ArrayList<>();
         remote.add(new Photo("url1", "id1"));
         remote.add(new Photo("url2", "id2"));
@@ -24,7 +27,7 @@ public class PhotoChooserTest {
     }
 
     @Test
-    public void firstMinusSecond() {
+    public void firstMinusSecondList() {
         ArrayList<Photo> remote = new ArrayList<>();
         remote.add(new Photo("url1", "id1"));
         remote.add(new Photo("url2", "id2"));
@@ -39,4 +42,33 @@ public class PhotoChooserTest {
         assertFalse(result.contains(new Photo("url3", "id3")));
     }
 
+    @Test
+    public void chooseOne() {
+        Synchronizer syncData = new Synchronizer(null, null) {
+            @Override
+            protected PhotosRemoteService getRemoteServiceImpl() {
+                return null;
+            }
+            @Override
+            public void incAlbumSize() {
+
+            }
+        };
+        ArrayList<Photo> local = new ArrayList<>(
+                Collections.singletonList(
+                        new Photo("url1", "id1")));
+        ArrayList<Photo> remote = new ArrayList<>(
+                Arrays.asList(
+                        new Photo("url1", "id1"),
+                        new Photo("url2", "id2"),
+                        new Photo("url3", "id3")
+                ));
+
+        // when
+        PhotoChooser.chooseRandom(syncData, local, remote);
+
+        // then
+        assertEquals(1, syncData.getToDelete().size());
+        assertEquals(1, syncData.getToDownload().size());
+    }
 }

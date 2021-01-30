@@ -17,7 +17,7 @@ public class PhotoChooserTest {
         remote.add(new Photo("url2", "id2"));
         remote.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result1 = PhotoChooser.chooseOne(remote);
+        ArrayList<Photo> result1 = PhotoChooser.chooseOneList(remote);
 
         assertEquals(1, result1.size());
         System.out.print(result1.get(0).getId());
@@ -33,9 +33,10 @@ public class PhotoChooserTest {
         ArrayList<Photo> local = new ArrayList<>();
         local.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result = PhotoChooser.firstMinusSecond(remote, local);
+        ArrayList<Photo> result = PhotoChooser.firstMinusSecondList(remote, local);
 
         assertEquals(2, result.size());
         assertFalse(result.contains(new Photo("url3", "id3")));
     }
+
 }

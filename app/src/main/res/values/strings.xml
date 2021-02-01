@@ -21,6 +21,7 @@
     <string name="sync">sync</string>
     <string name="last_sync_time">Last sync time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
+    <string name="synchronize">Synchronize</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>
@@ -32,4 +33,6 @@
     <string name="choose_now">Choose now</string>
 
     <string name="reset_cache">Reset cache</string>
+    <string name="quantity">Quantity</string>
+    <string name="quantity_explenation">Randomly retrieves only same photos. Leave empty to retrieve all photos.</string>
 </resources>

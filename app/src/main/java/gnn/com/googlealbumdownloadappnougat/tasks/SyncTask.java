@@ -27,7 +27,7 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
         File destination = presenter.getFolder();
         assert album != null && destination != null;
         try {
-            sync.sync(album, destination);
+            sync.syncAll(album, destination);
         } catch (GoogleAuthException | IOException e) {
             Log.e(TAG, e.getMessage());
             markAsError();
@@ -42,20 +42,20 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        presenter.updateUI_CallResult(sync, SyncStep.STARTING);
+        presenter.setSyncResult(sync, SyncStep.STARTING);
     }
 
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
-        presenter.updateUI_CallResult(sync, SyncStep.IN_PRORGESS);
+        presenter.setSyncResult(sync, SyncStep.IN_PRORGESS);
     }
 
     @Override
     protected void onPostExecute(Void voids) {
         super.onPostExecute(voids);
         if (isSuccessful()) {
-            presenter.updateUI_CallResult(sync, SyncStep.FINISHED);
+            presenter.setSyncResult(sync, SyncStep.FINISHED);
         }
     }
 }

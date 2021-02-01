@@ -38,7 +38,7 @@ public class SyncMethodTest {
                 mock(PhotosLocalService.class));
         File folder = mock(File.class);
         File processFolder = mock(File.class);
-        syncMethod.sync("album", folder);
+        syncMethod.sync("album", folder, 0);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class SyncMethodTest {
         SyncMethod syncMethod = new SyncRandom(synchronizer, prs, pls);
 
         // when
-        syncMethod.sync("album", folder);
+        syncMethod.sync("album", folder, 1);
 
         // then
         // check download one
@@ -89,7 +89,7 @@ public class SyncMethodTest {
         File processFolder = new File(temp_path);
         SyncFull syncFull = new SyncFull(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
         SyncMethod syncMethod = spy(syncFull);
-        syncMethod.sync("album", mock(File.class));
+        syncMethod.sync("album", mock(File.class), 0);
     }
 
     @Rule

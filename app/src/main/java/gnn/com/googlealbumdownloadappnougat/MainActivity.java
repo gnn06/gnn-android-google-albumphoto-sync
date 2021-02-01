@@ -1,6 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -71,12 +70,6 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.SyncButton).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.onSyncClick();
-            }
-        });
-
         findViewById(R.id.ChooseOneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onChooseSync();
@@ -119,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
             // return to app without choosing a folder : data == null && resultCode == 0
-            presenter.chooseFolderResult(data);
+            presenter.setFolder(data);
         }
     }
 
@@ -182,12 +175,12 @@ public class MainActivity extends AppCompatActivity implements IView {
         String name;
         if (account != null) {
             name = account.getEmail();
-            String GoogleAuthorization = account.getGrantedScopes().toString();
-            String writeAuthorization;
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                writeAuthorization = "write";
-            else writeAuthorization = "no write";
-            name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
+//            String GoogleAuthorization = account.getGrantedScopes().toString();
+//            String writeAuthorization;
+//            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+//                writeAuthorization = "write";
+//            else writeAuthorization = "no write";
+//            name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
         } else {
             name = getResources().getString(R.string.login);
         }
@@ -223,6 +216,24 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .setTitle(getResources().getString(R.string.error))
                 .setNegativeButton(android.R.string.ok, null)
                 .show();
+    }
+
+    @Override
+    /**
+     * @return String "" if empty
+     */
+    public String getQuantity() {
+        TextView view = findViewById(R.id.textQuantity);
+        return view.getText().toString();
+    }
+
+    @Override
+    /**
+     * @param quantity "" if no quantity
+     */
+    public void setQuantity(String quantity) {
+        TextView view = findViewById(R.id.textQuantity);
+        view.setText(quantity);
     }
 
 }

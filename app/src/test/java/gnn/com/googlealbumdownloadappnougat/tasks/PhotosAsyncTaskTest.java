@@ -30,7 +30,7 @@ public class PhotosAsyncTaskTest {
         task.onPostExecute(null);
 
         verify(presenter).showError();
-        verify(presenter, never()).updateUI_CallResult(sync, SyncStep.FINISHED);
+        verify(presenter, never()).setSyncResult(sync, SyncStep.FINISHED);
     }
 
 }

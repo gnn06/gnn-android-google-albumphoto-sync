@@ -54,6 +54,27 @@ public class Presenter implements IPresenter{
         return sync;
     }
 
+    private File cacheFile;
+
+    /**
+     * Get File to store cache
+     * @return File
+     */
+    private File getFileCache() {
+        if (this.cacheFile == null) {
+            File dir = activity.getApplicationContext().getFilesDir();
+            // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
+            this.cacheFile = new File(dir, "cache");
+            Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
+        }
+        return this.cacheFile;
+    }
+
+    private File getProcessFolder() {
+        // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
+        return activity.getApplicationContext().getFilesDir();
+    }
+
     @Override
     public void init() {
         view.updateUI_User();
@@ -71,9 +92,24 @@ public class Presenter implements IPresenter{
     @Override
     public void onSignOut() {
         auth.signOut();
+        getSync().resetCache();
         view.updateUI_User();
     }
 
+    @Override
+    public void showError() {
+        view.showError();
+    }
+
+    @Override
+    public void setProgressBarVisibility(int visible) {
+        view.setProgressBarVisibility(visible);
+    }
+
+    @Override
+    public void setSyncResult(SynchronizerAndroid sync, SyncStep step) {
+        view.updateUI_CallResult(sync, step);
+    }
 
     // --- Album ---
 
@@ -84,22 +120,16 @@ public class Presenter implements IPresenter{
      * persistent data
      */
     private String album;
+
     @Override
     public String getAlbum() {
         return album;
     }
 
-    // Use from persistence
-
-    @Override
-    public void setAlbum(String album) {
-        this.album = album;
-        view.onAlbumChosenResult(album);
-    }
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, null);
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getFileCache());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -116,21 +146,33 @@ public class Presenter implements IPresenter{
     }
 
     /**
-     * Called from alertDialog showing album list
-     * @param albumName chosen album
+     * called when albums is retrieved
+     * ask user to choose an album
+     * @param albums
      */
-    @Override
-    public void onChooseAlbum(String albumName) {
-        this.album = albumName;
-        view.onAlbumChosenResult(albumName);
-    }
-
     @Override
     public void setAlbums(ArrayList<String> albums) {
         this.mAlbums = albums;
         view.showChooseAlbumDialog(albums);
     }
 
+    // Use from persistence
+    @Override
+    public void setAlbum(String album) {
+        this.album = album;
+        view.onAlbumChosenResult(album);
+    }
+
+    /**
+     * Called from alertDialog showing album list
+     * @param albumName chosen album
+     */
+    @Override
+    public void onChooseAlbum(String albumName) {
+        this.album = albumName;
+        getSync().resetCache();
+        view.onAlbumChosenResult(albumName);
+    }
 
     // --- folder ---
 
@@ -139,6 +181,7 @@ public class Presenter implements IPresenter{
      * persistant data
      */
     private String folderHuman = Environment.DIRECTORY_PICTURES;
+
     @Override
     public String getFolderHuman() {
         return this.folderHuman;
@@ -160,27 +203,6 @@ public class Presenter implements IPresenter{
         view.updateUI_Folder(folderHuman);
     }
 
-
-    private File cacheFile;
-    /**
-     * Get File to store cache
-     * @return File
-     */
-    private File getFileCache() {
-        if (this.cacheFile == null) {
-            File dir = activity.getApplicationContext().getFilesDir();
-            // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
-            this.cacheFile = new File(dir, "cache");
-            Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
-        }
-        return this.cacheFile;
-    }
-
-    private File getProcessFolder() {
-        // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
-        return activity.getApplicationContext().getFilesDir();
-    }
-
     @Override
     public void chooseFolder() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
@@ -188,7 +210,7 @@ public class Presenter implements IPresenter{
     }
 
     @Override
-    public void chooseFolderResult(@Nonnull Intent data) {
+    public void setFolder(@Nonnull Intent data) {
         Uri uri = data.getData();
         assert uri != null;
         final String humanPath = Folder.getHumanPath(uri);
@@ -197,6 +219,23 @@ public class Presenter implements IPresenter{
         view.updateUI_Folder(humanPath);
     }
 
+    // --- quantity ---
+
+    /**
+     * @return -1 if no quantity specified
+     */
+    @Override
+    public int getQuantity() {
+        String quantity = view.getQuantity();
+        // replace "" into "-1"
+        return Integer.parseInt(quantity.equals("") ? "-1" : quantity);
+    }
+
+    @Override
+    public void setQuantity(int quantity) {
+        // replace -1 into ""
+        view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
+    }
 
     // --- sync ---
 
@@ -227,6 +266,8 @@ public class Presenter implements IPresenter{
         getSync().resetCache();
     }
 
+    // --- private methods ---
+
     private void taskWithPermissions(final SyncTask task) {
         Exec exec = new Exec() {
             @Override
@@ -253,21 +294,6 @@ public class Presenter implements IPresenter{
         if (pendingRequirement != null) {
             pendingRequirement.resumeRequirement(result);
         }
-    }
-
-    @Override
-    public void showError() {
-        view.showError();
-    }
-
-    @Override
-    public void setProgressBarVisibility(int visible) {
-        view.setProgressBarVisibility(visible);
-    }
-
-    @Override
-    public void updateUI_CallResult(SynchronizerAndroid sync, SyncStep step) {
-        view.updateUI_CallResult(sync, step);
     }
 }
 

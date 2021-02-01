@@ -25,12 +25,12 @@ class SyncFull extends SyncMethod {
      * Determine new photo to download and photo to be deleled.
      */
     // TODO: 07/05/2019 managed updated photo if possible
-    void syncImpl(String albumName, File folder) throws IOException, GoogleAuthException {
+    void syncImpl(String albumName, File folder, int quantity) throws IOException, GoogleAuthException {
         System.out.println("get photos of album : " + albumName);
         System.out.println("download photos into folder : " + folder);
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(folder);
-        PhotoChooser.chooseFull(synchronizer, local, remote);
+        new PhotoChooser().chooseFull(synchronizer, local, remote);
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());
         System.out.println("to download count = " + synchronizer.getToDownload().size());

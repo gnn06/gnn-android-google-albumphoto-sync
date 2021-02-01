@@ -11,6 +11,7 @@ public class Persistence {
 
     private static final String PREF_ALBUM_KEY = "album";
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
+    private static final String PREF_QUANTITY_KEY = "quantity";
 
     private Activity activity;
     private IPresenter presenter;
@@ -24,9 +25,11 @@ public class Persistence {
         SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         String album = presenter.getAlbum();
-        editor.putString(PREF_ALBUM_KEY, album);
         String folderHuman = presenter.getFolderHuman();
+        int quantity = presenter.getQuantity();
+        editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
+        editor.putInt(PREF_QUANTITY_KEY, quantity);
         editor.commit();
     }
 
@@ -44,6 +47,8 @@ public class Persistence {
             if (folderHuman != null) {
                 presenter.setFolderHuman(folderHuman);
             }
+            int quantity = preferences.getInt(PREF_QUANTITY_KEY, -1);
+            presenter.setQuantity(quantity);
         }
     }
 }

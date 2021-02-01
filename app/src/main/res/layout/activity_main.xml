@@ -94,6 +94,41 @@
 
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/SectionSyncQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/titleQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quantity"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <EditText
+                    android:id="@+id/textQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleQuantity"
+                    android:autofillHints="no"
+                    android:ems="5"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleQuantity"
+                    android:layout_toEndOf="@id/textQuantity"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/quantity_explenation" />
+            </RelativeLayout>
+            <RelativeLayout
                 android:id="@+id/SectionSync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,16 +137,10 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp">
                 <Button
-                    android:id="@+id/SyncButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/full_album" />
-                <Button
                     android:id="@+id/ChooseOneButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/SyncButton"
-                    android:text="@string/choose_one" />
+                    android:text="@string/synchronize" />
 
             </RelativeLayout>
             <RelativeLayout

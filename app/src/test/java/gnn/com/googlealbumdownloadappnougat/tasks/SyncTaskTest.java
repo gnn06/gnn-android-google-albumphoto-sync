@@ -26,7 +26,7 @@ public class SyncTaskTest {
 
         when(presenter.getAlbum()).thenReturn("album");
         when(((Presenter) presenter).getFolder()).thenReturn(file);
-        doThrow(new GoogleAuthException()).when(sync).sync("album", file);
+        doThrow(new GoogleAuthException()).when(sync).syncAll("album", file);
 
         SyncTask task = Mockito.spy(new SyncTask(presenter, sync));
 

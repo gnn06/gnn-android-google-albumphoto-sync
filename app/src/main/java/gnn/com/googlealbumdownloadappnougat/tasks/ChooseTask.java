@@ -20,9 +20,13 @@ public class ChooseTask extends SyncTask {
     protected Void doInBackground(Void... voids) {
         String album = presenter.getAlbum();
         File destination = presenter.getFolder();
-        assert album != null && destination != null;
+        int quantity = presenter.getQuantity();
         try {
-            sync.chooseOne(album, destination);
+            if (quantity == -1) {
+                sync.syncAll(album, destination);
+            } else {
+                sync.syncRandom(album, destination, quantity);
+            }
         } catch (GoogleAuthException | IOException e) {
             Log.e(TAG, e.getMessage());
             markAsError();

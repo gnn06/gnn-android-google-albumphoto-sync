@@ -20,12 +20,12 @@ abstract class SyncMethod {
         this.localService = localService;
     }
 
-    void sync(String albumName, File imageFolder) throws IOException, GoogleAuthException {
+    void sync(String albumName, File imageFolder, int quantity) throws IOException, GoogleAuthException {
         synchronizer.resetCurrent();
-        syncImpl(albumName, imageFolder);
+        syncImpl(albumName, imageFolder, quantity);
         synchronizer.storeSyncTime();
     }
 
-    abstract void syncImpl (String albumName, File folder) throws IOException, GoogleAuthException;
+    abstract void syncImpl(String albumName, File folder, int quantity) throws IOException, GoogleAuthException;
 
 }

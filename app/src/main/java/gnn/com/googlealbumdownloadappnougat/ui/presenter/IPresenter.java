@@ -38,15 +38,19 @@ public interface IPresenter {
 
     void chooseFolder();
 
-    void chooseFolderResult(Intent data);
+    void setFolder(Intent data);
 
     void showError();
 
     void setProgressBarVisibility(int visible);
 
-    void updateUI_CallResult(SynchronizerAndroid sync, SyncStep starting);
+    void setSyncResult(SynchronizerAndroid sync, SyncStep starting);
 
     void onResetCache();
 
     void init();
+
+    int getQuantity();
+
+    void setQuantity(int quantity);
 }

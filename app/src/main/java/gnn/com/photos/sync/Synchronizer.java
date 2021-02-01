@@ -44,6 +44,7 @@ public abstract class Synchronizer implements SyncData {
         return this.localService;
     }
 
+    // TODO maybe move field into SyncData
     private int currentDownload;
     private int currentDelete;
     private ArrayList<Photo> toDownload;
@@ -57,17 +58,17 @@ public abstract class Synchronizer implements SyncData {
      * Determine new photo to download and photo to be deleled.
      */
     // TODO: 07/05/2019 managed updated photo if possible
-    public void sync(String albumName, File folder) throws IOException, GoogleAuthException {
+    public void syncAll(String albumName, File folder) throws IOException, GoogleAuthException {
         new SyncFull(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder);
+                .sync(albumName, folder, -1);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
-    public void chooseOne(String albumName, File folder) throws IOException, GoogleAuthException {
+    public void syncRandom(String albumName, File folder, int quantity) throws IOException, GoogleAuthException {
         new SyncRandom(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder);
+                .sync(albumName, folder, quantity);
     }
 
     public int getTotalDownload() {

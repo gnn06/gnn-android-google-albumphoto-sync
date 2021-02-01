@@ -1,5 +1,7 @@
 package gnn.com.photos.model;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Photo implements Serializable {
@@ -27,5 +29,11 @@ public class Photo implements Serializable {
     @Override
     public boolean equals(Object other) {
         return this.id.equals(((Photo)other).id);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return id;
     }
 }

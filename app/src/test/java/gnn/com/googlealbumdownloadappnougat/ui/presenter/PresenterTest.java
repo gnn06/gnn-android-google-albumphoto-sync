@@ -122,4 +122,52 @@ public class PresenterTest {
         verify(view, times(1)).updateUI_User();
         verify(view, times(1)).updateUI_lastSyncTime(anyString());
     }
+
+    @Test
+    public void getQuantity_empty() {
+        IView view = mock(MainActivity.class);
+        MainActivity activity = mock(MainActivity.class);
+        Presenter presenter = new Presenter(view, activity);
+
+        when(view.getQuantity()).thenReturn("");
+
+        int actual = presenter.getQuantity();
+
+        assertEquals(-1, actual);
+    }
+
+    @Test
+    public void getQuantity_notEmpty() {
+        IView view = mock(MainActivity.class);
+        MainActivity activity = mock(MainActivity.class);
+        Presenter presenter = new Presenter(view, activity);
+
+        when(view.getQuantity()).thenReturn("5");
+
+        int actual = presenter.getQuantity();
+
+        assertEquals(5, actual);
+    }
+
+    @Test
+    public void setQuantity_notEmpty() {
+        IView view = mock(MainActivity.class);
+        MainActivity activity = mock(MainActivity.class);
+        Presenter presenter = new Presenter(view, activity);
+
+        presenter.setQuantity(5);
+
+        verify(view).setQuantity("5");
+    }
+
+    @Test
+    public void setQuantity_empty() {
+        IView view = mock(MainActivity.class);
+        MainActivity activity = mock(MainActivity.class);
+        Presenter presenter = new Presenter(view, activity);
+
+        presenter.setQuantity(-1);
+
+        verify(view).setQuantity("");
+    }
 }

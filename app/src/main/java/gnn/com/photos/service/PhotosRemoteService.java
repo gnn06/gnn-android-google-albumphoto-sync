@@ -31,11 +31,11 @@ public abstract class PhotosRemoteService {
     }
 
     public PhotosRemoteService() {
-        cache = new Cache(null);
+        cache = new Cache(null, -1);
     }
 
     public PhotosRemoteService(File cacheFile) {
-        cache = new Cache(cacheFile);
+        cache = new Cache(cacheFile, 24 * 60 * 60 * 1000);
     }
 
     protected PhotosLibraryClient client;

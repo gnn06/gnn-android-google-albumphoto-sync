@@ -11,10 +11,9 @@ import static org.mockito.Mockito.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.service.Cache;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CacheTest {
@@ -22,7 +21,7 @@ public class CacheTest {
     @Test
     public void test_empty_no_persistence() throws IOException {
         // given an empty cache
-        Cache cache = new Cache(null);
+        Cache cache = new Cache(null, -1);
         // when get cache
         Object result = cache.get();
         // then, check that get an answer
@@ -32,8 +31,8 @@ public class CacheTest {
     @Test
     public void test_notEmpty_no_persistence() throws IOException {
         // given an not empty cache
-        Cache cache = new Cache(null);
-        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(
+        Cache cache = new Cache(null, 24 * 60 * 60 * 1000);
+        ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));
         cache.put(photos);
@@ -46,10 +45,10 @@ public class CacheTest {
     @Test
     public void test_put_noPersistence() throws IOException {
         // given empty cache
-        Cache cache = new Cache(null);
+        Cache cache = new Cache(null, 24 * 60 * 60 * 1000);
         assertNull(cache.get());
         // when
-        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(
+        ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));
         cache.put(photos);
@@ -61,11 +60,11 @@ public class CacheTest {
     public void test_put_persistent() throws IOException {
         // given empty cache
         File file = mock(File.class);
-        Cache cache = spy(new Cache(file));
+        Cache cache = spy(new Cache(file, 24 * 60 * 60 * 1000));
         doNothing().when(cache).write();
         assertNull(cache.get());
         // when
-        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(
+        ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));
         cache.put(photos);
@@ -76,18 +75,42 @@ public class CacheTest {
     }
 
     @Test
-    public void test_empty_from_disk() throws IOException {
-        // given an not empty cache
+    public void cache_expired() throws IOException {
+        // given an existing expired cache
         File file = mock(File.class);
         when(file.exists()).thenReturn(true);
-        Cache cache = spy(new Cache(file));
-        ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(
+        when(file.lastModified()).thenReturn(System.currentTimeMillis() - (25 * 60 * 60 * 1000));
+        Cache cache = spy(new Cache(file, 24 * 60 * 60 * 1000));
+        doReturn(null).when(cache).read();
+
+        // when
+        ArrayList<Photo> actual = cache.get();
+
+        // then check that read was not called and reset was called
+        assertNull(actual);
+        verify(cache, never()).read();
+        verify(cache).reset();
+    }
+
+    @Test
+    public void cache_not_expired() throws IOException {
+        // given an existing expired cache
+        File file = mock(File.class);
+        when(file.exists()).thenReturn(true);
+        when(file.lastModified()).thenReturn(System.currentTimeMillis() - (60 * 1000));
+
+        Cache cache = spy(new Cache(file, 24 * 60 * 60 * 1000));
+        ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));
-        doReturn(photos).when(cache).read();
-        // when get cache
-        Object result = cache.get();
-        // then, check that get an answer
-        assertEquals(photos, result);
+        doReturn(expected).when(cache).read();
+
+        // when
+        ArrayList<Photo> actual = cache.get();
+
+        // then
+        assertEquals(expected,actual);
+        verify(cache).read();
+        verify(cache, never()).reset();
     }
 }

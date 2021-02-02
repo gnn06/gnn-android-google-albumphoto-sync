@@ -15,21 +15,40 @@ import gnn.com.photos.model.Photo;
 public class Cache {
 
     private final File file;
+    private final long cache_period_validity;
 
     private ArrayList<Photo> photos;
 
     /**
      * @param file File to use to store and retrieve cache
+     *             Null if no cache
+     * @param period_validity cache period validity in milliseconds
+     *                        Useless if cache is null
      */
-    public Cache(File file) {
+    public Cache(File file, long period_validity) {
         this.file = file;
+        this.cache_period_validity = period_validity;
     }
 
+    /**
+     * if no cache file, store only in memory
+     * @return null if cache no cache or expired
+     * @throws IOException
+     */
     public ArrayList<Photo> get() throws IOException {
-        ArrayList<Photo> photos = null;
+        ArrayList<Photo> photos;
         if (file != null && file.exists()) {
-            photos = read();
-            Log.i("Cache", "use cache");
+            long delay = System.currentTimeMillis() - file.lastModified();
+            if (delay < this.cache_period_validity) {
+                // valid cache
+                photos = read();
+                Log.i("Cache", "use cache");
+            } else {
+                // cache expired
+                reset();
+                Log.i("Cache", "cache expired");
+                return null;
+            }
         } else {
             photos = this.photos;
         }

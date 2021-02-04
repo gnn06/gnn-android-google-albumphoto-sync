@@ -53,4 +53,6 @@ public interface IPresenter {
     int getQuantity();
 
     void setQuantity(int quantity);
+
+    void setCacheMaxAge(long cacheMaxAge);
 }

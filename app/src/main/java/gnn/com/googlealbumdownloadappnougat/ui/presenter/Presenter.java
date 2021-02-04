@@ -39,8 +39,8 @@ public class Presenter implements IPresenter{
     }
 
     private AuthManager auth;
-
     // For test
+
     public void setAuth(AuthManager auth) {
         this.auth = auth;
     }
@@ -55,6 +55,7 @@ public class Presenter implements IPresenter{
     }
 
     private File cacheFile;
+    private long cacheMaxAge; // default value come from Preferences
 
     /**
      * Get File to store cache
@@ -71,7 +72,7 @@ public class Presenter implements IPresenter{
     }
 
     private long getCacheMaxAge() {
-        return 24 * 60 * 60 * 1000;
+        return this.cacheMaxAge;
     }
 
     private File getProcessFolder() {
@@ -238,6 +239,11 @@ public class Presenter implements IPresenter{
     public void setQuantity(int quantity) {
         // replace -1 into ""
         view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
+    }
+
+    @Override
+    public void setCacheMaxAge(long cacheMaxAge) {
+        this.cacheMaxAge = cacheMaxAge;
     }
 
     // --- sync ---

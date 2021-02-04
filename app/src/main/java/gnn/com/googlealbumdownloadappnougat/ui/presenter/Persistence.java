@@ -12,6 +12,7 @@ public class Persistence {
     private static final String PREF_ALBUM_KEY = "album";
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
     private static final String PREF_QUANTITY_KEY = "quantity";
+    private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
 
     private Activity activity;
     private IPresenter presenter;
@@ -52,6 +53,8 @@ public class Persistence {
             }
             int quantity = preferences.getInt(PREF_QUANTITY_KEY, -1);
             presenter.setQuantity(quantity);
+            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, 24 * 60 * 60 * 1000);
+            presenter.setCacheMaxAge(cacheMaxAge);
         }
     }
 }

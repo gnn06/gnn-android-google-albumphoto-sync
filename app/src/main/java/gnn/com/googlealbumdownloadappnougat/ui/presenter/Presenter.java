@@ -49,7 +49,7 @@ public class Presenter implements IPresenter{
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getFileCache(), getProcessFolder());
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getCacheMaxAge(), getProcessFolder());
         }
         return sync;
     }
@@ -60,7 +60,7 @@ public class Presenter implements IPresenter{
      * Get File to store cache
      * @return File
      */
-    private File getFileCache() {
+    private File getCacheFile() {
         if (this.cacheFile == null) {
             File dir = activity.getApplicationContext().getFilesDir();
             // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
@@ -68,6 +68,10 @@ public class Presenter implements IPresenter{
             Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
         }
         return this.cacheFile;
+    }
+
+    private long getCacheMaxAge() {
+        return 24 * 60 * 60 * 1000;
     }
 
     private File getProcessFolder() {
@@ -129,7 +133,7 @@ public class Presenter implements IPresenter{
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getFileCache());
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getCacheMaxAge());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override

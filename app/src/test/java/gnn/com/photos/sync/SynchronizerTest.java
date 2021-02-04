@@ -10,7 +10,7 @@ public class SynchronizerTest {
 
     @Test
     public void resetCache() {
-        Synchronizer sync = new Synchronizer(null, null) {
+        Synchronizer sync = new Synchronizer(null, 24 * 60 * 60 * 1000, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return mock(PhotosRemoteService.class);

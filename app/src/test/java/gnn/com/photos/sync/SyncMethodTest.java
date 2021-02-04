@@ -57,7 +57,7 @@ public class SyncMethodTest {
         final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
-        Synchronizer synchronizer = new Synchronizer(null, null) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -101,7 +101,7 @@ public class SyncMethodTest {
         // given a synchronizer with a processFolder containing a last_sync file
         File tempFile = folder.newFile("last_sync");
 
-        Synchronizer synchronizer = new Synchronizer(null, folder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, folder.getRoot()) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;
@@ -123,7 +123,7 @@ public class SyncMethodTest {
     @Test
     public void test_readLastSyncTime_null() {
         // given
-        Synchronizer synchronizer = new Synchronizer(null, folder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, folder.getRoot()) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;

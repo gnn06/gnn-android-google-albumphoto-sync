@@ -24,7 +24,7 @@ public class DownloadManagerTest {
         toDownloadList.add(photo);
         File folder = new File("c:/temp/");
 
-        SynchronizerAndroid synchronizerSpy = Mockito.spy(new SynchronizerAndroid(activity, null, null));
+        SynchronizerAndroid synchronizerSpy = Mockito.spy(new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null));
         synchronizerSpy.setSyncTask(Mockito.mock(SyncTask.class));
         try {
             DownloadManager.download(toDownloadList,

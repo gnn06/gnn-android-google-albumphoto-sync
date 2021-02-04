@@ -17,11 +17,13 @@ import gnn.com.photos.service.PhotosRemoteService;
 
 public abstract class Synchronizer implements SyncData {
 
-    protected final File fileCache;
+    protected final File cacheFile;
+    protected final long cacheMaxAge;
     private final File processFolder;
 
-    public Synchronizer(File cacheFile, File processFolder) {
-        this.fileCache = cacheFile;
+    public Synchronizer(File cacheFile, long cacheMaxAge, File processFolder) {
+        this.cacheFile = cacheFile;
+        this.cacheMaxAge = cacheMaxAge;
         this.processFolder = processFolder;
     }
 

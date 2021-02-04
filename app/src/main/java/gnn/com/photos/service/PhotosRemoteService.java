@@ -34,8 +34,8 @@ public abstract class PhotosRemoteService {
         cache = new Cache(null, -1);
     }
 
-    public PhotosRemoteService(File cacheFile) {
-        cache = new Cache(cacheFile, 24 * 60 * 60 * 1000);
+    public PhotosRemoteService(File cacheFile, long cacheMaxAge) {
+        cache = new Cache(cacheFile, cacheMaxAge);
     }
 
     protected PhotosLibraryClient client;

@@ -15,19 +15,19 @@ import gnn.com.photos.model.Photo;
 public class Cache {
 
     private final File file;
-    private final long cache_period_validity;
+    private final long maxAge;
 
     private ArrayList<Photo> photos;
 
     /**
      * @param file File to use to store and retrieve cache
      *             Null if no cache
-     * @param period_validity cache period validity in milliseconds
+     * @param maxAge cache period validity in milliseconds
      *                        Useless if cache is null
      */
-    public Cache(File file, long period_validity) {
+    public Cache(File file, long maxAge) {
         this.file = file;
-        this.cache_period_validity = period_validity;
+        this.maxAge = maxAge;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Cache {
         ArrayList<Photo> photos;
         if (file != null && file.exists()) {
             long delay = System.currentTimeMillis() - file.lastModified();
-            if (delay < this.cache_period_validity) {
+            if (delay < this.maxAge) {
                 // valid cache
                 photos = read();
                 Log.i("Cache", "use cache");

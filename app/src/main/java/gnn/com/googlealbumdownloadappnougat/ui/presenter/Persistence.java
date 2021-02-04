@@ -33,6 +33,9 @@ public class Persistence {
         editor.commit();
     }
 
+    /**
+     * retrieves data from Preferences and inject into Presenter
+     */
     public void restoreData() {
         // Restore data
         // default values are taken from presenter

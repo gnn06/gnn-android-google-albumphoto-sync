@@ -152,7 +152,6 @@ public class Presenter implements IPresenter{
     /**
      * called when albums is retrieved
      * ask user to choose an album
-     * @param albums
      */
     @Override
     public void setAlbums(ArrayList<String> albums) {

@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         } else if (item.getItemId() == R.id.reset_cache) {
             presenter.onResetCache();
             return true;
+        } else if (item.getItemId() == R.id.settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             name = getResources().getString(R.string.login);
         }
 
-        TextView myAwesomeTextView = findViewById(R.id.textUser);
+        TextView myAwesomeTextView = findViewById(R.id.textCacheMaxAge);
         myAwesomeTextView.setText(name);
 
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));

@@ -18,8 +18,8 @@ public class Persistence {
     private static final String PREF_QUANTITY_KEY = "quantity";
     private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
 
-    private Activity activity;
-    private IPresenter presenter;
+    private final Activity activity;
+    private final IPresenter presenter;
 
     public Persistence(Activity activity, IPresenter presenter) {
         this.activity = activity;
@@ -35,15 +35,14 @@ public class Persistence {
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
         editor.putInt(PREF_QUANTITY_KEY, quantity);
-        editor.commit();
+        editor.apply();
     }
 
     public void saveSettings(long cacheMaxAge) {
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
-        editor.commit();
+        editor.apply();
     }
 
     /**

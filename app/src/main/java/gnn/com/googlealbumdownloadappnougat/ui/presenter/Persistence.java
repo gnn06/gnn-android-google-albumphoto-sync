@@ -3,6 +3,10 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
 
 /**
  * Default values are taken from Presenter
@@ -31,6 +35,14 @@ public class Persistence {
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
         editor.putInt(PREF_QUANTITY_KEY, quantity);
+        editor.commit();
+    }
+
+    public void saveSettings(long cacheMaxAge) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
         editor.commit();
     }
 

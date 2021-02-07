@@ -27,7 +27,7 @@ public class Persistence {
     }
 
     public void saveData() {
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
         String album = presenter.getAlbum();
         String folderHuman = presenter.getFolderHuman();
@@ -40,7 +40,7 @@ public class Persistence {
 
     public void saveSettings(long cacheMaxAge) {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
         editor.commit();
@@ -53,7 +53,7 @@ public class Persistence {
         // Restore data
         // default values are taken from presenter
         // presenter.setXXX update TextViews
-        SharedPreferences preferences = this.activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
             String album = preferences.getString(PREF_ALBUM_KEY, presenter.getAlbum());
             if (album != null) {

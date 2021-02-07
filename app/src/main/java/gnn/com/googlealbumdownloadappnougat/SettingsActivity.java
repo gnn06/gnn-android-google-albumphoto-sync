@@ -19,8 +19,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         TextView view = findViewById(R.id.editCacheMaxAge);
-        long cacheMaxAge = Long.parseLong(view.getText().toString());
-        Persistence persistence = new Persistence(this, null);
-        persistence.saveSettings(cacheMaxAge);
+        if (!view.getText().equals("")) {
+            long cacheMaxAge = Long.parseLong(view.getText().toString());
+            Persistence persistence = new Persistence(this, null);
+            persistence.saveSettings(cacheMaxAge);
+        }
     }
 }

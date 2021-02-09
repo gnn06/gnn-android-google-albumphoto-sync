@@ -25,7 +25,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
-public class Presenter implements IPresenter{
+public class Presenter implements IPresenter, IPresenterSettings {
 
     private static final String TAG = "goi";
 
@@ -69,10 +69,6 @@ public class Presenter implements IPresenter{
             Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());
         }
         return this.cacheFile;
-    }
-
-    private long getCacheMaxAge() {
-        return this.cacheMaxAge;
     }
 
     private File getProcessFolder() {
@@ -241,15 +237,16 @@ public class Presenter implements IPresenter{
         view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
     }
 
+    private long getCacheMaxAge() {
+        return this.cacheMaxAge;
+    }
+
     @Override
     public void setCacheMaxAge(long cacheMaxAge) {
         this.cacheMaxAge = cacheMaxAge;
     }
 
-    @Override
-    public long getDefaultCacheMaxAge() {
-        return 24 * 60 * 60 * 1000;
-    }
+    public static final long DefaultCacheMaxAge = 24 * 60 * 60 * 1000;
 
     // --- sync ---
 

@@ -63,10 +63,10 @@ public class Persistence {
         editor.apply();
     }
 
-    public void restoreSettings(IPresenter presenter) {
+    public void restoreSettings(IPresenterSettings presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, presenter.getDefaultCacheMaxAge());
+            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, Presenter.DefaultCacheMaxAge);
             presenter.setCacheMaxAge(cacheMaxAge);
         }
     }

@@ -22,7 +22,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
-    private IPresenter presenter;
+    private Presenter presenter;
     private Persistence persistence;
 
     @Override

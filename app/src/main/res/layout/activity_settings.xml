@@ -16,21 +16,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/titleCacheMaxAge"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:paddingStart="16dp"/>
 
         <EditText
             android:id="@+id/editCacheMaxAge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:paddingStart="16dp"/>
 
         <TextView
             android:id="@+id/textCacheMaxAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleUser"
-            android:text="@string/textCacheMaxAge" />
+            android:text="@string/textCacheMaxAge"
+            android:paddingStart="16dp"/>
 
     </LinearLayout>
 

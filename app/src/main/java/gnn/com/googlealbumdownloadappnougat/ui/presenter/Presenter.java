@@ -237,7 +237,7 @@ public class Presenter implements IPresenter, IPresenterSettings {
         view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
     }
 
-    private long getCacheMaxAge() {
+    public long getCacheMaxAge() {
         return this.cacheMaxAge;
     }
 

@@ -9,7 +9,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterSettings;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements IPresenterSettings {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

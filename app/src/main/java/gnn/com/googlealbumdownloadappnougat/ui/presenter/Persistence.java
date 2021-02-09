@@ -56,10 +56,10 @@ public class Persistence {
         }
     }
 
-    public void saveSettings(SettingsActivity view) {
+    public void saveSettings(IPresenterSettings presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(PREF_CACHE_MAX_AGE, view.getCacheMaxAge());
+        editor.putLong(PREF_CACHE_MAX_AGE, presenter.getCacheMaxAge());
         editor.apply();
     }
 

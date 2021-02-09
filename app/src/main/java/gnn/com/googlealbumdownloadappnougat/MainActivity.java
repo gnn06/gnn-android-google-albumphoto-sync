@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             name = getResources().getString(R.string.login);
         }
 
-        TextView myAwesomeTextView = findViewById(R.id.textCacheMaxAge);
+        TextView myAwesomeTextView = findViewById(R.id.textUser);
         myAwesomeTextView.setText(name);
 
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));

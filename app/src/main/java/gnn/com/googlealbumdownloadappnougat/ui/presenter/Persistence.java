@@ -38,13 +38,6 @@ public class Persistence {
         editor.apply();
     }
 
-    public void saveSettings(long cacheMaxAge) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
-        editor.apply();
-    }
-
     /**
      * retrieves data from Preferences and inject into Presenter
      */
@@ -64,7 +57,20 @@ public class Persistence {
             }
             int quantity = preferences.getInt(PREF_QUANTITY_KEY, -1);
             presenter.setQuantity(quantity);
-            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, 24 * 60 * 60 * 1000);
+        }
+    }
+
+    public void saveSettings(long cacheMaxAge) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
+        editor.apply();
+    }
+
+    public void restoreSettings() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        if (preferences != null) {
+            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, presenter.getDefaultCacheMaxAge());
             presenter.setCacheMaxAge(cacheMaxAge);
         }
     }

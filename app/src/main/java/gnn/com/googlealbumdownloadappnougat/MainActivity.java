@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         this.persistence = new Persistence(this, presenter);
         persistence.restoreData();
+        persistence.restoreSettings();
 
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -80,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        persistence.saveData();
+        // not necessary to save settings as settings can not be changed in this activity
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
@@ -98,12 +106,6 @@ public class MainActivity extends AppCompatActivity implements IView {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        persistence.saveData();
     }
 
     @Override

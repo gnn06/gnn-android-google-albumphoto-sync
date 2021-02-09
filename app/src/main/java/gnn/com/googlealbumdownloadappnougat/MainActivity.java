@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new Presenter(this, this);
 
-        this.persistence = new Persistence(this, presenter);
-        persistence.restoreData();
-        persistence.restoreSettings();
+        this.persistence = new Persistence(this);
+        persistence.restoreData(presenter);
+        persistence.restoreSettings(presenter);
 
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onPause() {
         super.onPause();
-        persistence.saveData();
+        persistence.saveData(presenter);
         // not necessary to save settings as settings can not be changed in this activity
     }
 
@@ -224,8 +224,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    /**
-     * @return String "" if empty
+    /*
+      @return String "" if empty
      */
     public String getQuantity() {
         TextView view = findViewById(R.id.textQuantity);
@@ -233,8 +233,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    /**
-     * @param quantity "" if no quantity
+    /*
+      @param quantity "" if no quantity
      */
     public void setQuantity(String quantity) {
         TextView view = findViewById(R.id.textQuantity);

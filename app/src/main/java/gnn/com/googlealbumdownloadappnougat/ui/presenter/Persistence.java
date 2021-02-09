@@ -1,11 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
 
 /**
@@ -19,14 +17,12 @@ public class Persistence {
     private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
 
     private final Activity activity;
-    private final IPresenter presenter;
 
-    public Persistence(Activity activity, IPresenter presenter) {
+    public Persistence(Activity activity) {
         this.activity = activity;
-        this.presenter = presenter;
     }
 
-    public void saveData() {
+    public void saveData(IPresenter presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
         String album = presenter.getAlbum();
@@ -41,7 +37,7 @@ public class Persistence {
     /**
      * retrieves data from Preferences and inject into Presenter
      */
-    public void restoreData() {
+    public void restoreData(IPresenter presenter) {
         // Restore data
         // default values are taken from presenter
         // presenter.setXXX update TextViews
@@ -60,14 +56,14 @@ public class Persistence {
         }
     }
 
-    public void saveSettings(long cacheMaxAge) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+    public void saveSettings(SettingsActivity view) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(PREF_CACHE_MAX_AGE, cacheMaxAge);
+        editor.putLong(PREF_CACHE_MAX_AGE, view.getCacheMaxAge());
         editor.apply();
     }
 
-    public void restoreSettings() {
+    public void restoreSettings(IPresenter presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
             long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, presenter.getDefaultCacheMaxAge());

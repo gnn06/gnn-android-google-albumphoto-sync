@@ -15,14 +15,19 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
     }
 
+    public long getCacheMaxAge() {
+        long result = -1;
+        TextView view = findViewById(R.id.editCacheMaxAge);
+        if (!view.getText().equals("")) {
+            result = Long.parseLong(view.getText().toString());
+        }
+        return result;
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-        TextView view = findViewById(R.id.editCacheMaxAge);
-        if (!view.getText().equals("")) {
-            long cacheMaxAge = Long.parseLong(view.getText().toString());
-            Persistence persistence = new Persistence(this, null);
-            persistence.saveSettings(cacheMaxAge);
-        }
+        Persistence persistence = new Persistence(this);
+        persistence.saveSettings(this);
     }
 }

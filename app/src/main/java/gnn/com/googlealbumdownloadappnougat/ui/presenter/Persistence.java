@@ -66,7 +66,7 @@ public class Persistence {
     public void restoreSettings(IPresenterSettings presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, Presenter.DefaultCacheMaxAge);
+            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, PresenterSettings.DefaultCacheMaxAge);
             presenter.setCacheMaxAge(cacheMaxAge);
         }
     }

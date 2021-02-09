@@ -246,8 +246,6 @@ public class Presenter implements IPresenter, IPresenterSettings {
         this.cacheMaxAge = cacheMaxAge;
     }
 
-    public static final long DefaultCacheMaxAge = 24 * 60 * 60 * 1000;
-
     // --- sync ---
 
     @Override

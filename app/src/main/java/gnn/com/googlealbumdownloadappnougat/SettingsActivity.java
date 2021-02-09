@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView view = findViewById(R.id.editCacheMaxAge);
         if (!view.getText().equals("")) {
             result = Long.parseLong(view.getText().toString());
+            result = result * 60 * 60 * 1000;
         }
         return result;
     }
@@ -39,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void setCacheMaxAge(long cacheMaxAge) {
         if (cacheMaxAge != -1) {
             TextView view = findViewById(R.id.editCacheMaxAge);
-            view.setText(Long.toString(cacheMaxAge));
+            view.setText(Long.toString(cacheMaxAge / 60 / 60 / 1000));
         }
     }
 }

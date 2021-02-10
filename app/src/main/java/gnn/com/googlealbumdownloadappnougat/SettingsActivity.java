@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -31,16 +32,24 @@ public class SettingsActivity extends AppCompatActivity implements IPresenterSet
         long result = -1;
         TextView view = findViewById(R.id.editCacheMaxAge);
         if (!view.getText().equals("")) {
-            result = Long.parseLong(view.getText().toString());
-            result = result * 60 * 60 * 1000;
+            result = hourToMs(Long.parseLong(view.getText().toString()));
         }
         return result;
     }
 
+    @SuppressLint("SetTextI18n")
     public void setCacheMaxAge(long cacheMaxAge) {
         if (cacheMaxAge != -1) {
             TextView view = findViewById(R.id.editCacheMaxAge);
-            view.setText(Long.toString(cacheMaxAge / 60 / 60 / 1000));
+            view.setText(Long.toString(msToHour(cacheMaxAge)));
         }
+    }
+
+    long msToHour(long ms) {
+        return ms / 1000 / 60 / 60;
+    }
+
+    long hourToMs(long hour) {
+        return hour * 60 * 60 * 1000;
     }
 }

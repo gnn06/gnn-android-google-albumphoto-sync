@@ -25,14 +25,14 @@ import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
-public class Presenter implements IPresenter, IPresenterSettings {
+public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     private static final String TAG = "goi";
 
     private final IView view;
     private final MainActivity activity;
 
-    public Presenter(IView view, MainActivity activity) {
+    public PresenterMain(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);

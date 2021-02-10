@@ -18,13 +18,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PresenterTest {
+public class PresenterMainTest {
 
     @Test
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = spy(new Presenter(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity));
         Whitebox.setInternalState(presenter, "album", null);
         IView view = spy(IView.class);
         presenter.onSyncClick();
@@ -35,7 +35,7 @@ public class PresenterTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = spy(new Presenter(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -49,7 +49,7 @@ public class PresenterTest {
     public void onSyncClick_MissingPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = spy(new Presenter(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity));
         Whitebox.setInternalState(presenter, "album", "test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -63,7 +63,7 @@ public class PresenterTest {
     public void onShowAlbumList_NoCache_NoPermission () {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = spy(new Presenter(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         Mockito.when(authMock.hasWritePermission()).thenReturn(false);
@@ -79,7 +79,7 @@ public class PresenterTest {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
         when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = new Presenter(view, view);
+        PresenterMain presenter = new PresenterMain(view, view);
         Require require = Mockito.mock(Require.class);
 
         // when
@@ -97,7 +97,7 @@ public class PresenterTest {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
         when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        Presenter presenter = new Presenter(view, view);
+        PresenterMain presenter = new PresenterMain(view, view);
         // when
         presenter.onResetCache();
         // then
@@ -110,7 +110,7 @@ public class PresenterTest {
         IView view = mock(IView.class);
         MainActivity activity = mock(MainActivity.class);
 
-        Presenter presenter = spy(new Presenter(view, activity));
+        PresenterMain presenter = spy(new PresenterMain(view, activity));
 
         SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
         doReturn(synchronizer).when(presenter).getSync();
@@ -127,7 +127,7 @@ public class PresenterTest {
     public void getQuantity_empty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        Presenter presenter = new Presenter(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity);
 
         when(view.getQuantity()).thenReturn("");
 
@@ -140,7 +140,7 @@ public class PresenterTest {
     public void getQuantity_notEmpty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        Presenter presenter = new Presenter(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity);
 
         when(view.getQuantity()).thenReturn("5");
 
@@ -153,7 +153,7 @@ public class PresenterTest {
     public void setQuantity_notEmpty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        Presenter presenter = new Presenter(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity);
 
         presenter.setQuantity(5);
 
@@ -164,7 +164,7 @@ public class PresenterTest {
     public void setQuantity_empty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        Presenter presenter = new Presenter(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity);
 
         presenter.setQuantity(-1);
 

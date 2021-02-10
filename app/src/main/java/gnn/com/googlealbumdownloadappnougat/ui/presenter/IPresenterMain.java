@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
-public interface IPresenterMain extends IPresenter {
+public interface IPresenterMain {
 
     String getAlbum();
 
@@ -54,7 +54,4 @@ public interface IPresenterMain extends IPresenter {
 
     void setQuantity(int quantity);
 
-    void setCacheMaxAge(long cacheMaxAge);
-
-    long getDefaultCacheMaxAge();
 }

@@ -4,8 +4,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
 import static org.mockito.Mockito.never;
@@ -15,7 +15,7 @@ public class PhotosAsyncTaskTest {
 
     @Test
     public void doInBackground_Error() {
-        IPresenter presenter = Mockito.mock(Presenter.class);
+        IPresenterMain presenter = Mockito.mock(PresenterMain.class);
         SynchronizerAndroid sync = Mockito.mock(SynchronizerAndroid.class);
 
         PhotosAsyncTask task = new PhotosAsyncTask(presenter) {

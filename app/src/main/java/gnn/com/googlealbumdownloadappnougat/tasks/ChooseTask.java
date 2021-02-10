@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 
 public class ChooseTask extends SyncTask {
 
-    public ChooseTask(IPresenter presenter, SynchronizerAndroid sync) {
+    public ChooseTask(IPresenterMain presenter, SynchronizerAndroid sync) {
         super(presenter, sync);
     }
 

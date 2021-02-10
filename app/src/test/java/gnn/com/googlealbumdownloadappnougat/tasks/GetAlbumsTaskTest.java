@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.assertNull;
@@ -19,7 +19,7 @@ public class GetAlbumsTaskTest {
 
     @Test
     public void doInBackground_Error() throws IOException, GoogleAuthException {
-        Presenter presenter = Mockito.mock(Presenter.class);
+        PresenterMain presenter = Mockito.mock(PresenterMain.class);
         PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
 
         when(prs.getAlbums()).thenThrow(new GoogleAuthException("test"));

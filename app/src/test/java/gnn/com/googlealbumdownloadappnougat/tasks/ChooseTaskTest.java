@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +21,7 @@ public class ChooseTaskTest {
     @Test
     public void syncAll() throws IOException, GoogleAuthException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
-        IPresenter presenter = mock(Presenter.class);
+        IPresenterMain presenter = mock(PresenterMain.class);
         ChooseTask chooseTask = new ChooseTask(presenter, synchroniser);
         // given
         when(presenter.getQuantity()).thenReturn(-1);
@@ -36,7 +34,7 @@ public class ChooseTaskTest {
     @Test
     public void syncRandom() throws IOException, GoogleAuthException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
-        IPresenter presenter = mock(Presenter.class);
+        IPresenterMain presenter = mock(PresenterMain.class);
         ChooseTask chooseTask = new ChooseTask(presenter, synchroniser);
         // given
         when(presenter.getQuantity()).thenReturn(5);

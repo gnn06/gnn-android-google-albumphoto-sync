@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Presenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
-    private Presenter presenter;
+    private PresenterMain presenter;
     private Persistence persistence;
 
     @Override
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new Presenter(this, this);
+        presenter = new PresenterMain(this, this);
 
         this.persistence = new Persistence(this);
         persistence.restoreData(presenter);

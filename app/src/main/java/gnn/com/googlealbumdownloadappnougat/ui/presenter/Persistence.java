@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
-
 /**
  * Default values are taken from Presenter
  */
@@ -22,7 +20,7 @@ public class Persistence {
         this.activity = activity;
     }
 
-    public void saveData(IPresenter presenter) {
+    public void saveData(IPresenterMain presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
         String album = presenter.getAlbum();
@@ -37,7 +35,7 @@ public class Persistence {
     /**
      * retrieves data from Preferences and inject into Presenter
      */
-    public void restoreData(IPresenter presenter) {
+    public void restoreData(IPresenterMain presenter) {
         // Restore data
         // default values are taken from presenter
         // presenter.setXXX update TextViews

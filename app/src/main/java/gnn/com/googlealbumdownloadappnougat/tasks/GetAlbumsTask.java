@@ -7,14 +7,14 @@ import com.google.android.gms.auth.GoogleAuthException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.photos.service.PhotosRemoteService;
 
 public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>> {
 
     private PhotosRemoteService prs;
 
-    public GetAlbumsTask(IPresenter presenter, PhotosRemoteService prs) {
+    public GetAlbumsTask(IPresenterMain presenter, PhotosRemoteService prs) {
         super(presenter);
         this.prs = prs;
     }

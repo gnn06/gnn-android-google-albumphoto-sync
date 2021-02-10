@@ -17,6 +17,8 @@ public class Persistence {
     private final Activity activity;
 
     public Persistence(Activity activity) {
+        // Presenter is injected as methods parameter
+        // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;
     }
 

@@ -27,7 +27,8 @@ public class ChooseTask extends SyncTask {
             } else {
                 sync.syncRandom(album, destination, quantity);
             }
-        } catch (GoogleAuthException | IOException e) {
+        } catch (Exception e) {
+            // Catch Exception versus Google or IO to catch permission denied
             Log.e(TAG, e.toString());
             markAsError(e.toString());
         }

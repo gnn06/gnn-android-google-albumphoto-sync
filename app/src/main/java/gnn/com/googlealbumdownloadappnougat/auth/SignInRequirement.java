@@ -31,6 +31,6 @@ public class SignInRequirement extends Require {
 
     @Override
     void postRequireFailure() {
-        view.showError();
+        view.showError("message");
     }
 }

@@ -26,7 +26,7 @@ public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>
             albumNames = prs.getAlbums();
         } catch (IOException | GoogleAuthException e) {
             Log.e(TAG, e.getMessage());
-            markAsError();
+            markAsError(e.getMessage());
         }
         return albumNames;
     }

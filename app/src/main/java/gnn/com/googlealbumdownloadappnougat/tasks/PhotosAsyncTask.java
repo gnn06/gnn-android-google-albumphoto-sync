@@ -10,6 +10,7 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
     static final String TAG = "goi";
 
     private boolean error = false;
+    private String errorMessage;
     protected IPresenterMain presenter;
 
 
@@ -17,8 +18,9 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
         this.presenter = presenter;
     }
 
-    void markAsError() {
+    void markAsError(String message) {
         this.error = true;
+        this.errorMessage = message;
     }
 
     boolean isSuccessful() {
@@ -29,6 +31,7 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
     protected void onPreExecute() {
         super.onPreExecute();
         this.error = false;
+        this.errorMessage = null;
         presenter.setProgressBarVisibility(ProgressBar.VISIBLE);
     }
 
@@ -37,7 +40,7 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
         super.onPostExecute(result);
         presenter.setProgressBarVisibility(ProgressBar.INVISIBLE);
         if (error) {
-            presenter.showError();
+            presenter.showError(errorMessage);
         }
     }
 }

@@ -40,7 +40,7 @@ public interface IPresenterMain {
 
     void setFolder(Intent data);
 
-    void showError();
+    void showError(String errorMessage);
 
     void setProgressBarVisibility(int visible);
 

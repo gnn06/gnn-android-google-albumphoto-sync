@@ -33,7 +33,7 @@ public class EspressoTest {
         activityRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                activityRule.getActivity().showError();
+                activityRule.getActivity().showError("message");
             }
         });
     }

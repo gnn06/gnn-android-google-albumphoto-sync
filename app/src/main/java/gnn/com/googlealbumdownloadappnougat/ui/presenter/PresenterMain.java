@@ -98,8 +98,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void showError() {
-        view.showError();
+    public void showError(String message) {
+        view.showError(message);
     }
 
     @Override

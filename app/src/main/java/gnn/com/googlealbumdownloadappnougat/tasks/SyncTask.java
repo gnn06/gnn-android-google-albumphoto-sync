@@ -30,7 +30,7 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
             sync.syncAll(album, destination);
         } catch (GoogleAuthException | IOException e) {
             Log.e(TAG, e.getMessage());
-            markAsError();
+            markAsError(e.getMessage());
         }
         return null;
     }

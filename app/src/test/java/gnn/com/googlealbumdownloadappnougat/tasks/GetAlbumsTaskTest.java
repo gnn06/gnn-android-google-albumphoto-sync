@@ -29,7 +29,7 @@ public class GetAlbumsTaskTest {
         ArrayList<String> result = task.doInBackground();
 
         assertNull(result);
-        verify(task).markAsError();
+        verify(task).markAsError("message");
     }
 
 }

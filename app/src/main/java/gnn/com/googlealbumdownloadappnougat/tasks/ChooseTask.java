@@ -29,7 +29,7 @@ public class ChooseTask extends SyncTask {
             }
         } catch (GoogleAuthException | IOException e) {
             Log.e(TAG, e.getMessage());
-            markAsError();
+            markAsError(e.getMessage());
         }
         return null;
     }

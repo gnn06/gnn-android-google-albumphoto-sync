@@ -215,9 +215,10 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void showError() {
+    public void showError(String message) {
         new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.error))
+                .setMessage(message)
                 .setNegativeButton(android.R.string.ok, null)
                 .show();
     }

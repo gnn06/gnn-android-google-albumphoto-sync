@@ -32,7 +32,7 @@ public class WritePermission extends Require {
 
     @Override
     void postRequireFailure() {
-        view.showError();
+        view.showError("message");
     }
 
 }

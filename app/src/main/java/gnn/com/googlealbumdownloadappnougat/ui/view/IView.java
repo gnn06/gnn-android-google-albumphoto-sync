@@ -23,7 +23,7 @@ public interface IView {
 
     void updateUI_Folder(String humanPath);
 
-    void showError();
+    void showError(String message);
 
     String getQuantity();
 

@@ -32,7 +32,7 @@ public class SyncTaskTest {
 
         task.doInBackground();
 
-        verify(task).markAsError();
+        verify(task).markAsError("message");
     }
 
 }

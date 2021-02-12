@@ -26,9 +26,15 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
         String album = presenter.getAlbum();
         File destination = presenter.getFolder();
         assert album != null && destination != null;
+        int quantity = presenter.getQuantity();
         try {
-            sync.syncAll(album, destination);
+            if (quantity == -1) {
+                sync.syncAll(album, destination);
+            } else {
+                sync.syncRandom(album, destination, quantity);
+            }
         } catch (Exception e) {
+            // Catch Exception versus Google or IO to catch permission denied
             Log.e(TAG, e.toString());
             markAsError(e.toString());
         }

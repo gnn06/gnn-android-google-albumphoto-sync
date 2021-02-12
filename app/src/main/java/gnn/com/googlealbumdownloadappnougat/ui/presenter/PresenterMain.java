@@ -12,7 +12,6 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.tasks.ChooseTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -266,7 +265,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            taskWithPermissions(new ChooseTask(this, getSync()));
+            taskWithPermissions(new SyncTask(this, getSync()));
         }
     }
 

@@ -25,11 +25,11 @@ public class PhotosAsyncTaskTest {
             }
         };
 
-        task.markAsError(message);
+        task.markAsError("message");
 
         task.onPostExecute(null);
 
-        verify(presenter).showError(message);
+        verify(presenter).showError("message");
         verify(presenter, never()).setSyncResult(sync, SyncStep.FINISHED);
     }
 

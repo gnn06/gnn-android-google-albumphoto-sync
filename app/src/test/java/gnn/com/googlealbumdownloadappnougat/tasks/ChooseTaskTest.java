@@ -22,9 +22,11 @@ public class ChooseTaskTest {
     public void syncAll() throws IOException, GoogleAuthException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
         IPresenterMain presenter = mock(PresenterMain.class);
-        ChooseTask chooseTask = new ChooseTask(presenter, synchroniser);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser);
         // given
         when(presenter.getQuantity()).thenReturn(-1);
+        when(presenter.getAlbum()).thenReturn("album");
+        when(presenter.getFolder()).thenReturn(mock(File.class));
         // when
         chooseTask.doInBackground(null);
         // then
@@ -35,9 +37,11 @@ public class ChooseTaskTest {
     public void syncRandom() throws IOException, GoogleAuthException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
         IPresenterMain presenter = mock(PresenterMain.class);
-        ChooseTask chooseTask = new ChooseTask(presenter, synchroniser);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser);
         // given
         when(presenter.getQuantity()).thenReturn(5);
+        when(presenter.getAlbum()).thenReturn("album");
+        when(presenter.getFolder()).thenReturn(mock(File.class));
         // when
         chooseTask.doInBackground(null);
         // then

@@ -15,7 +15,7 @@ public class WritePermissionTest {
         MainActivity view = Mockito.mock(MainActivity.class);
         WritePermission permission = new WritePermission(null, auth, view);
         permission.postRequireFailure();
-        verify(view).showError(message);
+        verify(view).showError("message");
     }
 
 }

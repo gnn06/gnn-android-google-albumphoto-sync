@@ -15,7 +15,7 @@ public class SignInRequirementTest {
         MainActivity view = Mockito.mock(MainActivity.class);
         SignInRequirement sign = new SignInRequirement(null, auth, view);
         sign.postRequireFailure();
-        verify(view).showError(message);
+        verify(view).showError("message");
     }
 
 }

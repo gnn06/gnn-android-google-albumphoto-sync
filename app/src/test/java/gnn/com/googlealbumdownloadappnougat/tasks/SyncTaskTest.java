@@ -26,13 +26,14 @@ public class SyncTaskTest {
 
         when(presenter.getAlbum()).thenReturn("album");
         when(((PresenterMain) presenter).getFolder()).thenReturn(file);
+        when(presenter.getQuantity()).thenReturn(-1);
         doThrow(new GoogleAuthException()).when(sync).syncAll("album", file);
 
         SyncTask task = Mockito.spy(new SyncTask(presenter, sync));
 
         task.doInBackground();
 
-        verify(task).markAsError("message");
+        verify(task).markAsError(    "com.google.android.gms.auth.GoogleAuthException");
     }
 
 }

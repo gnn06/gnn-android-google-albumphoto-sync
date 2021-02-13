@@ -2,6 +2,8 @@ package gnn.com.photos.sync;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -27,59 +29,73 @@ import static org.mockito.Mockito.when;
 
 public class SyncMethodTest {
 
-    ArrayList<Photo> remotePhotos = new ArrayList<>();
-    ArrayList<Photo> localPhotos = new ArrayList<>();
+    ArrayList<Photo> remotePhotos;
+    ArrayList<Photo> localPhotos;
+    PhotosRemoteService prs;
+    PhotosLocalService pls;
+    Synchronizer synchronizer;
 
-    @Test
-    public void sync_all() throws IOException, GoogleAuthException {
-        Synchronizer sync = mock(Synchronizer.class);
-        SyncMethod syncMethod = new SyncMethod(sync,
-                mock(PhotosRemoteService.class),
-                mock(PhotosLocalService.class));
-        File folder = mock(File.class);
-        syncMethod.sync("album", folder, -1);
-    }
+    @Before
+    public void setUp() throws Exception {
+        remotePhotos = new ArrayList<>();
+        localPhotos = new ArrayList<>();
 
-    @Test
-    public void sync_chooseOne() throws IOException, GoogleAuthException {
-        // given
         remotePhotos.add(new Photo("url1", "id1"));
         remotePhotos.add(new Photo("url3", "id3"));
 
         localPhotos.add(new Photo("url2", "id2"));
 
-        final File folder = Mockito.mock(File.class);
+        prs = Mockito.mock(PhotosRemoteService.class);
+        pls = Mockito.mock(PhotosLocalService.class);
 
-        final PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
-        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
-
-        final PhotosLocalService pls = Mockito.mock(PhotosLocalService.class);
-        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
-
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, null) {
+        synchronizer = new Synchronizer(null, 0, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
             }
 
             @Override
-            public void incAlbumSize() {
+            public void incAlbumSize() {}
+        };
+    }
 
-            }
-        };
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {
-        };
+    @Test
+    public void sync_all() throws IOException, GoogleAuthException {
+        SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
+        File folder = mock(File.class);
+        // given remote photos that don't be local and local photo was dont't be remote
+        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+
+        // when calling sync
+        syncMethod.sync("album", folder, -1);
+
+        // then, check download all
+        verify(prs).download(remotePhotos, folder, synchronizer);
+
+        // and check delete all
+        verify(pls).delete(localPhotos, folder, synchronizer);
+    }
+
+    @Test
+    public void sync_chooseOne() throws IOException, GoogleAuthException {
+        // given remote photos that don't be local and local photo that don't be remote
+        final File folder = Mockito.mock(File.class);
+
+        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+
+        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
         // when
         syncMethod.sync("album", folder, 1);
 
-        // then
-        // check download one
+        // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
         verify(prs).download(captor.capture(), (File) anyObject(), (Synchronizer) anyObject());
         assertEquals(1, captor.getValue().size());
 
-        // check delete all
+        // and check delete all
         verify(pls).delete(localPhotos, folder, synchronizer);
     }
 

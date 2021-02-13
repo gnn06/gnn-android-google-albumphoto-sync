@@ -2,7 +2,6 @@ package gnn.com.photos.sync;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,6 +33,7 @@ public class SyncMethodTest {
     PhotosRemoteService prs;
     PhotosLocalService pls;
     Synchronizer synchronizer;
+    File folder;
 
     @Before
     public void setUp() throws Exception {
@@ -57,12 +57,12 @@ public class SyncMethodTest {
             @Override
             public void incAlbumSize() {}
         };
+        folder = mock(File.class);
     }
 
     @Test
     public void sync_all() throws IOException, GoogleAuthException {
         SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
-        File folder = mock(File.class);
         // given remote photos that don't be local and local photo was dont't be remote
         when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
@@ -80,8 +80,6 @@ public class SyncMethodTest {
     @Test
     public void sync_chooseOne() throws IOException, GoogleAuthException {
         // given remote photos that don't be local and local photo that don't be remote
-        final File folder = Mockito.mock(File.class);
-
         when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
@@ -107,15 +105,15 @@ public class SyncMethodTest {
     }
 
     @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder();
 
 
     @Test
     public void test_read_lastSyncTime() throws IOException {
         // given a synchronizer with a processFolder containing a last_sync file
-        File tempFile = folder.newFile("last_sync");
+        File tempFile = tempFolder.newFile("last_sync");
 
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, folder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;
@@ -137,7 +135,7 @@ public class SyncMethodTest {
     @Test
     public void test_readLastSyncTime_null() {
         // given
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, folder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;

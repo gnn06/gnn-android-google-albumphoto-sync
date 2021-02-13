@@ -20,11 +20,8 @@ import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 public class SyncMethodTest {
 
@@ -95,6 +92,22 @@ public class SyncMethodTest {
 
         // and check delete all
         verify(pls).delete(localPhotos, folder, synchronizer);
+    }
+
+    @Test
+    public void throw_into_sync() throws IOException {
+        //given
+        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
+
+        doThrow(new IOException()).when(prs).download((ArrayList<Photo>)anyObject(), (File)anyObject(), (Synchronizer)anyObject());
+
+        // when
+        try {
+            syncMethod.sync("album", folder, 1);
+        } catch (IOException | GoogleAuthException ignored) {}
+
+        // then assert that delete was not called
+        verify(pls, never()).delete((ArrayList<Photo>)anyObject(), (File)anyObject(), (Synchronizer)anyObject());
     }
 
     @Test

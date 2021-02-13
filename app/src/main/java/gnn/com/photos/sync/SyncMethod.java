@@ -40,8 +40,9 @@ class SyncMethod {
         System.out.println("to download count = " + synchronizer.getToDownload().size());
         System.out.println("to delete count = " + synchronizer.getToDelete().size());
 
-        localService.delete(synchronizer.getToDelete(), imageFolder, synchronizer);
         remoteService.download(synchronizer.getToDownload(), imageFolder, synchronizer);
+        // delete AFTER download to avoid to delete everything when there is an exception during download
+        localService.delete(synchronizer.getToDelete(), imageFolder, synchronizer);
         synchronizer.storeSyncTime();
     }
 

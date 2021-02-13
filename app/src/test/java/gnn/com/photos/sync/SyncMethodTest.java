@@ -36,7 +36,7 @@ public class SyncMethodTest {
     File folder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         remotePhotos = new ArrayList<>();
         localPhotos = new ArrayList<>();
 

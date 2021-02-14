@@ -1,7 +1,9 @@
 package gnn.com.photos.sync;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mockito.ArgumentCaptor;
 
 import static org.junit.Assert.*;
@@ -19,6 +21,9 @@ public class DownloadManagerTest {
 
     private ArrayList<Photo> toDownloadList;
     private Synchronizer synchronizer;
+
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Before
     public void setUp() throws Exception {
@@ -39,7 +44,7 @@ public class DownloadManagerTest {
 
         // when
         downloader.download(toDownloadList,
-                    null,
+                temporaryFolder.getRoot(),
                     synchronizer);
         // then
         verify(synchronizer, times(1)).incCurrentDownload();
@@ -49,11 +54,10 @@ public class DownloadManagerTest {
     public void download_no_renamming() throws IOException {
         // which mock copy
         DownloadManager downloader = spy(new DownloadManager());
-        doNothing().when(downloader).copy((URL)anyObject(), (File)anyObject());
 
         // when
         downloader.download(toDownloadList,
-                null,
+                temporaryFolder.getRoot(),
                 synchronizer);
 
         // then
@@ -67,11 +71,13 @@ public class DownloadManagerTest {
         // given a downloader
         DownloadManager downloader = spy(new DownloadManager());
         // which mock copy
-        doNothing().when(downloader).copy((URL)anyObject(), (File)anyObject());
 
         // when calling download
-        downloader.download(toDownloadList, null, synchronizer);
+        downloader.download(toDownloadList, temporaryFolder.getRoot(), synchronizer);
 
         // then
+        ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
+        verify(downloader).copy((URL)anyObject(), argument.capture());
+        assertEquals("name1.jpg", argument.getValue().getName());
     }
 }

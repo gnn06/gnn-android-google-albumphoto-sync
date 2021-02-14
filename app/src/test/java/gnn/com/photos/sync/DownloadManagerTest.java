@@ -1,9 +1,11 @@
-package gnn.com.googlealbumdownloadappnougat.photos;
+package gnn.com.photos.sync;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
@@ -15,7 +17,7 @@ import gnn.com.photos.sync.DownloadManager;
 public class DownloadManagerTest {
 
     private ArrayList<Photo> toDownloadList;
-    private SynchronizerAndroid synchronizer;
+    private Synchronizer synchronizer;
 
     @Before
     public void setUp() throws Exception {
@@ -23,28 +25,34 @@ public class DownloadManagerTest {
         Photo photo = new Photo("http://gn.com/", "id12");
         toDownloadList.add(photo);
 
-        synchronizer = mock(SynchronizerAndroid.class);
+        synchronizer = mock(Synchronizer.class);
     }
 
     @Test
-    public void download_call_synchronizerIncCurrentDownload() {
+    public void download_call_synchronizerIncCurrentDownload() throws IOException {
         // check incCurrentDownload is called
-        MainActivity activity = mock(MainActivity.class);
+
+        // which mock copy
+        DownloadManager downloader = spy(new DownloadManager());
+        doNothing().when(downloader).copy((URL)anyObject(), (File)anyObject());
 
         // when
-        try {
-            DownloadManager.download(toDownloadList,
+        downloader.download(toDownloadList,
                     null,
                     synchronizer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         verify(synchronizer, times(1)).incCurrentDownload();
     }
 
     @Test
     public void download_and_rename() throws IOException {
+        // given a downloader
+        DownloadManager downloader = spy(new DownloadManager());
+        // which mock copy
+        doNothing().when(downloader).copy((URL)anyObject(), (File)anyObject());
+
         // when calling download
-        DownloadManager.download(toDownloadList, null, synchronizer);
+        downloader.download(toDownloadList, null, synchronizer);
+
+        // then
     }
 }

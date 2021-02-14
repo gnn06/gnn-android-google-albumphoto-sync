@@ -17,7 +17,7 @@ public class DownloadManager {
      * Add .jpg to filename.
      * manage progress status bar
      */
-    public static void download(ArrayList<Photo> toDownload, File destinationFolder, Synchronizer synchronizer) throws IOException {
+    public void download(ArrayList<Photo> toDownload, File destinationFolder, Synchronizer synchronizer) throws IOException {
         int count = 0;
         for (Photo photo : toDownload) {
             URL source;
@@ -25,7 +25,7 @@ public class DownloadManager {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
                 File destination = new File(destinationFolder, photo.getId() + getFileExtension());
-                FileUtils.copyURLToFile(source, destination);
+                copy(source, destination);
                 count++;
                 synchronizer.incCurrentDownload();
             } catch (MalformedURLException e) {
@@ -34,6 +34,10 @@ public class DownloadManager {
             }
         }
         System.out.println("downloaded count = " + count);
+    }
+
+    void copy(URL source, File destination) throws IOException {
+        FileUtils.copyURLToFile(source, destination);
     }
 
     public static String getFileExtension() {

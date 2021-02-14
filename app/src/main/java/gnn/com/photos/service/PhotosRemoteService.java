@@ -88,7 +88,7 @@ public abstract class PhotosRemoteService {
     }
 
     public void download(ArrayList<Photo> list, File folder, Synchronizer sync) throws IOException {
-        new DownloadManager().download(list, folder, sync);
+        new DownloadManager().download(list, folder, null, sync);
     }
 
     protected abstract PhotosLibraryClient getPhotoLibraryClient() throws IOException, GoogleAuthException;

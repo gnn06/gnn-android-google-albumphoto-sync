@@ -45,7 +45,7 @@ public class DownloadManagerTest {
         // when
         downloader.download(toDownloadList,
                 temporaryFolder.getRoot(),
-                    synchronizer);
+                null, synchronizer);
         // then
         verify(synchronizer, times(1)).incCurrentDownload();
     }
@@ -58,7 +58,7 @@ public class DownloadManagerTest {
         // when
         downloader.download(toDownloadList,
                 temporaryFolder.getRoot(),
-                synchronizer);
+                null, synchronizer);
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
@@ -73,7 +73,7 @@ public class DownloadManagerTest {
         // which mock copy
 
         // when calling download
-        downloader.download(toDownloadList, temporaryFolder.getRoot(), synchronizer);
+        downloader.download(toDownloadList, temporaryFolder.getRoot(), "name", synchronizer);
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);

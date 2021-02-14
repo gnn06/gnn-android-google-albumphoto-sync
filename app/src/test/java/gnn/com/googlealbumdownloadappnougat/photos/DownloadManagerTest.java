@@ -1,38 +1,50 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.mockito.Mockito.*;
+
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.sync.DownloadManager;
 
 public class DownloadManagerTest {
 
+    private ArrayList<Photo> toDownloadList;
+    private SynchronizerAndroid synchronizer;
+
+    @Before
+    public void setUp() throws Exception {
+        toDownloadList = new ArrayList<>();
+        Photo photo = new Photo("http://gn.com/", "id12");
+        toDownloadList.add(photo);
+
+        synchronizer = mock(SynchronizerAndroid.class);
+    }
+
     @Test
     public void download() {
         // check incCurrentDownload is called
-        MainActivity activity = Mockito.mock(MainActivity.class);
+        MainActivity activity = mock(MainActivity.class);
 
-        ArrayList<Photo> toDownloadList = new ArrayList<>();
-        Photo photo = new Photo("http://gn.com/", "id12");
-        toDownloadList.add(photo);
-        File folder = new File("c:/temp/");
-
-        SynchronizerAndroid synchronizerSpy = Mockito.spy(new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null));
-        synchronizerSpy.setSyncTask(Mockito.mock(SyncTask.class));
+        // when
         try {
             DownloadManager.download(toDownloadList,
-                    folder,
-                    synchronizerSpy);
+                    null,
+                    synchronizer);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Mockito.verify(synchronizerSpy, Mockito.times(1)).incCurrentDownload();
+        verify(synchronizer, times(1)).incCurrentDownload();
+    }
+
+    @Test
+    public void download_and_rename() throws IOException {
+        // when calling download
+        DownloadManager.download(toDownloadList, null, synchronizer);
     }
 }

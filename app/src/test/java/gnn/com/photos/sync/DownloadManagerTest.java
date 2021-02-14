@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import gnn.com.photos.model.Photo;
@@ -28,8 +29,8 @@ public class DownloadManagerTest {
     @Before
     public void setUp() throws Exception {
         toDownloadList = new ArrayList<>();
-        Photo photo = new Photo("http://gn.com/", "id12");
-        toDownloadList.add(photo);
+        toDownloadList.add(new Photo("http://gn.com/12", "id12"));
+        toDownloadList.add(new Photo("http://gn.com/24", "id24"));
 
         synchronizer = mock(Synchronizer.class);
     }
@@ -47,7 +48,7 @@ public class DownloadManagerTest {
                 temporaryFolder.getRoot(),
                 null, synchronizer);
         // then
-        verify(synchronizer, times(1)).incCurrentDownload();
+        verify(synchronizer, times(2)).incCurrentDownload();
     }
 
     @Test
@@ -62,8 +63,11 @@ public class DownloadManagerTest {
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
-        verify(downloader).copy((URL)anyObject(), argument.capture());
-        assertEquals("id12.jpg", argument.getValue().getName());
+        verify(downloader, times(2)).copy((URL)anyObject(), argument.capture());
+
+        List<File> allArguments = argument.getAllValues();
+        assertEquals("id12.jpg", allArguments.get(0).getName());
+        assertEquals("id24.jpg", allArguments.get(1).getName());
     }
 
     @Test
@@ -77,7 +81,11 @@ public class DownloadManagerTest {
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
-        verify(downloader).copy((URL)anyObject(), argument.capture());
-        assertEquals("name1.jpg", argument.getValue().getName());
+        verify(downloader, times(2)).copy((URL)anyObject(), argument.capture());
+
+        List<File> allArguments = argument.getAllValues();
+
+        assertEquals("name1.jpg", allArguments.get(0).getName());
+        assertEquals("name2.jpg", allArguments.get(1).getName());
     }
 }

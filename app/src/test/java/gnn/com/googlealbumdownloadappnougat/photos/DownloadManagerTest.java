@@ -27,7 +27,7 @@ public class DownloadManagerTest {
     }
 
     @Test
-    public void download() {
+    public void download_call_synchronizerIncCurrentDownload() {
         // check incCurrentDownload is called
         MainActivity activity = mock(MainActivity.class);
 

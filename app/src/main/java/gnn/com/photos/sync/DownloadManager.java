@@ -17,14 +17,14 @@ public class DownloadManager {
      * Add .jpg to filename.
      * manage progress status bar
      */
-    public static void download(ArrayList<Photo> toDownload, File folder, Synchronizer synchronizer) throws IOException {
+    public static void download(ArrayList<Photo> toDownload, File destinationFolder, Synchronizer synchronizer) throws IOException {
         int count = 0;
         for (Photo photo : toDownload) {
             URL source;
             try {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
-                File destination = new File(folder, photo.getId() + getFileExtension());
+                File destination = new File(destinationFolder, photo.getId() + getFileExtension());
                 FileUtils.copyURLToFile(source, destination);
                 count++;
                 synchronizer.incCurrentDownload();

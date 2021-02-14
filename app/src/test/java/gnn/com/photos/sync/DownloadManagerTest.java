@@ -2,17 +2,18 @@ package gnn.com.photos.sync;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.*;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.sync.DownloadManager;
 
 public class DownloadManagerTest {
 
@@ -29,7 +30,7 @@ public class DownloadManagerTest {
     }
 
     @Test
-    public void download_call_synchronizerIncCurrentDownload() throws IOException {
+    public void download_incCurrentDownload() throws IOException {
         // check incCurrentDownload is called
 
         // which mock copy
@@ -40,7 +41,25 @@ public class DownloadManagerTest {
         downloader.download(toDownloadList,
                     null,
                     synchronizer);
+        // then
         verify(synchronizer, times(1)).incCurrentDownload();
+    }
+
+    @Test
+    public void download_no_renamming() throws IOException {
+        // which mock copy
+        DownloadManager downloader = spy(new DownloadManager());
+        doNothing().when(downloader).copy((URL)anyObject(), (File)anyObject());
+
+        // when
+        downloader.download(toDownloadList,
+                null,
+                synchronizer);
+
+        // then
+        ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
+        verify(downloader).copy((URL)anyObject(), argument.capture());
+        assertEquals("id12.jpg", argument.getValue().getName());
     }
 
     @Test

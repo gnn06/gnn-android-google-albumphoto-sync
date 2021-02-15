@@ -40,7 +40,6 @@ public class DownloadManagerTest {
         synchronizer = mock(Synchronizer.class);
     }
 
-    @Ignore
     @Test
     public void download_incCurrentDownload() throws IOException {
         // check incCurrentDownload is called
@@ -95,6 +94,7 @@ public class DownloadManagerTest {
         assertEquals("name2.jpg", allArguments.get(1).getName());
     }
 
+    @Ignore
     @Test
     public void copy_overwrite() throws IOException {
         final File tmpFile = new File(System.getProperty("java.io.tmpdir"), "toto");

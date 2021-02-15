@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.service.PhotosLocalService;
@@ -50,7 +51,9 @@ public class SyncMethodRenameTest {
         remotePhotos.add(new Photo("url1", "id1"));
         remotePhotos.add(new Photo("url2", "id2"));
 
-        localPhotos.add(new Photo("name3", "id3"));
+        localPhotos.add(new Photo("name1", "name1"));
+        localPhotos.add(new Photo("name2", "name2"));
+        localPhotos.add(new Photo("name3", "name3"));
 
         prs = Mockito.mock(PhotosRemoteService.class);
         pls = Mockito.mock(PhotosLocalService.class);
@@ -82,7 +85,10 @@ public class SyncMethodRenameTest {
         syncMethod.sync("album", folder, "name", -1);
 
         // then
-        verify(pls).delete(localPhotos, folder, synchronizer);
+        ArrayList<Photo> expectedToDelete = new ArrayList<>(Arrays.asList(
+                new Photo("name3", "name3")
+        ));
+        verify(pls).delete(expectedToDelete, folder, synchronizer);
     }
 
 }

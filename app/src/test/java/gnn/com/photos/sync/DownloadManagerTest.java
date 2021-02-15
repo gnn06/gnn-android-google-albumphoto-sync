@@ -1,5 +1,6 @@
 package gnn.com.photos.sync;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,5 +89,14 @@ public class DownloadManagerTest {
 
         assertEquals("name1.jpg", allArguments.get(0).getName());
         assertEquals("name2.jpg", allArguments.get(1).getName());
+    }
+
+    @Test
+    public void copy_overwrite() throws IOException {
+        final File tmpFile = new File(System.getProperty("java.io.tmpdir"), "toto");
+        FileUtils.writeStringToFile(tmpFile, "content", "iso-8859-1");
+        FileUtils.copyURLToFile(new URL("http://www.google.fr"), new File(System.getProperty("java.io.tmpdir"), "toto"));
+        String read = FileUtils.readFileToString(tmpFile, "iso-8859-1");
+        assertTrue(read.contains("<!doctype"));
     }
 }

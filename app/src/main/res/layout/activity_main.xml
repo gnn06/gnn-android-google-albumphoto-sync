@@ -129,6 +129,29 @@
                     android:text="@string/quantity_explenation" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/SectionRename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:id="@+id/titleRename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rename"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                <EditText
+                    android:id="@+id/textRename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleRename"
+                    android:ems="10"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/SectionSync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

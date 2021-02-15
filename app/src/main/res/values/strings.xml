@@ -39,5 +39,6 @@
     <string name="settings">Settings</string>
     <string name="titleCacheMaxAge">Cache max age</string>
     <string name="textCacheMaxAge">Cache max age in hours</string>
+    <string name="rename">Renaming</string>
 
 </resources>

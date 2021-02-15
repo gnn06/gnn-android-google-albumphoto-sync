@@ -241,4 +241,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         view.setText(quantity);
     }
 
+    @Override
+    public String getRename() {
+        return ((TextView)findViewById(R.id.textRename)).getText().toString();
+    }
+
 }

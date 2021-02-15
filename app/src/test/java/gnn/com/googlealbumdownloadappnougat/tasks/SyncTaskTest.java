@@ -12,6 +12,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -27,7 +28,7 @@ public class SyncTaskTest {
         when(presenter.getAlbum()).thenReturn("album");
         when(((PresenterMain) presenter).getFolder()).thenReturn(file);
         when(presenter.getQuantity()).thenReturn(-1);
-        doThrow(new GoogleAuthException()).when(sync).syncAll("album", file);
+        doThrow(new GoogleAuthException()).when(sync).syncAll("album", file, null);
 
         SyncTask task = Mockito.spy(new SyncTask(presenter, sync));
 

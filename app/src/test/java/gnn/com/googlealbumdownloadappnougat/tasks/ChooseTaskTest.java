@@ -30,7 +30,7 @@ public class ChooseTaskTest {
         // when
         chooseTask.doInBackground(null);
         // then
-        verify(synchroniser).syncAll(anyString(), (File) anyObject());
+        verify(synchroniser).syncAll(anyString(), (File) anyObject(), anyString());
     }
 
     @Test
@@ -45,6 +45,6 @@ public class ChooseTaskTest {
         // when
         chooseTask.doInBackground(null);
         // then
-        verify(synchroniser).syncRandom(anyString(), (File) anyObject(), anyInt());
+        verify(synchroniser).syncRandom(anyString(), (File) anyObject(), anyString(), anyInt());
     }
 }

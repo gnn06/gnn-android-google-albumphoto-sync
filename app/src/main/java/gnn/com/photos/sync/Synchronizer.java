@@ -60,17 +60,17 @@ public abstract class Synchronizer implements SyncData {
      * Determine new photo to download and photo to be deleled.
      */
     // TODO: 07/05/2019 managed updated photo if possible
-    public void syncAll(String albumName, File folder) throws IOException, GoogleAuthException {
+    public void syncAll(String albumName, File folder, String rename) throws IOException, GoogleAuthException {
         new SyncMethod(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder, null, -1);
+                .sync(albumName, folder, rename, -1);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
-    public void syncRandom(String albumName, File folder, int quantity) throws IOException, GoogleAuthException {
+    public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, GoogleAuthException {
         new SyncMethod(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder, null, quantity);
+                .sync(albumName, folder, rename, quantity);
     }
 
     public int getTotalDownload() {

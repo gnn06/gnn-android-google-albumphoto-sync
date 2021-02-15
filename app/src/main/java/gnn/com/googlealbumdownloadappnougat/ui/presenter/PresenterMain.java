@@ -236,6 +236,11 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
     }
 
+    @Override
+    public String getRename() {
+        return view.getRename();
+    }
+
     public long getCacheMaxAge() {
         return this.cacheMaxAge;
     }

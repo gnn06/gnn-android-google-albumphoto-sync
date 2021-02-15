@@ -2,10 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import android.util.Log;
 
-import com.google.android.gms.auth.GoogleAuthException;
-
 import java.io.File;
-import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
@@ -26,12 +23,13 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
         String album = presenter.getAlbum();
         File destination = presenter.getFolder();
         assert album != null && destination != null;
+        String rename = presenter.getRename();
         int quantity = presenter.getQuantity();
         try {
             if (quantity == -1) {
-                sync.syncAll(album, destination);
+                sync.syncAll(album, destination, rename);
             } else {
-                sync.syncRandom(album, destination, quantity);
+                sync.syncRandom(album, destination, rename, quantity);
             }
         } catch (Exception e) {
             // Catch Exception versus Google or IO to catch permission denied

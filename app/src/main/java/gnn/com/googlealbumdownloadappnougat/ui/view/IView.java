@@ -28,4 +28,6 @@ public interface IView {
     String getQuantity();
 
     void setQuantity(String quantity);
+
+    String getRename();
 }

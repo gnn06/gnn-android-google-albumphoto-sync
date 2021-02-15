@@ -1,7 +1,10 @@
 package gnn.com.photos.sync;
 
+import com.google.android.gms.common.annotation.KeepForSdk;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -37,6 +40,7 @@ public class DownloadManagerTest {
         synchronizer = mock(Synchronizer.class);
     }
 
+    @Ignore
     @Test
     public void download_incCurrentDownload() throws IOException {
         // check incCurrentDownload is called

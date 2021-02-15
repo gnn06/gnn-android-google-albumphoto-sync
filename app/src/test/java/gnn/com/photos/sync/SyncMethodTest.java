@@ -32,8 +32,11 @@ public class SyncMethodTest {
     Synchronizer synchronizer;
     File folder;
 
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, GoogleAuthException {
         remotePhotos = new ArrayList<>();
         localPhotos = new ArrayList<>();
 
@@ -45,6 +48,7 @@ public class SyncMethodTest {
         prs = Mockito.mock(PhotosRemoteService.class);
         pls = Mockito.mock(PhotosLocalService.class);
 
+
         synchronizer = new Synchronizer(null, 0, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
@@ -54,7 +58,12 @@ public class SyncMethodTest {
             @Override
             public void incAlbumSize() {}
         };
+
         folder = mock(File.class);
+
+        when(prs.getPhotos("album", synchronizer)).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+
     }
 
     @Test
@@ -65,10 +74,10 @@ public class SyncMethodTest {
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
-        syncMethod.sync("album", folder, -1);
+        syncMethod.sync("album", folder, null, -1);
 
         // then, check download all
-        verify(prs).download(remotePhotos, folder, synchronizer);
+        verify(prs).download(remotePhotos, folder, null, synchronizer);
 
         // and check delete all
         verify(pls).delete(localPhotos, folder, synchronizer);
@@ -83,11 +92,11 @@ public class SyncMethodTest {
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
         // when
-        syncMethod.sync("album", folder, 1);
+        syncMethod.sync("album", folder, null, 1);
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
-        verify(prs).download(captor.capture(), (File) anyObject(), (Synchronizer) anyObject());
+        verify(prs).download(captor.capture(), (File) anyObject(), anyString(), (Synchronizer) anyObject());
         assertEquals(1, captor.getValue().size());
 
         // and check delete all
@@ -99,11 +108,11 @@ public class SyncMethodTest {
         //given
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
-        doThrow(new IOException()).when(prs).download((ArrayList<Photo>)anyObject(), (File)anyObject(), (Synchronizer)anyObject());
+        doThrow(new IOException()).when(prs).download((ArrayList<Photo>)anyObject(), (File)anyObject(), anyString(), (Synchronizer)anyObject());
 
         // when
         try {
-            syncMethod.sync("album", folder, 1);
+            syncMethod.sync("album", folder, null, 1);
         } catch (IOException | GoogleAuthException ignored) {}
 
         // then assert that delete was not called
@@ -114,12 +123,8 @@ public class SyncMethodTest {
     public void test_write_last_sync_time() throws IOException, GoogleAuthException {
         SyncMethod syncFull = new SyncMethod(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
         SyncMethod syncMethod = spy(syncFull);
-        syncMethod.sync("album", mock(File.class), 0);
+        syncMethod.sync("album", mock(File.class), null, 0);
     }
-
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
-
 
     @Test
     public void test_read_lastSyncTime() throws IOException {
@@ -164,5 +169,4 @@ public class SyncMethodTest {
         // then
         assertNull(stringLastSyncTimeActual);
     }
-
 }

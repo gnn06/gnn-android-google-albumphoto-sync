@@ -44,6 +44,7 @@ public class DownloadManager {
     }
 
     void copy(URL source, File destination) throws IOException {
+        // copy overwrite existing file.
         FileUtils.copyURLToFile(source, destination);
     }
 

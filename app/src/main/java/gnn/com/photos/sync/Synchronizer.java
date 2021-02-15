@@ -62,7 +62,7 @@ public abstract class Synchronizer implements SyncData {
     // TODO: 07/05/2019 managed updated photo if possible
     public void syncAll(String albumName, File folder) throws IOException, GoogleAuthException {
         new SyncMethod(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder, -1);
+                .sync(albumName, folder, null, -1);
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class Synchronizer implements SyncData {
      */
     public void syncRandom(String albumName, File folder, int quantity) throws IOException, GoogleAuthException {
         new SyncMethod(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder, quantity);
+                .sync(albumName, folder, null, quantity);
     }
 
     public int getTotalDownload() {

@@ -31,9 +31,9 @@ class SyncMethod {
         ArrayList<Photo> local = localService.getLocalPhotos(imageFolder);
 
         if (quantity != -1)
-            new PhotoChooser().chooseRandom(synchronizer, local, remote, null, quantity);
+            new PhotoChooser().chooseRandom(synchronizer, local, remote, rename, quantity);
         else
-            new PhotoChooser().chooseFull(synchronizer, local, remote, null);
+            new PhotoChooser().chooseFull(synchronizer, local, remote, rename);
 
         System.out.println("remote count = " + remote.size());
         System.out.println("local count = " + local.size());

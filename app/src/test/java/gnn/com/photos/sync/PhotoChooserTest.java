@@ -8,10 +8,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.service.PhotosRemoteService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -98,11 +96,11 @@ public class PhotoChooserTest {
         ArrayList<Photo> expectedToDownload = new ArrayList<>();
         ArrayList<Photo> expectedToDelete = new ArrayList<>();
 
-        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, 2);
+        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
         when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
 
-        chooser.chooseRandom(syncData, local, remote, 2);
+        chooser.chooseRandom(syncData, local, remote, null, 2);
 
         verify(syncData).setToDownload(expectedToDownload);
         verify(syncData).setToDelete(expectedToDelete);
@@ -131,11 +129,11 @@ public class PhotoChooserTest {
                 new Photo("url1", "id1"),
                 new Photo("url3", "id2")));
 
-        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, 2);
+        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
         when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
 
-        chooser.chooseRandom(syncData, local, remote, 2);
+        chooser.chooseRandom(syncData, local, remote, null, 2);
 
         verify(syncData).setToDownload(expectedToDownload);
         verify(syncData).setToDelete(expectedToDelete);
@@ -162,11 +160,11 @@ public class PhotoChooserTest {
         ArrayList<Photo> expectedToDelete = new ArrayList<>(Arrays.asList(
                 new Photo("url4", "id1")));
 
-        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, 2);
+        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
         when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
 
-        chooser.chooseRandom(syncData, local, remote, 2);
+        chooser.chooseRandom(syncData, local, remote, null, 2);
 
         verify(syncData).setToDownload(expectedToDownload);
         verify(syncData).setToDelete(expectedToDelete);

@@ -79,7 +79,7 @@ public class PhotoChooserTest {
 
     @Test
     public void choosen_nothing_to_download_and_to_delete() {
-        PhotoChooser chooser = mock(PhotoChooser.class);
+        PhotoChooser chooser = spy(PhotoChooser.class);
         SyncData syncData = spy(SyncData.class);
 
         ArrayList<Photo> remote = new ArrayList<>(Arrays.asList(
@@ -95,8 +95,6 @@ public class PhotoChooserTest {
                 new Photo("url3", "id4")));
         ArrayList<Photo> expectedToDownload = new ArrayList<>();
         ArrayList<Photo> expectedToDelete = new ArrayList<>();
-
-        doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
         when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
 

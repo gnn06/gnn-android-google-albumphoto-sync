@@ -3,6 +3,7 @@ package gnn.com.photos.model;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Photo implements Serializable {
 
@@ -12,6 +13,16 @@ public class Photo implements Serializable {
     private final String url;
     
     private final String id;
+
+    /**
+     * rename Photos in list creating new Photos
+     */
+    public static void renameList(ArrayList<Photo> list, String rename) {
+        for (int i = 0; i < list.size(); i++) {
+            Photo photo = list.get(i);
+            list.set(i, new Photo(photo.getUrl(), rename + (i + 1)));
+        }
+    }
 
     public String getUrl() {
         return url;

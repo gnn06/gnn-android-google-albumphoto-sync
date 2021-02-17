@@ -18,19 +18,17 @@ public class DownloadManager {
      * manage progress status bar
      */
     public void download(ArrayList<Photo> toDownload, File destinationFolder, String rename, Synchronizer synchronizer) throws IOException {
+        // rename Id before download
+        if (rename != null) {
+            Photo.renameList(toDownload, rename);
+        }
         int count = 0;
         for (Photo photo : toDownload) {
             URL source;
             try {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
-                String destinationFileName;
-                if (rename != null) {
-                    destinationFileName = rename + (count + 1);
-                } else {
-                    destinationFileName = photo.getId();
-                }
-                destinationFileName += getFileExtension();
+                String destinationFileName = photo.getId() + getFileExtension();
                 File destination = new File(destinationFolder, destinationFileName);
                 copy(source, destination);
                 count++;

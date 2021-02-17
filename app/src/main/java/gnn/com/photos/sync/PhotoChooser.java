@@ -7,8 +7,6 @@ import gnn.com.photos.model.Photo;
 
 class PhotoChooser {
 
-    // TODO extraire renommage dans une fonction utilitaire, idem dans downloader.
-
     // TODO coder renommage avec une approche fonctionnelle
 
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
@@ -21,9 +19,7 @@ class PhotoChooser {
         synchronizer.setToDownload(firstMinusSecondList(remote, local));
         if (rename != null) {
             remote = (ArrayList<Photo>) remote.clone();
-            for (int i = 0; i < remote.size(); i++) {
-                remote.set(i, new Photo(remote.get(i).getUrl(), "name" + (i + 1)));
-            }
+            Photo.renameList(remote, rename);
         }
         synchronizer.setToDelete(firstMinusSecondList(local, remote));
     }

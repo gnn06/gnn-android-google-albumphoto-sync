@@ -7,11 +7,15 @@ import gnn.com.photos.model.Photo;
 
 class PhotoChooser {
 
+    // TODO extraire renommage dans une fonction utilitaire, idem dans downloader.
+
+    // TODO coder renommage avec une approche fonctionnelle
+
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
         ArrayList<Photo> chosen = chooseOneList(remote, quantity);
-        // download choosen except ones already downloaded (one already in local)
+        // download chosen except ones already downloaded (one already in local)
         synchronizer.setToDownload(firstMinusSecondList(chosen, local));
-        // delete all except choosen
+        // delete all except chosen
         if (rename != null) {
             chosen = (ArrayList<Photo>) chosen.clone();
             for (int i = 0; i < chosen.size(); i++) {

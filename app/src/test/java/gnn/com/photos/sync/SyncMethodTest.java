@@ -66,6 +66,9 @@ public class SyncMethodTest {
 
     }
 
+
+    // TODO inutile de faire tous les cas de choix, juste vérifier que ça appelle choose
+    // puis download et delete
     @Test
     public void sync_all() throws IOException, GoogleAuthException {
         SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);

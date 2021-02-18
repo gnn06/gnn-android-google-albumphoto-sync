@@ -24,6 +24,8 @@ import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
+// TODO persists rename
+
 public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     private static final String TAG = "goi";
@@ -239,6 +241,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public String getRename() {
         return view.getRename();
+    }
+
+    public void setRename(String rename) {
+        view.setRename(rename);
     }
 
     public long getCacheMaxAge() {

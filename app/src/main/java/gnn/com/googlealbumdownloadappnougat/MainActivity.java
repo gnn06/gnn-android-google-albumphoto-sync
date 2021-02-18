@@ -243,7 +243,17 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public String getRename() {
-        return ((TextView)findViewById(R.id.textRename)).getText().toString();
+        // getText returns "" if empty
+        // transform "" into null
+        String value = ((TextView) findViewById(R.id.textRename)).getText().toString();
+        return "".equals(value) ? null : value;
+    }
+
+    @Override
+    public void setRename(String rename) {
+        // transform null into ""
+        TextView view = findViewById(R.id.textRename);
+        view.setText(rename == null ? "" : rename);
     }
 
 }

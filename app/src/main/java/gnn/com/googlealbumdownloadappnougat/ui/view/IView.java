@@ -30,4 +30,6 @@ public interface IView {
     void setQuantity(String quantity);
 
     String getRename();
+
+    void setRename(String rename);
 }

@@ -13,6 +13,7 @@ public class Persistence {
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
     private static final String PREF_QUANTITY_KEY = "quantity";
     private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
+    private static final String PREF_RENAME = "rename";
 
     private final Activity activity;
 
@@ -25,12 +26,17 @@ public class Persistence {
     public void saveData(IPresenterMain presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
+
         String album = presenter.getAlbum();
         String folderHuman = presenter.getFolderHuman();
         int quantity = presenter.getQuantity();
+        String rename = presenter.getRename();
+
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
         editor.putInt(PREF_QUANTITY_KEY, quantity);
+        editor.putString(PREF_RENAME, rename);
+
         editor.apply();
     }
 
@@ -53,6 +59,8 @@ public class Persistence {
             }
             int quantity = preferences.getInt(PREF_QUANTITY_KEY, -1);
             presenter.setQuantity(quantity);
+            String rename = preferences.getString(PREF_RENAME, null);
+            presenter.setRename(rename);
         }
     }
 

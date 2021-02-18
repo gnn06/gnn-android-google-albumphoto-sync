@@ -55,4 +55,6 @@ public interface IPresenterMain {
     void setQuantity(int quantity);
 
     String getRename();
+
+    void setRename(String rename);
 }

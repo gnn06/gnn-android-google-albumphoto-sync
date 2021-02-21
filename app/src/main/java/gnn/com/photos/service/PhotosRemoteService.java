@@ -49,7 +49,7 @@ public abstract class PhotosRemoteService {
     public ArrayList<Photo> getPhotos(String album, Synchronizer synchronizer) throws IOException, GoogleAuthException {
         ArrayList<Photo> photos = PhotosRemoteService.cache.get();
         if (photos == null) {
-            photos = photoProvider.getPhotos(album, synchronizer);
+            photos = photoProvider.getPhotosFromAlbum(album, synchronizer);
             PhotosRemoteService.cache.put(photos);
         } else {
             Log.i(PhotosRemoteService.TAG, "use cache");

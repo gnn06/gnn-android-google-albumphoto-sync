@@ -36,7 +36,7 @@ public class PhotosRemoteServiceTest {
             }
         };
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
-        when(photoProvider.getPhotos("album", synchronizer)).thenReturn(photos);
+        when(photoProvider.getPhotosFromAlbum("album", synchronizer)).thenReturn(photos);
 
         // when call remotePhotos
         ArrayList<Photo> result = service.getPhotos("album", synchronizer);
@@ -63,6 +63,6 @@ public class PhotosRemoteServiceTest {
 
         // then check that obtains an answer without calling the service
         assertEquals(photos, result);
-        verify(photoProvider, times(0)).getPhotos(anyString(), (Synchronizer) anyObject());
+        verify(photoProvider, times(0)).getPhotosFromAlbum(anyString(), (Synchronizer) anyObject());
     }
 }

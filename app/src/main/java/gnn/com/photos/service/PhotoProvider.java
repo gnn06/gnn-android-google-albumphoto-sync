@@ -35,7 +35,7 @@ public abstract class PhotoProvider {
         return albumNames;
     }
 
-    public ArrayList<Photo> getPhotos(String albumName, Synchronizer synchronizer) throws IOException, GoogleAuthException {
+    public ArrayList<Photo> getPhotosFromAlbum(String albumName, Synchronizer synchronizer) throws IOException, GoogleAuthException {
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getClient().listAlbums();
         for (Album album : response.iterateAll()) {
             String title = album.getTitle();

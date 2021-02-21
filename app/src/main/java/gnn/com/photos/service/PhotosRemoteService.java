@@ -88,6 +88,8 @@ public abstract class PhotosRemoteService {
     }
 
     public void download(ArrayList<Photo> list, File folder, String rename, Synchronizer sync) throws IOException {
+        // TODO: 18/02/21 refresh baseUrl is expired
+        // baseUrl is valid during 60 minutes, refresh them before download
         new DownloadManager().download(list, folder, rename, sync);
     }
 

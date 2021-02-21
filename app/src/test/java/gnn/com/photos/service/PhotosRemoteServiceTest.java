@@ -2,30 +2,44 @@ package gnn.com.photos.service;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import gnn.com.photos.model.Photo;
-import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class PhotosRemoteServiceTest {
+
+    private Synchronizer synchronizer;
+    private PhotoProvider photoProvider;
+
+    @Before
+    public void setUp() throws Exception {
+        synchronizer = mock(Synchronizer.class);
+        photoProvider = mock(PhotoProvider.class);
+    }
 
     @Test
     public void testGetRemotePhotos_emptyCache() throws IOException, GoogleAuthException {
         // given, an empty cache
-        PhotosRemoteService service = Mockito.spy(PhotosRemoteService.class);
+        PhotosRemoteService service = new PhotosRemoteService() {
+            @Override
+            public PhotoProvider getPhotoProvider() {
+                return photoProvider;
+            }
+        };
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
-        Mockito.doReturn(photos).when(service).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
+        when(photoProvider.getPhotos("album", synchronizer)).thenReturn(photos);
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getPhotos("album", Mockito.mock(Synchronizer.class));
+        ArrayList<Photo> result = service.getPhotos("album", synchronizer);
 
         // then check that obtains an answer and put result into cache
         assertEquals(photos, result);
@@ -35,16 +49,20 @@ public class PhotosRemoteServiceTest {
     @Test
     public void testGetRemotePhotos_notEmptyCache() throws IOException, GoogleAuthException {
         // given, an not empty cache
-        PhotosRemoteService service = Mockito.spy(PhotosRemoteService.class);
+        PhotosRemoteService service = spy(new PhotosRemoteService() {
+            @Override
+            public PhotoProvider getPhotoProvider() {
+                return null;
+            }
+        });
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
         PhotosRemoteService.getCache().put(photos);
-        Mockito.doReturn(photos).when(service).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getPhotos("album", Mockito.mock(Synchronizer.class));
+        ArrayList<Photo> result = service.getPhotos("album", synchronizer);
 
         // then check that obtains an answer without calling the service
         assertEquals(photos, result);
-        Mockito.verify(service, Mockito.times(0)).getPhotosInternal(Mockito.anyString(), (Synchronizer) Mockito.anyObject());
+        verify(photoProvider, times(0)).getPhotos(anyString(), (Synchronizer) anyObject());
     }
 }

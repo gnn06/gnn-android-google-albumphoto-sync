@@ -12,6 +12,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
 
     private final Context activity;
+    private PhotoProviderAndroid _provider;
 
     public PhotosRemoteServiceAndroid(MainActivity activity, File cacheFile, long cacheMaxAge) {
         super(cacheFile, cacheMaxAge);
@@ -20,6 +21,10 @@ public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
 
     @Override
     public PhotoProvider getPhotoProvider() {
-        return new PhotoProviderAndroid(activity);
+        if (_provider == null) {
+            // can not initialize Provider in constructor as activity is not set
+            _provider = new PhotoProviderAndroid(activity);
+        }
+        return _provider;
     }
 }

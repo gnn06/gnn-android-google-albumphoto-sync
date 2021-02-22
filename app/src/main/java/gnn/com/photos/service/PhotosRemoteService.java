@@ -20,7 +20,6 @@ public abstract class PhotosRemoteService {
      * As class var, cache is common between PhotosRemoteService instances.
      */
     private static Cache cache;
-    private final PhotoProvider photoProvider;
 
     // Used to Unit test
     static Cache getCache() {
@@ -29,12 +28,10 @@ public abstract class PhotosRemoteService {
 
     public PhotosRemoteService() {
         cache = new Cache(null, -1);
-        photoProvider = getPhotoProvider();
     }
 
     public PhotosRemoteService(File cacheFile, long cacheMaxAge) {
         cache = new Cache(cacheFile, cacheMaxAge);
-        photoProvider = getPhotoProvider();
     }
 
     abstract public PhotoProvider getPhotoProvider();
@@ -43,13 +40,13 @@ public abstract class PhotosRemoteService {
      * Retrieve remote album list
      */
     public ArrayList<String> getAlbums() throws IOException, GoogleAuthException {
-        return photoProvider.getAlbums();
+        return getPhotoProvider().getAlbums();
     }
 
     public ArrayList<Photo> getPhotos(String album, Synchronizer synchronizer) throws IOException, GoogleAuthException {
         ArrayList<Photo> photos = PhotosRemoteService.cache.get();
         if (photos == null) {
-            photos = photoProvider.getPhotosFromAlbum(album, synchronizer);
+            photos = getPhotoProvider().getPhotosFromAlbum(album, synchronizer);
             PhotosRemoteService.cache.put(photos);
         } else {
             Log.i(PhotosRemoteService.TAG, "use cache");

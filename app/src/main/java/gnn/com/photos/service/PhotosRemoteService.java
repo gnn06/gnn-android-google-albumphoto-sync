@@ -55,10 +55,28 @@ public abstract class PhotosRemoteService {
         return photos;
     }
 
-    public void download(ArrayList<Photo> list, File folder, String rename, Synchronizer sync) throws IOException {
-        // TODO: 18/02/21 refresh baseUrl is expired
+    /**
+     * Refresh baseUrl and download photo
+     */
+    public void download(ArrayList<Photo> list, File folder, String rename, Synchronizer sync) throws IOException, GoogleAuthException {
         // baseUrl is valid during 60 minutes, refresh them before download
+        list = refreshBaseUrl(list);
         new DownloadManager().download(list, folder, rename, sync);
+    }
+
+    ArrayList<Photo> refreshBaseUrl(ArrayList<Photo> photosToRefresh) throws IOException, GoogleAuthException {
+        ArrayList<String> idsToRefresh = IdFromPhoto(photosToRefresh);
+        ArrayList<Photo> refreshPhotos = getPhotoProvider().getPhotosFromIds(idsToRefresh);
+        return refreshPhotos;
+    }
+
+    private ArrayList<String> IdFromPhoto(ArrayList<Photo> photos) {
+        ArrayList<String> ids = new ArrayList<>();
+        for (Photo item :
+                photos) {
+            ids.add(item.getId());
+        }
+        return ids;
     }
 
     public void resetCache() {

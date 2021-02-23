@@ -104,7 +104,7 @@ public class SyncMethodTest {
     }
 
     @Test
-    public void throw_into_sync() throws IOException {
+    public void throw_into_sync() throws IOException, GoogleAuthException {
         //given
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 

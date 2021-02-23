@@ -7,18 +7,16 @@ import gnn.com.photos.model.Photo;
 
 class PhotoChooser {
 
-    // TODO coder renommage avec une approche fonctionnelle
-
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
         ArrayList<Photo> chosen = chooseOneList(remote, quantity);
         chooseFull(synchronizer, local, chosen, rename);
     }
 
-
     void chooseFull(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename) {
         synchronizer.setToDownload(firstMinusSecondList(remote, local));
         if (rename != null) {
             remote = (ArrayList<Photo>) remote.clone();
+            // TODO coder renommage avec une approche fonctionnelle
             Photo.renameList(remote, rename);
         }
         synchronizer.setToDelete(firstMinusSecondList(local, remote));
@@ -32,6 +30,7 @@ class PhotoChooser {
      */
     ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity) {
         ArrayList<Photo> result = new ArrayList<>();
+        // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {
             for (int i = 1; i <= quantity && i <= remoteLst.size(); i++) {
                 int choose = ThreadLocalRandom.current().nextInt(remoteLst.size());

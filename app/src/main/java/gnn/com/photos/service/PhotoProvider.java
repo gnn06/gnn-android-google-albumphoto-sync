@@ -1,9 +1,6 @@
 package gnn.com.photos.service;
 
-import android.util.Log;
-
 import com.google.android.gms.auth.GoogleAuthException;
-import com.google.api.client.util.ArrayMap;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.internal.InternalPhotosLibraryClient;
 import com.google.photos.library.v1.proto.BatchGetMediaItemsResponse;
@@ -13,16 +10,11 @@ import com.google.photos.types.proto.MediaItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.sync.Synchronizer;
 
-public abstract class PhotoProvider {
-
-    private static final String TAG = "PhotoProvider";
-
-    protected PhotosLibraryClient client;
+abstract class PhotoProvider {
 
     public PhotoProvider() {
     }
@@ -30,7 +22,7 @@ public abstract class PhotoProvider {
     /**
      * Retrieve remote album list
      */
-    public ArrayList<String> getAlbums() throws IOException, GoogleAuthException {
+    ArrayList<String> getAlbums() throws IOException, GoogleAuthException {
         ArrayList<String> albumNames = new ArrayList<>();
         InternalPhotosLibraryClient.ListAlbumsPagedResponse albums = getClient().listAlbums();
         for (Album album : albums.iterateAll()) {
@@ -39,7 +31,7 @@ public abstract class PhotoProvider {
         return albumNames;
     }
 
-    public ArrayList<Photo> getPhotosFromAlbum(String albumName, Synchronizer synchronizer) throws IOException, GoogleAuthException {
+    ArrayList<Photo> getPhotosFromAlbum(String albumName, Synchronizer synchronizer) throws IOException, GoogleAuthException {
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getClient().listAlbums();
         for (Album album : response.iterateAll()) {
             String title = album.getTitle();
@@ -73,15 +65,6 @@ public abstract class PhotoProvider {
         return result;
     }
 
-    public PhotosLibraryClient getClient() throws IOException, GoogleAuthException {
-        if (client != null) {
-            Log.d(TAG, "get photo library client from cache");
-            return client;
-        } else {
-            return getClientImpl();
-        }
-    }
-
-    abstract PhotosLibraryClient getClientImpl() throws IOException, GoogleAuthException;
+    abstract PhotosLibraryClient getClient() throws IOException, GoogleAuthException;
 
 }

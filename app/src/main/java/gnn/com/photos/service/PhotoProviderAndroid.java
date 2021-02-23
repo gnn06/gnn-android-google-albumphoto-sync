@@ -21,6 +21,8 @@ public class PhotoProviderAndroid extends PhotoProvider {
 
     private final Context activity;
 
+    private PhotosLibraryClient client;
+
     public PhotoProviderAndroid(Context activity) {
         super();
         this.activity = activity;
@@ -37,7 +39,7 @@ public class PhotoProviderAndroid extends PhotoProvider {
         }
     }
 
-    PhotosLibraryClient getClientImpl()
+    private PhotosLibraryClient getClientImpl()
             throws IOException, GoogleAuthException {
         /* Need an Id client OAuth in the google developer console of type android
          * Put the package and the fingerprint (gradle signingReport)

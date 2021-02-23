@@ -60,7 +60,7 @@ public abstract class PhotoProvider {
 
     ArrayList<Photo> getPhotosFromIds(ArrayList<String> ids) throws IOException, GoogleAuthException {
         ArrayList<Photo> result = null;
-        BatchGetMediaItemsResponse response = client.batchGetMediaItems(ids);
+        BatchGetMediaItemsResponse response = getClient().batchGetMediaItems(ids);
         for (MediaItemResult item : response.getMediaItemResultsList()) {
             // code == 3 if id does not exist
             if (item.getStatus().getCode() == 0) {

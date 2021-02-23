@@ -70,6 +70,7 @@ public abstract class PhotosRemoteService {
         return refreshPhotos;
     }
 
+    // // TODO: 23/02/21 extract into Photo package
     private ArrayList<String> IdFromPhoto(ArrayList<Photo> photos) {
         ArrayList<String> ids = new ArrayList<>();
         for (Photo item :

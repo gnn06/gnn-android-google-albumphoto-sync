@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class Photo implements Serializable {
 
+    private static final long serialVersionUID = 1234567L;
+
     /**
      * Remote Url don't contain extension ".jpg"
      */

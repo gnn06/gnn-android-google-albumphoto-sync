@@ -66,8 +66,7 @@ public abstract class PhotosRemoteService {
 
     ArrayList<Photo> refreshBaseUrl(ArrayList<Photo> photosToRefresh) throws IOException, GoogleAuthException {
         ArrayList<String> idsToRefresh = IdFromPhoto(photosToRefresh);
-        ArrayList<Photo> refreshPhotos = getPhotoProvider().getPhotosFromIds(idsToRefresh);
-        return refreshPhotos;
+        return getPhotoProvider().getPhotosFromIds(idsToRefresh);
     }
 
     // // TODO: 23/02/21 extract into Photo package

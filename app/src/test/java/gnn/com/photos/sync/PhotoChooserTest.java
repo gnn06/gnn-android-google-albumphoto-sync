@@ -96,7 +96,7 @@ public class PhotoChooserTest {
         ArrayList<Photo> expectedToDownload = new ArrayList<>();
         ArrayList<Photo> expectedToDelete = new ArrayList<>();
 
-        when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
+        when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -129,7 +129,7 @@ public class PhotoChooserTest {
 
         doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
-        when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
+        when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -160,7 +160,7 @@ public class PhotoChooserTest {
 
         doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
-        when(chooser.chooseOneList((ArrayList<Photo>) remote, 2)).thenReturn(choosen);
+        when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 

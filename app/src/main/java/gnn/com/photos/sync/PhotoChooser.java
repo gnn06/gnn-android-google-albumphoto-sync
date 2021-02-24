@@ -33,9 +33,12 @@ class PhotoChooser {
         ArrayList<Photo> result = new ArrayList<>();
         // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {
-            for (int i = 1; i <= quantity && i <= remoteLst.size(); i++) {
+            while (result.size() < quantity) {
                 int choose = randomiser.nextInt(remoteLst.size());
-                result.add(remoteLst.get(choose));
+                // if choose an already choosen element
+                if (!result.contains(remoteLst.get(choose))) {
+                    result.add(remoteLst.get(choose));
+                }
             }
         } else {
             result = remoteLst;

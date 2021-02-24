@@ -27,7 +27,8 @@ public class PhotoChooserRandomTest {
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1"), new Photo("url2","id2"), new Photo("url3","id3")));
         when(randomizer.nextInt(3))
                 .thenReturn(0)
-                .thenReturn(0);
+                .thenReturn(0)
+                .thenReturn(2);
         ArrayList<Photo> result = chooser.chooseOneList(photos, 2);
         assertEquals(2, result.size());
         assertNotEquals(result.get(0), result.get(1));

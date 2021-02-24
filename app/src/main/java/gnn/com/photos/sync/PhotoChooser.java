@@ -7,7 +7,8 @@ import gnn.com.photos.model.Photo;
 
 class PhotoChooser {
 
-    private final ThreadLocalRandom randomizer = ThreadLocalRandom.current();
+    // randomizer must not be final to be mocked by mockito
+    private ThreadLocalRandom randomiser = ThreadLocalRandom.current();
 
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
         ArrayList<Photo> chosen = chooseOneList(remote, quantity);
@@ -33,7 +34,7 @@ class PhotoChooser {
         // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {
             for (int i = 1; i <= quantity && i <= remoteLst.size(); i++) {
-                int choose = randomizer.nextInt(remoteLst.size());
+                int choose = randomiser.nextInt(remoteLst.size());
                 result.add(remoteLst.get(choose));
             }
         } else {

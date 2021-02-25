@@ -32,7 +32,39 @@ public class PhotoProviderTest {
     public void more_than_50() throws IOException, GoogleAuthException {
         // given
         ArrayList<String> ids = createIds(55);
+
+        final PhotosLibraryClient client = mock(PhotosLibraryClient.class);
+        PhotoProvider provider = new PhotoProvider() {
+            @Override
+            PhotosLibraryClient getClient() throws IOException, GoogleAuthException {
+                return client;
+            }
+        };
+
+        BatchGetMediaItemsResponse response = mock(BatchGetMediaItemsResponse.class);
+
+        when(client.batchGetMediaItems(any(List.class))).thenReturn(response);
+
         ArrayList<MediaItemResult> photos = createPhotos(55);
+        when(response.getMediaItemResultsList())
+                .thenReturn(photos.subList(0, 50))
+                .thenReturn(photos.subList(50, 55));
+
+        // when
+        ArrayList<Photo> actual = provider.getPhotosFromIds(ids);
+
+        // then
+        assertEquals(55, actual.size());
+        assertEquals("url1", actual.get(0).getUrl());
+        assertEquals("url50", actual.get(50-1).getUrl());
+        assertEquals("url55", actual.get(55-1).getUrl());
+    }
+
+    @Test
+    public void less_than_50() throws IOException, GoogleAuthException {
+        // given
+        ArrayList<String> ids = createIds(25);
+        ArrayList<MediaItemResult> photos = createPhotos(25);
 
         final PhotosLibraryClient client = mock(PhotosLibraryClient.class);
         PhotoProvider provider = new PhotoProvider() {
@@ -45,14 +77,15 @@ public class PhotoProviderTest {
         BatchGetMediaItemsResponse response = mock(BatchGetMediaItemsResponse.class);
         when(client.batchGetMediaItems(any(List.class))).thenReturn(response);
         when(response.getMediaItemResultsList())
-                .thenReturn(photos.subList(0, 50))
-                .thenReturn(photos.subList(50, 55));
+                .thenReturn(photos);
+
         // when
         ArrayList<Photo> actual = provider.getPhotosFromIds(ids);
+
         // then
-        assertEquals(55, actual.size());
+        assertEquals(25, actual.size());
         assertEquals("url1", actual.get(0).getUrl());
-        assertEquals("url55", actual.get(55-1).getUrl());
+        assertEquals("url25", actual.get(25-1).getUrl());
     }
 
     private ArrayList<String> createIds(int size) {

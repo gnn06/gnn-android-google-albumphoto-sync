@@ -51,11 +51,13 @@ abstract class PhotoProvider {
         return null;
     }
 
-    ArrayList<Photo> getPhotosFromIds(ArrayList<String> ids) throws IOException, GoogleAuthException {
+    ArrayList<Photo> getPhotosFromIds(List<String> ids) throws IOException, GoogleAuthException {
         ArrayList<Photo> result = new ArrayList<>();
-        for (int i = 0; i < ids.size(); i += 50) {
-            List<String> slice = ids.subList(i, i + 50 >= ids.size() ? ids.size() : i + 50);
-            BatchGetMediaItemsResponse response = getClient().batchGetMediaItems(slice);
+        if (ids.size() > 50) {
+            result.addAll(getPhotosFromIds(ids.subList(0, 50)));
+            result.addAll(getPhotosFromIds(ids.subList(50, ids.size())));
+        } else {
+            BatchGetMediaItemsResponse response = getClient().batchGetMediaItems(ids);
             for (MediaItemResult item : response.getMediaItemResultsList()) {
                 // code == 3 if id does not exist
                 if (item.getStatus().getCode() == 0) {

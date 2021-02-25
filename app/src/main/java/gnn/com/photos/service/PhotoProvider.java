@@ -10,6 +10,7 @@ import com.google.photos.types.proto.MediaItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import gnn.com.photos.model.Photo;
 import gnn.com.photos.sync.Synchronizer;
@@ -51,15 +52,15 @@ abstract class PhotoProvider {
     }
 
     ArrayList<Photo> getPhotosFromIds(ArrayList<String> ids) throws IOException, GoogleAuthException {
-        ArrayList<Photo> result = null;
-        BatchGetMediaItemsResponse response = getClient().batchGetMediaItems(ids);
-        for (MediaItemResult item : response.getMediaItemResultsList()) {
-            // code == 3 if id does not exist
-            if (item.getStatus().getCode() == 0) {
-                if (result == null) {
-                    result = new ArrayList<>();
+        ArrayList<Photo> result = new ArrayList<>();
+        for (int i = 0; i < ids.size(); i += 50) {
+            List<String> slice = ids.subList(i, i + 50 >= ids.size() ? ids.size() : i + 50);
+            BatchGetMediaItemsResponse response = getClient().batchGetMediaItems(slice);
+            for (MediaItemResult item : response.getMediaItemResultsList()) {
+                // code == 3 if id does not exist
+                if (item.getStatus().getCode() == 0) {
+                    result.add(new Photo(item.getMediaItem().getBaseUrl(), item.getMediaItem().getId()));
                 }
-                result.add(new Photo(item.getMediaItem().getBaseUrl(), item.getMediaItem().getId()));
             }
         }
         return result;

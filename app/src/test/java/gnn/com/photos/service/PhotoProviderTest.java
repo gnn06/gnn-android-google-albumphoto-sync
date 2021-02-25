@@ -9,18 +9,15 @@ import com.google.rpc.Status;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import gnn.com.photos.model.Photo;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,7 +33,7 @@ public class PhotoProviderTest {
         final PhotosLibraryClient client = mock(PhotosLibraryClient.class);
         PhotoProvider provider = new PhotoProvider() {
             @Override
-            PhotosLibraryClient getClient() throws IOException, GoogleAuthException {
+            PhotosLibraryClient getClient() {
                 return client;
             }
         };
@@ -69,7 +66,7 @@ public class PhotoProviderTest {
         final PhotosLibraryClient client = mock(PhotosLibraryClient.class);
         PhotoProvider provider = new PhotoProvider() {
             @Override
-            PhotosLibraryClient getClient() throws IOException, GoogleAuthException {
+            PhotosLibraryClient getClient() {
                 return client;
             }
         };

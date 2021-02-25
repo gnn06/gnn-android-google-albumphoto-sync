@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -20,12 +20,12 @@ public class PhotoChooserRandomTest {
     @InjectMocks PhotoChooser chooser;
 
     @Mock
-    ThreadLocalRandom randomizer;
+    ThreadLocalRandom randomiser;
 
     @Test
     public void choose_same_element_twice() {
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1"), new Photo("url2","id2"), new Photo("url3","id3")));
-        when(randomizer.nextInt(3))
+        when(randomiser.nextInt(3))
                 .thenReturn(0)
                 .thenReturn(0)
                 .thenReturn(2);

@@ -4,7 +4,7 @@ import com.google.android.gms.auth.GoogleAuthException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class ChooseTaskTest {
         // when
         chooseTask.doInBackground(null);
         // then
-        verify(synchroniser).syncAll(anyString(), (File) anyObject(), anyString());
+        verify(synchroniser).syncAll(anyString(), any(File.class), (String)isNull());
     }
 
     @Test
@@ -45,6 +45,6 @@ public class ChooseTaskTest {
         // when
         chooseTask.doInBackground(null);
         // then
-        verify(synchroniser).syncRandom(anyString(), (File) anyObject(), anyString(), anyInt());
+        verify(synchroniser).syncRandom(anyString(), any(File.class), (String)isNull(), anyInt());
     }
 }

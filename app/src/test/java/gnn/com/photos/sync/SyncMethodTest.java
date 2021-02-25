@@ -19,9 +19,16 @@ import gnn.com.photos.model.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class SyncMethodTest {
 
@@ -70,7 +77,7 @@ public class SyncMethodTest {
     public void sync_all() throws IOException, GoogleAuthException {
         SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
         // given remote photos that don't be local and local photo was dont't be remote
-        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
+        when(prs.getPhotos(Mockito.anyString(), any(Synchronizer.class))).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
@@ -86,7 +93,7 @@ public class SyncMethodTest {
     @Test
     public void sync_chooseOne() throws IOException, GoogleAuthException {
         // given remote photos that don't be local and local photo that don't be remote
-        when(prs.getPhotos(Mockito.anyString(), (Synchronizer) Mockito.anyObject())).thenReturn(remotePhotos);
+        when(prs.getPhotos(Mockito.anyString(), any(Synchronizer.class))).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
@@ -96,7 +103,7 @@ public class SyncMethodTest {
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
-        verify(prs).download(captor.capture(), (File) anyObject(), anyString(), (Synchronizer) anyObject());
+        verify(prs).download(captor.capture(), any(File.class), (String)isNull(), any(Synchronizer.class));
         assertEquals(1, captor.getValue().size());
 
         // and check delete all
@@ -108,7 +115,7 @@ public class SyncMethodTest {
         //given
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
-        doThrow(new IOException()).when(prs).download((ArrayList<Photo>)anyObject(), (File)anyObject(), anyString(), (Synchronizer)anyObject());
+        doThrow(new IOException()).when(prs).download(any(ArrayList.class), any(File.class), (String) isNull(), any(Synchronizer.class));
 
         // when
         try {
@@ -116,7 +123,7 @@ public class SyncMethodTest {
         } catch (IOException | GoogleAuthException ignored) {}
 
         // then assert that delete was not called
-        verify(pls, never()).delete((ArrayList<Photo>)anyObject(), (File)anyObject(), (Synchronizer)anyObject());
+        verify(pls, never()).delete(any(ArrayList.class), any(File.class), any(Synchronizer.class));
     }
 
     @Test

@@ -5,8 +5,7 @@ import android.content.ContextWrapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -23,9 +22,8 @@ public class PresenterMainTest {
     @Test
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
-        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PresenterMain presenter = spy(new PresenterMain(activity, activity));
-        Whitebox.setInternalState(presenter, "album", null);
+        presenter.setAlbum(null);
         IView view = spy(IView.class);
         presenter.onSyncClick();
         verify(view, Mockito.never()).alertNoAlbum();
@@ -36,13 +34,12 @@ public class PresenterMainTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PresenterMain presenter = spy(new PresenterMain(activity, activity));
-        Whitebox.setInternalState(presenter, "album", "test");
+        presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
         Mockito.when(authMock.hasWritePermission()).thenReturn(true);
         presenter.setAuth(authMock);
         presenter.onSyncClick();
-//        assertNull(null, Whitebox.getInternalState(presenter, "pendingRequirement"));
     }
 
     @Test
@@ -50,13 +47,12 @@ public class PresenterMainTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PresenterMain presenter = spy(new PresenterMain(activity, activity));
-        Whitebox.setInternalState(presenter, "album", "test");
+        presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
-        Mockito.when(authMock.hasWritePermission()).thenReturn(false);
         presenter.setAuth(authMock);
         presenter.onSyncClick();
-        assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
+        assertNotNull(presenter.getPendingRequirement());
     }
 
     @Test
@@ -66,19 +62,17 @@ public class PresenterMainTest {
         PresenterMain presenter = spy(new PresenterMain(activity, activity));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
-        Mockito.when(authMock.hasWritePermission()).thenReturn(false);
         presenter.setAuth(authMock);
 
         presenter.onShowAlbumList();
 
-        assertNotNull(Whitebox.getInternalState(presenter, "pendingRequirement"));
+        assertNotNull(presenter.getPendingRequirement());
     }
 
     @Test
     public void startRequirement () {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
-        when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PresenterMain presenter = new PresenterMain(view, view);
         Require require = Mockito.mock(Require.class);
 
@@ -87,7 +81,7 @@ public class PresenterMainTest {
 
         // then
         // verify that the require is stored and started
-        assertEquals(require, Whitebox.getInternalState(presenter, "pendingRequirement"));
+        assertEquals(require, presenter.getPendingRequirement());
         verify(require).exec();
 
     }
@@ -120,7 +114,7 @@ public class PresenterMainTest {
 
         // then have called update_UI and updateUI_lastSyncTime
         verify(view, times(1)).updateUI_User();
-        verify(view, times(1)).updateUI_lastSyncTime(anyString());
+        verify(view, times(1)).updateUI_lastSyncTime(null);
     }
 
     @Test

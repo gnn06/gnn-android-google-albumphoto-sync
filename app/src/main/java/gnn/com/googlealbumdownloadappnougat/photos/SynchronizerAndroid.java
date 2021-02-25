@@ -27,7 +27,7 @@ public class SynchronizerAndroid extends Synchronizer {
         return new PhotosRemoteServiceAndroid(activity, cacheFile, cacheMaxAge);
     }
 
-    protected void incCurrentDownload() {
+    public void incCurrentDownload() {
         super.incCurrentDownload();
         this.syncTask.publicPublish();
     }

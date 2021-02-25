@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.*;
 
@@ -81,7 +81,6 @@ public class CacheTest {
         when(file.exists()).thenReturn(true);
         when(file.lastModified()).thenReturn(System.currentTimeMillis() - (25 * 60 * 60 * 1000));
         Cache cache = spy(new Cache(file, 24 * 60 * 60 * 1000));
-        doReturn(null).when(cache).read();
 
         // when
         ArrayList<Photo> actual = cache.get();

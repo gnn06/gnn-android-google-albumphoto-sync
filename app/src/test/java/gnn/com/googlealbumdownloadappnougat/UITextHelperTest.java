@@ -3,8 +3,6 @@ package gnn.com.googlealbumdownloadappnougat;
 import android.content.res.Resources;
 
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.internal.util.reflection.Whitebox;
 
 import java.util.ArrayList;
 
@@ -12,14 +10,15 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.model.Photo;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UITextHelperTest {
 
     @Test
     public void getResultText_inProgress() {
-        SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
         UITextHelper UITextHelper = new UITextHelper(activity);
         SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null);
@@ -29,11 +28,14 @@ public class UITextHelperTest {
         toDownloadList.add(new Photo("sqd","34"));
         ArrayList<Photo> toDeleteList = new ArrayList<>();
         toDeleteList.add(new Photo("aze", "23"));
-        Whitebox.setInternalState(synchronizer, "toDownload", toDownloadList);
-        Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
-        Whitebox.setInternalState(synchronizer, "currentDownload", 2);
-        Whitebox.setInternalState(synchronizer, "currentDelete", 1);
-        Whitebox.setInternalState(synchronizer, "albumSize", 2);
+        synchronizer.setToDownload(toDownloadList);
+        synchronizer.setToDelete(toDeleteList);
+        synchronizer.setSyncTask(mock(SyncTask.class));
+        synchronizer.incCurrentDownload();
+        synchronizer.incCurrentDownload();
+        synchronizer.incCurrentDelete();
+        synchronizer.incAlbumSize();
+        synchronizer.incAlbumSize();
 
         String resultText = UITextHelper.getDetailResultText(synchronizer, false);
 
@@ -42,7 +44,6 @@ public class UITextHelperTest {
 
     @Test
     public void getResultText_finish() {
-        SyncTask syncTaskSpy = Mockito.mock(SyncTask.class);
         MainActivity activity = new MainActivity();
         UITextHelper UITextHelper = new UITextHelper(activity);
         SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null);
@@ -52,11 +53,14 @@ public class UITextHelperTest {
         toDownloadList.add(new Photo("sqd","34"));
         ArrayList<Photo> toDeleteList = new ArrayList<>();
         toDeleteList.add(new Photo("aze", "23"));
-        Whitebox.setInternalState(synchronizer, "toDownload", toDownloadList);
-        Whitebox.setInternalState(synchronizer, "toDelete", toDeleteList);
-        Whitebox.setInternalState(synchronizer, "currentDownload", 2);
-        Whitebox.setInternalState(synchronizer, "currentDelete", 1);
-        Whitebox.setInternalState(synchronizer, "albumSize", 2);
+        synchronizer.setSyncTask(mock(SyncTask.class));
+        synchronizer.setToDownload(toDownloadList);
+        synchronizer.setToDelete(toDeleteList);
+        synchronizer.incCurrentDownload();
+        synchronizer.incCurrentDownload();
+        synchronizer.incCurrentDelete();
+        synchronizer.incAlbumSize();
+        synchronizer.incAlbumSize();
 
         String resultText = UITextHelper.getDetailResultText(synchronizer,true);
 

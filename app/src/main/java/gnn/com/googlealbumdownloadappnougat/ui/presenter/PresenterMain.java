@@ -306,6 +306,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         require.exec();
     }
 
+    Require getPendingRequirement() {
+        return this.pendingRequirement;
+    }
+
     @Override
     public void handlePermission(int result) {
         if (pendingRequirement != null) {

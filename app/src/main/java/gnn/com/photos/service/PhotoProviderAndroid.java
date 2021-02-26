@@ -28,9 +28,7 @@ public class PhotoProviderAndroid extends PhotoProvider {
         this.activity = activity;
     }
 
-    public PhotosLibraryClient getClient()
-            throws IOException, GoogleAuthException
-    {
+    public PhotosLibraryClient getClient() throws RemoteException {
         if (client != null) {
             Log.d(TAG, "get photo library client from cache");
             return client;
@@ -39,23 +37,26 @@ public class PhotoProviderAndroid extends PhotoProvider {
         }
     }
 
-    private PhotosLibraryClient getClientImpl()
-            throws IOException, GoogleAuthException {
+    private PhotosLibraryClient getClientImpl() throws RemoteException {
         /* Need an Id client OAuth in the google developer console of type android
          * Put the package and the fingerprint (gradle signingReport)
          */
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        assert account != null && account.getAccount() != null;
-        String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
-        OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
-                .setAccessToken(new AccessToken(token, null))
-                .build();
-        PhotosLibrarySettings settings =
-                PhotosLibrarySettings.newBuilder()
-                        .setCredentialsProvider(
-                                FixedCredentialsProvider.create(
-                                        userCredentials))
-                        .build();
-        return PhotosLibraryClient.initialize(settings);
+        try {
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+            assert account != null && account.getAccount() != null;
+            String token = GoogleAuthUtil.getToken(activity.getApplicationContext(), account.getAccount(), "oauth2:profile email");
+            OAuth2Credentials userCredentials = OAuth2Credentials.newBuilder()
+                    .setAccessToken(new AccessToken(token, null))
+                    .build();
+            PhotosLibrarySettings settings =
+                    PhotosLibrarySettings.newBuilder()
+                            .setCredentialsProvider(
+                                    FixedCredentialsProvider.create(
+                                            userCredentials))
+                            .build();
+            return PhotosLibraryClient.initialize(settings);
+        } catch (Exception ex) {
+            throw new RemoteException();
+        }
     }
 }

@@ -12,6 +12,7 @@ import java.io.IOException;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
+import gnn.com.photos.service.RemoteException;
 
 import static org.mockito.Mockito.*;
 
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
 public class ChooseTaskTest {
 
     @Test
-    public void syncAll() throws IOException, GoogleAuthException {
+    public void syncAll() throws IOException, RemoteException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
         IPresenterMain presenter = mock(PresenterMain.class);
         SyncTask chooseTask = new SyncTask(presenter, synchroniser);
@@ -34,7 +35,7 @@ public class ChooseTaskTest {
     }
 
     @Test
-    public void syncRandom() throws IOException, GoogleAuthException {
+    public void syncRandom() throws IOException, RemoteException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
         IPresenterMain presenter = mock(PresenterMain.class);
         SyncTask chooseTask = new SyncTask(presenter, synchroniser);

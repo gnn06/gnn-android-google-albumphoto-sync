@@ -30,11 +30,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    implementation project(path: ':lib-photos')
+    implementation ('com.google.photos.library:google-photos-library-client:1.2.0')
+
     // Google Play services Auth split
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     // Google Api Client library and Android extension
-
-    implementation ('com.google.photos.library:google-photos-library-client:1.2.0')
 
     // Dependency needed to avoid runtime exception when calling PhotosLibraryClient.initialize.
     // "No functional channel service provider found. Try adding a dependency on the grpc-okhttp, grpc-netty, or grpc-netty-shaded artifact"
@@ -43,8 +44,6 @@ dependencies {
     implementation 'io.grpc:grpc-stub:1.20.0'
     // needed by offline mode when running test
     implementation 'io.grpc:grpc-core:1.19.0'
-
-    implementation 'commons-io:commons-io:2.6'
 
     testImplementation 'junit:junit:4.12'
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.photos.service.PhotosRemoteService;
+import gnn.com.photos.service.RemoteException;
 
 public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>> {
 
@@ -24,7 +25,7 @@ public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>
         ArrayList<String> albumNames = null;
         try {
             albumNames = prs.getAlbums();
-        } catch (IOException | GoogleAuthException e) {
+        } catch (RemoteException e) {
             Log.e(TAG, e.toString());
             markAsError(e.toString());
         }

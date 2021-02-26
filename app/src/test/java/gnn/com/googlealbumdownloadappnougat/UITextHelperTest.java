@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
-import gnn.com.photos.model.Photo;
+import gnn.com.photos.Photo;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.anyInt;

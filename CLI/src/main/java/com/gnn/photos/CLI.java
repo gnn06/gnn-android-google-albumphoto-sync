@@ -13,8 +13,9 @@ public class CLI {
 //            File folder = new File(System.getProperty("java.io.tmpdir"), "google-sync");
             File destinationFolder = new File(System.getProperty("user.home"), "googlephotos-sync");
             File processFolder = new File(destinationFolder, "data");
+            File credentialFolder = new File(System.getProperty("user.home"), "credentials");
 
-            SynchronizerCLI synchronizer = new SynchronizerCLI(processFolder, 24*7, processFolder);
+            SynchronizerCLI synchronizer = new SynchronizerCLI(processFolder, 24*7, processFolder, credentialFolder);
             synchronizer.syncRandom("Wallpaper", destinationFolder, "wallpaper", 1);
 
         } catch (IOException | RemoteException e) {

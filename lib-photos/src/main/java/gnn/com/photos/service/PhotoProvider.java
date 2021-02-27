@@ -14,7 +14,7 @@ import java.util.List;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
 
-abstract class PhotoProvider {
+public abstract class PhotoProvider {
 
     public PhotoProvider() {
     }
@@ -67,6 +67,6 @@ abstract class PhotoProvider {
         return result;
     }
 
-    abstract PhotosLibraryClient getClient() throws RemoteException;
+    protected abstract PhotosLibraryClient getClient() throws RemoteException;
 
 }

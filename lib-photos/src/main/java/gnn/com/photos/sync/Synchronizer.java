@@ -20,7 +20,7 @@ public abstract class Synchronizer implements SyncData {
 
     protected final File cacheFile;
     protected final long cacheMaxAge;
-    private final File processFolder;
+    protected final File processFolder;
 
     public Synchronizer(File cacheFile, long cacheMaxAge, File processFolder) {
         this.cacheFile = cacheFile;

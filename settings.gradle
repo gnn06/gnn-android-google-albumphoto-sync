@@ -1,2 +1,3 @@
+include ':CLI'
 include ':lib-photos'
 include ':app'

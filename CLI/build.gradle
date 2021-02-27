@@ -1,5 +1,9 @@
 plugins {
-    id 'java'
+    id 'application'
+}
+
+application {
+    mainClass = 'com.gnn.photos.CLI'
 }
 
 version 'unspecified'
@@ -11,19 +15,18 @@ repositories {
 }
 
 dependencies {
-    compile 'com.google.photos.library:google-photos-library-client:1.1.0'
-    compile 'com.google.oauth-client:google-oauth-client-java6:1.23.0'
-    compile group: 'com.google.auth', name: 'google-auth-library-credentials', version: '0.9.1'
-    compile group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.9.1'
-    compile group: 'com.google.api', name: 'gax', version: '1.27.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
-    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
-    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.5.1'
-    compile 'io.grpc:grpc-netty:1.13.2'
-    compile 'io.netty:netty-tcnative-boringssl-static:2.0.8.Final'
+    implementation 'com.google.photos.library:google-photos-library-client:1.1.0'
+    implementation 'com.google.oauth-client:google-oauth-client-java6:1.23.0'
+    implementation group: 'com.google.auth', name: 'google-auth-library-credentials', version: '0.9.1'
+    implementation group: 'com.google.auth', name: 'google-auth-library-oauth2-http', version: '0.9.1'
+    implementation group: 'com.google.api', name: 'gax', version: '1.27.0'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
+    implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.5.1'
+    implementation 'io.grpc:grpc-netty:1.13.2'
+    implementation 'io.netty:netty-tcnative-boringssl-static:2.0.8.Final'
     // https://mvnrepository.com/artifact/commons-io/commons-io
-    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
     implementation project(path: ':lib-photos')
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

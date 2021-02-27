@@ -37,7 +37,7 @@ public class PhotoProviderCLI extends PhotoProvider {
                     "https://www.googleapis.com/auth/photoslibrary.appendonly");
 
     private static final java.io.File DATA_STORE_DIR =
-            new java.io.File(new File("CLI/src/main/resources").getAbsolutePath());
+            new java.io.File(new File("src/main/resources").getAbsolutePath());
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final int LOCAL_RECEIVER_PORT = 61984;
 
@@ -52,14 +52,14 @@ public class PhotoProviderCLI extends PhotoProvider {
                             .build();
             return PhotosLibraryClient.initialize(settings);
         } catch (IOException | GeneralSecurityException exception) {
-            throw new RemoteException();
+            throw new RemoteException(exception);
         }
     }
 
     private static Credentials getUserCredentials(String credentialsPath, List<String> selectedScopes)
             throws IOException, GeneralSecurityException {
         System.out.println(DATA_STORE_DIR);
-        File secret = new File(new File("CLI/src/main/resources").getAbsolutePath(), credentialsPath);
+        File secret = new File(new File("src/main/resources").getAbsolutePath(), credentialsPath);
         System.out.println("secret=" + secret.getAbsolutePath());
         GoogleClientSecrets clientSecrets =
                 GoogleClientSecrets.load(

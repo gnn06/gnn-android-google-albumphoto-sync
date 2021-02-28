@@ -35,7 +35,7 @@ public class PhotoProviderTest {
         final PhotosLibraryClient client = Mockito.mock(PhotosLibraryClient.class);
         PhotoProvider provider = new PhotoProvider() {
             @Override
-            PhotosLibraryClient getClient() {
+            protected PhotosLibraryClient getClient() throws RemoteException {
                 return client;
             }
         };
@@ -68,7 +68,7 @@ public class PhotoProviderTest {
         final PhotosLibraryClient client = Mockito.mock(PhotosLibraryClient.class);
         PhotoProvider provider = new PhotoProvider() {
             @Override
-            PhotosLibraryClient getClient() {
+            protected PhotosLibraryClient getClient() throws RemoteException {
                 return client;
             }
         };

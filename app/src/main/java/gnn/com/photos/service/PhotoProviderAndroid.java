@@ -56,7 +56,7 @@ public class PhotoProviderAndroid extends PhotoProvider {
                             .build();
             return PhotosLibraryClient.initialize(settings);
         } catch (Exception ex) {
-            throw new RemoteException();
+            throw new RemoteException(ex);
         }
     }
 }

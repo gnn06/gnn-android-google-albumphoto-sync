@@ -23,7 +23,7 @@ public class GetAlbumsTaskTest {
         PresenterMain presenter = Mockito.mock(PresenterMain.class);
         PhotosRemoteService prs = Mockito.mock(PhotosRemoteService.class);
 
-        when(prs.getAlbums()).thenThrow(new RemoteException());
+        when(prs.getAlbums()).thenThrow(new RemoteException(null));
 
         GetAlbumsTask task = Mockito.spy(new GetAlbumsTask(presenter, prs));
 

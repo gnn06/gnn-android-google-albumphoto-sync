@@ -29,7 +29,7 @@ public class SyncTaskTest {
         when(presenter.getAlbum()).thenReturn("album");
         when(((PresenterMain) presenter).getFolder()).thenReturn(file);
         when(presenter.getQuantity()).thenReturn(-1);
-        doThrow(new RemoteException()).when(sync).syncAll("album", file, null);
+        doThrow(new RemoteException(null)).when(sync).syncAll("album", file, null);
 
         SyncTask task = Mockito.spy(new SyncTask(presenter, sync));
 

@@ -52,7 +52,9 @@ public abstract class PhotoProvider {
 
     ArrayList<Photo> getPhotosFromIds(List<String> ids) throws RemoteException {
         ArrayList<Photo> result = new ArrayList<>();
-        if (ids.size() > 50) {
+        if (ids.size() == 0) {
+          return result;
+        } else if (ids.size() > 50) {
             result.addAll(getPhotosFromIds(ids.subList(0, 50)));
             result.addAll(getPhotosFromIds(ids.subList(50, ids.size())));
         } else {

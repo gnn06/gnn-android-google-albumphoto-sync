@@ -52,7 +52,7 @@ public abstract class Synchronizer implements SyncData {
     private int currentDelete;
     private ArrayList<Photo> toDownload;
     private ArrayList<Photo> toDelete;
-    protected int albumSize = 0;
+    private int albumSize = 0;
 
     /**
      * Main method.
@@ -98,7 +98,9 @@ public abstract class Synchronizer implements SyncData {
         this.currentDelete += 1;
     }
 
-    abstract public void incAlbumSize();
+    public void incAlbumSize()  {
+        this.currentDelete += 1;
+    };
 
     public void setToDownload(ArrayList<Photo> toDownload) {
         this.toDownload = toDownload;

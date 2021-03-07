@@ -9,6 +9,7 @@ import gnn.com.photos.sync.Synchronizer;
 
 public class SynchronizerAndroid extends Synchronizer {
 
+    // transmited to PhotoSRemoteService
     private final MainActivity activity;
 
     public SynchronizerAndroid(MainActivity activity, File cacheFile, long cacheMaxAge, File processFolder) {
@@ -16,6 +17,7 @@ public class SynchronizerAndroid extends Synchronizer {
         this.activity = activity;
     }
 
+    // to forward progression
     private SyncTask syncTask;
 
     public void setSyncTask(SyncTask syncTask) {
@@ -39,7 +41,7 @@ public class SynchronizerAndroid extends Synchronizer {
 
     @Override
     public void incAlbumSize() {
-        this.albumSize++;
+        super.incAlbumSize();
         this.syncTask.publicPublish();
     }
 

@@ -99,7 +99,7 @@ public abstract class Synchronizer implements SyncData {
     }
 
     public void incAlbumSize()  {
-        this.currentDelete += 1;
+        this.albumSize += 1;
     };
 
     public void setToDownload(ArrayList<Photo> toDownload) {

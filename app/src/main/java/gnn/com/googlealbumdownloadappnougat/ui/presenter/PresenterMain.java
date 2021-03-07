@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.ScheduleActivity;
+import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
@@ -254,7 +256,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         this.cacheMaxAge = cacheMaxAge;
     }
 
-    // --- sync ---
+    // --- Actions ---
 
     @Override
     public void onSyncClick() {
@@ -283,6 +285,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         getSync().resetCache();
     }
 
+    @Override
+    public void onButtonChoose() {
+        activity.startActivity(new Intent(activity, ScheduleActivity.class));
+    }
     // --- private methods ---
 
     private void taskWithPermissions(final SyncTask task) {

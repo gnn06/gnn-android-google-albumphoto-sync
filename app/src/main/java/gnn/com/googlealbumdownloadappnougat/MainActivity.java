@@ -76,6 +76,12 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
+        findViewById(R.id.ButtonSchedule).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onButtonChoose();
+            }
+        });
+
         presenter.init();
     }
 

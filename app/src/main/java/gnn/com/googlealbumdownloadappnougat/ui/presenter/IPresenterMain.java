@@ -57,4 +57,7 @@ public interface IPresenterMain {
     String getRename();
 
     void setRename(String rename);
+
+    void onButtonChoose();
 }
+

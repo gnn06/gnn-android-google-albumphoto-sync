@@ -16,7 +16,7 @@ public class CLI {
             File credentialFolder = new File(System.getProperty("user.home"), "credentials");
 
             SynchronizerCLI synchronizer = new SynchronizerCLI(processFolder, 24*7, processFolder, credentialFolder);
-            synchronizer.syncRandom("Wallpaper", destinationFolder, "wallpaper", 1);
+            synchronizer.syncRandom("Wallpaper", destinationFolder, "wallpaper", 10);
 
         } catch (IOException | RemoteException e) {
             e.printStackTrace();

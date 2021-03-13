@@ -23,10 +23,10 @@ public class EspressoTest {
     public ActivityTestRule<MainActivity> activityRule =
             new ActivityTestRule<>(MainActivity.class);
 
-    @Test
-    public void AlbumClick() {
-        onView(withId(R.id.SectionAlbum)).perform(click());
-    }
+//    @Test
+//    public void AlbumClick() {
+//        onView(withId(R.id.SectionAlbum)).perform(click());
+//    }
 
     @Test
     public void showError() throws Throwable {

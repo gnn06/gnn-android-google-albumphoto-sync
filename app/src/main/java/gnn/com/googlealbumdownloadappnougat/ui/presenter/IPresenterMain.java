@@ -58,6 +58,6 @@ public interface IPresenterMain {
 
     void setRename(String rename);
 
-    void onButtonChoose();
+    void onButtonSchedule();
 }
 

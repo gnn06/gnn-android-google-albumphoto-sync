@@ -286,8 +286,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void onButtonChoose() {
-        activity.startActivity(new Intent(activity, ScheduleActivity.class));
+    public void onButtonSchedule() {
+        Intent intent = new Intent(activity, ScheduleActivity.class);
+//        intent.putE
+        activity.startActivity(intent);
     }
     // --- private methods ---
 

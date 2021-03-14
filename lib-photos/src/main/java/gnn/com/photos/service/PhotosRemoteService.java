@@ -10,7 +10,7 @@ import gnn.com.photos.sync.Synchronizer;
 
 public abstract class PhotosRemoteService {
 
-    private static final gnn.com.photos.Log Log = new Log( Cache.class.getName() );
+    private static final Log Log = new Log( PhotosRemoteService.class.getName() );
 
     private static final String TAG = "PhotosRemoteService";
 

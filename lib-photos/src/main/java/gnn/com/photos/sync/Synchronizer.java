@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import gnn.com.photos.Log;
-import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosRemoteService;
@@ -16,7 +15,7 @@ import gnn.com.photos.service.RemoteException;
 
 public abstract class Synchronizer implements SyncData {
 
-    private static final gnn.com.photos.Log Log = new Log( Cache.class.getName() );
+    private static final gnn.com.photos.Log Log = new Log( Synchronizer.class.getName() );
 
     protected final File cacheFile;
     protected final long cacheMaxAge;

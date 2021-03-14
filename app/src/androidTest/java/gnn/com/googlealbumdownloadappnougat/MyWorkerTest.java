@@ -41,11 +41,19 @@ public class MyWorkerTest {
     public void doWork() throws IOException {
         File cache = temporaryFolder.newFolder();
         File process = temporaryFolder.newFolder();
+        File folder = temporaryFolder.newFolder();
         MyWorker worker = TestWorkerBuilder.from(context, MyWorker.class, executor)
                 .setInputData(
                         new Data.Builder()
                         .putString("cacheAbsolutePath", cache.getAbsolutePath())
+                        .putLong("cacheMaxAge", -1)
                         .putString("processAbsolutePath", process.getAbsolutePath())
+
+                        .putString("album", "album")
+                        .putString("folderPath", folder.getAbsolutePath())
+                        .putString("rename", null)
+                        .putInt("quantity", -1)
+
                         .build()
                 )
                 .build();

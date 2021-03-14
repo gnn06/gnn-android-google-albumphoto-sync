@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 
 import static org.junit.Assert.*;
 
-//@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class MyWorkerTest {
 
     private Context context;

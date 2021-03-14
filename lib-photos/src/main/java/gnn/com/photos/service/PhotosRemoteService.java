@@ -14,22 +14,16 @@ public abstract class PhotosRemoteService {
 
     private static final String TAG = "PhotosRemoteService";
 
-    /**
-     * As class var, cache is common between PhotosRemoteService instances.
-     */
-    private static Cache cache;
-
-    // Used to Unit test
-    static Cache getCache() {
-        return cache;
-    }
-
     public PhotosRemoteService() {
-        cache = new Cache(null, -1);
+
     }
 
     public PhotosRemoteService(File cacheFile, long cacheMaxAge) {
-        cache = new Cache(cacheFile, cacheMaxAge);
+        Cache.config(cacheFile, cacheMaxAge);
+    }
+
+    private Cache getCache() {
+        return Cache.getCache();
     }
 
     abstract public PhotoProvider getPhotoProvider();
@@ -42,10 +36,10 @@ public abstract class PhotosRemoteService {
     }
 
     public ArrayList<Photo> getPhotos(String album, Synchronizer synchronizer) throws IOException, RemoteException {
-        ArrayList<Photo> photos = PhotosRemoteService.cache.get();
+        ArrayList<Photo> photos = getCache().get();
         if (photos == null) {
             photos = getPhotoProvider().getPhotosFromAlbum(album, synchronizer);
-            PhotosRemoteService.cache.put(photos);
+            getCache().put(photos);
         } else {
             Log.i(PhotosRemoteService.TAG, "use cache");
         }
@@ -68,8 +62,6 @@ public abstract class PhotosRemoteService {
     }
 
     public void resetCache() {
-        if (cache != null) {
-            cache.reset();
-        }
+        getCache().reset();
     }
 }

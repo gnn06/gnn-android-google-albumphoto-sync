@@ -15,20 +15,27 @@ public class Cache {
 
     private static final Log Log = new Log( Cache.class.getName() );
 
-    private final File file;
-    private final long maxAge;
+    private static File file = null;
+    private static long maxAge = -1;
+
+    public static void config(File file, long maxAge) {
+        Cache.file = file;
+        Cache.maxAge = maxAge;
+    }
 
     private ArrayList<Photo> photos;
 
     /**
-     * @param file File to use to store and retrieve cache
-     *             Null if no cache
-     * @param maxAge cache period validity in milliseconds
-     *                        Useless if cache is null
+     * Singleton pattern
      */
-    public Cache(File file, long maxAge) {
-        this.file = file;
-        this.maxAge = maxAge;
+    private static Cache _cache;
+
+    // Used to Unit test
+    static Cache getCache() {
+        if (_cache == null) {
+            _cache = new Cache();
+        }
+        return _cache;
     }
 
     /**
@@ -40,7 +47,7 @@ public class Cache {
         ArrayList<Photo> photos;
         if (file != null && file.exists()) {
             long delay = System.currentTimeMillis() - file.lastModified();
-            if (delay < this.maxAge) {
+            if (delay < maxAge) {
                 // valid cache
                 photos = read();
                 Log.i("Cache", "use cache");
@@ -69,19 +76,21 @@ public class Cache {
     }
 
     ArrayList<Photo> read() throws IOException {
-        ObjectInputStream iis = new ObjectInputStream(new FileInputStream(file));
-        ArrayList<Photo> result = null;
-        try {
-            result = (ArrayList<Photo>) iis.readObject();
-        } catch (ClassNotFoundException e) {
-            Log.e("Cach", "can't deserialize");
-        }
-        return result;
+        if (file != null) {
+            ObjectInputStream iis = new ObjectInputStream(new FileInputStream(file));
+            ArrayList<Photo> result = null;
+            try {
+                result = (ArrayList<Photo>) iis.readObject();
+            } catch (ClassNotFoundException e) {
+                Log.e("Cach", "can't deserialize");
+            }
+            return result;
+        } else return null;
     }
 
     public void reset() {
         this.photos = null;
-        if (this.file != null) {
+        if (file != null) {
             file.delete();
         }
     }

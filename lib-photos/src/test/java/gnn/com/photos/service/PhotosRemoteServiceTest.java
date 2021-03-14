@@ -28,6 +28,9 @@ public class PhotosRemoteServiceTest {
         synchronizer = Mockito.mock(Synchronizer.class);
         photoProvider = Mockito.mock(PhotoProvider.class);
         photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
+
+        Cache.config(null, -1);
+        Cache.getCache().reset();
     }
 
     @Test
@@ -40,13 +43,14 @@ public class PhotosRemoteServiceTest {
             }
         };
         Mockito.when(photoProvider.getPhotosFromAlbum("album", synchronizer)).thenReturn(photos);
+        Cache.getCache().reset();
 
         // when call remotePhotos
         ArrayList<Photo> result = service.getPhotos("album", synchronizer);
 
         // then check that obtains an answer and put result into cache
         Assert.assertEquals(photos, result);
-        assertEquals(photos, PhotosRemoteService.getCache().get());
+        assertEquals(photos, Cache.getCache().get());
     }
 
     @Test
@@ -59,7 +63,7 @@ public class PhotosRemoteServiceTest {
             }
         });
         ArrayList<Photo> photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
-        PhotosRemoteService.getCache().put(photos);
+        Cache.getCache().put(photos);
 
         // when call remotePhotos
         ArrayList<Photo> result = service.getPhotos("album", synchronizer);

@@ -1,6 +1,7 @@
 package gnn.com.photos.service;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,10 +21,15 @@ import gnn.com.photos.Photo;
 @RunWith(MockitoJUnitRunner.class)
 public class CacheTest {
 
+    @Before
+    public void before() {
+        Cache.getCache().reset();
+    }
+
     @Test
     public void test_empty_no_persistence() throws IOException {
         // given an empty cache
-        Cache cache = new Cache(null, -1);
+        Cache cache = Cache.getCache();
         // when get cache
         Object result = cache.get();
         // then, check that get an answer
@@ -33,7 +39,8 @@ public class CacheTest {
     @Test
     public void test_notEmpty_no_persistence() throws IOException {
         // given an not empty cache
-        Cache cache = new Cache(null, 24 * 60 * 60 * 1000);
+        Cache.config(null, 24 * 60 * 60 * 1000);
+        Cache cache = Cache.getCache();
         ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));
@@ -47,7 +54,8 @@ public class CacheTest {
     @Test
     public void test_put_noPersistence() throws IOException {
         // given empty cache
-        Cache cache = new Cache(null, 24 * 60 * 60 * 1000);
+        Cache.config(null, 24 * 60 * 60 * 1000);
+        Cache cache = Cache.getCache();
         Assert.assertNull(cache.get());
         // when
         ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
@@ -62,7 +70,8 @@ public class CacheTest {
     public void test_put_persistent() throws IOException {
         // given empty cache
         File file = Mockito.mock(File.class);
-        Cache cache = Mockito.spy(new Cache(file, 24 * 60 * 60 * 1000));
+        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache cache = Mockito.spy(Cache.getCache());
         Mockito.doNothing().when(cache).write();
         Assert.assertNull(cache.get());
         // when
@@ -82,7 +91,8 @@ public class CacheTest {
         File file = Mockito.mock(File.class);
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (25 * 60 * 60 * 1000));
-        Cache cache = Mockito.spy(new Cache(file, 24 * 60 * 60 * 1000));
+        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache cache = Mockito.spy(Cache.getCache());
 
         // when
         ArrayList<Photo> actual = cache.get();
@@ -100,7 +110,8 @@ public class CacheTest {
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (60 * 1000));
 
-        Cache cache = Mockito.spy(new Cache(file, 24 * 60 * 60 * 1000));
+        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache cache = Mockito.spy(Cache.getCache());
         ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
         ));

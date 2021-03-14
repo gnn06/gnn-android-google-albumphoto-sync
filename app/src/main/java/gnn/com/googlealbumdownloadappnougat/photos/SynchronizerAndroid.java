@@ -1,8 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
+import android.content.Context;
+
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
@@ -10,9 +11,9 @@ import gnn.com.photos.sync.Synchronizer;
 public class SynchronizerAndroid extends Synchronizer {
 
     // transmited to PhotoSRemoteService
-    private final MainActivity activity;
+    private final Context activity;
 
-    public SynchronizerAndroid(MainActivity activity, File cacheFile, long cacheMaxAge, File processFolder) {
+    public SynchronizerAndroid(Context activity, File cacheFile, long cacheMaxAge, File processFolder) {
         super(cacheFile, cacheMaxAge, processFolder);
         this.activity = activity;
     }

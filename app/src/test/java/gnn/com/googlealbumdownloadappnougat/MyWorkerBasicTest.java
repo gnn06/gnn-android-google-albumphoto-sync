@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.ContextWrapper;
 
 import androidx.work.Data;
+import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -22,6 +24,7 @@ import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -41,25 +44,6 @@ public class MyWorkerBasicTest {
     public TemporaryFolder tmpFolder = new TemporaryFolder();
 
     @Test
-    @Ignore
-    public void dummy() throws IOException {
-        MyWorker worker = mock(MyWorker.class);
-        when(worker.doWork()).thenCallRealMethod();
-//        Data data = new Data.Builder()
-//                .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())
-//                .putLong("cacheMaxAge", 24)
-//                .putString("processAbsolutePath", tmpFolder.newFolder().getAbsolutePath())
-//
-//                .putString("folderPath", tmpFolder.newFolder().getAbsolutePath())
-//
-//                .build();
-//        doReturn(data).when(worker).getInputData();
-//        when(worker.getInputData()).thenReturn(data);
-
-        worker.doWork();
-    }
-
-    @Test
     public void test() throws Exception {
         MyWorker myWorker = new MyWorker(context, parameters);
 
@@ -74,9 +58,11 @@ public class MyWorkerBasicTest {
         when(myWorker.getInputData()).thenReturn(data);
 
         SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
-
         PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
-        myWorker.doWork();
+
+        ListenableWorker.Result result = myWorker.doWork();
+
+        assertThat(result, is(ListenableWorker.Result.success()));
     }
 
 }

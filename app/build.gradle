@@ -61,8 +61,8 @@ dependencies {
     // needed to mock final class
     testImplementation 'org.mockito:mockito-inline:2.13.0'
 
-    def powermock_version = "1.7.0"
-    testImplementation "org.powermock:powermock-module-junit4-legacy:$powermock_version"
+    def powermock_version = "2.0.2"
+    testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
     testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
 
 

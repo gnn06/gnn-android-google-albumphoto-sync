@@ -15,10 +15,15 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.File;
+
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.service.RemoteException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
@@ -35,7 +40,7 @@ public class MyWorkerBasicTest {
     public TemporaryFolder tmpFolder = new TemporaryFolder();
 
     @Test
-    public void test() throws Exception {
+    public void test_success() throws Exception {
         MyWorker myWorker = new MyWorker(context, parameters);
 
         Data data = new Data.Builder()
@@ -54,6 +59,34 @@ public class MyWorkerBasicTest {
         ListenableWorker.Result result = myWorker.doWork();
 
         assertThat(result, is(ListenableWorker.Result.success()));
+    }
+
+    @Test
+    public void test_exception() throws Exception {
+        MyWorker myWorker = new MyWorker(context, parameters);
+
+        File destinationFolder = tmpFolder.newFolder();
+        Data data = new Data.Builder()
+                .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())
+                .putLong("cacheMaxAge", -1)
+                .putString("processAbsolutePath", tmpFolder.newFolder().getAbsolutePath())
+
+                .putString("album", "album")
+                .putString("folderPath", destinationFolder.getAbsolutePath())
+                .putString("rename", null)
+                .putInt("quantity", -1)
+
+                .build();
+        when(myWorker.getInputData()).thenReturn(data);
+
+        SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
+        doThrow(new RemoteException(null)).when(mock).syncRandom("album", destinationFolder, null, -1);
+        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
+
+
+        ListenableWorker.Result result = myWorker.doWork();
+
+        assertThat(result, is(ListenableWorker.Result.failure()));
     }
 
 }

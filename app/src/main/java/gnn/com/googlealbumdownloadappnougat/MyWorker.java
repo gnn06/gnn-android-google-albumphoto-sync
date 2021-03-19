@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -37,7 +36,7 @@ public class MyWorker extends Worker {
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = getSynchronizer(cacheFile, cacheMaxAge, processFolder, activity);
+        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
 
         String albumName = getInputData().getString("album");
         File destinationFolder = new File(getInputData().getString("folderPath"));
@@ -51,7 +50,4 @@ public class MyWorker extends Worker {
         }
     }
 
-    private SynchronizerAndroid getSynchronizer(File cacheFile, long cacheMaxAge, File processFolder, Context activity) {
-        return new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
-    }
 }

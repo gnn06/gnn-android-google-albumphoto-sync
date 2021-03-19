@@ -20,9 +20,6 @@ public class MyWorker extends Worker {
         super(context, workerParams);
     }
 
-    // impossible d'injcter un synchronizer via le constructeur car on ne contrôle
-    // pas l'appel du contructeur ; utiliser inputData
-
     @NonNull
     @Override
     public Result doWork() {

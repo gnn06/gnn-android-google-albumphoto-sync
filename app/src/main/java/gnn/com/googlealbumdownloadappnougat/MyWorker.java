@@ -16,9 +16,6 @@ import gnn.com.photos.sync.Synchronizer;
 
 public class MyWorker extends Worker {
 
-    // given from Presenter
-    private final SynchronizerAndroid synchronizer =  null;
-
     public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }

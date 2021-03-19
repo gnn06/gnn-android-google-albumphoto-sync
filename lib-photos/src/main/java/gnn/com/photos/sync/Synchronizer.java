@@ -56,8 +56,8 @@ public abstract class Synchronizer implements SyncData {
     /**
      * Main method.
      * Synchronize local folder with given album name.
-     * Retrieve photo list from Google, retrieve already donwloaded photo from local folder
-     * Determine new photo to download and photo to be deleled.
+     * Retrieve photo list from Google, retrieve already downloaded photo from local folder
+     * Determine new photo to download and photo to be deleted.
      */
     // TODO: 07/05/2019 managed updated photo if possible
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
@@ -99,7 +99,7 @@ public abstract class Synchronizer implements SyncData {
 
     public void incAlbumSize()  {
         this.albumSize += 1;
-    };
+    }
 
     public void setToDownload(ArrayList<Photo> toDownload) {
         this.toDownload = toDownload;

@@ -41,6 +41,7 @@ public class MyWorkerBasicTest {
     private MyWorker UT_myWorker;
     private File destinationFolder;
     private Data data;
+    private SynchronizerAndroid synchronizerMock;
 
     @Before
     public void setUp() throws Exception {
@@ -61,12 +62,12 @@ public class MyWorkerBasicTest {
         // use powerMockito to mock private getFilename method
         // and use doReturn to avoid null pointer exception caused by when-thenReturn
         PowerMockito.doReturn(tmpFolder.newFile().getAbsolutePath()).when(UT_myWorker, "getFilename");
+        synchronizerMock = PowerMockito.mock(SynchronizerAndroid.class);
     }
 
     @Test
     public void test_success() throws Exception {
-        SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
-        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
+        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();
@@ -76,9 +77,8 @@ public class MyWorkerBasicTest {
 
     @Test
     public void test_exception() throws Exception {
-        SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
-        doThrow(new RemoteException(null)).when(mock).syncRandom("album", destinationFolder, null, -1);
-        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
+        doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom("album", destinationFolder, null, -1);
+        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();

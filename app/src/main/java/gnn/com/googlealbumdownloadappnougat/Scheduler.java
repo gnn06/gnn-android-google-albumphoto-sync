@@ -28,6 +28,9 @@ public class Scheduler {
         this.context = context;
     }
 
+    // TODO: 19/03/21 comment récupérer le statut d'un uniquePeriodic
+    // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
+
     void schedule() {
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
                 .build();

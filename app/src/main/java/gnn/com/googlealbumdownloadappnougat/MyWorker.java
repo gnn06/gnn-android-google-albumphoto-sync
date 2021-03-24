@@ -52,7 +52,7 @@ public class MyWorker extends Worker {
     }
 
     private String getFilename() {
-        return getApplicationContext().getFilesDir().getAbsolutePath() + LOG_FILENAME;
+        return getApplicationContext().getFilesDir().getAbsolutePath();
     }
 
 }

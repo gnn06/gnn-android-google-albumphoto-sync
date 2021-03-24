@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class Scheduler {
 
     private static final String TAG = "Scheduler";
+    public static final String WORK_NAME = "mywork";
 
     private final Context context;
 
@@ -32,10 +33,21 @@ public class Scheduler {
     // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
 
     void schedule() {
+        // TODO rajouter les paramétres
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
                 .build();
         WorkManager.getInstance(context.getApplicationContext())
-                .enqueueUniquePeriodicWork("mywork", ExistingPeriodicWorkPolicy.KEEP, work);
+            .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
+    }
+
+    void cancel() {
+        WorkManager.getInstance(context.getApplicationContext())
+            .cancelUniqueWork(WORK_NAME);
+    }
+
+    void getState() {
+        WorkManager.getInstance(context.getApplicationContext())
+                .getWorkInfosForUniqueWork(WORK_NAME);
     }
 
     void dumpWorker() {

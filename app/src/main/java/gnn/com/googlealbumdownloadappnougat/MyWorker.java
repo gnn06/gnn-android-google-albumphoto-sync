@@ -18,7 +18,6 @@ import gnn.com.photos.sync.Synchronizer;
 public class MyWorker extends Worker {
 
     private final static String TAG = "MyWorker";
-    private final static String LOG_FILENAME = "MyWorker";
 
     public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);

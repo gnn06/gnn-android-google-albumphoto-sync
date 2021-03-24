@@ -9,10 +9,7 @@ import androidx.work.WorkerParameters;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
@@ -30,6 +27,7 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        WorkerLogger logger = new WorkerLogger(getFilename());
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
         long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
@@ -43,38 +41,14 @@ public class MyWorker extends Worker {
         int quantity = getInputData().getInt("quantity", -1);
         try {
             synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
-            log(Level.INFO, "success");
+            logger.log(Level.INFO, "success");
             Log.i(TAG, "success");
             return Result.success();
         } catch (IOException | RemoteException e) {
-            log(Level.SEVERE, e.toString());
+            logger.log(Level.SEVERE, e.toString());
             Log.e(TAG, e.toString());
             return Result.failure();
         }
-    }
-
-    private void log(Level level, String message) {
-        Logger logger = getLogger();
-        if (logger != null) {
-            logger.log(level, message);
-        }
-    }
-
-    private Logger getLogger() {
-        Logger logger = Logger.getLogger(MyWorker.class.getName());
-        if (logger.getHandlers().length == 0) {
-            try {
-                FileHandler fileHandler = new FileHandler(getFilename(), true);
-                fileHandler.setFormatter(new SimpleFormatter());
-                // keep parent handler
-                logger.addHandler(fileHandler);
-                Log.i(TAG, "logger initialized");
-            } catch (Exception ex) {
-                Log.e(TAG, "can not get logger");
-                logger = null;
-            }
-        }
-        return logger;
     }
 
     private String getFilename() {

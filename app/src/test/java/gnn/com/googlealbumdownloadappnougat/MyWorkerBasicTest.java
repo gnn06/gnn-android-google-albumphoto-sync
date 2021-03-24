@@ -6,10 +6,13 @@ import androidx.work.Data;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -23,7 +26,9 @@ import gnn.com.photos.service.RemoteException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
@@ -41,7 +46,7 @@ public class MyWorkerBasicTest {
 
     @Test
     public void test_success() throws Exception {
-        MyWorker myWorker = new MyWorker(context, parameters);
+        MyWorker UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
 
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())
@@ -51,12 +56,17 @@ public class MyWorkerBasicTest {
                 .putString("folderPath", tmpFolder.newFolder().getAbsolutePath())
 
                 .build();
-        when(myWorker.getInputData()).thenReturn(data);
+        when(UT_myWorker.getInputData()).thenReturn(data);
 
         SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
         PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
 
-        ListenableWorker.Result result = myWorker.doWork();
+        // use powerMockito to mock private getFilename method
+        // and use doReturn to avoid null pointer exception caused by when-thenReturn
+        PowerMockito.doReturn(tmpFolder.newFile().getAbsolutePath()).when(UT_myWorker, "getFilename");
+
+        // when
+        ListenableWorker.Result result = UT_myWorker.doWork();
 
         assertThat(result, is(ListenableWorker.Result.success()));
     }

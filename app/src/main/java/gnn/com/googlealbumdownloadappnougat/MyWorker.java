@@ -10,6 +10,7 @@ import androidx.work.WorkerParameters;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -42,28 +43,36 @@ public class MyWorker extends Worker {
         int quantity = getInputData().getInt("quantity", -1);
         try {
             synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
-            getLogger().info("success");
+            log(Level.INFO, "success");
             Log.i(TAG, "success");
             return Result.success();
         } catch (IOException | RemoteException e) {
-            try {
-                getLogger().severe(e.toString());
-            } catch (IOException ioException) {
-                Log.e(TAG, "can not get logger");
-            }
+            log(Level.SEVERE, e.toString());
             Log.e(TAG, e.toString());
             return Result.failure();
         }
     }
 
-    private Logger getLogger() throws IOException {
+    private void log(Level level, String message) {
+        Logger logger = getLogger();
+        if (logger != null) {
+            logger.log(level, message);
+        }
+    }
+
+    private Logger getLogger() {
         Logger logger = Logger.getLogger(MyWorker.class.getName());
         if (logger.getHandlers().length == 0) {
-            FileHandler fileHandler = new FileHandler(getFilename(), true);
-            fileHandler.setFormatter(new SimpleFormatter());
-            // keep parent handler
-            logger.addHandler(fileHandler);
-            Log.i(TAG, "logger initialized");
+            try {
+                FileHandler fileHandler = new FileHandler(getFilename(), true);
+                fileHandler.setFormatter(new SimpleFormatter());
+                // keep parent handler
+                logger.addHandler(fileHandler);
+                Log.i(TAG, "logger initialized");
+            } catch (Exception ex) {
+                Log.e(TAG, "can not get logger");
+                logger = null;
+            }
         }
         return logger;
     }

@@ -73,7 +73,7 @@ public class MyWorkerBasicTest {
 
     @Test
     public void test_exception() throws Exception {
-        MyWorker myWorker = new MyWorker(context, parameters);
+        MyWorker UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
 
         File destinationFolder = tmpFolder.newFolder();
         Data data = new Data.Builder()
@@ -87,14 +87,16 @@ public class MyWorkerBasicTest {
                 .putInt("quantity", -1)
 
                 .build();
-        when(myWorker.getInputData()).thenReturn(data);
+        when(UT_myWorker.getInputData()).thenReturn(data);
 
         SynchronizerAndroid mock = PowerMockito.mock(SynchronizerAndroid.class);
         doThrow(new RemoteException(null)).when(mock).syncRandom("album", destinationFolder, null, -1);
         PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(mock);
 
+        PowerMockito.doReturn(tmpFolder.newFile().getAbsolutePath()).when(UT_myWorker, "getFilename");
 
-        ListenableWorker.Result result = myWorker.doWork();
+        // when
+        ListenableWorker.Result result = UT_myWorker.doWork();
 
         assertThat(result, is(ListenableWorker.Result.failure()));
     }

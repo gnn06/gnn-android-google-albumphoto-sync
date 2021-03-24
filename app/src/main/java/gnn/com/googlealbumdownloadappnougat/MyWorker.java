@@ -46,7 +46,12 @@ public class MyWorker extends Worker {
             Log.i(TAG, "success");
             return Result.success();
         } catch (IOException | RemoteException e) {
-            Log.e(TAG, e.getMessage());
+            try {
+                getLogger().severe(e.toString());
+            } catch (IOException ioException) {
+                Log.e(TAG, "can not get logger");
+            }
+            Log.e(TAG, e.toString());
             return Result.failure();
         }
     }

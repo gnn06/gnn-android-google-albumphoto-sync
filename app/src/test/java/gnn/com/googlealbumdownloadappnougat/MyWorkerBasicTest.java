@@ -6,6 +6,7 @@ import androidx.work.Data;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -37,11 +38,15 @@ public class MyWorkerBasicTest {
 
     @Rule
     public TemporaryFolder tmpFolder = new TemporaryFolder();
+    private MyWorker UT_myWorker;
+
+    @Before
+    public void setUp() throws Exception {
+        UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
+    }
 
     @Test
     public void test_success() throws Exception {
-        MyWorker UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
-
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())
                 .putLong("cacheMaxAge", -1)
@@ -67,8 +72,6 @@ public class MyWorkerBasicTest {
 
     @Test
     public void test_exception() throws Exception {
-        MyWorker UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
-
         File destinationFolder = tmpFolder.newFolder();
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())

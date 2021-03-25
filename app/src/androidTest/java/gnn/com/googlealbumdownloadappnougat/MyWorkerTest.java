@@ -34,6 +34,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -61,8 +62,6 @@ public class MyWorkerTest {
                         .build();
         WorkManager workManager = WorkManager.getInstance(context);
         ListenableFuture<List<WorkInfo>> info = workManager.getWorkInfosForUniqueWork("MyWorker");
-//        workManager.enqueue(request).getResult().get();
-//        WorkInfo workInfo = workManager.getWorkInfoById(request.getId()).get();
-        System.out.println(info.isDone());
+        assertThat(info.get().size(), is(0));
     }
 }

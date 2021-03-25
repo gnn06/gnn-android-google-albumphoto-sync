@@ -9,8 +9,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.work.Configuration;
 import androidx.work.Data;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.ListenableWorker;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.testing.SynchronousExecutor;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -57,11 +60,21 @@ public class MyWorkerTest {
 
     @Test
     public void test() throws ExecutionException, InterruptedException {
-        OneTimeWorkRequest request =
-                new OneTimeWorkRequest.Builder(MyWorker.class)
-                        .build();
+        PeriodicWorkRequest request =
+                new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
+                .build();
         WorkManager workManager = WorkManager.getInstance(context);
         ListenableFuture<List<WorkInfo>> info = workManager.getWorkInfosForUniqueWork("MyWorker");
         assertThat(info.get().size(), is(0));
+        workManager.enqueueUniquePeriodicWork("MyWorker",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                request);
+        info = workManager.getWorkInfosForUniqueWork("MyWorker");
+        assertThat(info.get().size(), is(1));
+        workManager.enqueueUniquePeriodicWork("MyWorker",
+                ExistingPeriodicWorkPolicy.REPLACE,
+                request);
+        info = workManager.getWorkInfosForUniqueWork("MyWorker");
+        assertThat(info.get().size(), is(1));
     }
 }

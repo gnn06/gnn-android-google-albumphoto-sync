@@ -73,7 +73,7 @@ public class MyWorkerTest {
     }
 
     @Test
-    public void test() throws ExecutionException, InterruptedException {
+    public void basicTest() throws ExecutionException, InterruptedException {
         // given an empty queue
         info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
         assertThat(info.get().size(), is(0));

@@ -54,6 +54,7 @@ public class MyWorkerTest {
     private ListenableFuture<List<WorkInfo>> info;
     private WorkManager workManager;
     private PeriodicWorkRequest request;
+    private Scheduler UT_scheduler;
 
     @Before
     public void setUp() {
@@ -69,6 +70,7 @@ public class MyWorkerTest {
         workManager = WorkManager.getInstance(context);
         request = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
         .build();
+        this.UT_scheduler = new Scheduler(context);
     }
 
     @Test
@@ -84,10 +86,10 @@ public class MyWorkerTest {
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
-        // and when replace work
-        workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                request);
+
+        // when
+        UT_scheduler.schedule();
+
         // then still one work
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
@@ -104,7 +106,7 @@ public class MyWorkerTest {
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
 
         // when cancel work
-        workManager.cancelUniqueWork(MY_WORKER);
+        UT_scheduler.cancel();
 
         // then
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);

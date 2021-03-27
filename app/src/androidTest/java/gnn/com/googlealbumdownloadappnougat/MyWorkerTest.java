@@ -40,10 +40,21 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
+/**
+ * not an real unit test
+ * just usefull understand and check of WorkManagerTestInitializer works
+ *
+ * in each test method, queue is empty
+ */
+
 @RunWith(AndroidJUnit4.class)
 public class MyWorkerTest {
 
+    public static final String MY_WORKER = "MyWorker";
     private  Context context;
+    private ListenableFuture<List<WorkInfo>> info;
+    private WorkManager workManager;
+    private PeriodicWorkRequest request;
 
     @Before
     public void setUp() {
@@ -56,25 +67,30 @@ public class MyWorkerTest {
         // Initialize WorkManager for instrumentation tests.
         WorkManagerTestInitHelper.initializeTestWorkManager(
                 context, config);
+        workManager = WorkManager.getInstance(context);
+        request = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
+        .build();
     }
 
     @Test
     public void test() throws ExecutionException, InterruptedException {
-        PeriodicWorkRequest request =
-                new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
-                .build();
-        WorkManager workManager = WorkManager.getInstance(context);
-        ListenableFuture<List<WorkInfo>> info = workManager.getWorkInfosForUniqueWork("MyWorker");
+        // given an empty queue
+        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
         assertThat(info.get().size(), is(0));
-        workManager.enqueueUniquePeriodicWork("MyWorker",
+        // when enqueue work
+        workManager.enqueueUniquePeriodicWork(MY_WORKER,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
-        info = workManager.getWorkInfosForUniqueWork("MyWorker");
+        // then assert one work is enqueued
+        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
         assertThat(info.get().size(), is(1));
-        workManager.enqueueUniquePeriodicWork("MyWorker",
+        assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
+        // and when replace work
+        workManager.enqueueUniquePeriodicWork(MY_WORKER,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
-        info = workManager.getWorkInfosForUniqueWork("MyWorker");
+        // then still one work
+        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
         assertThat(info.get().size(), is(1));
     }
 }

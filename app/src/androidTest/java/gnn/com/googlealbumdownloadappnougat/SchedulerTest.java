@@ -97,6 +97,20 @@ public class SchedulerTest {
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.CANCELLED));
+    }
+
+    @Test
+    public void cancel_empty() throws ExecutionException, InterruptedException {
+        // given an enqueued work (state == enqueued)
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
+        assertThat(info.get().size(), is(0));
+
+        // when cancel work
+        UT_scheduler.cancel();
+
+        // then still empty queue
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
+        assertThat(info.get().size(), is(0));
 
     }
 }

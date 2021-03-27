@@ -93,4 +93,24 @@ public class MyWorkerTest {
         info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
         assertThat(info.get().size(), is(1));
     }
+
+    @Test
+    public void cancel() throws ExecutionException, InterruptedException {
+        // given an enqueued work (state == enqueued)
+        workManager.enqueueUniquePeriodicWork(MY_WORKER,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                request);
+        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        assertThat(info.get().size(), is(1));
+        assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
+
+        // when cancel work
+        workManager.cancelUniqueWork(MY_WORKER);
+
+        // then
+        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        assertThat(info.get().size(), is(1));
+        assertThat(info.get().get(0).getState(), is(WorkInfo.State.CANCELLED));
+
+    }
 }

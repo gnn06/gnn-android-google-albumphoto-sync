@@ -34,7 +34,7 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class MyWorkerTest {
+public class SchedulerTest {
 
     private ListenableFuture<List<WorkInfo>> info;
     private WorkManager workManager;
@@ -59,7 +59,7 @@ public class MyWorkerTest {
     }
 
     @Test
-    public void basicTest() throws ExecutionException, InterruptedException {
+    public void schedule() throws ExecutionException, InterruptedException {
         // given an empty queue
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));

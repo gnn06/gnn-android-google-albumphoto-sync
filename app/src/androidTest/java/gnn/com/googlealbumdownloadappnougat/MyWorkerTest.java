@@ -50,7 +50,6 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class MyWorkerTest {
 
-    public static final String MY_WORKER = "MyWorker";
     private  Context context;
     private ListenableFuture<List<WorkInfo>> info;
     private WorkManager workManager;
@@ -75,32 +74,32 @@ public class MyWorkerTest {
     @Test
     public void basicTest() throws ExecutionException, InterruptedException {
         // given an empty queue
-        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
         // when enqueue work
-        workManager.enqueueUniquePeriodicWork(MY_WORKER,
+        workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
         // then assert one work is enqueued
-        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
         // and when replace work
-        workManager.enqueueUniquePeriodicWork(MY_WORKER,
+        workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
         // then still one work
-        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
     }
 
     @Test
     public void cancel() throws ExecutionException, InterruptedException {
         // given an enqueued work (state == enqueued)
-        workManager.enqueueUniquePeriodicWork(MY_WORKER,
+        workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
-        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
 
@@ -108,7 +107,7 @@ public class MyWorkerTest {
         workManager.cancelUniqueWork(MY_WORKER);
 
         // then
-        info = workManager.getWorkInfosForUniqueWork(MY_WORKER);
+        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.CANCELLED));
 

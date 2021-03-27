@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class Scheduler {
 
     private static final String TAG = "Scheduler";
-    public static final String WORK_NAME = "mywork";
+    static final String WORK_NAME = "mywork";
 
     private final Context context;
 
@@ -36,7 +36,7 @@ public class Scheduler {
         // TODO rajouter les paramétres
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
                 .build();
-        WorkManager.getInstance(context.getApplicationContext())
+        WorkManager.getInstance(context)
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -26,6 +27,7 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        System.out.println("dowork");
         WorkerLogger logger = new WorkerLogger(getFilename());
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
         long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
@@ -42,7 +44,10 @@ public class MyWorker extends Worker {
             synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
             logger.log(Level.INFO, "success");
             Log.i(TAG, "success");
-            return Result.success();
+            Data outputData = new Data.Builder()
+                    .putString("toto", "This is output message")
+                    .build();
+            return Result.success(outputData);
         } catch (IOException | RemoteException e) {
             logger.log(Level.SEVERE, e.toString());
             Log.e(TAG, e.toString());

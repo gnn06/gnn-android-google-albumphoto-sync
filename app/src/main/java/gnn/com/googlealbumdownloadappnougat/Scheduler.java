@@ -45,9 +45,19 @@ public class Scheduler {
             .cancelUniqueWork(WORK_NAME);
     }
 
-    void getState() {
-        WorkManager.getInstance(context.getApplicationContext())
+    WorkInfo getState() {
+        ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
                 .getWorkInfosForUniqueWork(WORK_NAME);
+        try {
+            if (futureInfo.get().size() >= 1) {
+                WorkInfo info = futureInfo.get().get(0);
+                return info;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     void dumpWorker() {

@@ -17,13 +17,14 @@ public class WorkerResultStoreTest {
 
     @Test
     public void store_with_empty() throws IOException {
-        WorkInfo info = new WorkInfo(
-                new UUID(123, 456),
-                WorkInfo.State.ENQUEUED,
-                new Data.Builder().build(),
-                new ArrayList<String>(),
-                new Data.Builder().build(),
-                0);
-        store.store(info);
+//        WorkInfo info = new WorkInfo(
+//                new UUID(123, 456),
+//                WorkInfo.State.ENQUEUED,
+//                new Data.Builder().build(),
+//                new ArrayList<String>(),
+//                new Data.Builder().build(),
+//                0);
+        store.store(WorkerResultStore.State.SUCCESS);
+        store.store(WorkerResultStore.State.FAILURE);
     }
 }

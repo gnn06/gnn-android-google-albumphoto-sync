@@ -16,7 +16,7 @@ class WorkerResultStore {
 
     public static final String FILE_NAME = "work.json";
 
-    void store(WorkInfo result) throws IOException {
+    void store(State result) throws IOException {
         Item item = convert(result);
         Item[] items1 = readItems();
         List<Item> items2;
@@ -47,15 +47,19 @@ class WorkerResultStore {
         writer.close();
     }
 
-    private Item convert(WorkInfo result) {
-        return new Item(result.getState());
+    private Item convert(State result) {
+        return new Item(result);
+    }
+
+    enum State {
+        SUCCESS, FAILURE
     }
 
     private class Item {
-        private final String state;
+        private final State state;
 
-        public Item(WorkInfo.State state) {
-            this.state = state.name();
+        public Item(State state) {
+            this.state = state;
         }
     }
 }

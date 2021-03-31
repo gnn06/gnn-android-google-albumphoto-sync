@@ -27,8 +27,8 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        System.out.println("dowork");
-        WorkerLogger logger = new WorkerLogger(getFilename());
+        WorkerResultStore store = new WorkerResultStore();
+
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
         long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
@@ -40,16 +40,18 @@ public class MyWorker extends Worker {
         File destinationFolder = new File(getInputData().getString("folderPath"));
         String rename = getInputData().getString("rename");
         int quantity = getInputData().getInt("quantity", -1);
+
         try {
             synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
-            logger.log(Level.INFO, "success");
+            store.store(WorkerResultStore.State.SUCCESS);
             Log.i(TAG, "success");
-            Data outputData = new Data.Builder()
-                    .putString("toto", "This is output message")
-                    .build();
-            return Result.success(outputData);
+            return Result.success();
         } catch (IOException | RemoteException e) {
-            logger.log(Level.SEVERE, e.toString());
+            try {
+                store.store(WorkerResultStore.State.FAILURE);
+            } catch (IOException ioException) {
+                Log.e(TAG, "can not store result");
+            }
             Log.e(TAG, e.toString());
             return Result.failure();
         }

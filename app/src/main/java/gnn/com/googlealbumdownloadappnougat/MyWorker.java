@@ -4,13 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
@@ -27,7 +25,7 @@ public class MyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        WorkerResultStore store = new WorkerResultStore();
+        WorkerResultStore store = new WorkerResultStore(getApplicationContext());
 
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
         long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
@@ -41,10 +39,13 @@ public class MyWorker extends Worker {
         String rename = getInputData().getString("rename");
         int quantity = getInputData().getInt("quantity", -1);
 
+        // Doc Periodic work is never successed, always enqueued
+
         try {
             synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
             store.store(WorkerResultStore.State.SUCCESS);
             Log.i(TAG, "success");
+            // Doc periodic outputData is always empty
             return Result.success();
         } catch (IOException | RemoteException e) {
             try {

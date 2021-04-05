@@ -24,6 +24,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +33,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -50,10 +53,11 @@ public class SchedulerTest {
     private Scheduler UT_scheduler;
     @Rule
     public TemporaryFolder tmpFolder = new TemporaryFolder();
+    private Context context;
 
     @Before
     public void setUp() throws IOException {
-        Context context = ApplicationProvider.getApplicationContext();
+        context = ApplicationProvider.getApplicationContext();
         Configuration config = new Configuration.Builder()
                 .setMinimumLoggingLevel(Log.DEBUG)
                 .setExecutor(new SynchronousExecutor())
@@ -80,29 +84,39 @@ public class SchedulerTest {
                 .setInputData(data)
                 .build();
         this.UT_scheduler = new Scheduler(context);
+        new File(context.getCacheDir().getAbsolutePath() + WorkerResultStore.FILE_NAME).delete();
     }
 
     @Test
-    @Ignore
-    public void schedule() throws ExecutionException, InterruptedException {
+//    @Ignore
+    public void schedule() throws ExecutionException, InterruptedException, FileNotFoundException {
+        // given a store
+        WorkerResultStore store = new WorkerResultStore(context);
+
         // given an empty queue
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
-        // when enqueue work
-        workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,
-                ExistingPeriodicWorkPolicy.REPLACE,
-                request);
-        // then assert one work is enqueued
-        info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
-        assertThat(info.get().size(), is(1));
-        assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
+
+        WorkerResultStore.Item[] items = store.readItems();
+        assertThat(items, is(nullValue()));
 
         // when
         UT_scheduler.schedule();
 
-        // then still one work
+        // inutile de testDrver.setPeroidDelay car en mode syncExecutor
+        // testDriver.setPeriodDelayMet(info.get().get(0).getId());
+
+        // then assert enqueued
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
+
+        // then assert work was created with input
+        assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
+
+        // can not assert inputData given, just check work store a Result
+        // assert store contains a result
+        items = store.readItems();
+        assertThat(items.length, is(1));
     }
 
     @Test
@@ -142,7 +156,7 @@ public class SchedulerTest {
     }
 
     @Test
-//    @Ignore
+    @Ignore
     public void getState() throws ExecutionException, InterruptedException {
         // given a finished work
         workManager.enqueueUniquePeriodicWork(Scheduler.WORK_NAME,

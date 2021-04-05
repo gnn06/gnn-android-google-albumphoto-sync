@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -10,11 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import androidx.work.WorkInfo;
 
 class WorkerResultStore {
 
     public static final String FILE_NAME = "work.json";
+
+    private final Context context;
+
+    WorkerResultStore(Context context) {
+        this.context = context;
+    }
 
     void store(State result) throws IOException {
         Item item = convert(result);
@@ -29,10 +36,10 @@ class WorkerResultStore {
         writeItems((Item[]) items2.toArray(new Item[items2.size()]));
     }
 
-    private Item[] readItems() throws FileNotFoundException {
+    Item[] readItems() throws FileNotFoundException {
         Gson gson = new Gson();
-        if (new File(FILE_NAME).exists()) {
-            FileReader reader = new FileReader(FILE_NAME);
+        if (new File(getFileStore()).exists()) {
+            FileReader reader = new FileReader(getFileStore());
             Item[] items = gson.fromJson(reader, Item[].class);
             return items;
         } else {
@@ -42,7 +49,7 @@ class WorkerResultStore {
 
     private void writeItems(Item[] items) throws IOException {
         Gson gson = new Gson();
-        FileWriter writer = new FileWriter(FILE_NAME);
+        FileWriter writer = new FileWriter(getFileStore());
         gson.toJson(items, writer);
         writer.close();
     }
@@ -52,14 +59,17 @@ class WorkerResultStore {
     }
 
     enum State {
-        SUCCESS, FAILURE
+        SUCCESS, FAILURE;
     }
 
-    private class Item {
+    class Item {
         private final State state;
-
         public Item(State state) {
             this.state = state;
         }
+    }
+
+    private String getFileStore() {
+        return context.getCacheDir().getAbsoluteFile() + FILE_NAME;
     }
 }

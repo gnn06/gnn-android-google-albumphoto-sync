@@ -35,14 +35,14 @@ public class MyWorker extends Worker {
         Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
 
         String albumName = getInputData().getString("album");
-        File destinationFolder = new File(getInputData().getString("folderPath"));
+        String destinationFolder = getInputData().getString("folderPath");
         String rename = getInputData().getString("rename");
         int quantity = getInputData().getInt("quantity", -1);
 
         // Doc Periodic work is never successed, always enqueued
 
         try {
-            synchronizer.syncRandom(albumName, destinationFolder, rename, quantity);
+            synchronizer.syncRandom(albumName, new File(destinationFolder), rename, quantity);
             store.store(WorkerResultStore.State.SUCCESS);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty

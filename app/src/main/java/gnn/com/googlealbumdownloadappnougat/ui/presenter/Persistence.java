@@ -45,23 +45,35 @@ public class Persistence {
      */
     public void restoreData(IPresenterMain presenter) {
         // Restore data
-        // default values are taken from presenter
-        // presenter.setXXX update TextViews
+        SyncData data = getData();
+        if (data.getAlbum() != null) {
+            presenter.setAlbum(data.getAlbum());
+        }
+        if (data.getFolderHuman() != null) {
+            presenter.setFolderHuman(data.getFolderHuman());
+        }
+        presenter.setQuantity(data.getQuantity());
+        presenter.setRename(data.getRename());
+    }
+
+    public SyncData getData() {
+        SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            String album = preferences.getString(PREF_ALBUM_KEY, presenter.getAlbum());
+            String album = preferences.getString(PREF_ALBUM_KEY, null);
             if (album != null) {
-                presenter.setAlbum(album);
+                data.setAlbum(album);
             }
-            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, presenter.getFolderHuman());
+            String folderHuman = preferences.getString(PREF_FOLDER_HUMAN_KEY, null);
             if (folderHuman != null) {
-                presenter.setFolderHuman(folderHuman);
+                data.setFolderHuman(folderHuman);
             }
             int quantity = preferences.getInt(PREF_QUANTITY_KEY, -1);
-            presenter.setQuantity(quantity);
+            data.setQuantity(quantity);
             String rename = preferences.getString(PREF_RENAME, null);
-            presenter.setRename(rename);
+            data.setRename(rename);
         }
+        return data;
     }
 
     public void saveSettings(IPresenterSettings presenter) {

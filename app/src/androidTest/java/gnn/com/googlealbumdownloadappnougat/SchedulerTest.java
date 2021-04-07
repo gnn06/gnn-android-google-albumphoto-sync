@@ -101,7 +101,7 @@ public class SchedulerTest {
         assertThat(items, is(nullValue()));
 
         // when
-        UT_scheduler.schedule();
+        UT_scheduler.schedule("album", "folder", null, -1, ApplicationContext.getInstance(context));
 
         // inutile de testDrver.setPeroidDelay car en mode syncExecutor
         // testDriver.setPeriodDelayMet(info.get().get(0).getId());

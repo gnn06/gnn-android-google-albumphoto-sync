@@ -3,6 +3,7 @@ package gnn.com.googlealbumdownloadappnougat;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
@@ -32,9 +33,19 @@ public class Scheduler {
     // TODO: 19/03/21 comment récupérer le statut d'un uniquePeriodic
     // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
 
-    void schedule() {
-        // TODO rajouter les paramétres
+    void schedule(String album, String destinationFolder, String rename, int quantity, ApplicationContext appContext) {
+        Data data = new Data.Builder()
+                .putString("cacheAbsolutePath", appContext.getCachePath())
+                .putString("processAbsolutePath", appContext.getProcessPath())
+                .putLong("cacheMaxAge", -1)
+                .putString("album", album)
+                .putString("folderPath", destinationFolder)
+                .putString("rename", rename)
+                .putInt("quantity", quantity)
+
+                .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
+                .setInputData(data)
                 .build();
         WorkManager.getInstance(context)
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);

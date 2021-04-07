@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
+
 public class ScheduleActivity extends AppCompatActivity {
 
     private static final String TAG = "ScheduleActivity";
@@ -18,7 +21,14 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     public void scheduleOnclick(View view) {
-        scheduler.schedule();
+        Scheduler sched = new Scheduler(this);
+        SyncData data = new Persistence(null).getData();
+        ApplicationContext appContext = ApplicationContext.getInstance(this);
+        sched.schedule(data.getAlbum(),
+                data.getFolderHuman(),
+                data.getRename(),
+                data.getQuantity(),
+                appContext);
     }
 
 }

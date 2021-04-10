@@ -7,6 +7,7 @@ import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,10 +25,16 @@ import gnn.com.photos.service.RemoteException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MyWorker.class)
+// Mock simplement avec mockito un Worker
+// N'utilise ni WorkManagerTestInitHelper ni TestWorkerBuilderl
+// ca a l'avantage de ne pas avoir à s'éxécuter dans le virtual device
+// ca permet surtout d'utiliser powermock pour mocker les private et les news
 public class MyWorkerBasicTest {
 
     @Mock
@@ -42,6 +49,8 @@ public class MyWorkerBasicTest {
     private File destinationFolder;
     private Data data;
     private SynchronizerAndroid synchronizerMock;
+    @Mock private WorkerResultStore workerStoreMock;
+
 
     @Before
     public void setUp() throws Exception {
@@ -67,16 +76,19 @@ public class MyWorkerBasicTest {
 
     @Test
     public void test_success() throws Exception {
+        PowerMockito.whenNew(WorkerResultStore.class).withAnyArguments().thenReturn(workerStoreMock);
         PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();
 
         assertThat(result, is(ListenableWorker.Result.success()));
+        verify(workerStoreMock, times(1)).store(WorkerResultStore.State.SUCCESS);
     }
 
     @Test
     public void test_exception() throws Exception {
+        PowerMockito.whenNew(WorkerResultStore.class).withAnyArguments().thenReturn(workerStoreMock);
         doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom("album", destinationFolder, null, -1);
         PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
 

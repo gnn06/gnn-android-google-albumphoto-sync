@@ -84,7 +84,7 @@ public class SchedulerTest {
 
                 .build();
 
-        request = new PeriodicWorkRequest.Builder(WorkerMock.class, 1, TimeUnit.HOURS)
+        request = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
         this.UT_scheduler = new Scheduler(context);
@@ -92,7 +92,6 @@ public class SchedulerTest {
     }
 
     @Test
-//    @Ignore
     public void schedule() throws ExecutionException, InterruptedException, FileNotFoundException {
         // given a store
         WorkerResultStore store = new WorkerResultStore(context);

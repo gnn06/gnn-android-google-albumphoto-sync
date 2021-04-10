@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 
@@ -7,7 +7,6 @@ import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -20,6 +19,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.service.MyWorker;
+import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
 import gnn.com.photos.service.RemoteException;
 
 import static org.hamcrest.CoreMatchers.is;

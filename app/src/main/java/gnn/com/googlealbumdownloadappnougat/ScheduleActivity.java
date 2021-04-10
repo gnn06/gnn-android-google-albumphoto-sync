@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import gnn.com.googlealbumdownloadappnougat.service.Scheduler;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 
@@ -17,7 +18,7 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-        scheduler.dumpWorker();
+        // TODO get last schedule state
     }
 
     public void scheduleOnclick(View view) {

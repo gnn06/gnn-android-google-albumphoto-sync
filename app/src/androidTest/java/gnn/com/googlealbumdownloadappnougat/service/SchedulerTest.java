@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 import android.util.Log;
@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;

@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 
@@ -6,20 +6,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import androidx.work.Data;
-import androidx.work.WorkInfo;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.UUID;
+
+import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
 
 @RunWith(PowerMockRunner.class)
 public class WorkerResultStoreTest {

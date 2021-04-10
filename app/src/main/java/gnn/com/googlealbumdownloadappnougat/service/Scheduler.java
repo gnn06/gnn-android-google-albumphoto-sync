@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
@@ -33,7 +35,7 @@ public class Scheduler {
     // TODO: 19/03/21 comment récupérer le statut d'un uniquePeriodic
     // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
 
-    void schedule(String album, String destinationFolder, String rename, int quantity, ApplicationContext appContext) {
+    public void schedule(String album, String destinationFolder, String rename, int quantity, ApplicationContext appContext) {
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())
@@ -75,13 +77,13 @@ public class Scheduler {
         try {
             // "e248680d-778f-41b8-9992-79da52fb8d83"
             WorkManager workManager = WorkManager.getInstance(context.getApplicationContext());
-            ListenableFuture<List<WorkInfo>> infos = workManager.getWorkInfosByTag("gnn.com.googlealbumdownloadappnougat.MyWorker");
+            ListenableFuture<List<WorkInfo>> infos = workManager.getWorkInfosByTag("gnn.com.googlealbumdownloadappnougat.service.MyWorker");
             Log.i(TAG, "getWorkInfosByTag.size= " + infos.get().size());
             for (Iterator<WorkInfo> it = infos.get().iterator(); it.hasNext(); ) {
                 WorkInfo info = it.next();
                 Log.i(TAG, String.valueOf(info.getState().isFinished()));
             }
-//            workManager.cancelAllWorkByTag("gnn.com.googlealbumdownloadappnougat.MyWorker");
+//            workManager.cancelAllWorkByTag("gnn.com.googlealbumdownloadappnougat.service.MyWorker");
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "onCreate: worker statut", e);
         }

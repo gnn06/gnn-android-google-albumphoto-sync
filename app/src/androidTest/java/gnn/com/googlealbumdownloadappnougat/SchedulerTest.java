@@ -44,6 +44,10 @@ import static org.junit.Assert.assertThat;
  */
 
 @RunWith(AndroidJUnit4.class)
+// Use WorkManagerTestInitHelper.
+// Problème difficile de mocker les service utilisé tel que Synchronizer
+// préférable de mocker simplement le Worker , cf MyWorkerBasicTest
+@Ignore
 public class SchedulerTest {
 
     private ListenableFuture<List<WorkInfo>> info;

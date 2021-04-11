@@ -11,6 +11,9 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
@@ -23,9 +26,10 @@ public class WorkerResultStoreTest {
 
     @Test
     public void store_with_empty() throws IOException {
-        Context mock = mock(Context.class);
-        when(mock.getCacheDir()).thenReturn(tmpFolder.newFile());
-        WorkerResultStore store = new WorkerResultStore(mock);
+        Context context = mock(Context.class);
+        File folder = tmpFolder.newFolder();
+        when(context.getFilesDir()).thenReturn(folder);
+        WorkerResultStore store = new WorkerResultStore(context);
 //        WorkInfo info = new WorkInfo(
 //                new UUID(123, 456),
 //                WorkInfo.State.ENQUEUED,
@@ -35,5 +39,11 @@ public class WorkerResultStoreTest {
 //                0);
         store.store(WorkerResultStore.State.SUCCESS);
         store.store(WorkerResultStore.State.FAILURE);
+
+        BufferedReader br = new BufferedReader(new FileReader(new File(folder, "work.json")));
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 }

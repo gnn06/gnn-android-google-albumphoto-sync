@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +41,7 @@ class WorkerResultStore {
         Gson gson = new Gson();
         if (new File(getFileStore()).exists()) {
             FileReader reader = new FileReader(getFileStore());
+            // TODO gère la récupération d'un fichier dans un ancien format
             Item[] items = gson.fromJson(reader, Item[].class);
             return items;
         } else {
@@ -64,8 +66,10 @@ class WorkerResultStore {
 
     class Item {
         private final State state;
+        private final String dateTime;
         public Item(State state) {
             this.state = state;
+            this.dateTime = LocalDateTime.now().toString();
         }
     }
 

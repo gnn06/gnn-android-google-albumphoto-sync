@@ -32,18 +32,19 @@ public class SynchronizerAndroid extends Synchronizer {
 
     public void incCurrentDownload() {
         super.incCurrentDownload();
-        this.syncTask.publicPublish();
+        if (this.syncTask != null) this.syncTask.publicPublish();
     }
 
     public void incCurrentDelete() {
         super.incCurrentDelete();
-        this.syncTask.publicPublish();
+        if (this.syncTask != null) this.syncTask.publicPublish();
     }
 
     @Override
     public void incAlbumSize() {
         super.incAlbumSize();
-        this.syncTask.publicPublish();
+        // when called from service, syncTask is null
+        if (this.syncTask != null) this.syncTask.publicPublish();
     }
 
 

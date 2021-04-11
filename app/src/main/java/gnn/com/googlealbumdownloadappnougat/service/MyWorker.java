@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -43,7 +43,7 @@ public class MyWorker extends Worker {
         // Doc Periodic work is never successed, always enqueued
 
         try {
-            synchronizer.syncRandom(albumName, new File(destinationFolder), rename, quantity);
+            synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
             store.store(WorkerResultStore.State.SUCCESS);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty
@@ -59,8 +59,8 @@ public class MyWorker extends Worker {
         }
     }
 
-    private String getFilename() {
-        return getApplicationContext().getFilesDir().getAbsolutePath();
+    private File getDestinationFolder(String album) {
+        return Environment.getExternalStoragePublicDirectory(album);
     }
 
 }

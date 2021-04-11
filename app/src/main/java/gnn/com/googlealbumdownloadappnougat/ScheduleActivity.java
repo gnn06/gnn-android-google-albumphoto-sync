@@ -23,7 +23,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void scheduleOnclick(View view) {
         Scheduler sched = new Scheduler(this);
-        SyncData data = new Persistence(null).getData();
+        SyncData data = new Persistence(this).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(this);
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),
@@ -32,4 +32,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 appContext);
     }
 
+    public void cancelOnclick(View view) {
+        Scheduler sched = new Scheduler(this);
+        sched.cancel();
+    }
 }

@@ -53,9 +53,10 @@ public class Scheduler {
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
-    void cancel() {
+    public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
             .cancelUniqueWork(WORK_NAME);
+        Log.i(TAG, "work canceled");
     }
 
     WorkInfo getState() {

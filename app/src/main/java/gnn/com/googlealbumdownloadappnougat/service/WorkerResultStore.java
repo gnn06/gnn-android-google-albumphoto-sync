@@ -70,6 +70,6 @@ class WorkerResultStore {
     }
 
     private String getFileStore() {
-        return context.getCacheDir().getAbsoluteFile() + FILE_NAME;
+        return context.getFilesDir().getAbsoluteFile() + "/" + FILE_NAME;
     }
 }

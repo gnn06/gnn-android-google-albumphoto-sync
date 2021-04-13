@@ -7,25 +7,27 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterSettings;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterSettings;
 
 public class SettingsActivity extends AppCompatActivity implements IPresenterSettings {
+
+    private IPresenterSettings presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Persistence persistence = new Persistence(this);
-        IPresenterSettings presenter = new PresenterSettings(this);
-        persistence.restoreSettings(presenter);
+        presenter = new PresenterSettings(this);
+        PersistenceSettings persistence = new PersistenceSettings(this);
+        persistence.restore(presenter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Persistence persistence = new Persistence(this);
-        persistence.saveSettings(this);
+        PersistenceSettings persistence = new PersistenceSettings(this);
+        persistence.save(presenter);
     }
 
     public long getCacheMaxAge() {

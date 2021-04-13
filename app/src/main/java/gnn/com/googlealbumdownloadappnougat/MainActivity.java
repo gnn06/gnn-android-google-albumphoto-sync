@@ -22,7 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
     private PresenterMain presenter;
-    private Persistence persistence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +48,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new PresenterMain(this, this);
 
-        this.persistence = new Persistence(this);
-        persistence.restoreData(presenter);
-        persistence.restoreSettings(presenter);
+        new PersistenceMain(this).restore(presenter);
+        new PersistenceSettings(this).restore(presenter);
 
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onPause() {
         super.onPause();
-        persistence.saveData(presenter);
+        new PersistenceMain(this).save(presenter);
         // not necessary to save settings as settings can not be changed in this activity
     }
 

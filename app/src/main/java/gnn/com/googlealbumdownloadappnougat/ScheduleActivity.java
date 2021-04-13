@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import gnn.com.googlealbumdownloadappnougat.service.Scheduler;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public void scheduleOnclick(View view) {
         Scheduler sched = new Scheduler(this);
-        SyncData data = new Persistence(this).getData();
+        SyncData data = new PersistenceMain(this).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(this);
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),

@@ -7,23 +7,22 @@ import android.preference.PreferenceManager;
 /**
  * Default values are taken from Presenter
  */
-public class Persistence {
+public class PersistenceMain {
 
     private static final String PREF_ALBUM_KEY = "album";
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
     private static final String PREF_QUANTITY_KEY = "quantity";
-    private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
     private static final String PREF_RENAME = "rename";
 
     private final Activity activity;
 
-    public Persistence(Activity activity) {
+    public PersistenceMain(Activity activity) {
         // Presenter is injected as methods parameter
         // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;
     }
 
-    public void saveData(IPresenterMain presenter) {
+    public void save(IPresenterMain presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -42,8 +41,9 @@ public class Persistence {
 
     /**
      * retrieves data from Preferences and inject into Presenter
+     * @param presenter
      */
-    public void restoreData(IPresenterMain presenter) {
+    public void restore(IPresenterMain presenter) {
         // Restore data
         SyncData data = getData();
         if (data.getAlbum() != null) {
@@ -76,18 +76,4 @@ public class Persistence {
         return data;
     }
 
-    public void saveSettings(IPresenterSettings presenter) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(PREF_CACHE_MAX_AGE, presenter.getCacheMaxAge());
-        editor.apply();
-    }
-
-    public void restoreSettings(IPresenterSettings presenter) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        if (preferences != null) {
-            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, PresenterSettings.DefaultCacheMaxAge);
-            presenter.setCacheMaxAge(cacheMaxAge);
-        }
-    }
 }

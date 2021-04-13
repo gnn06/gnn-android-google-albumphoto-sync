@@ -2,7 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ScheduleActivity;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Persistence;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 
 public class PresenterSchedule implements IPresenterSchedule, IPersistenceSchedule {
@@ -26,7 +26,7 @@ public class PresenterSchedule implements IPresenterSchedule, IPersistenceSchedu
     @Override
     public void onSchedule() {
         Scheduler sched = new Scheduler(activity);
-        SyncData data = new Persistence(activity).getData();
+        SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),
@@ -34,7 +34,6 @@ public class PresenterSchedule implements IPresenterSchedule, IPersistenceSchedu
                 data.getQuantity(),
                 24,
                 appContext);
-
     }
 
     @Override

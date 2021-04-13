@@ -10,6 +10,7 @@ public class PresenterSettings implements IPresenterSettings {
         this.view = view;
     }
 
+    @Override
     public long getCacheMaxAge() {
         return view.getCacheMaxAge();
     }

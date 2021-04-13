@@ -5,7 +5,7 @@ import gnn.com.googlealbumdownloadappnougat.ScheduleActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 
-public class PresenterSchedule implements IPresenterSchedule, IPersistenceSchedule {
+public class PresenterSchedule implements IPresenterSchedule {
 
     private static final String TAG = "Schedule";
 

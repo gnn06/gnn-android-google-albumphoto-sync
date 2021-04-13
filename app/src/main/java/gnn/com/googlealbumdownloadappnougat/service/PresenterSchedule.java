@@ -27,11 +27,12 @@ public class PresenterSchedule implements IPresenterSchedule {
         Scheduler sched = new Scheduler(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
+        int interval = view.getInterval();
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),
                 data.getRename(),
                 data.getQuantity(),
-                24,
+                interval,
                 appContext);
     }
 

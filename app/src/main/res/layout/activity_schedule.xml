@@ -9,15 +9,18 @@
     <EditText
         android:id="@+id/textInterval"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
 
     <Button
         android:id="@+id/schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onScheduleClick"
-        android:text="Button" />
-
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInterval" />
 
     <Button
         android:id="@+id/cancel"
@@ -26,5 +29,5 @@
         android:onClick="onCancelClick"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@+id/schedule"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textInterval" />
 </androidx.constraintlayout.widget.ConstraintLayout>

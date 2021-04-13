@@ -39,6 +39,12 @@ public class ScheduleActivity extends AppCompatActivity implements IScheduleView
     @Override
     public void setInterval(int interval) {
         TextView view = findViewById(R.id.textInterval);
-        view.setText(interval);
+        view.setText(Integer.toString(interval));
+    }
+
+    @Override
+    public int getInterval() {
+        TextView view = findViewById(R.id.textInterval);
+        return Integer.parseInt(view.getText().toString());
     }
 }

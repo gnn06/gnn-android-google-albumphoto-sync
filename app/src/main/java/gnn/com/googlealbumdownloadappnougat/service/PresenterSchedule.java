@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.ScheduleActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 

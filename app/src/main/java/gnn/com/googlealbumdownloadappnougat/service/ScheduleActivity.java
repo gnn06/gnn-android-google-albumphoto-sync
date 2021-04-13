@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.service;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.service.IScheduleView;
 import gnn.com.googlealbumdownloadappnougat.service.PresenterSchedule;
 import gnn.com.googlealbumdownloadappnougat.service.Scheduler;

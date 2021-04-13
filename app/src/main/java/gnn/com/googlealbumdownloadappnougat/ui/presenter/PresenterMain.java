@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.ScheduleActivity;
-import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
+import gnn.com.googlealbumdownloadappnougat.service.ScheduleActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;

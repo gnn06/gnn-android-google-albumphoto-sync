@@ -22,8 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.settings.SettingsActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceSettings;
+import gnn.com.googlealbumdownloadappnougat.settings.PersistenceSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;

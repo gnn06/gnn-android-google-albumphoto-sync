@@ -14,6 +14,7 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.service.ScheduleActivity;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
+import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;

@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterSettings;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceSettings;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterSettings;
+import gnn.com.googlealbumdownloadappnougat.R;
 
 public class SettingsActivity extends AppCompatActivity implements IPresenterSettings {
 

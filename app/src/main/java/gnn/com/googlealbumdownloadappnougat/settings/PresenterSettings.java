@@ -1,6 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.ui.presenter;
-
-import gnn.com.googlealbumdownloadappnougat.SettingsActivity;
+package gnn.com.googlealbumdownloadappnougat.settings;
 
 public class PresenterSettings implements IPresenterSettings {
 

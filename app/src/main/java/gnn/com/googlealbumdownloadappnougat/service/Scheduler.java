@@ -35,7 +35,7 @@ public class Scheduler {
     // TODO: 19/03/21 comment récupérer le statut d'un uniquePeriodic
     // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
 
-    public void schedule(String album, String destinationFolder, String rename, int quantity, ApplicationContext appContext) {
+    public void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())
@@ -46,7 +46,7 @@ public class Scheduler {
                 .putInt("quantity", quantity)
 
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, intervalHour, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

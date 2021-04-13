@@ -29,6 +29,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 data.getFolderHuman(),
                 data.getRename(),
                 data.getQuantity(),
+                24,
                 appContext);
     }
 

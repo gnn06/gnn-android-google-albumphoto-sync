@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "gnn.com.googlealbumdownloadappnougat"
-        minSdkVersion 28
+        minSdkVersion 27 // nova = android 8.1 = api 27
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

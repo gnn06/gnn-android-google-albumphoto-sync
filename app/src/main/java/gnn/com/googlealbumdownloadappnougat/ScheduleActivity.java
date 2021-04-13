@@ -4,37 +4,40 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import gnn.com.googlealbumdownloadappnougat.service.IScheduleView;
+import gnn.com.googlealbumdownloadappnougat.service.PresenterSchedule;
 import gnn.com.googlealbumdownloadappnougat.service.Scheduler;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends AppCompatActivity implements IScheduleView {
 
     private static final String TAG = "ScheduleActivity";
+
     private final Scheduler scheduler = new Scheduler(this);
+
+    private PresenterSchedule presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        presenter = new PresenterSchedule(this);
+        presenter.onInit();
         // TODO get last schedule state
     }
 
-    public void scheduleOnclick(View view) {
-        Scheduler sched = new Scheduler(this);
-        SyncData data = new PersistenceMain(this).getData();
-        ApplicationContext appContext = ApplicationContext.getInstance(this);
-        sched.schedule(data.getAlbum(),
-                data.getFolderHuman(),
-                data.getRename(),
-                data.getQuantity(),
-                24,
-                appContext);
+    public void onScheduleClick(View view) {
+        presenter.onSchedule();
     }
 
-    public void cancelOnclick(View view) {
-        Scheduler sched = new Scheduler(this);
-        sched.cancel();
+    public void onCancelClick(View view) {
+        presenter.cancel();
+    }
+
+    @Override
+    public void setInterval(int interval) {
+        TextView view = findViewById(R.id.textInterval);
+        view.setText(interval);
     }
 }

@@ -1,22 +1,16 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import gnn.com.googlealbumdownloadappnougat.R;
-import gnn.com.googlealbumdownloadappnougat.service.IScheduleView;
-import gnn.com.googlealbumdownloadappnougat.service.PresenterSchedule;
-import gnn.com.googlealbumdownloadappnougat.service.Scheduler;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 
 public class ActivitySchedule extends AppCompatActivity implements IScheduleView {
 
     private static final String TAG = "ScheduleActivity";
-
-    private final Scheduler scheduler = new Scheduler(this);
 
     private PresenterSchedule presenter;
 

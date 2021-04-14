@@ -44,13 +44,13 @@ public class MyWorker extends Worker {
 
         try {
             synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
-            store.store(WorkerResultStore.State.SUCCESS);
+            store.store(Item.State.SUCCESS);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty
             return Result.success();
         } catch (IOException | RemoteException e) {
             try {
-                store.store(WorkerResultStore.State.FAILURE);
+                store.store(Item.State.FAILURE);
             } catch (IOException ioException) {
                 Log.e(TAG, "can not store result");
             }

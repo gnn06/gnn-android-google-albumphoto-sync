@@ -19,8 +19,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.service.MyWorker;
-import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
 import gnn.com.photos.service.RemoteException;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -84,7 +82,7 @@ public class MyWorkerBasicTest {
         ListenableWorker.Result result = UT_myWorker.doWork();
 
         assertThat(result, is(ListenableWorker.Result.success()));
-        verify(workerStoreMock, times(1)).store(WorkerResultStore.State.SUCCESS);
+        verify(workerStoreMock, times(1)).store(Item.State.SUCCESS);
     }
 
     @Test

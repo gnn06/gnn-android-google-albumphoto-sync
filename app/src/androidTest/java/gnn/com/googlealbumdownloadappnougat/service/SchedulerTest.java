@@ -102,7 +102,7 @@ public class SchedulerTest {
         info = workManager.getWorkInfosForUniqueWork(Scheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
 
-        WorkerResultStore.Item[] items = store.readItems();
+        Item[] items = store.readItems();
         assertThat(items, is(nullValue()));
 
         // when

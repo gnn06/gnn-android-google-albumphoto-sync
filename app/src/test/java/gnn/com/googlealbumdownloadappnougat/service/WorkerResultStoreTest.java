@@ -2,8 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -18,9 +16,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-
-import gnn.com.googlealbumdownloadappnougat.service.WorkerResultStore;
 
 @RunWith(PowerMockRunner.class)
 public class WorkerResultStoreTest {
@@ -34,8 +29,8 @@ public class WorkerResultStoreTest {
         File folder = tmpFolder.newFolder();
         when(context.getFilesDir()).thenReturn(folder);
         WorkerResultStore store = new WorkerResultStore(context);
-        store.store(WorkerResultStore.State.SUCCESS);
-        store.store(WorkerResultStore.State.FAILURE);
+        store.store(Item.State.SUCCESS);
+        store.store(Item.State.FAILURE);
 
         dumpFile(folder.getAbsoluteFile() + "/work.json");
     }
@@ -60,6 +55,6 @@ public class WorkerResultStoreTest {
         when(context.getFilesDir()).thenReturn(folder);
 
         WorkerResultStore store = new WorkerResultStore(context);
-        store.store(WorkerResultStore.State.SUCCESS);
+        store.store(Item.State.SUCCESS);
     }
 }

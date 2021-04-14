@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.WorkInfo;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 
@@ -48,5 +49,15 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
     public int getInterval() {
         TextView view = findViewById(R.id.textInterval);
         return Integer.parseInt(view.getText().toString());
+    }
+
+    @Override
+    public void setState(WorkInfo state) {
+        TextView view = findViewById(R.id.info);
+        if (state != null) {
+            view.setText(state.toString());
+        } else {
+            view.setText("no worker");
+        }
     }
 }

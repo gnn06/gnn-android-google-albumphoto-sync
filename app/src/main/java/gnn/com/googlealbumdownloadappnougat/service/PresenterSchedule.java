@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
+import androidx.work.WorkInfo;
+
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
@@ -21,6 +23,8 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onInit() {
         new PersistenceSchedule(this.activity).restore(this);
+        WorkInfo info = new Scheduler(this.activity).getState();
+        view.setState(info);
     }
 
     @Override

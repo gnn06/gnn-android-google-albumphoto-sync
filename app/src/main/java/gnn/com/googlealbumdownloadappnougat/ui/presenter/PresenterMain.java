@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.service.ScheduleActivity;
+import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
@@ -287,7 +287,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onButtonSchedule() {
-        Intent intent = new Intent(activity, ScheduleActivity.class);
+        Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);
     }

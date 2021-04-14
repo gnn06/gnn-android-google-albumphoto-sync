@@ -10,8 +10,9 @@ import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.service.IScheduleView;
 import gnn.com.googlealbumdownloadappnougat.service.PresenterSchedule;
 import gnn.com.googlealbumdownloadappnougat.service.Scheduler;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 
-public class ScheduleActivity extends AppCompatActivity implements IScheduleView {
+public class ActivitySchedule extends AppCompatActivity implements IScheduleView {
 
     private static final String TAG = "ScheduleActivity";
 
@@ -26,6 +27,13 @@ public class ScheduleActivity extends AppCompatActivity implements IScheduleView
         presenter = new PresenterSchedule(this);
         presenter.onInit();
         // TODO get last schedule state
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        new PersistenceSchedule(this).save(presenter);
+        // not necessary to save settings as settings can not be changed in this activity
     }
 
     public void onScheduleClick(View view) {

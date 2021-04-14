@@ -26,7 +26,7 @@
             android:label="@string/settings"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".service.ScheduleActivity"
+        <activity android:name=".service.ActivitySchedule"
             android:parentActivityName=".MainActivity"/>
     </application>
 

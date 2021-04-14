@@ -7,11 +7,12 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 public class PresenterSchedule implements IPresenterSchedule {
 
     private static final String TAG = "Schedule";
+    public static int DefaultInterval = 24;
 
     private final IScheduleView view;
-    private final ScheduleActivity activity;
+    private final ActivitySchedule activity;
 
-    public PresenterSchedule(ScheduleActivity activity)
+    public PresenterSchedule(ActivitySchedule activity)
     {
         this.activity = activity;
         this.view = activity;
@@ -19,7 +20,7 @@ public class PresenterSchedule implements IPresenterSchedule {
 
     @Override
     public void onInit() {
-        view.setInterval(24);
+        new PersistenceSchedule(this.activity).restore(this);
     }
 
     @Override
@@ -40,6 +41,16 @@ public class PresenterSchedule implements IPresenterSchedule {
     public void cancel() {
         Scheduler sched = new Scheduler(activity);
         sched.cancel();
+    }
+
+    @Override
+    public int getInterval() {
+        return view.getInterval();
+    }
+
+    @Override
+    public void setInterval(int interval) {
+        view.setInterval(interval);
     }
 }
 

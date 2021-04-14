@@ -6,4 +6,8 @@ public interface IPresenterSchedule {
     void onSchedule();
 
     void cancel();
+
+    int getInterval();
+
+    void setInterval(int interval);
 }

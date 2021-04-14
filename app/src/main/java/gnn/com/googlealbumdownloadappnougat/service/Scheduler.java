@@ -32,7 +32,6 @@ public class Scheduler {
         this.context = context;
     }
 
-    // TODO: 19/03/21 comment récupérer le statut d'un uniquePeriodic
     // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
 
     public void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {

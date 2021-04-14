@@ -40,7 +40,6 @@ class WorkerResultStore {
         Gson gson = new Gson();
         if (new File(getFileStore()).exists()) {
             FileReader reader = new FileReader(getFileStore());
-            // TODO gère la récupération d'un fichier dans un ancien format
             Item[] items = gson.fromJson(reader, Item[].class);
             return items;
         } else {

@@ -21,7 +21,6 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
         setContentView(R.layout.activity_schedule);
         presenter = new PresenterSchedule(this);
         presenter.onInit();
-        // TODO get last schedule state
     }
 
     @Override

@@ -1,11 +1,17 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.WorkInfo;
+
+import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 
@@ -36,6 +42,18 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
 
     public void onCancelClick(View view) {
         presenter.cancel();
+    }
+
+    public void onWallpaperClick(View view) {
+        String path = "/sdcard/Pictures/ADoMfeQj6d-sExfOjnrmN0QHHGRERVUz4Id9o4QmChvwZSqHTZgEnn4QbZkKkaqbq8ym-5zOaY4nOsUQefGenJAGHe9y5CTBUQ.jpg";
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        try {
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, 1080, 1920, true);
+            wallpaperManager.setBitmap(scaledBitmap);
+        } catch (IOException e) {
+            Log.e("SCHEDULE", e.getMessage());
+        }
     }
 
     @Override

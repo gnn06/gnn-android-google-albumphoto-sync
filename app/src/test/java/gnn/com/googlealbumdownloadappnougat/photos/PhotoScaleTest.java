@@ -14,6 +14,6 @@ class PhotoScaleTest {
         int displayHeight = 1920;
         int scaleWidth = 1080;
         int scaleHeight = 370 * 1080 / 1920; // 208.125
-        Rect rect = PhotoScale.scale(photoWidth, photoHeight, displayWidth, displayHeight);
+        Rect rect = PhotoScaleAndroid.scale(photoWidth, photoHeight, displayWidth, displayHeight);
     }
 }

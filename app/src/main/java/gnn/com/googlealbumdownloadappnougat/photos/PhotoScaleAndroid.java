@@ -1,36 +1,16 @@
-package gnn.com.googlealbumdownloadappnougat;
+package gnn.com.googlealbumdownloadappnougat.photos;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+class PhotoScaleAndroid {
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
-
-//@RunWith(RobolectricTestRunner.class)
-@RunWith(AndroidJUnit4.class)
-public class TestAndroid {
-    @Test
-    public void test() throws FileNotFoundException {
-//        Bitmap bitmap = BitmapFactory.decodeFile("/home/gnn/Images/Papiers peints/IMG_20200614_174102.jpg");
-        Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/Pictures/template.jpg");
-        assertThat(bitmap, is(notNullValue()));
-
-        int displayWidth = 512;
-        int displayHeight = 382;
+    static Bitmap scale(Bitmap bitmap) {
+        int displayWidth = 1080;
+        int displayHeight = 1920;
 
         Bitmap BG_Bitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(BG_Bitmap);
@@ -59,10 +39,19 @@ public class TestAndroid {
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
 
-
         canvas.drawBitmap(bitmap, transformation, paint);
+        return BG_Bitmap;
+    }
 
-        OutputStream stream = new FileOutputStream("/sdcard/Pictures/toto.jpg");
-        BG_Bitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);
+    static Rect scale(int photoWidth, int photoHeight, int displayWidth, int displayHeight) {
+        int scaleWidth = 0;
+        int scaleHeight = 0;
+        if (photoWidth > photoHeight) {
+            scaleWidth = photoHeight * displayWidth / displayHeight;
+            scaleHeight = photoHeight;
+        } else {
+
+        }
+        return new Rect();
     }
 }

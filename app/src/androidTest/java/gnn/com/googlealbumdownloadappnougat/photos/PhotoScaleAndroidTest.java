@@ -25,7 +25,7 @@ public class PhotoScaleAndroidTest {
         Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/Pictures/template.jpg");
         assertThat(bitmap, is(notNullValue()));
 
-        Bitmap scaledBitmap  = PhotoScaleAndroid.scale(bitmap);
+        Bitmap scaledBitmap  = PhotoScaleAndroid.scale(bitmap, 1080, 1920);
 
         OutputStream stream = new FileOutputStream("/sdcard/Pictures/toto.jpg");
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 95, stream);

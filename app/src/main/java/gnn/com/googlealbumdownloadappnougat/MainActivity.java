@@ -82,6 +82,12 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
+        findViewById(R.id.ButtonWallpaper).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onButtonWallpaper();
+            }
+        });
+
         presenter.init();
     }
 

@@ -169,7 +169,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/ChooseOneButton"
-                    android:text="Schedule"/>
+                    android:text="Schedule sync"/>
+                <Button
+                    android:id="@+id/ButtonWallpaper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/ButtonSchedule"
+                    android:text="Wallpaper"/>
 
             </RelativeLayout>
             <RelativeLayout

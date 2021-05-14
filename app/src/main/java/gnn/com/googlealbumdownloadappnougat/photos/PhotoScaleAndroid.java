@@ -10,6 +10,7 @@ public class PhotoScaleAndroid {
 
     static public Bitmap scale(Bitmap bitmap, int displayWidth, int displayHeight) {
 
+        // TODO BG_Bitmap est inutile en mode maximize où il n'y a jamais de background à remplir
         Bitmap BG_Bitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(BG_Bitmap);
 

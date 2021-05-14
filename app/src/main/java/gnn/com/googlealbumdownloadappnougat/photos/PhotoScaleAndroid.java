@@ -6,9 +6,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-class PhotoScaleAndroid {
+public class PhotoScaleAndroid {
 
-    static Bitmap scale(Bitmap bitmap, int displayWidth, int displayHeight) {
+    static public Bitmap scale(Bitmap bitmap, int displayWidth, int displayHeight) {
 
         Bitmap BG_Bitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(BG_Bitmap);

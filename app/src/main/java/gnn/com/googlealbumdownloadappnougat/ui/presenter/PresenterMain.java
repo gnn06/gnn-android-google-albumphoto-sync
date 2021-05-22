@@ -1,22 +1,19 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
-import android.app.WallpaperManager;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.photos.PhotoScaleAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -38,11 +35,13 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     private final IView view;
     private final MainActivity activity;
+    private final PhotoWallPaper photoWallPaper ;
 
     public PresenterMain(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
+        this.photoWallPaper = new PhotoWallPaper(activity);
     }
 
     private AuthManager auth;
@@ -301,20 +300,14 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onButtonWallpaper() {
         // Pixel
+        @SuppressLint("SdCardPath")
         String path = "/sdcard/Pictures/ADoMfeQj6d-sExfOjnrmN0QHHGRERVUz4Id9o4QmChvwZSqHTZgEnn4QbZkKkaqbq8ym-5zOaY4nOsUQefGenJAGHe9y5CTBUQ.jpg";
         // Oneplus
 //        final String path = "/sdcard/Pictures/Wallpaper/ADoMfeQopV_9xE6Wi9Uz1CWFVNiDjtPjbCv5dexK9a-_F-F_n8hBcuD2Hf2Ez8CTQVIf7ev54r8mBmvXwo2oU--vu7KhR-L6uw.jpg";
         Bitmap bitmap = BitmapFactory.decodeFile(path);
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(this.activity);
-        try {
-            Point point = new Point();
-            this.activity.getWindowManager().getDefaultDisplay().getSize(point);
-            Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
-            wallpaperManager.setBitmap(scaledBitmap);
-        } catch (IOException e) {
-            Log.e("SCHEDULE", e.getMessage());
-        }
+        photoWallPaper.setWallpaper(bitmap);
     }
+
     // --- private methods ---
 
     private void taskWithPermissions(final SyncTask task) {

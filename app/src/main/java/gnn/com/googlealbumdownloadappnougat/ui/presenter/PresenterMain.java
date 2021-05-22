@@ -299,13 +299,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onButtonWallpaper() {
-        // Pixel
-        @SuppressLint("SdCardPath")
-        String path = "/sdcard/Pictures/ADoMfeQj6d-sExfOjnrmN0QHHGRERVUz4Id9o4QmChvwZSqHTZgEnn4QbZkKkaqbq8ym-5zOaY4nOsUQefGenJAGHe9y5CTBUQ.jpg";
-        // Oneplus
-//        final String path = "/sdcard/Pictures/Wallpaper/ADoMfeQopV_9xE6Wi9Uz1CWFVNiDjtPjbCv5dexK9a-_F-F_n8hBcuD2Hf2Ez8CTQVIf7ev54r8mBmvXwo2oU--vu7KhR-L6uw.jpg";
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        photoWallPaper.setWallpaper(bitmap);
+        photoWallPaper.setWallpaper();
     }
 
     // --- private methods ---

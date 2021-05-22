@@ -34,7 +34,7 @@ public class PhotosLocalService {
     public void delete(ArrayList<Photo> toDelete, File folder, Synchronizer synchronizer) {
         int delete = 0;
         for (Photo photo : toDelete) {
-            File file = new File(folder, photo.getId() + DownloadManager.getFileExtension());
+            File file = new File(folder, photo.getPhotoLocalFileName());
             if (!file.delete()) {
                 System.out.println("error deleting");
             }

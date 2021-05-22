@@ -5,7 +5,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import gnn.com.photos.Photo;
 
-class PhotoChooser {
+/*
+ * Use by SyncMethod and PhotoWallpaper
+ */
+public class PhotoChooser {
 
     // randomizer must not be final to be mocked by mockito
     private ThreadLocalRandom randomiser = ThreadLocalRandom.current();
@@ -29,7 +32,7 @@ class PhotoChooser {
      *
      * @param quantity should be > 0
      */
-    ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity) {
+    public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity) {
         ArrayList<Photo> result = new ArrayList<>();
         // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {

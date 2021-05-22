@@ -1,5 +1,6 @@
 package gnn.com.photos;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -62,5 +63,10 @@ public class Photo implements Serializable {
     public static String getFileExtension() {
         // TODO: 06/05/2019 manage file extension from mimeType
         return ".jpg";
+    }
+
+    public File getPhotoLocalFile(File destinationFolder) {
+        File destination = new File(destinationFolder, getPhotoLocalFileName());
+        return destination;
     }
 }

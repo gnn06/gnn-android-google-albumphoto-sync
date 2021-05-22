@@ -1,9 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -35,13 +32,11 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     private final IView view;
     private final MainActivity activity;
-    private final PhotoWallPaper photoWallPaper ;
 
     public PresenterMain(IView view, MainActivity activity) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
-        this.photoWallPaper = new PhotoWallPaper(activity);
     }
 
     private AuthManager auth;
@@ -299,7 +294,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onButtonWallpaper() {
-        photoWallPaper.setWallpaper();
+        // TODO check folder is not null
+        new PhotoWallPaper(activity, getFolder()).setWallpaper();
     }
 
     // --- private methods ---

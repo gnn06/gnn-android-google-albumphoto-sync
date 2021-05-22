@@ -7,35 +7,55 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotoScaleAndroid;
+import gnn.com.photos.Photo;
+import gnn.com.photos.service.PhotosLocalService;
+import gnn.com.photos.sync.PhotoChooser;
 
 public class PhotoWallPaper {
     private final MainActivity activity;
+    private final File folder;
 
-    public PhotoWallPaper(MainActivity activity) {
+    public PhotoWallPaper(MainActivity activity, File folder) {
         this.activity = activity;
+        this.folder = folder;
     }
 
     void setWallpaper() {
-        Bitmap bitmap = getBitmap();
-        setWallpaper(bitmap);
+        Photo photo = chooseLocalPhoto(folder);
+        Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(folder).getAbsolutePath());
+        if (bitmap != null) {
+            setWallpaper(bitmap);
+        }
     }
 
-    private Bitmap getBitmap() {
-        String path = getPhotoPath();
-        return BitmapFactory.decodeFile(path);
+    private Bitmap getBitmap(String path) {
+        return path != null ? BitmapFactory.decodeFile(path) : null;
     }
 
-    private String getPhotoPath() {
+    /**
+     *
+     * @return null if no photo found
+     * @param folder
+     */
+    private Photo chooseLocalPhoto(File folder) {
         // Pixel
         @SuppressLint("SdCardPath")
         String path = "/sdcard/Pictures/ADoMfeQj6d-sExfOjnrmN0QHHGRERVUz4Id9o4QmChvwZSqHTZgEnn4QbZkKkaqbq8ym-5zOaY4nOsUQefGenJAGHe9y5CTBUQ.jpg";
         // Oneplus
 //        final String path = "/sdcard/Pictures/Wallpaper/ADoMfeQopV_9xE6Wi9Uz1CWFVNiDjtPjbCv5dexK9a-_F-F_n8hBcuD2Hf2Ez8CTQVIf7ev54r8mBmvXwo2oU--vu7KhR-L6uw.jpg";
-        return path;
+        PhotosLocalService pls = new PhotosLocalService();
+        ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
+        if (localPhotos.size() > 0) {
+            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1);
+            return photos.get(0);
+        }
+        return null;
     }
 
     private void setWallpaper(Bitmap bitmap) {

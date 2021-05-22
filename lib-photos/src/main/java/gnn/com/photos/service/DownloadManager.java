@@ -29,7 +29,7 @@ public class DownloadManager {
             try {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
-                File destination = new File(destinationFolder, photo.getPhotoLocalFileName());
+                File destination = photo.getPhotoLocalFile(destinationFolder);
                 copy(source, destination);
                 count++;
                 synchronizer.incCurrentDownload();

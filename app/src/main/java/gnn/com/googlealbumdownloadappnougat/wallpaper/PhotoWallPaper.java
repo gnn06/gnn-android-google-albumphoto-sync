@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
+import android.app.Activity;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,14 +14,13 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoScaleAndroid;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PhotoChooser;
 
 public class PhotoWallPaper {
     private static final String TAG = "PhotoWallPaper";
-    private final MainActivity activity;
+    private final Activity activity;
     private final File folder;
 
     public PhotoWallPaper(MainActivity activity, File folder) {

@@ -4,6 +4,8 @@ import android.graphics.Rect;
 
 import org.junit.Test;
 
+import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoScaleAndroid;
+
 class PhotoScaleTest {
 
     @Test

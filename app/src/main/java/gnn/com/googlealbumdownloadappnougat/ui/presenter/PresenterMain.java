@@ -23,6 +23,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoWallPaper;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 

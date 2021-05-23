@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.ui.presenter;
+package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;

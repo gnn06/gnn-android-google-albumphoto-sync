@@ -46,7 +46,7 @@ public class Scheduler {
                 .putInt("quantity", quantity)
 
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(MyWorker.class, intervalHour, TimeUnit.HOURS)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 // problème difficile de mocker les services instancier par le worker
 // préférable de simplement mocker avec mockito. cf MyWorkerBasicTest
 @Ignore
-public class MyWorkerTest {
+public class SyncWorkerTest {
 
     private Context context;
     private ExecutorService executor;
@@ -50,8 +50,8 @@ public class MyWorkerTest {
                 .putInt("quantity", -1)
 
                 .build();
-        MyWorker worker = TestWorkerBuilder.from(context,
-                MyWorker.class,
+        SyncWorker worker = TestWorkerBuilder.from(context,
+                SyncWorker.class,
                 executor)
                 .setInputData(inputData)
                 .build();

@@ -15,11 +15,11 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
-public class MyWorker extends Worker {
+public class SyncWorker extends Worker {
 
     private final static String TAG = "MyWorker";
 
-    public MyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 

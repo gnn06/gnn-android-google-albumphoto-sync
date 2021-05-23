@@ -86,7 +86,7 @@ public class SchedulerTest {
 
                 .build();
 
-        request = new PeriodicWorkRequest.Builder(MyWorker.class, 1, TimeUnit.HOURS)
+        request = new PeriodicWorkRequest.Builder(SyncWorker.class, 1, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
         this.UT_scheduler = new Scheduler(context);

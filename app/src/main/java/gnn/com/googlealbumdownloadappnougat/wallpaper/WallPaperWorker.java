@@ -19,7 +19,7 @@ import gnn.com.photos.sync.Synchronizer;
 
 public class WallPaperWorker extends Worker {
 
-    private final static String TAG = "MyWorker";
+    private final static String TAG = "WalllPaperWorker";
 
     public WallPaperWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -28,38 +28,11 @@ public class WallPaperWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        WorkerResultStore store = new WorkerResultStore(getApplicationContext());
-
-        File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-        long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
-        File processFolder = new File(getInputData().getString("processAbsolutePath"));
-
-        Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
-
-        String albumName = getInputData().getString("album");
         String destinationFolder = getInputData().getString("folderPath");
-        String rename = getInputData().getString("rename");
-        int quantity = getInputData().getInt("quantity", -1);
 
-        // Doc Periodic work is never successed, always enqueued
-
-        try {
-
-            synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
-            store.store(Item.State.SUCCESS);
-            Log.i(TAG, "success");
-            // Doc periodic outputData is always empty
-            return Result.success();
-        } catch (IOException | RemoteException e) {
-            try {
-                store.store(Item.State.FAILURE);
-            } catch (IOException ioException) {
-                Log.e(TAG, "can not store result");
-            }
-            Log.e(TAG, e.toString());
-            return Result.failure();
-        }
+        PhotoWallPaper photoWallPaper = new PhotoWallPaper(context, folder);
+        photoWallPaper.setWallpaper();
+        return Result.success();
     }
 
     private File getDestinationFolder(String album) {

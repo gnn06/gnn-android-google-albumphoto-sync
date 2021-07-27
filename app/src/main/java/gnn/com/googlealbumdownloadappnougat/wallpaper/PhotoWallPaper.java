@@ -23,7 +23,7 @@ public class PhotoWallPaper {
     private final Activity activity;
     private final File folder;
 
-    public PhotoWallPaper(MainActivity activity, File folder) {
+    public PhotoWallPaper(Activity activity, File folder) {
         this.activity = activity;
         this.folder = folder;
     }

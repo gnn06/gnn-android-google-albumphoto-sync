@@ -10,11 +10,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 import gnn.com.photos.Photo;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoChooserTest {
@@ -37,28 +39,28 @@ public class PhotoChooserTest {
 
     @Test
     public void chooseOne_1() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 1);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 1, null);
 
         Assert.assertEquals(1, result1.size());
     }
 
     @Test
     public void chooseOne_2() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 2);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 2, null);
 
         Assert.assertEquals(2, result1.size());
     }
 
     @Test
     public void chooseOne_max() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 5);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 5, null);
 
         Assert.assertEquals(3, result1.size());
     }
 
     @Test
     public void chooseOne_size() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 3);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 3, null);
 
         Assert.assertEquals(3, result1.size());
     }
@@ -98,7 +100,7 @@ public class PhotoChooserTest {
         ArrayList<Photo> expectedToDownload = new ArrayList<>();
         ArrayList<Photo> expectedToDelete = new ArrayList<>();
 
-        Mockito.when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, null)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -131,7 +133,7 @@ public class PhotoChooserTest {
 
         Mockito.doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
-        Mockito.when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, null)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -162,7 +164,7 @@ public class PhotoChooserTest {
 
         Mockito.doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
-        Mockito.when(chooser.chooseOneList(remote, 2)).thenReturn(choosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, null)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -170,4 +172,27 @@ public class PhotoChooserTest {
         Mockito.verify(syncData).setToDelete(expectedToDelete);
     }
 
+
+
+
+    private ArrayList<Photo> createPhotoList(int size) {
+        ArrayList result = new ArrayList(size);
+        for (int i = 1; i <= size; i++) {
+            result.add(new Photo("url" + i, "id" + i));
+        }
+        return result;
+    }
+
+    private ArrayList<Photo> createRandomPhotoList(int size, int bound) {
+        ThreadLocalRandom randomiser = ThreadLocalRandom.current();
+        ArrayList result = new ArrayList(size);
+        while (result.size() < size) {
+            int i = randomiser.nextInt(bound);
+            Photo photo = new Photo("url" + i, "id" + i);
+            if (!result.contains(photo)) {
+                result.add(photo);
+            }
+        }
+        return result;
+    }
 }

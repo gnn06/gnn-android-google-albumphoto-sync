@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PhotoChooser;
@@ -47,7 +46,7 @@ public class PhotoWallPaper {
         PhotosLocalService pls = new PhotosLocalService();
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
         if (localPhotos.size() > 0) {
-            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1);
+            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, previousPhotos);
             return photos.get(0);
         }
         // TODO manage no local photo

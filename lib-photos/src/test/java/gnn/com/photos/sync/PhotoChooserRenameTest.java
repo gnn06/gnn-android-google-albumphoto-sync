@@ -84,7 +84,7 @@ public class PhotoChooserRenameTest {
         chosen.add(new Photo("url2", "id2"));
         chosen.add(new Photo("url4", "id4"));
 
-        Mockito.when(chooser.chooseOneList(remote, 2, null)).thenReturn(chosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, local)).thenReturn(chosen);
 
         chooser.chooseRandom(syncData, local, remote, "name", 2);
 

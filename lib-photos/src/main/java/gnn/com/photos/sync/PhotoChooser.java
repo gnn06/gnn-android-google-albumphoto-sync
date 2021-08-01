@@ -14,7 +14,7 @@ public class PhotoChooser {
     private ThreadLocalRandom randomiser = ThreadLocalRandom.current();
 
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
-        ArrayList<Photo> chosen = chooseOneList(remote, quantity, null);
+        ArrayList<Photo> chosen = chooseOneList(remote, quantity, local);
         chooseFull(synchronizer, local, chosen, rename);
     }
 

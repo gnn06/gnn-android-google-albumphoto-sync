@@ -46,7 +46,7 @@ public class PhotoWallPaper {
         PhotosLocalService pls = new PhotosLocalService();
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
         if (localPhotos.size() > 0) {
-            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, previousPhotos);
+            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }
         // TODO manage no local photo

@@ -27,7 +27,7 @@ public class PhotoWallPaper {
         this.folder = folder;
     }
 
-    void setWallpaper() {
+    public void setWallpaper() {
         Photo photo = chooseLocalPhoto(folder);
         if (photo != null) {
             Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(folder).getAbsolutePath());

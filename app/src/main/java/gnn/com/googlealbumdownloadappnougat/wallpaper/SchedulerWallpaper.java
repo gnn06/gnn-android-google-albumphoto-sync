@@ -10,7 +10,6 @@ import androidx.work.WorkManager;
 import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.service.SyncWorker;
 
 public class SchedulerWallpaper {
 
@@ -30,7 +29,7 @@ public class SchedulerWallpaper {
                 .putString("folderPath", destinationFolder)
 
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, intervalHour, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

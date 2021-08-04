@@ -35,4 +35,8 @@ public class SchedulerWallpaper {
         WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(WORK_NAME_WALLPAPER, ExistingPeriodicWorkPolicy.KEEP, work);
     }
+
+    public void cancel() {
+        // TODO
+    }
 }

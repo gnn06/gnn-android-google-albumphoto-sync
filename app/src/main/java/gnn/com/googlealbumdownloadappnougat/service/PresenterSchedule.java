@@ -5,6 +5,7 @@ import androidx.work.WorkInfo;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.SchedulerWallpaper;
 
 public class PresenterSchedule implements IPresenterSchedule {
 
@@ -48,6 +49,23 @@ public class PresenterSchedule implements IPresenterSchedule {
     }
 
     @Override
+    public void onScheduleWallpaper() {
+        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        SyncData data = new PersistenceMain(activity).getData();
+        ApplicationContext appContext = ApplicationContext.getInstance(activity);
+        // TODO;
+        int interval = 1;
+        sched.schedule(data.getFolderHuman(), interval, appContext);
+    }
+
+    @Override
+    public void onCancelWallpaper() {
+        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        sched.cancel();
+    }
+
+
+    @Override
     public int getIntervalSync() {
         return view.getIntervalSync();
     }
@@ -55,16 +73,6 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void setIntervalSync(int interval) {
         view.setIntervalSync(interval);
-    }
-
-    @Override
-    public void onScheduleWallpaper() {
-        // TODO
-    }
-
-    @Override
-    public void onCancelWallpaper() {
-        // TODO
     }
 }
 

@@ -53,7 +53,7 @@ public class PresenterSchedule implements IPresenterSchedule {
         SchedulerWallpaper sched = new SchedulerWallpaper(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
-        // TODO;
+        // TODO get interval from UI
         int interval = 1;
         sched.schedule(data.getFolderHuman(), interval, appContext);
     }

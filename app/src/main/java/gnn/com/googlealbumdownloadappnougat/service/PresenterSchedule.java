@@ -56,5 +56,15 @@ public class PresenterSchedule implements IPresenterSchedule {
     public void setIntervalSync(int interval) {
         view.setIntervalSync(interval);
     }
+
+    @Override
+    public void onScheduleWallpaper() {
+        // TODO
+    }
+
+    @Override
+    public void onCancelWallpaper() {
+        // TODO
+    }
 }
 

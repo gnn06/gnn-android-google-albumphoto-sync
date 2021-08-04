@@ -30,11 +30,21 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
         // not necessary to save settings as settings can not be changed in this activity
     }
 
-    public void onScheduleClick(View view) {
+    @Override
+    public void setState(WorkInfo state) {
+        TextView view = findViewById(R.id.info);
+        if (state != null) {
+            view.setText(state.toString());
+        } else {
+            view.setText("no worker");
+        }
+    }
+
+    public void onScheduleSyncClick(View view) {
         presenter.onScheduleSync();
     }
 
-    public void onCancelClick(View view) {
+    public void onCancelSyncClick(View view) {
         presenter.onCancelSync();
     }
 
@@ -50,13 +60,11 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
         return Integer.parseInt(view.getText().toString());
     }
 
-    @Override
-    public void setState(WorkInfo state) {
-        TextView view = findViewById(R.id.info);
-        if (state != null) {
-            view.setText(state.toString());
-        } else {
-            view.setText("no worker");
-        }
+    public void onScheduleWallpaperClick(View view) {
+        presenter.onScheduleWallpaper();
+    }
+
+    public void onCancelWallpaperClick(View view) {
+        presenter.onCancelWallpaper();
     }
 }

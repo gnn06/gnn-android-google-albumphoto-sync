@@ -10,4 +10,8 @@ public interface IPresenterSchedule {
     int getIntervalSync();
 
     void setIntervalSync(int interval);
+
+    void onScheduleWallpaper();
+
+    void onCancelWallpaper();
 }

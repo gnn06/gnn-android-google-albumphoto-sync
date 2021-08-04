@@ -17,7 +17,7 @@
         android:id="@+id/scheduleSync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onScheduleClick"
+        android:onClick="onScheduleSyncClick"
         android:text="@string/scheduleSync"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textIntervalSync" />
@@ -26,7 +26,7 @@
         android:id="@+id/cancelSync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onCancelClick"
+        android:onClick="onCancelSyncClick"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@+id/scheduleSync"
         app:layout_constraintTop_toBottomOf="@+id/textIntervalSync" />
@@ -43,7 +43,7 @@
         android:id="@+id/scheduleWallpaper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onScheduleClick"
+        android:onClick="onScheduleWallpaperClick"
         android:text="@string/scheduleWallpaper"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textIntervalWallpaper" />
@@ -52,7 +52,7 @@
         android:id="@+id/cancelWallpaper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onCancelClick"
+        android:onClick="onCancelWallpaperClick"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@id/scheduleWallpaper"
         app:layout_constraintTop_toBottomOf="@id/textIntervalWallpaper" />

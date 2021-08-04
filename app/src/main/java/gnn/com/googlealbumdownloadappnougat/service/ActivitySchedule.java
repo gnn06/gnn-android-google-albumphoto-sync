@@ -31,8 +31,18 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
     }
 
     @Override
-    public void setState(WorkInfo state) {
+    public void setStateSync(WorkInfo state) {
         TextView view = findViewById(R.id.info);
+        if (state != null) {
+            view.setText(state.toString());
+        } else {
+            view.setText("no worker");
+        }
+    }
+
+    @Override
+    public void setStateWallpaper(WorkInfo state) {
+        TextView view = findViewById(R.id.infoWallpaper);
         if (state != null) {
             view.setText(state.toString());
         } else {

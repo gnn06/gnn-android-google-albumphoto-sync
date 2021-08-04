@@ -7,5 +7,7 @@ public interface IScheduleView {
 
     int getIntervalSync();
 
-    void setState(WorkInfo state);
+    void setStateSync(WorkInfo state);
+
+    void setStateWallpaper(WorkInfo stateWallpaper);
 }

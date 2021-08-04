@@ -25,7 +25,9 @@ public class PresenterSchedule implements IPresenterSchedule {
     public void onInit() {
         new PersistenceSchedule(this.activity).restore(this);
         WorkInfo info = new SchedulerSync(this.activity).getState();
-        view.setState(info);
+        view.setStateSync(info);
+        WorkInfo stateWallpaper = new SchedulerWallpaper(this.activity).getState();
+        view.setStateWallpaper(stateWallpaper);
     }
 
     @Override

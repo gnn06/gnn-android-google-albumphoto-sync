@@ -6,8 +6,12 @@ import android.util.Log;
 import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
@@ -43,5 +47,20 @@ public class SchedulerWallpaper {
         WorkManager.getInstance(context.getApplicationContext())
                 .cancelUniqueWork(WORK_NAME_WALLPAPER);
         Log.i(TAG, "work canceled");
+    }
+
+    public WorkInfo getState() {
+        ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
+                .getWorkInfosForUniqueWork(WORK_NAME_WALLPAPER);
+        try {
+            if (futureInfo.get().size() >= 1) {
+                WorkInfo info = futureInfo.get().get(0);
+                return info;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

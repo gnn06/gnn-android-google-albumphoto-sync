@@ -23,16 +23,16 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onInit() {
         new PersistenceSchedule(this.activity).restore(this);
-        WorkInfo info = new Scheduler(this.activity).getState();
+        WorkInfo info = new SchedulerSync(this.activity).getState();
         view.setState(info);
     }
 
     @Override
-    public void onSchedule() {
-        Scheduler sched = new Scheduler(activity);
+    public void onScheduleSync() {
+        SchedulerSync sched = new SchedulerSync(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
-        int interval = view.getInterval();
+        int interval = view.getIntervalSync();
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),
                 data.getRename(),
@@ -42,19 +42,19 @@ public class PresenterSchedule implements IPresenterSchedule {
     }
 
     @Override
-    public void cancel() {
-        Scheduler sched = new Scheduler(activity);
+    public void onCancelSync() {
+        SchedulerSync sched = new SchedulerSync(activity);
         sched.cancel();
     }
 
     @Override
-    public int getInterval() {
-        return view.getInterval();
+    public int getIntervalSync() {
+        return view.getIntervalSync();
     }
 
     @Override
-    public void setInterval(int interval) {
-        view.setInterval(interval);
+    public void setIntervalSync(int interval) {
+        view.setIntervalSync(interval);
     }
 }
 

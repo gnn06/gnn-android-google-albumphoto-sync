@@ -3,11 +3,11 @@ package gnn.com.googlealbumdownloadappnougat.service;
 public interface IPresenterSchedule {
     void onInit();
 
-    void onSchedule();
+    void onScheduleSync();
 
-    void cancel();
+    void onCancelSync();
 
-    int getInterval();
+    int getIntervalSync();
 
-    void setInterval(int interval);
+    void setIntervalSync(int interval);
 }

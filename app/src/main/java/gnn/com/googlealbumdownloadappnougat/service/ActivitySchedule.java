@@ -31,21 +31,21 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
     }
 
     public void onScheduleClick(View view) {
-        presenter.onSchedule();
+        presenter.onScheduleSync();
     }
 
     public void onCancelClick(View view) {
-        presenter.cancel();
+        presenter.onCancelSync();
     }
 
     @Override
-    public void setInterval(int interval) {
+    public void setIntervalSync(int interval) {
         TextView view = findViewById(R.id.textIntervalSync);
         view.setText(Integer.toString(interval));
     }
 
     @Override
-    public int getInterval() {
+    public int getIntervalSync() {
         TextView view = findViewById(R.id.textIntervalSync);
         return Integer.parseInt(view.getText().toString());
     }

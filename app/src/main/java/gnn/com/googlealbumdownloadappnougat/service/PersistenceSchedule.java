@@ -18,7 +18,7 @@ public class PersistenceSchedule {
     public void save(IPresenterSchedule presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(PREF_INTERVAL, presenter.getInterval());
+        editor.putInt(PREF_INTERVAL, presenter.getIntervalSync());
         editor.apply();
     }
 
@@ -26,7 +26,7 @@ public class PersistenceSchedule {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
             int interval = preferences.getInt(PREF_INTERVAL, PresenterSchedule.DefaultInterval);
-            presenter.setInterval(interval);
+            presenter.setIntervalSync(interval);
         }
     }
 }

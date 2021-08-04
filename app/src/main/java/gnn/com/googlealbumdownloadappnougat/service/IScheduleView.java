@@ -3,9 +3,9 @@ package gnn.com.googlealbumdownloadappnougat.service;
 import androidx.work.WorkInfo;
 
 public interface IScheduleView {
-    void setInterval(int interval);
+    void setIntervalSync(int interval);
 
-    int getInterval();
+    int getIntervalSync();
 
     void setState(WorkInfo state);
 }

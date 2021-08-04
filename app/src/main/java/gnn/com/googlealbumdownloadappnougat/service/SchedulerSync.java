@@ -21,14 +21,14 @@ import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
  */
-public class Scheduler {
+public class SchedulerSync {
 
     private static final String TAG = "Scheduler";
     static final String WORK_NAME = "mywork";
 
     private final Context context;
 
-    public Scheduler(Context context) {
+    public SchedulerSync(Context context) {
         this.context = context;
     }
 

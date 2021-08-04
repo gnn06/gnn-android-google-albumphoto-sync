@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.work.Data;
 import androidx.work.ExistingPeriodicWorkPolicy;
@@ -14,6 +15,8 @@ import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 public class SchedulerWallpaper {
 
     private static final String WORK_NAME_WALLPAPER = "GNN-WORK_WALLPAPER";
+    private static final String TAG = "SchedulerWapper";
+
     final private Context context;
 
     public SchedulerWallpaper(Context context) {
@@ -37,6 +40,8 @@ public class SchedulerWallpaper {
     }
 
     public void cancel() {
-        // TODO
+        WorkManager.getInstance(context.getApplicationContext())
+                .cancelUniqueWork(WORK_NAME_WALLPAPER);
+        Log.i(TAG, "work canceled");
     }
 }

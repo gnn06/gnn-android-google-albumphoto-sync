@@ -40,5 +40,7 @@
     <string name="titleCacheMaxAge">Cache max age</string>
     <string name="textCacheMaxAge">Cache max age in hours</string>
     <string name="rename">Renaming</string>
+    <string name="scheduleSync">Schedule Sync</string>
+    <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
 </resources>

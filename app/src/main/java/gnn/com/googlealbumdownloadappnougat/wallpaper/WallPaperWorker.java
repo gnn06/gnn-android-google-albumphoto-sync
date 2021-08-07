@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -33,28 +34,19 @@ public class WallPaperWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Logger logger = getLogger();
-        String destinationPath = getInputData().getString("folderPath");;
-        File destinationFolder = getDestinationFolder(destinationPath);
-        PhotoWallPaper photoWallPaper = new PhotoWallPaper((Activity)getApplicationContext(), destinationFolder);
-        photoWallPaper.setWallpaper();
-        return Result.success();
-    }
-
-    Logger getLogger() {
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        Handler[] handlers = logger.getHandlers();
-        if (handlers.length == 0) {
-            try {
-                Handler handler = new FileHandler("/tmp/dev/toto.log");
-                Formatter formatter = new SimpleFormatter();
-                handler.setFormatter(formatter);
-                logger.addHandler(handler);
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            }
+        Logger logger = AppLogger.getLogger(getApplicationContext());
+        try {
+            logger.info("Wallpaper.doWork start");
+            String destinationPath = getInputData().getString("folderPath");
+            File destinationFolder = getDestinationFolder(destinationPath);
+            logger.info("WallpaperWorker parameters " + destinationPath);
+            PhotoWallPaper photoWallPaper = new PhotoWallPaper(getApplicationContext(), destinationFolder);
+            photoWallPaper.setWallpaper();
+            return Result.success();
+        } catch (Exception e) {
+            logger.severe(e.getMessage());
+            return Result.failure();
         }
-        return logger;
     }
 
     private File getDestinationFolder(String album) {

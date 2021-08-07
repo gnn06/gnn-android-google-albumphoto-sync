@@ -42,7 +42,7 @@ public class PhotoScaleAndroid {
         return BG_Bitmap;
     }
 
-    static Rect scale(int photoWidth, int photoHeight, int displayWidth, int displayHeight) {
+    public static Rect scale(int photoWidth, int photoHeight, int displayWidth, int displayHeight) {
         int scaleWidth = 0;
         int scaleHeight = 0;
         if (photoWidth > photoHeight) {

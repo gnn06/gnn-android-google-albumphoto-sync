@@ -1,12 +1,14 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.util.Log;
+import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,10 +68,10 @@ public class PhotoWallPaper {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(activity);
         Logger logger = AppLogger.getLogger(activity);
         try {
-            // TODO
-//            Point point = new Point();
-//            ((Activity)activity).getWindowManager().getDefaultDisplay().getSize(point);
-            Point point = new Point(1080,2115);
+            Point point = getScreenSize();
+            // portail = 1080x1977 and paysage = 1977x1080
+            logger.info("screen size " + point.x + "x" + point.y);
+            Log.i(TAG, "screen size " + point.x + "x" + point.y);
             Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
             wallpaperManager.setBitmap(scaledBitmap);
             logger.info("wallpaper correctly set");
@@ -77,5 +79,14 @@ public class PhotoWallPaper {
             logger.severe("WallpaperManager error " + e.getMessage());
             Log.e("WALLPAPER", e.getMessage());
         }
+    }
+
+    @NonNull
+    Point getScreenSize() {
+        // As not un activity, get windowsmanager throught SystemService and not Activity.getWiindowManager
+        WindowManager wm = (WindowManager)activity.getSystemService(Context.WINDOW_SERVICE);
+        Point point = new Point();
+        wm.getDefaultDisplay().getSize(point);
+        return point;
     }
 }

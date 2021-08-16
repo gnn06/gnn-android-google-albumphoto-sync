@@ -32,7 +32,7 @@ public class PhotoChooserRandomTest {
                 .thenReturn(0)
                 .thenReturn(0)
                 .thenReturn(2);
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 2, null);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 2, null, null);
         Assert.assertEquals(2, result.size());
         assertNotEquals(result.get(0), result.get(1));
     }
@@ -44,7 +44,7 @@ public class PhotoChooserRandomTest {
         Mockito.when(randomiser.nextInt(Mockito.anyInt()))
                 .thenCallRealMethod();
         // when
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 25, previousPhotos);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 25, previousPhotos, null);
         // then
         List<Photo> intersectPreviousCurrentList = result.stream().filter(item -> previousPhotos.contains(item)).collect(Collectors.toList());
         assertEquals(0, intersectPreviousCurrentList.size());
@@ -57,7 +57,7 @@ public class PhotoChooserRandomTest {
         Mockito.when(randomiser.nextInt(Mockito.anyInt()))
                 .thenCallRealMethod();
         // when
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 90, previousPhotos);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 90, previousPhotos, null);
         // then
         assertNotEquals(0, result.size());
     }

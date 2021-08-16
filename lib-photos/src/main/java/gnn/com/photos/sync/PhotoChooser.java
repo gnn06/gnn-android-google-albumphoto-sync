@@ -2,6 +2,7 @@ package gnn.com.photos.sync;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
 
@@ -14,7 +15,7 @@ public class PhotoChooser {
     private ThreadLocalRandom randomiser = ThreadLocalRandom.current();
 
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
-        ArrayList<Photo> chosen = chooseOneList(remote, quantity, local);
+        ArrayList<Photo> chosen = chooseOneList(remote, quantity, local, null);
         chooseFull(synchronizer, local, chosen, rename);
     }
 
@@ -33,7 +34,7 @@ public class PhotoChooser {
      * @param quantity should be > 0
      * @param previousPhotos
      */
-    public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos) {
+    public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos, Logger logger) {
         ArrayList<Photo> result = new ArrayList<>();
         // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {
@@ -42,6 +43,9 @@ public class PhotoChooser {
                 ArrayList<Photo> photos = firstMinusSecondList((ArrayList<Photo>) remoteLst.clone(), previousPhotos);
                 while (result.size() < quantity && result.size() < photos.size()) {
                     int choose = randomiser.nextInt(photos.size());
+                    if (logger != null) {
+                        logger.info("choose " + choose + " in " + photos.size() + " with " + randomiser.hashCode());
+                    }
                     // if choose an already choosen element
                     if (!result.contains(photos.get(choose))) {
                         result.add(photos.get(choose));
@@ -51,6 +55,9 @@ public class PhotoChooser {
             // then choose photo into all list
             while (result.size() < quantity) {
                 int choose = randomiser.nextInt(remoteLst.size());
+                if (logger != null) {
+                    logger.info("choose " + choose + " in " + remoteLst.size() + " with " + randomiser.hashCode());
+                }
                 // if choose an already choosen element
                 if (!result.contains(remoteLst.get(choose))) {
                     result.add(remoteLst.get(choose));

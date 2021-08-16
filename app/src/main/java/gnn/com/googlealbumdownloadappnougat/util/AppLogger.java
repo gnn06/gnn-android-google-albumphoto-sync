@@ -16,13 +16,16 @@ public class AppLogger {
     private static final String TAG = "AppLogger";
 
     public static Logger getLogger(Context context) {
+        return getLogger(context.getCacheDir().getAbsolutePath());
+    }
+
+    private static Logger getLogger(String path) {
         Logger logger = Logger.getLogger("worker");
         Handler[] handlers = logger.getHandlers();
         if (handlers.length == 0) {
             try {
 //                Handler handler = new FileHandler("/tmp/dev/toto.log");
-                File cacheDir = context.getCacheDir();
-                Handler handler = new FileHandler(cacheDir.getAbsolutePath() + "/app.log");
+                Handler handler = new FileHandler(path + "/app.log", true);
                 Formatter formatter = new SimpleFormatter();
                 handler.setFormatter(formatter);
                 logger.addHandler(handler);

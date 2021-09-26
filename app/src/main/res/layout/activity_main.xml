@@ -5,221 +5,225 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#AAA"
-            android:orientation="vertical"
-            android:showDividers="middle"
-            android:visibility="visible">
-
-            <RelativeLayout
-                android:id="@+id/SectionUser"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp"
-                android:background="?android:attr/selectableItemBackground">
+                android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#AAA"
+                        android:orientation="vertical"
+                        android:showDividers="middle"
+                        android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/titleUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/titleUser"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        <RelativeLayout
+                            android:id="@+id/SectionUser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp"
+                            android:background="?android:attr/selectableItemBackground">
 
-                <TextView
-                    android:id="@+id/textUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleUser"
-                    android:text="@string/user_unknown"/>
+                            <TextView
+                                android:id="@+id/titleUser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/titleUser"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/textUser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleUser"
+                                android:text="@string/user_unknown"/>
 
-            <RelativeLayout
-                android:id="@+id/SectionAlbum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp">
+                        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/titleAlbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/album"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        <RelativeLayout
+                            android:id="@+id/SectionAlbum"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
 
-                <TextView
-                    android:id="@+id/textAlbum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleAlbum"
-                    android:text="@string/no_album" />
-            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/titleAlbum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/album"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <RelativeLayout
-                android:id="@+id/SectionFolder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp">
+                            <TextView
+                                android:id="@+id/textAlbum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleAlbum"
+                                android:text="@string/no_album" />
+                        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/titleFolder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/folder"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        <RelativeLayout
+                            android:id="@+id/SectionFolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
 
-                <TextView
-                    android:id="@+id/textFolder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleFolder"
-                    android:text="@string/folder" />
+                            <TextView
+                                android:id="@+id/titleFolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/folder"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/SectionSyncQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp">
+                            <TextView
+                                android:id="@+id/textFolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleFolder"
+                                android:text="@string/folder" />
 
-                <TextView
-                    android:id="@+id/titleQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quantity"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/SectionSyncQuantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
 
-                <EditText
-                    android:id="@+id/textQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleQuantity"
-                    android:autofillHints="no"
-                    android:ems="5"
-                    android:inputType="number" />
+                            <TextView
+                                android:id="@+id/titleQuantity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/quantity"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleQuantity"
-                    android:layout_toEndOf="@id/textQuantity"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/quantity_explenation" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/SectionRename"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp">
-                <TextView
-                    android:id="@+id/titleRename"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rename"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-                <EditText
-                    android:id="@+id/textRename"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleRename"
-                    android:ems="10"/>
-            </RelativeLayout>
+                            <EditText
+                                android:id="@+id/textQuantity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleQuantity"
+                                android:autofillHints="no"
+                                android:ems="5"
+                                android:inputType="number" />
 
-            <RelativeLayout
-                android:id="@+id/SectionSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp">
-                <Button
-                    android:id="@+id/ChooseOneButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/synchronize" />
-                <Button
-                    android:id="@+id/ButtonSchedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ChooseOneButton"
-                    android:text="Schedule sync"/>
-                <Button
-                    android:id="@+id/ButtonWallpaper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ButtonSchedule"
-                    android:text="Wallpaper"/>
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleQuantity"
+                                android:layout_toEndOf="@id/textQuantity"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/quantity_explenation" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/SectionRename"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
+                            <TextView
+                                android:id="@+id/titleRename"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/rename"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            <EditText
+                                android:id="@+id/textRename"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleRename"
+                                android:ems="10"/>
+                        </RelativeLayout>
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/SectionResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="8dp">
-                <TextView
-                    android:id="@+id/titleResult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/titleResult"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-                <TextView
-                    android:id="@+id/result"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/titleResult"
-                    android:text="@string/result" />
-            </RelativeLayout>
-        </LinearLayout>
+                        <RelativeLayout
+                            android:id="@+id/SectionSync"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="8dp">
+                            <Button
+                                android:id="@+id/ChooseOneButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/synchronize" />
+                            <Button
+                                android:id="@+id/ButtonSchedule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/ChooseOneButton"
+                                android:text="Schedule sync"/>
+                            <Button
+                                android:id="@+id/ButtonWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@id/ButtonSchedule"
+                                android:text="Wallpaper"/>
 
-        <RelativeLayout
-            android:id="@+id/pb_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#37FFFFFF"
-            android:visibility="invisible">
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/SectionResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
+                            <TextView
+                                android:id="@+id/titleResult"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/titleResult"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            <TextView
+                                android:id="@+id/result"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleResult"
+                                android:text="@string/result" />
+                        </RelativeLayout>
+                    </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_centerInParent="true"
-                android:minWidth="128dp"
-                android:minHeight="128dp"
-                android:visibility="visible" />
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/pb_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#37FFFFFF"
+                        android:visibility="invisible">
 
-    </FrameLayout>
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="@style/Widget.AppCompat.ProgressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignWithParentIfMissing="false"
+                            android:layout_centerInParent="true"
+                            android:minWidth="128dp"
+                            android:minHeight="128dp"
+                            android:visibility="visible" />
+                    </RelativeLayout>
+            </FrameLayout>
+    </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

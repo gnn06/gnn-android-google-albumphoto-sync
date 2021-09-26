@@ -36,15 +36,17 @@ public class WallPaperWorker extends Worker {
     public Result doWork() {
         Logger logger = AppLogger.getLogger(getApplicationContext());
         try {
-            logger.info("Wallpaper.doWork start");
+            logger.info("Wallpaper.doWork start @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
             String destinationPath = getInputData().getString("folderPath");
             File destinationFolder = getDestinationFolder(destinationPath);
             logger.info("WallpaperWorker parameters " + destinationPath);
             PhotoWallPaper photoWallPaper = new PhotoWallPaper(getApplicationContext(), destinationFolder);
             photoWallPaper.setWallpaper();
+            logger.getHandlers()[0].close();
             return Result.success();
         } catch (Exception e) {
             logger.severe(e.getMessage());
+            logger.getHandlers()[0].close();
             return Result.failure();
         }
     }

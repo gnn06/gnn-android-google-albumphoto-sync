@@ -1,6 +1,7 @@
 package gnn.com.photos.sync;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
@@ -12,7 +13,7 @@ import gnn.com.photos.Photo;
 public class PhotoChooser {
 
     // randomizer must not be final to be mocked by mockito
-    private ThreadLocalRandom randomiser = ThreadLocalRandom.current();
+    // test randomizer instancié à chaque appel
 
     void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
         ArrayList<Photo> chosen = chooseOneList(remote, quantity, local, null);
@@ -35,6 +36,9 @@ public class PhotoChooser {
      * @param previousPhotos
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos, Logger logger) {
+        if (logger != null) {
+            logger.info("@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
+        }
         ArrayList<Photo> result = new ArrayList<>();
         // TODO: 23/02/21 manage that random can choose twice the same photo
         if (quantity < remoteLst.size()) {
@@ -42,9 +46,9 @@ public class PhotoChooser {
                 // first choose photo to avoid previous
                 ArrayList<Photo> photos = firstMinusSecondList((ArrayList<Photo>) remoteLst.clone(), previousPhotos);
                 while (result.size() < quantity && result.size() < photos.size()) {
-                    int choose = randomiser.nextInt(photos.size());
+                    int choose = new Random().nextInt(photos.size());
                     if (logger != null) {
-                        logger.info("choose " + choose + " in " + photos.size() + " with " + randomiser.hashCode());
+                        logger.info("choose " + choose + " in " + photos.size());
                     }
                     // if choose an already choosen element
                     if (!result.contains(photos.get(choose))) {
@@ -54,9 +58,9 @@ public class PhotoChooser {
             }
             // then choose photo into all list
             while (result.size() < quantity) {
-                int choose = randomiser.nextInt(remoteLst.size());
+                int choose = new Random().nextInt(remoteLst.size());
                 if (logger != null) {
-                    logger.info("choose " + choose + " in " + remoteLst.size() + " with " + randomiser.hashCode());
+                    logger.info("choose " + choose + " in " + remoteLst.size());
                 }
                 // if choose an already choosen element
                 if (!result.contains(remoteLst.get(choose))) {

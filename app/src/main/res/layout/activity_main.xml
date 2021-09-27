@@ -189,8 +189,9 @@
                                 android:text="@string/frequenceWallpaperExplenation" />
                         </RelativeLayout>
                         <!-- Buttons (sync, scheduler, wallpaper) -->
-                        <RelativeLayout
+                        <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/SectionSync"
+                            android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingStart="12dp"
@@ -198,23 +199,24 @@
                             android:paddingEnd="16dp"
                             android:paddingBottom="8dp">
                             <Button
-                                android:id="@+id/ChooseOneButton"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/synchronize" />
-                            <Button
                                 android:id="@+id/ButtonSchedule"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/ChooseOneButton"
-                                android:text="Schedule sync"/>
+                                android:text="Schedule ..."/>
+                            <Button
+                                android:id="@+id/ChooseOneButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/synchronize" />
+
                             <Button
                                 android:id="@+id/ButtonWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/ButtonSchedule"
                                 android:text="Wallpaper"/>
-                        </RelativeLayout>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
                         <!-- Result -->
                         <RelativeLayout
                             android:id="@+id/SectionResult"

@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -19,6 +19,7 @@
                         android:showDividers="middle"
                         android:visibility="visible">
 
+                        <!-- login -->
                         <RelativeLayout
                             android:id="@+id/SectionUser"
                             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                                 android:text="@string/user_unknown"/>
 
                         </RelativeLayout>
-
+                        <!-- Album -->
                         <RelativeLayout
                             android:id="@+id/SectionAlbum"
                             android:layout_width="match_parent"
@@ -69,7 +70,7 @@
                                 android:layout_below="@id/titleAlbum"
                                 android:text="@string/no_album" />
                         </RelativeLayout>
-
+                        <!-- Folder -->
                         <RelativeLayout
                             android:id="@+id/SectionFolder"
                             android:layout_width="match_parent"
@@ -95,6 +96,7 @@
                                 android:text="@string/folder" />
 
                         </RelativeLayout>
+                        <!-- Quantity -->
                         <RelativeLayout
                             android:id="@+id/SectionSyncQuantity"
                             android:layout_width="match_parent"
@@ -130,6 +132,7 @@
                                 android:layout_marginStart="16dp"
                                 android:text="@string/quantity_explenation" />
                         </RelativeLayout>
+                        <!-- Rename -->
                         <RelativeLayout
                             android:id="@+id/SectionRename"
                             android:layout_width="match_parent"
@@ -152,7 +155,7 @@
                                 android:layout_below="@id/titleRename"
                                 android:ems="10"/>
                         </RelativeLayout>
-
+                        <!-- Buttons (sync, scheduler, wallpaper) -->
                         <RelativeLayout
                             android:id="@+id/SectionSync"
                             android:layout_width="wrap_content"
@@ -180,6 +183,7 @@
                                 android:text="Wallpaper"/>
 
                         </RelativeLayout>
+                        <!-- Result -->
                         <RelativeLayout
                             android:id="@+id/SectionResult"
                             android:layout_width="wrap_content"
@@ -203,6 +207,7 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+                    <!-- Progress Bar -->
                     <RelativeLayout
                         android:id="@+id/pb_layout"
                         android:layout_width="match_parent"

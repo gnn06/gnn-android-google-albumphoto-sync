@@ -22,6 +22,10 @@ public class PersistenceMain {
         this.activity = activity;
     }
 
+    /**
+     * Get data from UI throught Persenter and store then into preferences
+     * @param presenter
+     */
     public void save(IPresenterMain presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
@@ -56,6 +60,11 @@ public class PersistenceMain {
         presenter.setRename(data.getRename());
     }
 
+    /**
+     * Get Data from Preferences and return them as SyncData.
+     * Used to restore main UI and from schedule UI to enqueue work
+     * @return
+     */
     public SyncData getData() {
         SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);

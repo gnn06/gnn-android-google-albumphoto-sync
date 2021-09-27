@@ -155,6 +155,39 @@
                                 android:layout_below="@id/titleRename"
                                 android:ems="10"/>
                         </RelativeLayout>
+                        <!-- Frequencies -->
+                        <RelativeLayout
+                            android:id="@+id/SectionFreqeuncyWallpaper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?android:attr/selectableItemBackground"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
+                            <TextView
+                                android:id="@+id/titleFrequenceyWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/frequencyWallpaper"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            <EditText
+                                android:id="@+id/textFrequencyWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleFrequenceyWallpaper"
+                                android:autofillHints="no"
+                                android:ems="5"
+                                android:inputType="number" />
+                            <TextView
+                                android:id="@+id/textExplenationFrequencyWallpaper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleFrequenceyWallpaper"
+                                android:layout_toEndOf="@id/textFrequencyWallpaper"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/frequenceWallpaperExplenation" />
+                        </RelativeLayout>
                         <!-- Buttons (sync, scheduler, wallpaper) -->
                         <RelativeLayout
                             android:id="@+id/SectionSync"
@@ -181,7 +214,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_toEndOf="@id/ButtonSchedule"
                                 android:text="Wallpaper"/>
-
                         </RelativeLayout>
                         <!-- Result -->
                         <RelativeLayout

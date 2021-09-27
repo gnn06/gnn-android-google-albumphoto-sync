@@ -240,6 +240,17 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
+    public int getFrequencyWallpaper() {
+        String frequency = view.getFrequencyWallpaper();
+        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+    }
+
+    @Override
+    public void setFrequencyWallpaper(int frequency) {
+        view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
+    }
+
+    @Override
     public String getRename() {
         return view.getRename();
     }

@@ -268,4 +268,15 @@ public class MainActivity extends AppCompatActivity implements IView {
         view.setText(rename == null ? "" : rename);
     }
 
+    @Override
+    public String getFrequencyWallpaper() {
+        TextView view = findViewById(R.id.textFrequencyWallpaper);
+        return view.getText().toString();
+    }
+
+    @Override
+    public void setFrequencyWallpaper(String frequency) {
+        TextView view = findViewById(R.id.textFrequencyWallpaper);
+        view.setText(frequency);
+    }
 }

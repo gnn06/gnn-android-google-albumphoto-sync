@@ -32,4 +32,8 @@ public interface IView {
     String getRename();
 
     void setRename(String rename);
+
+    String getFrequencyWallpaper();
+
+    void setFrequencyWallpaper(String frequency);
 }

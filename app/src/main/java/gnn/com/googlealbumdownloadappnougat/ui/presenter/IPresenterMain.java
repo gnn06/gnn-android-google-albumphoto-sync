@@ -58,12 +58,14 @@ public interface IPresenterMain {
 
     void setRename(String rename);
 
-    void onButtonSchedule();
+    void onButtonScheduleDetail();
 
     void onButtonWallpaper();
 
     int getFrequencyWallpaper();
 
     void setFrequencyWallpaper(int frequency);
+
+    void onButtonSchedule();
 }
 

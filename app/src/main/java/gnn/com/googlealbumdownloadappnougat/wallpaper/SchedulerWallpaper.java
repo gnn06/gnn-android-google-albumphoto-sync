@@ -36,7 +36,7 @@ public class SchedulerWallpaper {
                 .putString("folderPath", destinationFolder)
 
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, intervalHour, TimeUnit.HOURS)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, intervalHour, TimeUnit.MINUTES)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

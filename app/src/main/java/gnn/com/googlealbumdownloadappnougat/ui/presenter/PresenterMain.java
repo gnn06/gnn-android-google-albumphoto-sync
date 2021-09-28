@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
@@ -24,6 +25,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoWallPaper;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.SchedulerWallpaper;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
@@ -251,6 +253,14 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
+    public void onButtonSchedule() {
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
+        int intervalHour = this.getFrequencyWallpaper();
+        scheduler.schedule(this.getFolder().getAbsolutePath(), intervalHour, appContext);
+    }
+
+    @Override
     public String getRename() {
         return view.getRename();
     }
@@ -298,7 +308,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void onButtonSchedule() {
+    public void onButtonScheduleDetail() {
         Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);

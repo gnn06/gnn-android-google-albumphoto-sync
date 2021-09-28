@@ -179,13 +179,14 @@
                                 android:autofillHints="no"
                                 android:ems="5"
                                 android:inputType="number" />
+
                             <TextView
                                 android:id="@+id/textExplenationFrequencyWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/titleFrequenceyWallpaper"
-                                android:layout_toEndOf="@id/textFrequencyWallpaper"
                                 android:layout_marginStart="16dp"
+                                android:layout_toEndOf="@id/textFrequencyWallpaper"
                                 android:text="@string/frequenceWallpaperExplenation" />
                         </RelativeLayout>
                         <!-- Buttons (sync, scheduler, wallpaper) -->
@@ -199,10 +200,14 @@
                             android:paddingEnd="16dp"
                             android:paddingBottom="8dp">
                             <Button
+                                android:id="@+id/ButtonSchedule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Schedule"/>
+                            <Button
                                 android:id="@+id/ButtonScheduleDetails"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/ChooseOneButton"
                                 android:text="Schedule ..."/>
                             <Button
                                 android:id="@+id/ChooseOneButton"

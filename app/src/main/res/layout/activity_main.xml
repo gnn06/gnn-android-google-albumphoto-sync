@@ -205,21 +205,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Schedule"/>
                             <Button
-                                android:id="@+id/ButtonScheduleDetails"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Schedule ..."/>
-                            <Button
                                 android:id="@+id/ChooseOneButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/synchronize" />
-
                             <Button
                                 android:id="@+id/ButtonWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_toEndOf="@id/ButtonScheduleDetails"
                                 android:text="Wallpaper"/>
                         </androidx.appcompat.widget.LinearLayoutCompat>
                         <!-- Result -->

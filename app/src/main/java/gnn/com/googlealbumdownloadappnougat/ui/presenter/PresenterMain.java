@@ -257,7 +257,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
         ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
         int intervalHour = this.getFrequencyWallpaper();
-        scheduler.schedule(this.getFolder().getAbsolutePath(), intervalHour, appContext);
+        scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
     }
 
     @Override

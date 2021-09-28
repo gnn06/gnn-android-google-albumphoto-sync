@@ -44,5 +44,6 @@
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
+    <string name="schedule_details">schedule</string>
 
 </resources>

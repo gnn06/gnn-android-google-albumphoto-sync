@@ -76,12 +76,6 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.ButtonScheduleDetails).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.onButtonScheduleDetail();
-            }
-        });
-
         findViewById(R.id.ButtonWallpaper).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onButtonWallpaper();
@@ -117,6 +111,9 @@ public class MainActivity extends AppCompatActivity implements IView {
             return true;
         } else if (item.getItemId() == R.id.reset_cache) {
             presenter.onResetCache();
+            return true;
+        } else if (item.getItemId() == R.id.scheduleDetails) {
+            presenter.onButtonScheduleDetail();
             return true;
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));

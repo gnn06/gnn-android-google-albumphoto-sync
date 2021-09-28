@@ -6,6 +6,15 @@ public class SyncData {
     private int quantity;
     private String rename;
     private String folderHuman;
+    private int frequencyWallpaper;
+
+    public int getFrequencyWallpaper() {
+        return frequencyWallpaper;
+    }
+
+    public void setFrequencyWallpaper(int frequencyWallpaper) {
+        this.frequencyWallpaper = frequencyWallpaper;
+    }
 
     public String getAlbum() {
         return album;

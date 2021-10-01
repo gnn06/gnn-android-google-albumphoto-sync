@@ -190,7 +190,7 @@
                                 android:text="@string/frequenceWallpaperExplenation" />
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/SwitchWallPaper"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/textFrequencyWallpaper"
                                 android:text="Changement automatique du fond d'écran ">

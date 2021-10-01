@@ -9,11 +9,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -82,9 +86,10 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        findViewById(R.id.ButtonSchedule).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                presenter.onButtonSchedule();
+        ((SwitchCompat)findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                presenter.onSwitchWallpaper(checked);
             }
         });
 
@@ -187,6 +192,12 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void setProgressBarVisibility(int visible) {
         View pb = findViewById(R.id.pb_layout);
         pb.setVisibility(visible);
+    }
+
+    @Override
+    public void setSwitchWallpaper(boolean scheduled) {
+        SwitchCompat button = findViewById(R.id.SwitchWallPaper);
+        button.setChecked(scheduled);
     }
 
     public void updateUI_User() {

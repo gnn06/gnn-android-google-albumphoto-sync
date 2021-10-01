@@ -67,5 +67,7 @@ public interface IPresenterMain {
     void setFrequencyWallpaper(int frequency);
 
     void onButtonSchedule();
+
+    void onSwitchWallpaper(boolean checked);
 }
 

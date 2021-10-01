@@ -86,6 +86,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
         String lastSyncTime = getSync().retrieveLastSyncTime();
         view.updateUI_lastSyncTime(lastSyncTime);
+
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        boolean scheduled = scheduler.isScheduled();
+        view.setSwitchWallpaper(scheduled);
     }
 
     @Override
@@ -250,6 +254,18 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void setFrequencyWallpaper(int frequency) {
         view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
+    }
+
+    @Override
+    public void onSwitchWallpaper(boolean checked) {
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        if (checked) {
+            ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
+            int intervalHour = this.getFrequencyWallpaper();
+            scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
+        } else {
+            scheduler.cancel();
+        }
     }
 
     @Override

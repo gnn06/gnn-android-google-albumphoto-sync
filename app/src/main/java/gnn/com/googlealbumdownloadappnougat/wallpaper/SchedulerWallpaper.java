@@ -8,6 +8,7 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+import androidx.work.impl.model.RawWorkInfoDao;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -47,6 +48,16 @@ public class SchedulerWallpaper {
         WorkManager.getInstance(context.getApplicationContext())
                 .cancelUniqueWork(WORK_NAME_WALLPAPER);
         Log.i(TAG, "work canceled");
+    }
+
+    public boolean isScheduled() {
+        WorkInfo state = getState();
+        if (state != null) {
+            return WorkInfo.State.ENQUEUED.toString().equals(state.getState().name())
+                    || WorkInfo.State.RUNNING.toString().equals(state.getState().name());
+        } else {
+            return false;
+        }
     }
 
     public WorkInfo getState() {

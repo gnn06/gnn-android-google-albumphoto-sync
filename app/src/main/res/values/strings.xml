@@ -21,7 +21,7 @@
     <string name="sync">sync</string>
     <string name="last_sync_time">Last sync time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
-    <string name="synchronize">Synchronize</string>
+    <string name="synchronize">Synchronize une fois</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>

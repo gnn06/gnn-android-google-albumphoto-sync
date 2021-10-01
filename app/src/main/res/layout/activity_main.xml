@@ -215,7 +215,7 @@
                                 android:id="@+id/ButtonWallpaper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Wallpaper"/>
+                                android:text="Wallpaper une fois"/>
                         </androidx.appcompat.widget.LinearLayoutCompat>
                         <!-- Result -->
                         <RelativeLayout

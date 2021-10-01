@@ -90,6 +90,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
         boolean scheduled = scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
+        view.enableFrequencyWallpaper(scheduled);
     }
 
     @Override
@@ -266,6 +267,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         } else {
             scheduler.cancel();
         }
+        view.enableFrequencyWallpaper(checked);
     }
 
     @Override

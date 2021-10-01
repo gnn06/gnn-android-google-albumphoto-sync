@@ -38,4 +38,6 @@ public interface IView {
     void setFrequencyWallpaper(String frequency);
 
     void setSwitchWallpaper(boolean scheduled);
+
+    void enableFrequencyWallpaper(boolean checked);
 }

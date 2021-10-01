@@ -25,7 +25,7 @@ public class PresenterMainTest {
         PresenterMain presenter = spy(new PresenterMain(activity, activity));
         presenter.setAlbum(null);
         IView view = spy(IView.class);
-        presenter.onSyncClick();
+        presenter.onButtonSyncOnce();
         verify(view, Mockito.never()).alertNoAlbum();
     }
 
@@ -39,7 +39,7 @@ public class PresenterMainTest {
         Mockito.when(authMock.isSignIn()).thenReturn(true);
         Mockito.when(authMock.hasWritePermission()).thenReturn(true);
         presenter.setAuth(authMock);
-        presenter.onSyncClick();
+        presenter.onButtonSyncOnce();
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PresenterMainTest {
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
-        presenter.onSyncClick();
+        presenter.onButtonSyncOnce();
         assertNotNull(presenter.getPendingRequirement());
     }
 
@@ -93,7 +93,7 @@ public class PresenterMainTest {
         when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PresenterMain presenter = new PresenterMain(view, view);
         // when
-        presenter.onResetCache();
+        presenter.onMenuResetCache();
         // then
     }
 

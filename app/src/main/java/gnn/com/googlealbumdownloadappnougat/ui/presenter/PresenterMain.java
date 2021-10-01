@@ -258,27 +258,6 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void onSwitchWallpaper(boolean checked) {
-        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
-        if (checked) {
-            ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
-            int intervalHour = this.getFrequencyWallpaper();
-            scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
-        } else {
-            scheduler.cancel();
-        }
-        view.enableFrequencyWallpaper(checked);
-    }
-
-    @Override
-    public void onButtonSchedule() {
-        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
-        ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
-        int intervalHour = this.getFrequencyWallpaper();
-        scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
-    }
-
-    @Override
     public String getRename() {
         return view.getRename();
     }
@@ -299,7 +278,20 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     // --- Actions ---
 
     @Override
-    public void onSyncClick() {
+    public void onSwitchWallpaper(boolean checked) {
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        if (checked) {
+            ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
+            int intervalHour = this.getFrequencyWallpaper();
+            scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
+        } else {
+            scheduler.cancel();
+        }
+        view.enableFrequencyWallpaper(checked);
+    }
+
+    @Override
+    public void onButtonSyncOnce() {
         Log.d(TAG, "onSyncClick");
         String album = this.album;
         if (album == null || album.equals("")) {
@@ -310,32 +302,21 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void onChooseSync() {
-        Log.d(TAG, "onChooseOneClick");
-        String album = this.album;
-        if (album == null || album.equals("")) {
-            view.alertNoAlbum();
-        } else {
-            taskWithPermissions(new SyncTask(this, getSync()));
-        }
+    public void onButtonWallpaperOnce() {
+        // TODO check folder is not null
+        new PhotoWallPaper(activity, getFolder()).setWallpaper();
     }
 
     @Override
-    public void onResetCache() {
+    public void onMenuResetCache() {
         getSync().resetCache();
     }
 
     @Override
-    public void onButtonScheduleDetail() {
+    public void onMenuScheduleDetail() {
         Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);
-    }
-
-    @Override
-    public void onButtonWallpaper() {
-        // TODO check folder is not null
-        new PhotoWallPaper(activity, getFolder()).setWallpaper();
     }
 
     // --- private methods ---

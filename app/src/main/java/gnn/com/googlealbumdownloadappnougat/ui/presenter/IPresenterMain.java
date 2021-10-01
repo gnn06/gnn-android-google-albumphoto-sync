@@ -24,10 +24,6 @@ public interface IPresenterMain {
 
     void setAlbums(ArrayList<String> mAlbums);
 
-    void onSyncClick();
-
-    void onChooseSync();
-
     void handlePermission(int i);
 
     String getFolderHuman();
@@ -46,8 +42,6 @@ public interface IPresenterMain {
 
     void setSyncResult(SynchronizerAndroid sync, SyncStep starting);
 
-    void onResetCache();
-
     void init();
 
     int getQuantity();
@@ -58,16 +52,18 @@ public interface IPresenterMain {
 
     void setRename(String rename);
 
-    void onButtonScheduleDetail();
-
-    void onButtonWallpaper();
-
     int getFrequencyWallpaper();
 
     void setFrequencyWallpaper(int frequency);
 
-    void onButtonSchedule();
+    void onButtonSyncOnce();
+
+    void onButtonWallpaperOnce();
 
     void onSwitchWallpaper(boolean checked);
+
+    void onMenuResetCache();
+
+    void onMenuScheduleDetail();
 }
 

@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -76,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         findViewById(R.id.ChooseOneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.onChooseSync();
+                presenter.onButtonSyncOnce();
             }
         });
 
         findViewById(R.id.ButtonWallpaper).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.onButtonWallpaper();
+                presenter.onButtonWallpaperOnce();
             }
         });
 
@@ -121,10 +120,10 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.onSignOut();
             return true;
         } else if (item.getItemId() == R.id.reset_cache) {
-            presenter.onResetCache();
+            presenter.onMenuResetCache();
             return true;
         } else if (item.getItemId() == R.id.scheduleDetails) {
-            presenter.onButtonScheduleDetail();
+            presenter.onMenuScheduleDetail();
             return true;
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));

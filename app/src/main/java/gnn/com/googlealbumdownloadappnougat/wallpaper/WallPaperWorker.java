@@ -1,27 +1,18 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
-import gnn.com.photos.service.RemoteException;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class WallPaperWorker extends Worker {
 
@@ -36,10 +27,21 @@ public class WallPaperWorker extends Worker {
     public Result doWork() {
         Logger logger = AppLogger.getLogger(getApplicationContext());
         try {
-            logger.info("Wallpaper.doWork start @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
             String destinationPath = getInputData().getString("folderPath");
             File destinationFolder = getDestinationFolder(destinationPath);
+
+            long delay = getInputData().getLong("syncMaxAge", 0);
+
+            File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
+            long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
+            File processFolder = new File(getInputData().getString("processAbsolutePath"));
+
+            logger.info("Wallpaper.doWork start @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
             logger.info("WallpaperWorker parameters " + destinationPath);
+
+            // make a sync to doownload photo if necessary
+            new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
+
             PhotoWallPaper photoWallPaper = new PhotoWallPaper(getApplicationContext(), destinationFolder);
             photoWallPaper.setWallpaper();
             logger.getHandlers()[0].close();

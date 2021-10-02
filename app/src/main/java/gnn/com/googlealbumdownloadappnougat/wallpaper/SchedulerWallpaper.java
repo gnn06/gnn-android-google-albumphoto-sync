@@ -35,6 +35,7 @@ public class SchedulerWallpaper {
                 .putString("processAbsolutePath", appContext.getProcessPath())
                 .putLong("cacheMaxAge", -1)
                 .putString("folderPath", destinationFolder)
+                .putLong("syncMaxAge", -1)
 
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, intervalHour, TimeUnit.MINUTES)

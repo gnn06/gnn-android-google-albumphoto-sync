@@ -23,6 +23,10 @@ public class SynchronizerDelayed {
     }
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
+        String lastSyncTime = synchronizer.retrieveLastSyncTime();
+        if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
+            synchronizer.syncRandom(albumName, folder, rename, quantity)
+        } // else do noting
     }
 
 

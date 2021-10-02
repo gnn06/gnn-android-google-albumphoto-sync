@@ -8,7 +8,6 @@ import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-import androidx.work.impl.model.RawWorkInfoDao;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -28,17 +27,23 @@ public class WallpaperScheduler {
         this.context = context;
     }
 
-    public void schedule(String destinationFolder, int intervalHour, ApplicationContext appContext) {
-        // TODO put cacheMax in params
+    public void schedule(String destinationFolder, long wallpaperMaxAge,
+                         long syncMaxAge,
+                         String album, int quantity, String rename, long cacheMaxAge,
+                         ApplicationContext appContext) {
+        // TODO envoi des argmunent trop laborieux
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", -1)
+                .putLong("cacheMaxAge", cacheMaxAge)
                 .putString("folderPath", destinationFolder)
-                .putLong("syncMaxAge", -1)
-
+                .putLong("syncMaxAge", syncMaxAge)
+                .putString("album", album)
+                .putString("folderPath", destinationFolder)
+                .putInt("quantity", quantity)
+                .putString("rename", rename)
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, intervalHour, TimeUnit.MINUTES)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAge, TimeUnit.MINUTES)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

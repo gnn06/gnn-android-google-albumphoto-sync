@@ -24,7 +24,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoWallPaper;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
@@ -282,12 +282,19 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         if (checked) {
             ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
-            int intervalHour = this.getFrequencyWallpaper();
-            scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
+            scheduler.schedule(
+                    this.getFolderHuman(),
+                    getFrequencyWallpaper(),
+                    getFrequencySync(), getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
         } else {
             scheduler.cancel();
         }
         view.enableFrequencyWallpaper(checked);
+    }
+
+    // TODO add sync frequency into UI
+    private long getFrequencySync() {
+        return 0;
     }
 
     @Override

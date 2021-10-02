@@ -55,9 +55,8 @@ public class PresenterSchedule implements IPresenterSchedule {
         WallpaperScheduler sched = new WallpaperScheduler(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
-        // TODO get interval from UI
-        int interval = 1;
-        sched.schedule(data.getFolderHuman(), interval, appContext);
+        // TODO fix missing arguments
+        //sched.schedule(data.getFolderHuman(), wallpaperMaxAge, syncMaxAge, album, quantity, rename, cacheMaxAge, appContext);
     }
 
     @Override

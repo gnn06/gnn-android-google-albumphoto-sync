@@ -5,7 +5,7 @@ import androidx.work.WorkInfo;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.SchedulerWallpaper;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class PresenterSchedule implements IPresenterSchedule {
 
@@ -24,15 +24,15 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onInit() {
         new PersistenceSchedule(this.activity).restore(this);
-        WorkInfo info = new SchedulerSync(this.activity).getState();
+        WorkInfo info = new SyncScheduler(this.activity).getState();
         view.setStateSync(info);
-        WorkInfo stateWallpaper = new SchedulerWallpaper(this.activity).getState();
+        WorkInfo stateWallpaper = new WallpaperScheduler(this.activity).getState();
         view.setStateWallpaper(stateWallpaper);
     }
 
     @Override
     public void onScheduleSync() {
-        SchedulerSync sched = new SchedulerSync(activity);
+        SyncScheduler sched = new SyncScheduler(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
         int interval = view.getIntervalSync();
@@ -46,13 +46,13 @@ public class PresenterSchedule implements IPresenterSchedule {
 
     @Override
     public void onCancelSync() {
-        SchedulerSync sched = new SchedulerSync(activity);
+        SyncScheduler sched = new SyncScheduler(activity);
         sched.cancel();
     }
 
     @Override
     public void onScheduleWallpaper() {
-        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        WallpaperScheduler sched = new WallpaperScheduler(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
         // TODO get interval from UI
@@ -62,7 +62,7 @@ public class PresenterSchedule implements IPresenterSchedule {
 
     @Override
     public void onCancelWallpaper() {
-        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        WallpaperScheduler sched = new WallpaperScheduler(activity);
         sched.cancel();
     }
 

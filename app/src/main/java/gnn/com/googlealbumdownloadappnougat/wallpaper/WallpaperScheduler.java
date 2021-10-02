@@ -17,14 +17,14 @@ import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 
-public class SchedulerWallpaper {
+public class WallpaperScheduler {
 
     private static final String WORK_NAME_WALLPAPER = "GNN-WORK_WALLPAPER";
     private static final String TAG = "SchedulerWapper";
 
     final private Context context;
 
-    public SchedulerWallpaper(Context context) {
+    public WallpaperScheduler(Context context) {
         this.context = context;
     }
 

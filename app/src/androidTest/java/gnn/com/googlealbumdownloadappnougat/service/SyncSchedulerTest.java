@@ -50,13 +50,13 @@ import static org.junit.Assert.assertThat;
 // Problème difficile de mocker les service utilisé tel que Synchronizer
 // préférable de mocker simplement le Worker , cf MyWorkerBasicTest
 @Ignore
-public class SchedulerSyncTest {
+public class SyncSchedulerTest {
 
     private ListenableFuture<List<WorkInfo>> info;
     private WorkManager workManager;
     private TestDriver testDriver;
     private PeriodicWorkRequest request;
-    private SchedulerSync UT_schedulerSync;
+    private SyncScheduler UT_SyncScheduler;
     @Rule
     public TemporaryFolder tmpFolder = new TemporaryFolder();
     private Context context;
@@ -89,7 +89,7 @@ public class SchedulerSyncTest {
         request = new PeriodicWorkRequest.Builder(SyncWorker.class, 1, TimeUnit.HOURS)
                 .setInputData(data)
                 .build();
-        this.UT_schedulerSync = new SchedulerSync(context);
+        this.UT_SyncScheduler = new SyncScheduler(context);
         new File(context.getCacheDir().getAbsolutePath() + WorkerResultStore.FILE_NAME).delete();
     }
 
@@ -99,20 +99,20 @@ public class SchedulerSyncTest {
         WorkerResultStore store = new WorkerResultStore(context);
 
         // given an empty queue
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
 
         Item[] items = store.readItems();
         assertThat(items, is(nullValue()));
 
         // when
-        UT_schedulerSync.schedule("album", "folder", null, -1, 24, ApplicationContext.getInstance(context));
+        UT_SyncScheduler.schedule("album", "folder", null, -1, 24, ApplicationContext.getInstance(context));
 
         // inutile de testDrver.setPeroidDelay car en mode syncExecutor
         // testDriver.setPeriodDelayMet(info.get().get(0).getId());
 
         // then assert enqueued
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
 
         // then assert work was created with input
@@ -128,18 +128,18 @@ public class SchedulerSyncTest {
     @Ignore
     public void cancel() throws ExecutionException, InterruptedException {
         // given an enqueued work (state == enqueued)
-        workManager.enqueueUniquePeriodicWork(SchedulerSync.WORK_NAME,
+        workManager.enqueueUniquePeriodicWork(SyncScheduler.WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
 
         // when cancel work
-        UT_schedulerSync.cancel();
+        UT_SyncScheduler.cancel();
 
         // then
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.CANCELLED));
     }
@@ -148,14 +148,14 @@ public class SchedulerSyncTest {
     @Ignore
     public void cancel_empty() throws ExecutionException, InterruptedException {
         // given an empty queue
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
 
         // when cancel work
-        UT_schedulerSync.cancel();
+        UT_SyncScheduler.cancel();
 
         // then still empty queue
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
 
     }
@@ -164,11 +164,11 @@ public class SchedulerSyncTest {
     @Ignore
     public void getState() throws ExecutionException, InterruptedException {
         // given a finished work
-        workManager.enqueueUniquePeriodicWork(SchedulerSync.WORK_NAME,
+        workManager.enqueueUniquePeriodicWork(SyncScheduler.WORK_NAME,
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
 
-        info = workManager.getWorkInfosForUniqueWork(SchedulerSync.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
         UUID id = request.getId();
 

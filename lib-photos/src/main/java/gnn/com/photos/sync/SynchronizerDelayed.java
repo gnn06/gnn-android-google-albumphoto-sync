@@ -7,6 +7,8 @@ import gnn.com.photos.service.RemoteException;
 
 /**
  * Synchronizer that check if last sync was expired
+ * param :
+ * - delay before sync expiration
  */
 public class SynchronizerDelayed {
 

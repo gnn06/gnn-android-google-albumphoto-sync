@@ -14,6 +14,13 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
 import gnn.com.photos.sync.SynchronizerDelayed;
 
+/**
+ * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired
+ * params :
+ * - from ChooserSetter, folder where choose photo
+ * - from SyncrhonizerDelayed, delay
+ * - from Syncrhonizer.sync, albumName, rename, quantity
+ */
 public class WallPaperWorker extends Worker {
 
     private final static String TAG = "WalllPaperWorker";

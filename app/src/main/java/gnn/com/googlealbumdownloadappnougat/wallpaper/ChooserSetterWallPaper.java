@@ -22,7 +22,13 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PhotoChooser;
 
-public class PhotoWallPaper {
+/**
+ * Choose a photo and set the wall paper
+ * params :
+ * - folder where choose a
+ * - android context to create log
+ */
+public class ChooserSetterWallPaper {
     private static final String TAG = "PhotoWallPaper";
     private final Context activity;
     private final File folder;

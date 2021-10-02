@@ -9,10 +9,8 @@ import android.graphics.Point;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.work.Data;
-import androidx.work.WorkerParameters;
 import androidx.work.testing.TestWorkerBuilder;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,9 +20,6 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Logger;
-
-import gnn.com.googlealbumdownloadappnougat.service.SyncWorker;
 
 @RunWith(AndroidJUnit4.class)
 public class WallPaperWorkerTest {

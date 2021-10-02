@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import gnn.com.photos.service.RemoteException;
 
+/**
+ * Synchronizer that check if last sync was expired
+ */
 public class SynchronizerDelayed {
 
     protected Synchronizer synchronizer;

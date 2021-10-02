@@ -17,7 +17,8 @@ import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
  * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired
  * params :
  * - from ChooserSetter, folder where choose photo
- * - from SyncrhonizerDelayed, delay
+ * - from SyncrhonizerDelayed, sync delay
+ * - from Syncrhonizer.sync context, cacheAbsolutePath, cacheMaxAge, processAbsolutePath
  * - from Syncrhonizer.sync, albumName, rename, quantity
  */
 public class WallPaperWorker extends Worker {

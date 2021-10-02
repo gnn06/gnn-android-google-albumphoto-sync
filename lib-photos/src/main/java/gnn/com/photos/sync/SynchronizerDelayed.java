@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.photos.service.RemoteException;
+import gnn.com.util.ExpirationChecker;
 
 /**
  * Synchronizer that check if last sync was expired
@@ -30,7 +31,7 @@ public class SynchronizerDelayed {
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
         String lastSyncTime = synchronizer.retrieveLastSyncTime();
         if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
-            synchronizer.syncRandom(albumName, folder, rename, quantity)
+            synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting
     }
 

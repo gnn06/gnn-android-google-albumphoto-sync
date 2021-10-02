@@ -9,11 +9,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -72,17 +75,30 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         findViewById(R.id.ChooseOneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.onChooseSync();
+                presenter.onButtonSyncOnce();
             }
         });
 
-        findViewById(R.id.ButtonSchedule).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ButtonWallpaper).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.onButtonSchedule();
+                presenter.onButtonWallpaperOnce();
+            }
+        });
+
+        ((SwitchCompat)findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                presenter.onSwitchWallpaper(checked);
             }
         });
 
         presenter.init();
+    }
+
+    @Override
+    public void enableFrequencyWallpaper(boolean switchChecked) {
+        View text = findViewById(R.id.textFrequencyWallpaper);
+        text.setEnabled(!switchChecked);
     }
 
     @Override
@@ -104,7 +120,10 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.onSignOut();
             return true;
         } else if (item.getItemId() == R.id.reset_cache) {
-            presenter.onResetCache();
+            presenter.onMenuResetCache();
+            return true;
+        } else if (item.getItemId() == R.id.scheduleDetails) {
+            presenter.onMenuScheduleDetail();
             return true;
         } else if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -178,6 +197,12 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void setProgressBarVisibility(int visible) {
         View pb = findViewById(R.id.pb_layout);
         pb.setVisibility(visible);
+    }
+
+    @Override
+    public void setSwitchWallpaper(boolean scheduled) {
+        SwitchCompat button = findViewById(R.id.SwitchWallPaper);
+        button.setChecked(scheduled);
     }
 
     public void updateUI_User() {
@@ -262,4 +287,15 @@ public class MainActivity extends AppCompatActivity implements IView {
         view.setText(rename == null ? "" : rename);
     }
 
+    @Override
+    public String getFrequencyWallpaper() {
+        TextView view = findViewById(R.id.textFrequencyWallpaper);
+        return view.getText().toString();
+    }
+
+    @Override
+    public void setFrequencyWallpaper(String frequency) {
+        TextView view = findViewById(R.id.textFrequencyWallpaper);
+        view.setText(frequency);
+    }
 }

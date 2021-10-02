@@ -13,6 +13,7 @@ public class PersistenceMain {
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
     private static final String PREF_QUANTITY_KEY = "quantity";
     private static final String PREF_RENAME = "rename";
+    private static final String PREF_FREQ_WALLPAPER = "frequency_wallpaper";
 
     private final Activity activity;
 
@@ -22,6 +23,10 @@ public class PersistenceMain {
         this.activity = activity;
     }
 
+    /**
+     * Get data from UI throught Persenter and store then into preferences
+     * @param presenter
+     */
     public void save(IPresenterMain presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
@@ -30,11 +35,13 @@ public class PersistenceMain {
         String folderHuman = presenter.getFolderHuman();
         int quantity = presenter.getQuantity();
         String rename = presenter.getRename();
+        int frequencyWallpaper = presenter.getFrequencyWallpaper();
 
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
         editor.putInt(PREF_QUANTITY_KEY, quantity);
         editor.putString(PREF_RENAME, rename);
+        editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
 
         editor.apply();
     }
@@ -54,8 +61,14 @@ public class PersistenceMain {
         }
         presenter.setQuantity(data.getQuantity());
         presenter.setRename(data.getRename());
+        presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
     }
 
+    /**
+     * Get Data from Preferences and return them as SyncData.
+     * Used to restore main UI and from schedule UI to enqueue work
+     * @return
+     */
     public SyncData getData() {
         SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -72,6 +85,8 @@ public class PersistenceMain {
             data.setQuantity(quantity);
             String rename = preferences.getString(PREF_RENAME, null);
             data.setRename(rename);
+            int frequencyWallpaper = preferences.getInt(PREF_FREQ_WALLPAPER, -1);
+            data.setFrequencyWallpaper(frequencyWallpaper);
         }
         return data;
     }

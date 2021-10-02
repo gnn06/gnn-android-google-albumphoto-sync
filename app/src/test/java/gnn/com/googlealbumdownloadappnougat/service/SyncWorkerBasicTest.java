@@ -29,12 +29,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(MyWorker.class)
+@PrepareForTest(SyncWorker.class)
 // Mock simplement avec mockito un Worker
 // N'utilise ni WorkManagerTestInitHelper ni TestWorkerBuilderl
 // ca a l'avantage de ne pas avoir à s'éxécuter dans le virtual device
 // ca permet surtout d'utiliser powermock pour mocker les private et les news
-public class MyWorkerBasicTest {
+public class SyncWorkerBasicTest {
 
     @Mock
     Context context;
@@ -44,7 +44,7 @@ public class MyWorkerBasicTest {
 
     @Rule
     public TemporaryFolder tmpFolder = new TemporaryFolder();
-    private MyWorker UT_myWorker;
+    private SyncWorker UT_myWorker;
     private File destinationFolder;
     private Data data;
     private SynchronizerAndroid synchronizerMock;
@@ -53,7 +53,7 @@ public class MyWorkerBasicTest {
 
     @Before
     public void setUp() throws Exception {
-        UT_myWorker = PowerMockito.spy(new MyWorker(context, parameters));
+        UT_myWorker = PowerMockito.spy(new SyncWorker(context, parameters));
         destinationFolder = tmpFolder.newFolder();
         data = new Data.Builder()
                 .putString("cacheAbsolutePath", tmpFolder.newFile().getAbsolutePath())

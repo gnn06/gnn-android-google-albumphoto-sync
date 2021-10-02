@@ -13,7 +13,6 @@ import gnn.com.photos.Photo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoChooserRenameTest {
@@ -85,7 +84,7 @@ public class PhotoChooserRenameTest {
         chosen.add(new Photo("url2", "id2"));
         chosen.add(new Photo("url4", "id4"));
 
-        Mockito.when(chooser.chooseOneList(remote, 2)).thenReturn(chosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, local, null)).thenReturn(chosen);
 
         chooser.chooseRandom(syncData, local, remote, "name", 2);
 

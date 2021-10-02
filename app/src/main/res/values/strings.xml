@@ -21,7 +21,7 @@
     <string name="sync">sync</string>
     <string name="last_sync_time">Last sync time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
-    <string name="synchronize">Synchronize</string>
+    <string name="synchronize">Synchronize une fois</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>
@@ -40,5 +40,10 @@
     <string name="titleCacheMaxAge">Cache max age</string>
     <string name="textCacheMaxAge">Cache max age in hours</string>
     <string name="rename">Renaming</string>
+    <string name="scheduleSync">Schedule Sync</string>
+    <string name="scheduleWallpaper">Schedule Wallpaper</string>
+    <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
+    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
+    <string name="schedule_details">schedule</string>
 
 </resources>

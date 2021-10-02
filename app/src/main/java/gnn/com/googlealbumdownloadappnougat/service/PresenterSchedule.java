@@ -5,6 +5,7 @@ import androidx.work.WorkInfo;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.SchedulerWallpaper;
 
 public class PresenterSchedule implements IPresenterSchedule {
 
@@ -23,16 +24,18 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onInit() {
         new PersistenceSchedule(this.activity).restore(this);
-        WorkInfo info = new Scheduler(this.activity).getState();
-        view.setState(info);
+        WorkInfo info = new SchedulerSync(this.activity).getState();
+        view.setStateSync(info);
+        WorkInfo stateWallpaper = new SchedulerWallpaper(this.activity).getState();
+        view.setStateWallpaper(stateWallpaper);
     }
 
     @Override
-    public void onSchedule() {
-        Scheduler sched = new Scheduler(activity);
+    public void onScheduleSync() {
+        SchedulerSync sched = new SchedulerSync(activity);
         SyncData data = new PersistenceMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
-        int interval = view.getInterval();
+        int interval = view.getIntervalSync();
         sched.schedule(data.getAlbum(),
                 data.getFolderHuman(),
                 data.getRename(),
@@ -42,19 +45,36 @@ public class PresenterSchedule implements IPresenterSchedule {
     }
 
     @Override
-    public void cancel() {
-        Scheduler sched = new Scheduler(activity);
+    public void onCancelSync() {
+        SchedulerSync sched = new SchedulerSync(activity);
         sched.cancel();
     }
 
     @Override
-    public int getInterval() {
-        return view.getInterval();
+    public void onScheduleWallpaper() {
+        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        SyncData data = new PersistenceMain(activity).getData();
+        ApplicationContext appContext = ApplicationContext.getInstance(activity);
+        // TODO get interval from UI
+        int interval = 1;
+        sched.schedule(data.getFolderHuman(), interval, appContext);
     }
 
     @Override
-    public void setInterval(int interval) {
-        view.setInterval(interval);
+    public void onCancelWallpaper() {
+        SchedulerWallpaper sched = new SchedulerWallpaper(activity);
+        sched.cancel();
+    }
+
+
+    @Override
+    public int getIntervalSync() {
+        return view.getIntervalSync();
+    }
+
+    @Override
+    public void setIntervalSync(int interval) {
+        view.setIntervalSync(interval);
     }
 }
 

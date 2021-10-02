@@ -29,8 +29,7 @@ public class DownloadManager {
             try {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
-                String destinationFileName = photo.getId() + getFileExtension();
-                File destination = new File(destinationFolder, destinationFileName);
+                File destination = photo.getPhotoLocalFile(destinationFolder);
                 copy(source, destination);
                 count++;
                 synchronizer.incCurrentDownload();
@@ -45,10 +44,5 @@ public class DownloadManager {
     void copy(URL source, File destination) throws IOException {
         // copy overwrite existing file.
         FileUtils.copyURLToFile(source, destination);
-    }
-
-    public static String getFileExtension() {
-        // TODO: 06/05/2019 manage file extension from mimeType
-        return ".jpg";
     }
 }

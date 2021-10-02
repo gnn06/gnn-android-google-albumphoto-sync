@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
@@ -23,6 +24,8 @@ import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoWallPaper;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.SchedulerWallpaper;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 
@@ -83,6 +86,11 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
         String lastSyncTime = getSync().retrieveLastSyncTime();
         view.updateUI_lastSyncTime(lastSyncTime);
+
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        boolean scheduled = scheduler.isScheduled();
+        view.setSwitchWallpaper(scheduled);
+        view.enableFrequencyWallpaper(scheduled);
     }
 
     @Override
@@ -239,6 +247,17 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
+    public int getFrequencyWallpaper() {
+        String frequency = view.getFrequencyWallpaper();
+        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+    }
+
+    @Override
+    public void setFrequencyWallpaper(int frequency) {
+        view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
+    }
+
+    @Override
     public String getRename() {
         return view.getRename();
     }
@@ -259,7 +278,20 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     // --- Actions ---
 
     @Override
-    public void onSyncClick() {
+    public void onSwitchWallpaper(boolean checked) {
+        SchedulerWallpaper scheduler = new SchedulerWallpaper(this.activity);
+        if (checked) {
+            ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
+            int intervalHour = this.getFrequencyWallpaper();
+            scheduler.schedule(this.getFolderHuman(), intervalHour, appContext);
+        } else {
+            scheduler.cancel();
+        }
+        view.enableFrequencyWallpaper(checked);
+    }
+
+    @Override
+    public void onButtonSyncOnce() {
         Log.d(TAG, "onSyncClick");
         String album = this.album;
         if (album == null || album.equals("")) {
@@ -270,27 +302,23 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void onChooseSync() {
-        Log.d(TAG, "onChooseOneClick");
-        String album = this.album;
-        if (album == null || album.equals("")) {
-            view.alertNoAlbum();
-        } else {
-            taskWithPermissions(new SyncTask(this, getSync()));
-        }
+    public void onButtonWallpaperOnce() {
+        // TODO check folder is not null
+        new PhotoWallPaper(activity, getFolder()).setWallpaper();
     }
 
     @Override
-    public void onResetCache() {
+    public void onMenuResetCache() {
         getSync().resetCache();
     }
 
     @Override
-    public void onButtonSchedule() {
+    public void onMenuScheduleDetail() {
         Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);
     }
+
     // --- private methods ---
 
     private void taskWithPermissions(final SyncTask task) {

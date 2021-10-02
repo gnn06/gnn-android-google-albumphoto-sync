@@ -1,9 +1,10 @@
 package gnn.com.photos;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Photo implements Serializable {
+public class Photo implements Serializable, Comparable {
 
     private static final long serialVersionUID = 1234567L;
 
@@ -53,5 +54,24 @@ public class Photo implements Serializable {
     @Override
     public String toString() {
         return id;
+    }
+
+    public String getPhotoLocalFileName() {
+        return getId() + getFileExtension();
+    }
+
+    public static String getFileExtension() {
+        // TODO: 06/05/2019 manage file extension from mimeType
+        return ".jpg";
+    }
+
+    public File getPhotoLocalFile(File destinationFolder) {
+        File destination = new File(destinationFolder, getPhotoLocalFileName());
+        return destination;
+    }
+
+    @Override
+    public int compareTo(Object compareTo) {
+        return this.id.compareTo(((Photo)compareTo).getId());
     }
 }

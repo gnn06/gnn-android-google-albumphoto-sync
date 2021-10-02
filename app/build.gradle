@@ -22,6 +22,8 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+
     }
 }
 
@@ -67,6 +69,6 @@ dependencies {
     testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
     testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
 
-
+    testImplementation 'org.robolectric:robolectric:4.5.1'
 }
 

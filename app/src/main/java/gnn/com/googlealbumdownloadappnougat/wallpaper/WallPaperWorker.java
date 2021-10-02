@@ -49,8 +49,8 @@ public class WallPaperWorker extends Worker {
             // make a sync to doownload photo if necessary
             new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
 
-            PhotoWallPaper photoWallPaper = new PhotoWallPaper(getApplicationContext(), destinationFolder);
-            photoWallPaper.setWallpaper();
+            ChooserSetterWallPaper chooserSetterWallPaper = new ChooserSetterWallPaper(getApplicationContext(), destinationFolder);
+            chooserSetterWallPaper.setWallpaper();
             logger.getHandlers()[0].close();
             return Result.success();
         } catch (Exception e) {

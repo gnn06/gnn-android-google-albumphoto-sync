@@ -33,7 +33,7 @@ public class ChooserSetterWallPaper {
     private final Context activity;
     private final File folder;
 
-    public PhotoWallPaper(Context activity, File folder) {
+    public ChooserSetterWallPaper(Context activity, File folder) {
         this.activity = activity;
         this.folder = folder;
     }

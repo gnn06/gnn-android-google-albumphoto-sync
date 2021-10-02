@@ -304,7 +304,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onButtonWallpaperOnce() {
         // TODO check folder is not null
-        new PhotoWallPaper(activity, getFolder()).setWallpaper();
+        new ChooserSetterWallPaper(activity, getFolder()).setWallpaper();
     }
 
     @Override

@@ -24,7 +24,6 @@ public class PhotoChooser {
         synchronizer.setToDownload(firstMinusSecondList(remote, local));
         if (rename != null) {
             remote = (ArrayList<Photo>) remote.clone();
-            // TODO coder renommage avec une approche fonctionnelle
             Photo.renameList(remote, rename);
         }
         synchronizer.setToDelete(firstMinusSecondList(local, remote));

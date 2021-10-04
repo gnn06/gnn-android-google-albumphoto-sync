@@ -19,9 +19,13 @@ public abstract class Synchronizer implements SyncData {
     private static final gnn.com.photos.Log Log = new Log( Synchronizer.class.getName() );
 
     // TODO cache properties inutile
+    protected final File cacheFile;
+    protected final long cacheMaxAge;
     protected final File processFolder;
 
     public Synchronizer(File cacheFile, long cacheMaxAge, File processFolder) {
+        this.cacheFile = cacheFile;
+        this.cacheMaxAge = cacheMaxAge;
         this.processFolder = processFolder;
     }
 

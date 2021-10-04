@@ -137,6 +137,7 @@ public abstract class Synchronizer implements SyncData {
         this.albumSize = 0;
     }
 
+    // TODO 04/10 extract store et retrieve methods
     void storeSyncTime() throws IOException {
         if (processFolder != null) {
             File file = new File(processFolder, "last_sync");

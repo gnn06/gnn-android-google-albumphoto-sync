@@ -37,7 +37,7 @@ public class WallPaperWorker extends Worker {
             String destinationPath = getInputData().getString("folderPath");
             File destinationFolder = getDestinationFolder(destinationPath);
 
-            long delay = getInputData().getLong("syncMaxAge", 0);
+            int delay = getInputData().getLong("syncMaxAge", 0);
 
             File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
             long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);

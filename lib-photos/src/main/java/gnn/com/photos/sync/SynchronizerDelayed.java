@@ -16,9 +16,9 @@ public class SynchronizerDelayed {
 
     protected Synchronizer synchronizer;
 
-    final private long delay;
+    final private int delay;
 
-    public SynchronizerDelayed(long delay) {
+    public SynchronizerDelayed(int delay) {
         this.delay = delay;
     }
 

@@ -24,14 +24,14 @@ public class SynchronizerDelayed {
 
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
+        if (new ExpirationChecker(lastSyncTime, delay).isExpired()) {
             synchronizer.syncAll(albumName, folder, rename);
         } // else do noting
     }
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
+        if (new ExpirationChecker(lastSyncTime, delay).isExpired()) {
             synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting
     }

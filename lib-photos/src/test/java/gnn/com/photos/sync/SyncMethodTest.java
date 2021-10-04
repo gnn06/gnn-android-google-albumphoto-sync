@@ -152,7 +152,9 @@ public class SyncMethodTest {
         };
 
         // when call method
-        Date stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+        Date lastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String  stringLastSyncTimeActual = simpleDateFormat.format(lastSyncTimeActual);
 
         // then assert we gave the DateTime of the given file
         DateFormat sdf =  SimpleDateFormat.getInstance();

@@ -115,22 +115,20 @@ public class PhotoChooserTest {
                 new Photo("url2", "id2"),
                 new Photo("url3", "id3"),
                 new Photo("url4", "id4")));
-        ArrayList<Photo> choosen = new ArrayList<>(Arrays.asList(
-                new Photo("url2", "id3"),
-                new Photo("url4", "id4")));
         ArrayList<Photo> local = new ArrayList<>(Arrays.asList(
                 new Photo("url1", "id1"),
-                new Photo("url3", "id2")));
+                new Photo("url2", "id2")));
+        ArrayList<Photo> choosen = new ArrayList<>(Arrays.asList(
+                new Photo("url3", "id3"),
+                new Photo("url4", "id4")));
         ArrayList<Photo> expectedToDownload = new ArrayList<>(Arrays.asList(
-                new Photo("url2", "id3"),
+                new Photo("url3", "id3"),
                 new Photo("url4", "id4")));
         ArrayList<Photo> expectedToDelete = new ArrayList<>(Arrays.asList(
                 new Photo("url1", "id1"),
-                new Photo("url3", "id2")));
+                new Photo("url2", "id2")));
 
         Mockito.doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
-
-        Mockito.when(chooser.chooseOneList(remote, 2, null, null)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 

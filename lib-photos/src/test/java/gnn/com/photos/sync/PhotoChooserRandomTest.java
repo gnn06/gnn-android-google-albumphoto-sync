@@ -28,10 +28,6 @@ public class PhotoChooserRandomTest {
     @Test
     public void choose_same_element_twice() {
         ArrayList<Photo> photos = createPhotoList(3);
-        Mockito.when(randomiser.nextInt(3))
-                .thenReturn(0)
-                .thenReturn(0)
-                .thenReturn(2);
         ArrayList<Photo> result = chooser.chooseOneList(photos, 2, null, null);
         Assert.assertEquals(2, result.size());
         assertNotEquals(result.get(0), result.get(1));
@@ -41,8 +37,6 @@ public class PhotoChooserRandomTest {
     public void choose_not_previous_first() {
         final ArrayList<Photo> photos = createPhotoList(100);
         final ArrayList<Photo> previousPhotos = createRandomPhotoList(25, 100);
-        Mockito.when(randomiser.nextInt(Mockito.anyInt()))
-                .thenCallRealMethod();
         // when
         ArrayList<Photo> result = chooser.chooseOneList(photos, 25, previousPhotos, null);
         // then
@@ -54,8 +48,6 @@ public class PhotoChooserRandomTest {
     public void choose_not_previous_need_duplication() {
         final ArrayList<Photo> photos = createPhotoList(100);
         final ArrayList<Photo> previousPhotos = createRandomPhotoList(90, 100);
-        Mockito.when(randomiser.nextInt(Mockito.anyInt()))
-                .thenCallRealMethod();
         // when
         ArrayList<Photo> result = chooser.chooseOneList(photos, 90, previousPhotos, null);
         // then

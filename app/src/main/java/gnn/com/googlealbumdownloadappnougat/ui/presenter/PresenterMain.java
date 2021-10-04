@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.annotation.Nonnull;
 
@@ -84,7 +85,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void init() {
         view.updateUI_User();
 
-        String lastSyncTime = getSync().retrieveLastSyncTime();
+        Date lastSyncTime = getSync().retrieveLastSyncTime();
         view.updateUI_lastSyncTime(lastSyncTime);
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);

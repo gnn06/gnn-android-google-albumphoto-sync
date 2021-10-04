@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
@@ -151,7 +152,7 @@ public class SyncMethodTest {
         };
 
         // when call method
-        String stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+        Date stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
 
         // then assert we gave the DateTime of the given file
         DateFormat sdf =  SimpleDateFormat.getInstance();
@@ -173,7 +174,7 @@ public class SyncMethodTest {
         };
 
         // when
-        String stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
+        Date stringLastSyncTimeActual = synchronizer.retrieveLastSyncTime();
 
         // then
         Assert.assertNull(stringLastSyncTimeActual);

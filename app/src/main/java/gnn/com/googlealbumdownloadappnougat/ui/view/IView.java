@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.ui.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
@@ -19,7 +20,7 @@ public interface IView {
 
     void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step);
 
-    void updateUI_lastSyncTime(String lastSyncTime);
+    void updateUI_lastSyncTime(Date lastSyncTime);
 
     void updateUI_Folder(String humanPath);
 

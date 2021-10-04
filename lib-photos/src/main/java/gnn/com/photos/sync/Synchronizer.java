@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import gnn.com.photos.Log;
 import gnn.com.photos.service.PhotosLocalService;
@@ -152,13 +153,12 @@ public abstract class Synchronizer implements SyncData {
      * @return format = MM/dd/yyyy HH:mm:ss
      *         null if no previous sync
      */
-    public String retrieveLastSyncTime() {
-        String stringLastModified = null;
+    public Date retrieveLastSyncTime() {
+        Date stringLastModified = null;
         if (processFolder != null) {
             File file = new File(processFolder, "last_sync");
             if (file.exists()) {
-                DateFormat sdf = SimpleDateFormat.getInstance();
-                stringLastModified = sdf.format(file.lastModified());
+                return new Date(file.lastModified());
             }
         }
         return stringLastModified;

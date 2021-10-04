@@ -2,6 +2,7 @@ package gnn.com.photos.sync;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import gnn.com.photos.service.RemoteException;
 import gnn.com.util.ExpirationChecker;
@@ -22,14 +23,14 @@ public class SynchronizerDelayed {
     }
 
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
-        String lastSyncTime = synchronizer.retrieveLastSyncTime();
+        Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
             synchronizer.syncAll(albumName, folder, rename);
         } // else do noting
     }
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
-        String lastSyncTime = synchronizer.retrieveLastSyncTime();
+        Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         if (new ExpirationChecker(delay).isExpired(lastSyncTime)) {
             synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting

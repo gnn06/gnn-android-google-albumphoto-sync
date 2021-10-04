@@ -1,5 +1,7 @@
 package gnn.com.util;
 
+import java.util.Date;
+
 // TODO UNIT TEST
 public class ExpirationChecker {
     private long maxAge;
@@ -9,7 +11,7 @@ public class ExpirationChecker {
     }
 
     // TODO change to date
-    public boolean isExpired(String lastSyncTime) {
+    public boolean isExpired(Date lastSyncTime) {
         return false;
     }
 }

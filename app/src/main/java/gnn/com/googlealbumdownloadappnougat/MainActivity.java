@@ -22,7 +22,10 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.settings.SettingsActivity;
@@ -234,9 +237,11 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_lastSyncTime(String lastSyncTime) {
+    public void updateUI_lastSyncTime(Date lastSyncTime) {
         TextView textView = findViewById(R.id.result);
-        textView.setText(UITextHelper.getLastSyncTimeString(lastSyncTime));
+        DateFormat sdf = SimpleDateFormat.getInstance();
+        String stringLastModified = sdf.format(lastSyncTime);
+        textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified));
     }
 
     @Override

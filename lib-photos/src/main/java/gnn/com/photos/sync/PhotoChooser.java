@@ -36,7 +36,7 @@ public class PhotoChooser {
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos, Logger logger) {
         if (logger != null) {
-            logger.info("@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
+            logger.info("thread id=" + Thread.currentThread().getId() + "@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
         }
         ArrayList<Photo> result = new ArrayList<>();
         // TODO: 23/02/21 manage that random can choose twice the same photo

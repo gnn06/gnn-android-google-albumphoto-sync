@@ -43,7 +43,7 @@ public class WallPaperWorker extends Worker {
             long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
             File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
-            logger.info("Wallpaper.doWork start @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
+            logger.info("Wallpaper.doWork start thread id=" + Thread.currentThread().getId() + ", @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
             logger.info("WallpaperWorker parameters " + destinationPath);
 
             String albumName = getInputData().getString("album");

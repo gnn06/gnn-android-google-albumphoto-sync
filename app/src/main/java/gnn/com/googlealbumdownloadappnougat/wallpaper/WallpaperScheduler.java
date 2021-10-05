@@ -31,7 +31,7 @@ public class WallpaperScheduler {
      * maxAge in minutes
      */
     public void schedule(String destinationFolder, long wallpaperMaxAge,
-                         long syncMaxAge,
+                         int syncMaxAge,
                          String album, int quantity, String rename, long cacheMaxAge,
                          ApplicationContext appContext) {
         // TODO envoi des argmunent trop laborieux
@@ -40,7 +40,7 @@ public class WallpaperScheduler {
                 .putString("processAbsolutePath", appContext.getProcessPath())
                 .putLong("cacheMaxAge", cacheMaxAge)
                 .putString("folderPath", destinationFolder)
-                .putLong("syncMaxAge", syncMaxAge)
+                .putInt("syncMaxAge", syncMaxAge)
                 .putString("album", album)
                 .putString("folderPath", destinationFolder)
                 .putInt("quantity", quantity)

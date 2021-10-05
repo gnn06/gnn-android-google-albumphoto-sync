@@ -232,10 +232,12 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public void updateUI_lastSyncTime(Date lastSyncTime) {
-        TextView textView = findViewById(R.id.result);
-        DateFormat sdf = SimpleDateFormat.getInstance();
-        String stringLastModified = sdf.format(lastSyncTime);
-        textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified));
+        if (lastSyncTime != null) {
+            TextView textView = findViewById(R.id.result);
+            DateFormat sdf = SimpleDateFormat.getInstance();
+            String stringLastModified = sdf.format(lastSyncTime);
+            textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified));
+        }
     }
 
     @Override

@@ -45,5 +45,7 @@
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
     <string name="schedule_details">schedule</string>
+    <string name="frequencySync">Fréquence de synchronisation</string>
+    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées en heures.</string>
 
 </resources>

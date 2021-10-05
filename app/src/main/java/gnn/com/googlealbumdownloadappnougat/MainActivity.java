@@ -99,12 +99,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void enableFrequencyWallpaper(boolean switchChecked) {
-        View text = findViewById(R.id.textFrequencyWallpaper);
-        text.setEnabled(!switchChecked);
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         new PersistenceMain(this).save(presenter);
@@ -302,5 +296,29 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void setFrequencyWallpaper(String frequency) {
         TextView view = findViewById(R.id.textFrequencyWallpaper);
         view.setText(frequency);
+    }
+
+    @Override
+    public void enableFrequencyWallpaper(boolean switchChecked) {
+        View text = findViewById(R.id.textFrequencyWallpaper);
+        text.setEnabled(!switchChecked);
+    }
+
+    @Override
+    public String getFrequencySync() {
+        TextView view = findViewById(R.id.textFrequencySync);
+        return view.getText().toString();
+    }
+
+    @Override
+    public void setFrequencySync(String frequency) {
+        TextView view = findViewById(R.id.textFrequencySync);
+        view.setText(frequency);
+    }
+
+    @Override
+    public void enableFrequencySync(boolean switchChecked) {
+        View text = findViewById(R.id.textFrequencySync);
+        text.setEnabled(!switchChecked);
     }
 }

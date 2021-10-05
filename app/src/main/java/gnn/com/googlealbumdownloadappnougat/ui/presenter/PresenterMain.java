@@ -92,6 +92,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         boolean scheduled = scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
+        view.enableFrequencySync(scheduled);
     }
 
     @Override
@@ -258,6 +259,21 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
     }
 
+    /**
+     *
+     * int frequencySync fréquence de téléchargement en heure
+     */
+    @Override
+    public int getFrequencySync() {
+        String frequency = view.getFrequencySync();
+        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+    }
+
+    @Override
+    public void setFrequencySync(int frequency) {
+        view.setFrequencySync(frequency == -1 ? "" : Integer.toString(frequency));
+    }
+
     @Override
     public String getRename() {
         return view.getRename();
@@ -286,16 +302,12 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             scheduler.schedule(
                     this.getFolderHuman(),
                     getFrequencyWallpaper(),
-                    getFrequencySync(), getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
+                    getFrequencySync() * 24 * 60, getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
         } else {
             scheduler.cancel();
         }
         view.enableFrequencyWallpaper(checked);
-    }
-
-    // TODO add sync frequency into UI
-    private long getFrequencySync() {
-        return 0;
+        view.enableFrequencySync(checked);
     }
 
     @Override

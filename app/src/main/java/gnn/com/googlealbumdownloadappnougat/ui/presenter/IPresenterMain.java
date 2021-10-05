@@ -56,6 +56,10 @@ public interface IPresenterMain {
 
     void setFrequencyWallpaper(int frequency);
 
+    int getFrequencySync();
+
+    void setFrequencySync(int frequency);
+
     void onButtonSyncOnce();
 
     void onButtonWallpaperOnce();

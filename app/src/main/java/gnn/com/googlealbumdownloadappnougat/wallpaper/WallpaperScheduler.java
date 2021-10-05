@@ -27,6 +27,9 @@ public class WallpaperScheduler {
         this.context = context;
     }
 
+    /**
+     * maxAge in minutes
+     */
     public void schedule(String destinationFolder, long wallpaperMaxAge,
                          long syncMaxAge,
                          String album, int quantity, String rename, long cacheMaxAge,

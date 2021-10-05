@@ -14,6 +14,7 @@ public class PersistenceMain {
     private static final String PREF_QUANTITY_KEY = "quantity";
     private static final String PREF_RENAME = "rename";
     private static final String PREF_FREQ_WALLPAPER = "frequency_wallpaper";
+    private static final String PREF_FREQ_SYNC = "frequency_sync";
 
     private final Activity activity;
 
@@ -36,12 +37,14 @@ public class PersistenceMain {
         int quantity = presenter.getQuantity();
         String rename = presenter.getRename();
         int frequencyWallpaper = presenter.getFrequencyWallpaper();
+        int frequencySync = presenter.getFrequencySync();
 
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
         editor.putInt(PREF_QUANTITY_KEY, quantity);
         editor.putString(PREF_RENAME, rename);
         editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
+        editor.putInt(PREF_FREQ_SYNC, frequencySync);
 
         editor.apply();
     }
@@ -62,6 +65,7 @@ public class PersistenceMain {
         presenter.setQuantity(data.getQuantity());
         presenter.setRename(data.getRename());
         presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
+        presenter.setFrequencySync(data.getFrequencySync());
     }
 
     /**
@@ -87,6 +91,8 @@ public class PersistenceMain {
             data.setRename(rename);
             int frequencyWallpaper = preferences.getInt(PREF_FREQ_WALLPAPER, -1);
             data.setFrequencyWallpaper(frequencyWallpaper);
+            int frequencySync = preferences.getInt(PREF_FREQ_SYNC, -1);
+            data.setFrequencySync(frequencySync);
         }
         return data;
     }

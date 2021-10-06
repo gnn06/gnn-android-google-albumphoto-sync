@@ -138,10 +138,9 @@ public abstract class Synchronizer implements SyncData {
         this.albumSize = 0;
     }
 
-    // TODO 04/10 extract store et retrieve methods
     void storeSyncTime() throws IOException {
         Log.i("SyncMethod", "write " + processFolder.getAbsolutePath());
-        new PersistSyncTime(processFolder).storeSyncTime();
+        new PersistSyncTime(processFolder).storeTime();
     }
 
     /**
@@ -149,6 +148,6 @@ public abstract class Synchronizer implements SyncData {
      *         null if no previous sync
      */
     public Date retrieveLastSyncTime() {
-        return new PersistSyncTime(processFolder).retrieveLastSyncTime();
+        return new PersistSyncTime(processFolder).retrieveTime();
     }
 }

@@ -1,13 +1,9 @@
 package gnn.com.photos.sync;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import gnn.com.photos.Log;
 import gnn.com.photos.service.PhotosLocalService;
@@ -144,17 +140,8 @@ public abstract class Synchronizer implements SyncData {
 
     // TODO 04/10 extract store et retrieve methods
     void storeSyncTime() throws IOException {
-        // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
-
-        if (processFolder != null) {
-            File file = new File(processFolder, "last_sync");
-            logger.info("write sync time to " + file.getAbsolutePath());
-            FileWriter writer = new FileWriter(file);
-            // TODO get current time and write it
-            writer.write("sync time");
-            writer.close();
-        }
+        Log.i("SyncMethod", "write " + processFolder.getAbsolutePath());
+        new PersistSyncTime(processFolder).storeSyncTime();
     }
 
     /**
@@ -162,13 +149,6 @@ public abstract class Synchronizer implements SyncData {
      *         null if no previous sync
      */
     public Date retrieveLastSyncTime() {
-        Date stringLastModified = null;
-        if (processFolder != null) {
-            File file = new File(processFolder, "last_sync");
-            if (file.exists()) {
-                return new Date(file.lastModified());
-            }
-        }
-        return stringLastModified;
+        return new PersistSyncTime(processFolder).retrieveLastSyncTime();
     }
 }

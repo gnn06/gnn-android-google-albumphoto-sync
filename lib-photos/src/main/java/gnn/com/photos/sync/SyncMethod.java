@@ -3,6 +3,7 @@ package gnn.com.photos.sync;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
@@ -22,9 +23,12 @@ class SyncMethod {
     }
 
     void sync(String albumName, File imageFolder, String rename, int quantity) throws IOException, RemoteException {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+
         synchronizer.resetCurrent();
-        System.out.println("get photos of album : " + albumName);
-        System.out.println("download photos into folder : " + imageFolder);
+        logger.info("get photos of album : " + albumName);
+        logger.info("download photos into folder : " + imageFolder);
 
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(imageFolder);
@@ -34,10 +38,10 @@ class SyncMethod {
         else
             new PhotoChooser().chooseFull(synchronizer, local, remote, rename);
 
-        System.out.println("remote count = " + remote.size());
-        System.out.println("local count = " + local.size());
-        System.out.println("to download count = " + synchronizer.getToDownload().size());
-        System.out.println("to delete count = " + synchronizer.getToDelete().size());
+        logger.info("remote count = " + remote.size());
+        logger.info("local count = " + local.size());
+        logger.info("to download count = " + synchronizer.getToDownload().size());
+        logger.info("to delete count = " + synchronizer.getToDelete().size());
 
         remoteService.download(synchronizer.getToDownload(), imageFolder, rename, synchronizer);
         // delete AFTER download to avoid to delete everything when there is an exception during download

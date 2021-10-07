@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
@@ -19,7 +20,11 @@ public class DownloadManager {
      * manage progress status bar
      */
     public void download(ArrayList<Photo> toDownload, File destinationFolder, String rename, Synchronizer synchronizer) throws IOException {
-        // rename Id before download
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+
+        logger.info("start download for " + toDownload.size() + " photo");
+    // rename Id before download
         if (rename != null) {
             Photo.renameList(toDownload, rename);
         }
@@ -35,10 +40,10 @@ public class DownloadManager {
                 synchronizer.incCurrentDownload();
             } catch (MalformedURLException e) {
                 // TODO: 06/05/2019 log instead of stderr
-                System.err.println("erreur " + photo + e.toString());
+                logger.severe("erreur " + photo + e.toString());
             }
         }
-        System.out.println("downloaded count = " + count);
+        logger.info("downloaded count = " + count);
     }
 
     void copy(URL source, File destination) throws IOException {

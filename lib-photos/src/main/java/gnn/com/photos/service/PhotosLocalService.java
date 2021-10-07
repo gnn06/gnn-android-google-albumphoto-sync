@@ -4,6 +4,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
@@ -32,15 +33,18 @@ public class PhotosLocalService {
      * Delete given local files.
      */
     public void delete(ArrayList<Photo> toDelete, File folder, Synchronizer synchronizer) {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+
         int delete = 0;
         for (Photo photo : toDelete) {
             File file = new File(folder, photo.getPhotoLocalFileName());
             if (!file.delete()) {
-                System.out.println("error deleting");
+                logger.severe("error deleting");
             }
             delete++;
             synchronizer.incCurrentDelete();
         }
-        System.out.println("deleted count = " + delete);
+        logger.info("deleted count = " + delete);
     }
 }

@@ -44,7 +44,7 @@ public class WallPaperWorker extends Worker {
             File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
             logger.info("Wallpaper.doWork start thread id=" + Thread.currentThread().getId() + ", @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
-            logger.info("WallpaperWorker parameters " + destinationPath);
+            logger.info("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
 
             String albumName = getInputData().getString("album");
             String rename = getInputData().getString("rename");

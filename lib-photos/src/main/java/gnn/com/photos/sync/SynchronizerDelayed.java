@@ -3,6 +3,7 @@ package gnn.com.photos.sync;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import gnn.com.photos.service.RemoteException;
 import gnn.com.util.ExpirationChecker;
@@ -14,6 +15,7 @@ import gnn.com.util.ExpirationChecker;
  */
 public class SynchronizerDelayed {
 
+    // instanciated by descendant
     protected Synchronizer synchronizer;
 
     final private int delay;
@@ -23,15 +25,25 @@ public class SynchronizerDelayed {
     }
 
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        if (lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired()) {
+        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
+        logger.info("sync expired=" + expired);
+        if (expired) {
             synchronizer.syncAll(albumName, folder, rename);
         } // else do noting
     }
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        if (lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired()) {
+        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
+        logger.info("sync expired=" + expired + " with delay = " + delay);
+        if (expired) {
             synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting
     }

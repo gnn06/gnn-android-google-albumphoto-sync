@@ -3,6 +3,7 @@ package gnn.com.photos.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Log;
 import gnn.com.photos.Photo;
@@ -40,8 +41,6 @@ public abstract class PhotosRemoteService {
         if (photos == null) {
             photos = getPhotoProvider().getPhotosFromAlbum(album, synchronizer);
             getCache().put(photos);
-        } else {
-            Log.i(PhotosRemoteService.TAG, "use cache");
         }
         synchronizer.setAlbumSize(photos.size());
         return photos;
@@ -57,6 +56,9 @@ public abstract class PhotosRemoteService {
     }
 
     ArrayList<Photo> refreshBaseUrl(ArrayList<Photo> photosToRefresh) throws RemoteException {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
+        logger.info("refreshBaseUrl for " + photosToRefresh.size() + " photos");
         ArrayList<String> idsToRefresh = Photo.IdFromPhoto(photosToRefresh);
         return getPhotoProvider().getPhotosFromIds(idsToRefresh);
     }

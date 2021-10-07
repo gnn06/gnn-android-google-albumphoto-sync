@@ -90,6 +90,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();
+        // TODO 07/10 fix init provoque un schedule
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
@@ -302,7 +303,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             scheduler.schedule(
                     this.getFolderHuman(),
                     getFrequencyWallpaper(),
-                    getFrequencySync() * 24 * 60, getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
+                    getFrequencySync() * 60, getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
         } else {
             scheduler.cancel();
         }

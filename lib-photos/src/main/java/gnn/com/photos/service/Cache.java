@@ -50,11 +50,11 @@ public class Cache {
             if (delay < maxAge) {
                 // valid cache
                 photos = read();
-                Log.i("Cache", "use cache");
+                Log.i("Cache", "use photo list cache");
             } else {
                 // cache expired
                 reset();
-                Log.i("Cache", "cache expired");
+                Log.i("Cache", "photo list cache expired");
                 return null;
             }
         } else {
@@ -82,7 +82,7 @@ public class Cache {
             try {
                 result = (ArrayList<Photo>) iis.readObject();
             } catch (ClassNotFoundException e) {
-                Log.e("Cach", "can't deserialize");
+                Log.e("Catch", "can't deserialize");
             }
             return result;
         } else return null;

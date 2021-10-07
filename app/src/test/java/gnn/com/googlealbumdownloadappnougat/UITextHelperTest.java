@@ -77,7 +77,7 @@ public class UITextHelperTest {
 
         UITextHelper uiTextHelper = new UITextHelper(activity);
 
-        String actual = uiTextHelper.getLastSyncTimeString(null);
+        String actual = uiTextHelper.getLastSyncTimeString(null, null);
 
         assertEquals("nono", actual);
     }

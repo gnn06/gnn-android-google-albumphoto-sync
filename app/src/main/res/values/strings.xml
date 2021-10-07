@@ -20,6 +20,7 @@
     <string name="sync_finished">Sync terminated</string>
     <string name="sync">sync</string>
     <string name="last_sync_time">Last sync time %s.</string>
+    <string name="last_wallpaper_time">Last wallpaper time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
     <string name="synchronize">Synchronize une fois</string>
 

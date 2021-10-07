@@ -231,12 +231,13 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_lastSyncTime(Date lastSyncTime) {
-        if (lastSyncTime != null) {
+    public void updateUI_lastSyncTime(Date lastSyncTime, Date lastWallpaperTime) {
+        if (lastSyncTime != null || lastWallpaperTime != null) {
             TextView textView = findViewById(R.id.result);
             DateFormat sdf = SimpleDateFormat.getInstance();
-            String stringLastModified = sdf.format(lastSyncTime);
-            textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified));
+            String stringLastModified = lastSyncTime != null ? sdf.format(lastSyncTime) : null;
+            String stringLastWallpaperTime = lastWallpaperTime != null ? sdf.format(lastWallpaperTime) : null;
+            textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified, stringLastWallpaperTime));
         }
     }
 

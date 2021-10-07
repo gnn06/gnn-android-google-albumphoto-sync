@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
+import gnn.com.photos.sync.PersistWallpaperTime;
 import gnn.com.photos.sync.PhotoChooser;
 
 /**
@@ -45,8 +46,13 @@ public class ChooserSetterWallPaper {
         if (photo != null) {
             Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(folder).getAbsolutePath());
             setWallpaper(bitmap);
+            try {
+                new PersistWallpaperTime(null).storeTime();
+            } catch (IOException e) {
+                Log.e(TAG, "can not write last wallpaper time");
+            }
         } else {
-            Log.w(TAG, "photo to use as wallpaper");
+            Log.w(TAG, "no photo to use as wallpaper");
         }
     }
 

@@ -17,7 +17,7 @@ abstract public class PersistTime {
 
     // TODO 04/10 extract store et retrieve methods
 
-    void storeTime() throws IOException {
+    public void storeTime() throws IOException {
         if (processFolder != null) {
             File file = new File(processFolder, filename);
             System.out.println(file.getAbsolutePath());

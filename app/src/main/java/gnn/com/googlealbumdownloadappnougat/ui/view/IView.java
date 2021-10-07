@@ -20,7 +20,7 @@ public interface IView {
 
     void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step);
 
-    void updateUI_lastSyncTime(Date lastSyncTime);
+    void updateUI_lastSyncTime(Date lastSyncTime, Date lastWallpaperTime);
 
     void updateUI_Folder(String humanPath);
 

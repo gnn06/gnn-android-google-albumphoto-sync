@@ -29,6 +29,7 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.sync.PersistWallpaperTime;
 
 public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
@@ -86,7 +87,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.updateUI_User();
 
         Date lastSyncTime = getSync().retrieveLastSyncTime();
-        view.updateUI_lastSyncTime(lastSyncTime);
+        Date lastWallpaperTime = new PersistWallpaperTime(null).retrieveTime();
+        view.updateUI_lastSyncTime(lastSyncTime, lastWallpaperTime);
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();

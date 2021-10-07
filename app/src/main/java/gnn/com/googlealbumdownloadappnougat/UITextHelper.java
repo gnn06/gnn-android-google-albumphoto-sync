@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import java.util.Date;
-
 import gnn.com.photos.sync.Synchronizer;
 
 public class UITextHelper {
@@ -14,11 +12,17 @@ public class UITextHelper {
 
     /**
      * @param lastSyncTime can be null
+     * @param lastWallpaperTime
      */
-    String getLastSyncTimeString(String lastSyncTime) {
-        return lastSyncTime == null ?
+    String getLastSyncTimeString(String lastSyncTime, String lastWallpaperTime) {
+        String result = "";
+        result = lastSyncTime == null ?
                 activity.getResources().getString(R.string.no_previous_sync)
                 : activity.getResources().getString(R.string.last_sync_time, lastSyncTime);
+        if (lastWallpaperTime != null) {
+            result += "\n" + activity.getResources().getString(R.string.last_wallpaper_time, lastWallpaperTime);
+        }
+        return result;
     }
 
     String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {

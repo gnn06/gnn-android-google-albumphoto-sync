@@ -32,22 +32,24 @@ import gnn.com.photos.sync.PhotoChooser;
 public class ChooserSetterWallPaper {
     private static final String TAG = "PhotoWallPaper";
     private final Context activity;
-    private final File folder;
+    private final File photoFolder;
+    private File processFolder;
 
-    public ChooserSetterWallPaper(Context activity, File folder) {
+    public ChooserSetterWallPaper(Context activity, File photoFolder, File processFolder) {
         this.activity = activity;
-        this.folder = folder;
+        this.photoFolder = photoFolder;
+        this.processFolder = processFolder;
     }
 
     public void setWallpaper() {
         Logger logger = AppLogger.getLogger(activity);
-        Photo photo = chooseLocalPhoto(folder);
+        Photo photo = chooseLocalPhoto(photoFolder);
         logger.info("wallpaper.setWallpaper has choose " + photo.getId());
         if (photo != null) {
-            Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(folder).getAbsolutePath());
+            Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(photoFolder).getAbsolutePath());
             setWallpaper(bitmap);
             try {
-                new PersistWallpaperTime(null).storeTime();
+                new PersistWallpaperTime(this.processFolder).storeTime();
             } catch (IOException e) {
                 Log.e(TAG, "can not write last wallpaper time");
             }

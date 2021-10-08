@@ -327,7 +327,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onButtonWallpaperOnce() {
         // TODO check folder is not null
-        new ChooserSetterWallPaper(activity, getFolder()).setWallpaper();
+        new ChooserSetterWallPaper(activity, getFolder(), getProcessFolder()).setWallpaper();
     }
 
     @Override
@@ -340,6 +340,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);
+        // TODO 08/10 manque refresh UI pour afficher la last wallpaper time
     }
 
     // --- private methods ---

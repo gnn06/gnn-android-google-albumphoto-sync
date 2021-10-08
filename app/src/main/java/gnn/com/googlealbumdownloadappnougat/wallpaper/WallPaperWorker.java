@@ -54,7 +54,9 @@ public class WallPaperWorker extends Worker {
             SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
             sync.syncRandom(albumName, destinationFolder, rename, quantity);
 
-            ChooserSetterWallPaper chooserSetterWallPaper = new ChooserSetterWallPaper(getApplicationContext(), destinationFolder);
+            ChooserSetterWallPaper chooserSetterWallPaper =
+                    new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
+                            processFolder);
             chooserSetterWallPaper.setWallpaper();
             logger.getHandlers()[0].close();
             return Result.success();

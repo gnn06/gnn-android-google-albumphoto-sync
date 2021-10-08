@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Logger;
 
 abstract public class PersistTime {
 
@@ -18,9 +19,11 @@ abstract public class PersistTime {
     // TODO 04/10 extract store et retrieve methods
 
     public void storeTime() throws IOException {
+        // require Logger was initialized
+        Logger logger = Logger.getLogger("worker");
         if (processFolder != null) {
             File file = new File(processFolder, filename);
-            System.out.println(file.getAbsolutePath());
+            logger.info(file.getAbsolutePath());
             FileWriter writer = new FileWriter(file);
             // TODO get current time and write it
             writer.write("sync time");

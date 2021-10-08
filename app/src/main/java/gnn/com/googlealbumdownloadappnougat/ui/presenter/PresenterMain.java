@@ -87,7 +87,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.updateUI_User();
 
         Date lastSyncTime = getSync().retrieveLastSyncTime();
-        Date lastWallpaperTime = new PersistWallpaperTime(null).retrieveTime();
+        Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
         view.updateUI_lastSyncTime(lastSyncTime, lastWallpaperTime);
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);

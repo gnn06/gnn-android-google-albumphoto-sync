@@ -14,7 +14,7 @@ public class UITextHelper {
      * @param lastSyncTime can be null
      * @param lastWallpaperTime
      */
-    String getLastSyncTimeString(String lastSyncTime, String lastWallpaperTime) {
+    String getLastTimesString(String lastSyncTime, String lastWallpaperTime) {
         String result = "";
         result = lastSyncTime == null ?
                 activity.getResources().getString(R.string.no_previous_sync)

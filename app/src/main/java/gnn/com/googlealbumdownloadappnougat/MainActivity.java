@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             DateFormat sdf = SimpleDateFormat.getInstance();
             String stringLastModified = lastSyncTime != null ? sdf.format(lastSyncTime) : null;
             String stringLastWallpaperTime = lastWallpaperTime != null ? sdf.format(lastWallpaperTime) : null;
-            textView.setText(UITextHelper.getLastSyncTimeString(stringLastModified, stringLastWallpaperTime));
+            textView.setText(UITextHelper.getLastTimesString(stringLastModified, stringLastWallpaperTime));
         }
     }
 

@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
@@ -79,7 +78,7 @@ public class UITextHelperTest {
 
         UITextHelper uiTextHelper = new UITextHelper(activity);
 
-        String actual = uiTextHelper.getLastSyncTimeString(null, null);
+        String actual = uiTextHelper.getLastTimesString(null, null);
 
         assertEquals("nono", actual);
     }
@@ -94,7 +93,7 @@ public class UITextHelperTest {
 
         UITextHelper uiTextHelper = new UITextHelper(activity);
 
-        String actual = uiTextHelper.getLastSyncTimeString("01/01/2021", null);
+        String actual = uiTextHelper.getLastTimesString("01/01/2021", null);
 
         assertEquals("nono", actual);
     }
@@ -111,7 +110,7 @@ public class UITextHelperTest {
 
         UITextHelper uiTextHelper = new UITextHelper(activity);
 
-        String actual = uiTextHelper.getLastSyncTimeString("01/01/2021", "01/02/2021");
+        String actual = uiTextHelper.getLastTimesString("01/01/2021", "01/02/2021");
 
         assertEquals("nono\nnini", actual);
     }

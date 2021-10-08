@@ -114,7 +114,7 @@ public class PresenterMainTest {
 
         // then have called update_UI and updateUI_lastSyncTime
         verify(view, times(1)).updateUI_User();
-        verify(view, times(1)).updateUI_lastSyncTime(null, lastWallpaperTime);
+        verify(view, times(1)).updateUI_lastSyncTime(null, null);
     }
 
     @Test

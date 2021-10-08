@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         new PersistenceMain(this).restore(presenter);
         new PersistenceSettings(this).restore(presenter);
 
+        // avoid to call click event when initialize UI
+        presenter.init();
+
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();
@@ -95,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
-        presenter.init();
     }
 
     @Override

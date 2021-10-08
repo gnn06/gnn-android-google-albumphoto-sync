@@ -5,12 +5,14 @@ import android.content.res.Resources;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.Photo;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -68,7 +70,7 @@ public class UITextHelperTest {
     }
 
     @Test
-    public void getLastSyncTimeString_null() {
+    public void getLastSyncTimeString_null_null() {
         MainActivity activity = mock(MainActivity.class);
 
         Resources ressources = mock(Resources.class);
@@ -80,5 +82,37 @@ public class UITextHelperTest {
         String actual = uiTextHelper.getLastSyncTimeString(null, null);
 
         assertEquals("nono", actual);
+    }
+
+    @Test
+    public void getLastSyncTimeString_sync_null() {
+        MainActivity activity = mock(MainActivity.class);
+
+        Resources ressources = mock(Resources.class);
+        when(activity.getResources()).thenReturn(ressources);
+        when(ressources.getString(anyInt(), any())).thenReturn("nono");
+
+        UITextHelper uiTextHelper = new UITextHelper(activity);
+
+        String actual = uiTextHelper.getLastSyncTimeString("01/01/2021", null);
+
+        assertEquals("nono", actual);
+    }
+
+    @Test
+    public void getLastSyncTimeString_sync_wall() {
+        MainActivity activity = mock(MainActivity.class);
+
+        Resources ressources = mock(Resources.class);
+        when(activity.getResources()).thenReturn(ressources);
+        when(ressources.getString(anyInt(), any()))
+                .thenReturn("nono")
+                .thenReturn("nini");
+
+        UITextHelper uiTextHelper = new UITextHelper(activity);
+
+        String actual = uiTextHelper.getLastSyncTimeString("01/01/2021", "01/02/2021");
+
+        assertEquals("nono\nnini", actual);
     }
 }

@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.refresh();
+        presenter.refreshLastTime();
     }
 
     @Override

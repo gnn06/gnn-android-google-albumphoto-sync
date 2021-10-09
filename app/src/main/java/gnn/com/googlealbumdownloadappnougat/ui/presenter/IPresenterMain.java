@@ -44,7 +44,7 @@ public interface IPresenterMain {
 
     void init();
 
-    void refresh();
+    void refreshLastTime();
 
     int getQuantity();
 

@@ -101,7 +101,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
      * Used to refresh UI
      */
     @Override
-    public void refresh() {
+    public void refreshLastTime() {
         Log.d(TAG, "refresh UI");
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
@@ -338,7 +338,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onButtonWallpaperOnce() {
         // TODO check folder is not null
         new ChooserSetterWallPaper(activity, getFolder(), getProcessFolder()).setWallpaper();
-        refresh();
+        refreshLastTime();
     }
 
     @Override

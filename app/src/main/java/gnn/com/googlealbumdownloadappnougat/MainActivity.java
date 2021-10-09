@@ -101,6 +101,12 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.refresh();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         new PersistenceMain(this).save(presenter);

@@ -86,9 +86,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void init() {
         view.updateUI_User();
 
-        Date lastSyncTime = getSync().retrieveLastSyncTime();
-        Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
-        view.updateUI_lastSyncTime(lastSyncTime, lastWallpaperTime);
+        // refreshLastTime will be called by onStart;
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();
@@ -96,6 +94,22 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
+    }
+
+    /**
+     * Called on onStart activity
+     * Used to refresh UI
+     */
+    @Override
+    public void refresh() {
+        refreshLastTime();
+    }
+
+    private void refreshLastTime() {
+        Log.d(TAG, "refresh UI");
+        Date lastSyncTime = getSync().retrieveLastSyncTime();
+        Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
+        view.updateUI_lastSyncTime(lastSyncTime, lastWallpaperTime);
     }
 
     @Override
@@ -169,8 +183,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         this.mAlbums = albums;
         view.showChooseAlbumDialog(albums);
     }
-
     // Use from persistence
+
     @Override
     public void setAlbum(String album) {
         this.album = album;
@@ -200,8 +214,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public String getFolderHuman() {
         return this.folderHuman;
     }
-
     // Use from Persistence
+
     /**
      * Get File from human version of folder
      * @return File

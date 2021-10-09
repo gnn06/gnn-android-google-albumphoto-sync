@@ -44,6 +44,8 @@ public interface IPresenterMain {
 
     void init();
 
+    void refresh();
+
     int getQuantity();
 
     void setQuantity(int quantity);

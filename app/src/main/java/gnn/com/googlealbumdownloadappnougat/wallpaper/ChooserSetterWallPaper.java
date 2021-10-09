@@ -68,7 +68,7 @@ public class ChooserSetterWallPaper {
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
         if (localPhotos.size() > 0) {
             Logger logger = AppLogger.getLogger(this.activity);
-            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, null, logger);
+            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }
         // TODO manage no local photo
@@ -85,7 +85,7 @@ public class ChooserSetterWallPaper {
         try {
             Point point = getScreenSize();
             // portail = 1080x1977 and paysage = 1977x1080
-            logger.info("screen size " + point.x + "x" + point.y);
+            logger.finest("screen size " + point.x + "x" + point.y);
             Log.i(TAG, "screen size " + point.x + "x" + point.y);
             Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
             wallpaperManager.setBitmap(scaledBitmap);

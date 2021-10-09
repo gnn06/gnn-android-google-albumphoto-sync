@@ -30,7 +30,7 @@ public class SynchronizerDelayed {
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
-        logger.info("sync expired=" + expired);
+        logger.info("sync expired=" + expired + " with delay=" + delay + " in minutes");
         if (expired) {
             synchronizer.syncAll(albumName, folder, rename);
         } // else do noting
@@ -42,7 +42,7 @@ public class SynchronizerDelayed {
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
-        logger.info("sync expired=" + expired + " with delay = " + delay);
+        logger.info("sync expired=" + expired + " with delay=" + delay + " in minutes");
         if (expired) {
             synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting

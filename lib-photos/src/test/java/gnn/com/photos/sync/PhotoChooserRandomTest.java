@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 
@@ -28,7 +27,7 @@ public class PhotoChooserRandomTest {
     @Test
     public void choose_same_element_twice() {
         ArrayList<Photo> photos = createPhotoList(3);
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 2, null, null);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 2, null);
         Assert.assertEquals(2, result.size());
         assertNotEquals(result.get(0), result.get(1));
     }
@@ -38,7 +37,7 @@ public class PhotoChooserRandomTest {
         final ArrayList<Photo> photos = createPhotoList(100);
         final ArrayList<Photo> previousPhotos = createRandomPhotoList(25, 100);
         // when
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 25, previousPhotos, null);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 25, previousPhotos);
         // then
         List<Photo> intersectPreviousCurrentList = result.stream().filter(item -> previousPhotos.contains(item)).collect(Collectors.toList());
         assertEquals(0, intersectPreviousCurrentList.size());
@@ -49,7 +48,7 @@ public class PhotoChooserRandomTest {
         final ArrayList<Photo> photos = createPhotoList(100);
         final ArrayList<Photo> previousPhotos = createRandomPhotoList(90, 100);
         // when
-        ArrayList<Photo> result = chooser.chooseOneList(photos, 90, previousPhotos, null);
+        ArrayList<Photo> result = chooser.chooseOneList(photos, 90, previousPhotos);
         // then
         assertNotEquals(0, result.size());
     }

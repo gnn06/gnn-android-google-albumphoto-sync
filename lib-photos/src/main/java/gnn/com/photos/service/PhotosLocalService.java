@@ -45,6 +45,6 @@ public class PhotosLocalService {
             delete++;
             synchronizer.incCurrentDelete();
         }
-        logger.info("deleted count = " + delete);
+        logger.fine("deleted count = " + delete);
     }
 }

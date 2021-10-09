@@ -27,8 +27,8 @@ class SyncMethod {
         Logger logger = Logger.getLogger("worker");
 
         synchronizer.resetCurrent();
-        logger.info("get photos of album : " + albumName);
-        logger.info("download photos into folder : " + imageFolder);
+        logger.fine("get photos of album : " + albumName);
+        logger.fine("download photos into folder : " + imageFolder);
 
         ArrayList<Photo> remote = remoteService.getPhotos(albumName, synchronizer);
         ArrayList<Photo> local = localService.getLocalPhotos(imageFolder);
@@ -38,10 +38,10 @@ class SyncMethod {
         else
             new PhotoChooser().chooseFull(synchronizer, local, remote, rename);
 
-        logger.info("remote count = " + remote.size());
-        logger.info("local count = " + local.size());
-        logger.info("to download count = " + synchronizer.getToDownload().size());
-        logger.info("to delete count = " + synchronizer.getToDelete().size());
+        logger.finest("remote count = " + remote.size());
+        logger.finest("local count = " + local.size());
+        logger.finest("to download count = " + synchronizer.getToDownload().size());
+        logger.finest("to delete count = " + synchronizer.getToDelete().size());
 
         remoteService.download(synchronizer.getToDownload(), imageFolder, rename, synchronizer);
         // delete AFTER download to avoid to delete everything when there is an exception during download

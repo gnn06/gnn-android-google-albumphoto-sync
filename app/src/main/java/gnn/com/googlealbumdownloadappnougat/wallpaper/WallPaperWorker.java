@@ -34,6 +34,7 @@ public class WallPaperWorker extends Worker {
     public Result doWork() {
         Logger logger = AppLogger.getLogger(getApplicationContext());
         try {
+            logger.info("start wallpaper worker");
             String destinationPath = getInputData().getString("folderPath");
             File destinationFolder = getDestinationFolder(destinationPath);
 
@@ -43,8 +44,8 @@ public class WallPaperWorker extends Worker {
             long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
             File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
-            logger.info("Wallpaper.doWork start thread id=" + Thread.currentThread().getId() + ", @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
-            logger.info("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
+            logger.finest("Wallpaper.doWork start thread id=" + Thread.currentThread().getId() + ", @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
+            logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
 
             String albumName = getInputData().getString("album");
             String rename = getInputData().getString("rename");

@@ -36,28 +36,28 @@ public class PhotoChooserTest {
 
     @Test
     public void chooseOne_1() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 1, null, null);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 1, null);
 
         Assert.assertEquals(1, result1.size());
     }
 
     @Test
     public void chooseOne_2() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 2, null, null);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 2, null);
 
         Assert.assertEquals(2, result1.size());
     }
 
     @Test
     public void chooseOne_max() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 5, null, null);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 5, null);
 
         Assert.assertEquals(3, result1.size());
     }
 
     @Test
     public void chooseOne_size() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 3, null, null);
+        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 3, null);
 
         Assert.assertEquals(3, result1.size());
     }
@@ -97,7 +97,7 @@ public class PhotoChooserTest {
         ArrayList<Photo> expectedToDownload = new ArrayList<>();
         ArrayList<Photo> expectedToDelete = new ArrayList<>();
 
-        Mockito.when(chooser.chooseOneList(remote, 2, local, null)).thenReturn(choosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, local)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 
@@ -159,7 +159,7 @@ public class PhotoChooserTest {
 
         Mockito.doCallRealMethod().when(chooser).chooseRandom(syncData, local, remote, null, 2);
 
-        Mockito.when(chooser.chooseOneList(remote, 2, local, null)).thenReturn(choosen);
+        Mockito.when(chooser.chooseOneList(remote, 2, local)).thenReturn(choosen);
 
         chooser.chooseRandom(syncData, local, remote, null, 2);
 

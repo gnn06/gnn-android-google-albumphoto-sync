@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Log;
 import gnn.com.photos.service.PhotosLocalService;
@@ -139,7 +140,8 @@ public abstract class Synchronizer implements SyncData {
     }
 
     void storeSyncTime() throws IOException {
-        Log.i("SyncMethod", "write " + processFolder.getAbsolutePath());
+        Logger logger = Logger.getLogger("worker");
+        logger.finest("write " + processFolder.getAbsolutePath());
         new PersistSyncTime(processFolder).storeTime();
     }
 

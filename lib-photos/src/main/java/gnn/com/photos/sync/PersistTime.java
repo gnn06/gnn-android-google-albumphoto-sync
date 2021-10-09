@@ -23,7 +23,7 @@ abstract public class PersistTime {
         Logger logger = Logger.getLogger("worker");
         if (processFolder != null) {
             File file = new File(processFolder, filename);
-            logger.info(file.getAbsolutePath());
+            logger.finest(file.getAbsolutePath());
             FileWriter writer = new FileWriter(file);
             // TODO get current time and write it
             writer.write("sync time");

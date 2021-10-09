@@ -9,6 +9,11 @@ public class ExpirationChecker {
     private Date cacheDate;
     private int maxAge;
 
+    /**
+     *
+     * @param cacheDate
+     * @param maxAge in minutes
+     */
     public ExpirationChecker(Date cacheDate, int maxAge) {
         this.cacheDate = cacheDate;
         this.maxAge = maxAge;

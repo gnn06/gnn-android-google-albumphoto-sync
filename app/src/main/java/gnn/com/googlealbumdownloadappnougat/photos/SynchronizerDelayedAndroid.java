@@ -3,7 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.photos;
 import android.content.Context;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import gnn.com.photos.sync.SynchronizerDelayed;
 

@@ -58,7 +58,7 @@ public abstract class PhotosRemoteService {
     ArrayList<Photo> refreshBaseUrl(ArrayList<Photo> photosToRefresh) throws RemoteException {
         // require Logger was initialized
         Logger logger = Logger.getLogger("worker");
-        logger.info("refreshBaseUrl for " + photosToRefresh.size() + " photos");
+        logger.fine("refreshBaseUrl for " + photosToRefresh.size() + " photos");
         ArrayList<String> idsToRefresh = Photo.IdFromPhoto(photosToRefresh);
         return getPhotoProvider().getPhotosFromIds(idsToRefresh);
     }

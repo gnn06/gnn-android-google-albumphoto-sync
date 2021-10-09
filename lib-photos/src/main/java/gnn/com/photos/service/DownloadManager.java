@@ -23,7 +23,7 @@ public class DownloadManager {
         // require Logger was initialized
         Logger logger = Logger.getLogger("worker");
 
-        logger.info("start download for " + toDownload.size() + " photo");
+        logger.fine("start download for " + toDownload.size() + " photo");
     // rename Id before download
         if (rename != null) {
             Photo.renameList(toDownload, rename);
@@ -43,7 +43,7 @@ public class DownloadManager {
                 logger.severe("erreur " + photo + e.toString());
             }
         }
-        logger.info("downloaded count = " + count);
+        logger.fine("downloaded count = " + count);
     }
 
     void copy(URL source, File destination) throws IOException {

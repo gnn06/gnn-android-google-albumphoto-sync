@@ -102,10 +102,6 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
      */
     @Override
     public void refresh() {
-        refreshLastTime();
-    }
-
-    private void refreshLastTime() {
         Log.d(TAG, "refresh UI");
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();

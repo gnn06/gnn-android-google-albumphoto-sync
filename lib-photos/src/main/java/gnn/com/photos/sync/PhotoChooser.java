@@ -35,7 +35,8 @@ public class PhotoChooser {
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos) {
         Logger logger = Logger.getLogger("worker");
-        logger.finest("thread id=" + Thread.currentThread().getId() + "@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
+        logger.finest("thread id=" + Thread.currentThread().getId() + "@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() +
+                ", @fileHandler=" + (logger.getHandlers().length > 0 ? logger.getHandlers()[0].hashCode() : ""));
         ArrayList<Photo> result = new ArrayList<>();
         if (quantity < remoteLst.size()) {
             if (previousPhotos != null) {

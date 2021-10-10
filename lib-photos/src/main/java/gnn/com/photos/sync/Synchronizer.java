@@ -137,7 +137,7 @@ public abstract class Synchronizer implements SyncData {
 
     void storeSyncTime() throws IOException {
         Logger logger = Logger.getLogger("worker");
-        logger.finest("write " + processFolder.getAbsolutePath());
+        logger.finest("write " + (processFolder != null ? processFolder.getAbsolutePath() : "null")) ;
         new PersistSyncTime(processFolder).storeTime();
     }
 

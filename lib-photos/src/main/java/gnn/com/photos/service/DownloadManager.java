@@ -39,7 +39,6 @@ public class DownloadManager {
                 count++;
                 synchronizer.incCurrentDownload();
             } catch (MalformedURLException e) {
-                // TODO: 06/05/2019 log instead of stderr
                 logger.severe("erreur " + photo + e.toString());
             }
         }

@@ -32,8 +32,6 @@ public class SyncScheduler {
         this.context = context;
     }
 
-    // TODO: 19/03/21 que se passe-t-il si on change la fréquence d'un uniquePeriodic
-
     public void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())

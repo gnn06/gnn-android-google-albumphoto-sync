@@ -13,7 +13,6 @@ import gnn.com.photos.service.RemoteException;
 
 public abstract class Synchronizer implements SyncData {
 
-    // TODO cache properties inutile
     protected final File cacheFile;
     protected final long cacheMaxAge;
     protected final File processFolder;
@@ -56,7 +55,7 @@ public abstract class Synchronizer implements SyncData {
      * Retrieve photo list from Google, retrieve already downloaded photo from local folder
      * Determine new photo to download and photo to be deleted.
      */
-    // TODO: 07/05/2019 managed updated photo if possible
+    // TODO: 07/05/2019 manage updated photo if possible
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
         new SyncMethod(this, getRemoteService(), getLocalService())
                 .sync(albumName, folder, rename, -1);

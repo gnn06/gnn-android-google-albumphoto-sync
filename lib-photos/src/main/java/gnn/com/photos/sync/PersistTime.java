@@ -16,8 +16,6 @@ abstract public class PersistTime {
         this.filename = filename;
     }
 
-    // TODO 04/10 extract store et retrieve methods
-
     public void storeTime() throws IOException {
         // require Logger was initialized
         Logger logger = Logger.getLogger("worker");
@@ -25,7 +23,6 @@ abstract public class PersistTime {
             File file = new File(processFolder, filename);
             logger.finest(file.getAbsolutePath());
             FileWriter writer = new FileWriter(file);
-            // TODO get current time and write it
             writer.write("sync time");
             writer.close();
         }

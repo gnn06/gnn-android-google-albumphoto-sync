@@ -5,15 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import gnn.com.photos.Log;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
 
 public abstract class PhotosRemoteService {
-
-    private static final Log Log = new Log( PhotosRemoteService.class.getName() );
-
-    private static final String TAG = "PhotosRemoteService";
 
     public PhotosRemoteService() {
 

@@ -26,7 +26,6 @@ public class AppLogger {
         Handler[] handlers = logger.getHandlers();
         if (handlers.length == 0) {
             try {
-//                Handler handler = new FileHandler("/tmp/dev/toto.log");
                 Handler handler = new FileHandler(path + "/app.log", true);
                 handler.setLevel(Level.FINEST);
                 Formatter formatter = new SimpleFormatter();

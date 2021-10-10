@@ -2,9 +2,11 @@ package gnn.com.photos.service;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -15,6 +17,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
 
@@ -124,5 +129,21 @@ public class CacheTest {
         Assert.assertEquals(expected,actual);
         Mockito.verify(cache).read();
         Mockito.verify(cache, Mockito.never()).reset();
+    }
+
+    @Rule
+    public TemporaryFolder folder= new TemporaryFolder();
+
+    @Test
+    public void log() throws IOException {
+        Logger logger = Logger.getLogger("worker");
+        logger.setLevel(Level.ALL);
+        File file = folder.newFile("myfile.txt");
+        Cache.config(file, -1);
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setLevel(Level.ALL);
+        logger.addHandler(handler);
+        Cache cache = Cache.getCache();
+        cache.get();
     }
 }

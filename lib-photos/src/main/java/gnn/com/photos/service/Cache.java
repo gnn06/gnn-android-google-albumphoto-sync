@@ -7,15 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
-import gnn.com.photos.Log;
 import gnn.com.photos.Photo;
 
 public class Cache {
 
-    private static final Log Log = new Log( Cache.class.getName() );
-
     private static File file = null;
+    // -1 => no cache
     private static long maxAge = -1;
 
     public static void config(File file, long maxAge) {
@@ -44,17 +43,18 @@ public class Cache {
      * @throws IOException
      */
     public ArrayList<Photo> get() throws IOException {
+        Logger logger = Logger.getLogger("worker");
         ArrayList<Photo> photos;
         if (file != null && file.exists()) {
             long delay = System.currentTimeMillis() - file.lastModified();
             if (delay < maxAge) {
                 // valid cache
                 photos = read();
-                Log.i("Cache", "use photo list cache");
+                logger.fine("use photo list cache");
             } else {
                 // cache expired
                 reset();
-                Log.i("Cache", "photo list cache expired");
+                logger.fine("photo list cache expired with delay=" + maxAge);
                 return null;
             }
         } else {
@@ -76,13 +76,14 @@ public class Cache {
     }
 
     ArrayList<Photo> read() throws IOException {
+        Logger logger = Logger.getLogger("worker");
         if (file != null) {
             ObjectInputStream iis = new ObjectInputStream(new FileInputStream(file));
             ArrayList<Photo> result = null;
             try {
                 result = (ArrayList<Photo>) iis.readObject();
             } catch (ClassNotFoundException e) {
-                Log.e("Catch", "can't deserialize");
+                logger.severe("can't deserialize");
             }
             return result;
         } else return null;

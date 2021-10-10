@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import gnn.com.photos.Log;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 
 public abstract class Synchronizer implements SyncData {
-
-    private static final gnn.com.photos.Log Log = new Log( Synchronizer.class.getName() );
 
     // TODO cache properties inutile
     protected final File cacheFile;

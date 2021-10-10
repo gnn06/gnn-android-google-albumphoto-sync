@@ -250,6 +250,50 @@
                                 android:layout_height="wrap_content"
                                 android:text="Wallpaper une fois"/>
                         </androidx.appcompat.widget.LinearLayoutCompat>
+                        <!-- Last times -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="8dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lastTimesTitle"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            <LinearLayout
+                                android:id="@+id/lastSync"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/lastSyncLabel"/>
+                                <TextView
+                                    android:id="@+id/lastSyncTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="textEnd"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/lastWallpaper"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/lastWallpaperTimeLabel"/>
+                                <TextView
+                                    android:id="@+id/lastWallpaperTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="textEnd"/>
+                            </LinearLayout>
+                        </LinearLayout>
                         <!-- Result -->
                         <RelativeLayout
                             android:id="@+id/SectionResult"
@@ -259,6 +303,7 @@
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
+
                             <TextView
                                 android:id="@+id/titleResult"
                                 android:layout_width="wrap_content"

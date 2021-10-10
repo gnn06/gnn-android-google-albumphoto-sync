@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -241,12 +243,19 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     public void updateUI_lastSyncTime(Date lastSyncTime, Date lastWallpaperTime) {
         DateFormat sdf = SimpleDateFormat.getInstance();
-
-        String stringLastModified = lastSyncTime != null ? sdf.format(lastSyncTime) : null;
-        String stringLastWallpaperTime = lastWallpaperTime != null ? sdf.format(lastWallpaperTime) : null;
-
-        TextView textView = findViewById(R.id.result);
-        textView.setText(UITextHelper.getLastTimesString(stringLastModified, stringLastWallpaperTime));
+        // TODO 09/10 visibility de récupérer pas l'espace qui reste vide
+        findViewById(R.id.lastSync).setVisibility(lastSyncTime != null ? View.VISIBLE : View.INVISIBLE);
+        if (lastSyncTime != null) {
+            String stringLastSyncTime = lastSyncTime != null ? sdf.format(lastSyncTime) : null;
+            TextView textView = findViewById(R.id.lastSyncTime);
+            textView.setText(stringLastSyncTime);
+        }
+        findViewById(R.id.lastWallpaper).setVisibility(lastWallpaperTime != null ? View.VISIBLE : View.INVISIBLE);
+        if (lastWallpaperTime != null) {
+            String stringLastWallpaperTime = lastWallpaperTime != null ? sdf.format(lastWallpaperTime) : null;
+            TextView textView = findViewById(R.id.lastWallpaperTime);
+            textView.setText(stringLastWallpaperTime);
+        }
     }
 
     @Override

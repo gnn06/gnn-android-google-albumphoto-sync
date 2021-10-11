@@ -10,13 +10,13 @@ import gnn.com.googlealbumdownloadappnougat.settings.PresenterSettings;
 /**
  * Default values are taken from Presenter
  */
-public class PersistenceSettings {
+public class PersistPrefSettings {
 
     private static final String PREF_CACHE_MAX_AGE = "cache_max_age";
 
     private final Activity activity;
 
-    public PersistenceSettings(Activity activity) {
+    public PersistPrefSettings(Activity activity) {
         // Presenter is injected as methods parameter
         // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;

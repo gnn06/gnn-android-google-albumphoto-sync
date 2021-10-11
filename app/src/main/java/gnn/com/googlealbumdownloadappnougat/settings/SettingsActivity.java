@@ -17,14 +17,14 @@ public class SettingsActivity extends AppCompatActivity implements IPresenterSet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         presenter = new PresenterSettings(this);
-        PersistenceSettings persistence = new PersistenceSettings(this);
+        PersistPrefSettings persistence = new PersistPrefSettings(this);
         persistence.restore(presenter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        PersistenceSettings persistence = new PersistenceSettings(this);
+        PersistPrefSettings persistence = new PersistPrefSettings(this);
         persistence.save(presenter);
     }
 

@@ -26,7 +26,7 @@ public class ActivitySchedule extends AppCompatActivity implements IScheduleView
     @Override
     protected void onPause() {
         super.onPause();
-        new PersistenceSchedule(this).save(presenter);
+        new PersistPrefSchedule(this).save(presenter);
         // not necessary to save settings as settings can not be changed in this activity
     }
 

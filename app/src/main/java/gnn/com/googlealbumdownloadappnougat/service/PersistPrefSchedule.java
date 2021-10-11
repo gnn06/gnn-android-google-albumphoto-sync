@@ -3,13 +3,13 @@ package gnn.com.googlealbumdownloadappnougat.service;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class PersistenceSchedule {
+public class PersistPrefSchedule {
 
     private static final String PREF_INTERVAL = "interval";
 
     private final ActivitySchedule activity;
 
-    public PersistenceSchedule(ActivitySchedule activity) {
+    public PersistPrefSchedule(ActivitySchedule activity) {
         // Presenter is injected as methods parameter
         // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;

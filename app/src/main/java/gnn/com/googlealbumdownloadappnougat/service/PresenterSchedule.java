@@ -3,7 +3,7 @@ package gnn.com.googlealbumdownloadappnougat.service;
 import androidx.work.WorkInfo;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.SyncData;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
@@ -23,7 +23,7 @@ public class PresenterSchedule implements IPresenterSchedule {
 
     @Override
     public void onInit() {
-        new PersistenceSchedule(this.activity).restore(this);
+        new PersistPrefSchedule(this.activity).restore(this);
         WorkInfo info = new SyncScheduler(this.activity).getState();
         view.setStateSync(info);
         WorkInfo stateWallpaper = new WallpaperScheduler(this.activity).getState();
@@ -33,7 +33,7 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onScheduleSync() {
         SyncScheduler sched = new SyncScheduler(activity);
-        SyncData data = new PersistenceMain(activity).getData();
+        SyncData data = new PersistPrefMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
         int interval = view.getIntervalSync();
         sched.schedule(data.getAlbum(),
@@ -53,7 +53,7 @@ public class PresenterSchedule implements IPresenterSchedule {
     @Override
     public void onScheduleWallpaper() {
         WallpaperScheduler sched = new WallpaperScheduler(activity);
-        SyncData data = new PersistenceMain(activity).getData();
+        SyncData data = new PersistPrefMain(activity).getData();
         ApplicationContext appContext = ApplicationContext.getInstance(activity);
         // TODO fix missing arguments
         //sched.schedule(data.getFolderHuman(), wallpaperMaxAge, syncMaxAge, album, quantity, rename, cacheMaxAge, appContext);

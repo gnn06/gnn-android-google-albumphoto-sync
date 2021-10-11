@@ -22,8 +22,6 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,8 +29,8 @@ import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.settings.SettingsActivity;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistenceMain;
-import gnn.com.googlealbumdownloadappnougat.settings.PersistenceSettings;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
@@ -57,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new PresenterMain(this, this);
 
-        new PersistenceMain(this).restore(presenter);
-        new PersistenceSettings(this).restore(presenter);
+        new PersistPrefMain(this).restore(presenter);
+        new PersistPrefSettings(this).restore(presenter);
 
         // avoid to call click event when initialize UI
         presenter.init();
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onPause() {
         super.onPause();
-        new PersistenceMain(this).save(presenter);
+        new PersistPrefMain(this).save(presenter);
         // not necessary to save settings as settings can not be changed in this activity
     }
 

@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 /**
  * Default values are taken from Presenter
  */
-public class PersistenceMain {
+public class PersistPrefMain {
 
     private static final String PREF_ALBUM_KEY = "album";
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
@@ -18,7 +18,7 @@ public class PersistenceMain {
 
     private final Activity activity;
 
-    public PersistenceMain(Activity activity) {
+    public PersistPrefMain(Activity activity) {
         // Presenter is injected as methods parameter
         // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;

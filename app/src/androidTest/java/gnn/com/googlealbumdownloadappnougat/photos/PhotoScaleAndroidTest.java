@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertThat;
 
 //@RunWith(RobolectricTestRunner.class)
 @RunWith(AndroidJUnit4.class)
+@Ignore
 public class PhotoScaleAndroidTest {
     @Test
     public void test() throws FileNotFoundException {

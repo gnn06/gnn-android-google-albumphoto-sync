@@ -55,7 +55,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotos(), getProcessFolder());
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosMinute(), getProcessFolder());
         }
         return sync;
     }
@@ -136,8 +136,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.updateUI_CallResult(sync, step);
     }
 
-    // --- Album ---
 
+    // --- Album ---
     private ArrayList<String> mAlbums;
 
     /**
@@ -154,7 +154,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotos());
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosMinute());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -179,8 +179,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         this.mAlbums = albums;
         view.showChooseAlbumDialog(albums);
     }
-    // Use from persistence
 
+    // Use from persistence
     @Override
     public void setAlbum(String album) {
         this.album = album;
@@ -198,8 +198,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.onAlbumChosenResult(albumName);
     }
 
-    // --- folder ---
 
+    // --- folder ---
     /**
      * default value = "Pictures"
      * persistant data
@@ -210,8 +210,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public String getFolderHuman() {
         return this.folderHuman;
     }
-    // Use from Persistence
 
+    // Use from Persistence
     /**
      * Get File from human version of folder
      * @return File
@@ -243,8 +243,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.updateUI_Folder(humanPath);
     }
 
-    // --- quantity ---
 
+    // --- quantity ---
     /**
      * @return -1 if no quantity specified
      */
@@ -282,16 +282,37 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
     }
 
+    /**
+     *
+     * int frequencySync fréquence de téléchargement en minute
+     */
+    @Override
+    public int getFrequencySyncMinute() {
+        return getFrequencySync() * 60;
+    }
+
     @Override
     public void setFrequencySync(int frequency) {
         view.setFrequencySync(frequency == -1 ? "" : Integer.toString(frequency));
     }
 
+    /**
+     *
+     * @return frequence de recupération des nouvelles phtos in days
+     */
     @Override
     public int getFrequencyUpdatePhotos() {
         String frequency = view.getFrequencyUpdatePhotos();
         return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
 
+    }
+
+    /**
+     * @return fréquence en minute
+     */
+    @Override
+    public int getFrequencyUpdatePhotosMinute() {
+        return getFrequencyUpdatePhotos() * 24 * 60;
     }
 
     @Override
@@ -318,7 +339,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             scheduler.schedule(
                     this.getFolderHuman(),
                     getFrequencyWallpaper(),
-                    getFrequencySync() * 60, getAlbum(), getQuantity(), getRename(), getFrequencyUpdatePhotos(), appContext);
+                    getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
+                    getFrequencyUpdatePhotosMinute(), appContext);
         } else {
             scheduler.cancel();
         }

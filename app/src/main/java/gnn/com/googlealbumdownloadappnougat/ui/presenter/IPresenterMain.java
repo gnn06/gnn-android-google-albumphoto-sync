@@ -60,9 +60,13 @@ public interface IPresenterMain {
 
     int getFrequencySync();
 
+    int getFrequencySyncMinute();
+
     void setFrequencySync(int frequency);
 
     int getFrequencyUpdatePhotos();
+
+    int getFrequencyUpdatePhotosMinute();
 
     void setFrequencyUpdatePhotos(int frequency);
 

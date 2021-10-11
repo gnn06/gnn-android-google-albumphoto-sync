@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import com.google.android.gms.auth.GoogleAuthException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Ignore
 public class SyncTaskTest {
 
     @Test

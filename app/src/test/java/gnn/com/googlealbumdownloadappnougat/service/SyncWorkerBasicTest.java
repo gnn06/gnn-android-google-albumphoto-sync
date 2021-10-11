@@ -7,6 +7,7 @@ import androidx.work.ListenableWorker;
 import androidx.work.WorkerParameters;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -34,6 +35,7 @@ import static org.mockito.Mockito.when;
 // N'utilise ni WorkManagerTestInitHelper ni TestWorkerBuilderl
 // ca a l'avantage de ne pas avoir à s'éxécuter dans le virtual device
 // ca permet surtout d'utiliser powermock pour mocker les private et les news
+@Ignore
 public class SyncWorkerBasicTest {
 
     @Mock

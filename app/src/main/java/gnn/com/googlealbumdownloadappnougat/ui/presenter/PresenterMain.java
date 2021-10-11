@@ -55,13 +55,12 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getCacheMaxAge(), getProcessFolder());
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotos(), getProcessFolder());
         }
         return sync;
     }
 
     private File cacheFile;
-    private long cacheMaxAge; // default value come from Preferences
 
     /**
      * Get File to store cache
@@ -155,7 +154,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getCacheMaxAge());
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotos());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -309,15 +308,6 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.setRename(rename);
     }
 
-    public long getCacheMaxAge() {
-        return this.cacheMaxAge;
-    }
-
-    @Override
-    public void setCacheMaxAge(long cacheMaxAge) {
-        this.cacheMaxAge = cacheMaxAge;
-    }
-
     // --- Actions ---
 
     @Override
@@ -328,7 +318,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             scheduler.schedule(
                     this.getFolderHuman(),
                     getFrequencyWallpaper(),
-                    getFrequencySync() * 60, getAlbum(), getQuantity(), getRename(), getCacheMaxAge(), appContext);
+                    getFrequencySync() * 60, getAlbum(), getQuantity(), getRename(), getFrequencyUpdatePhotos(), appContext);
         } else {
             scheduler.cancel();
         }

@@ -25,15 +25,12 @@ public class PersistPrefSettings {
     public void save(IPresenterSettings presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong(PREF_CACHE_MAX_AGE, presenter.getCacheMaxAge());
         editor.apply();
     }
 
     public void restore(IPresenterSettings presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            long cacheMaxAge = preferences.getLong(PREF_CACHE_MAX_AGE, PresenterSettings.DefaultCacheMaxAge);
-            presenter.setCacheMaxAge(cacheMaxAge);
         }
     }
 }

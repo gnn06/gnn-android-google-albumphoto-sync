@@ -130,9 +130,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         } else if (item.getItemId() == R.id.scheduleDetails) {
             presenter.onMenuScheduleDetail();
             return true;
-        } else if (item.getItemId() == R.id.settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }

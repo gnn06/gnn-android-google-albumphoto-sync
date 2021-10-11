@@ -6,6 +6,4 @@
         android:title="@string/reset_cache"/>
     <item android:id="@+id/scheduleDetails"
         android:title="@string/schedule_details"/>
-    <item android:id="@+id/settings"
-        android:title="@string/settings"/>
 </menu>

@@ -62,6 +62,10 @@ public interface IPresenterMain {
 
     void setFrequencySync(int frequency);
 
+    int getFrequencyUpdatePhotos();
+
+    void setFrequencyUpdatePhotos(int frequency);
+
     void onButtonSyncOnce();
 
     void onButtonWallpaperOnce();

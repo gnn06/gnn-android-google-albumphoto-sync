@@ -339,4 +339,23 @@ public class MainActivity extends AppCompatActivity implements IView {
         View text = findViewById(R.id.textFrequencySync);
         text.setEnabled(!switchChecked);
     }
+
+    @Override
+    public String getFrequencyUpdatePhotos() {
+        TextView view = findViewById(R.id.textFrequencyUpdatePhotos);
+        return view.getText().toString();
+    }
+
+    @Override
+    public void setFrequencyUpdatePhotos(String frequency) {
+        TextView view = findViewById(R.id.textFrequencyUpdatePhotos);
+        view.setText(frequency);
+    }
+
+    @Override
+    public void enableFrequencyUpdatePhotos(boolean switchChecked) {
+        View text = findViewById(R.id.textFrequencyUpdatePhotos);
+        text.setEnabled(!switchChecked);
+    }
+
 }

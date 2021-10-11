@@ -84,16 +84,17 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void init() {
+        // item saved in preferences are restored by Persisxxx.restore
         view.updateUI_User();
 
         // refreshLastTime will be called by onStart;
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();
-
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
+        view.enableFrequencyUpdatePhotos(scheduled);
     }
 
     /**
@@ -288,6 +289,18 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
+    public int getFrequencyUpdatePhotos() {
+        String frequency = view.getFrequencyUpdatePhotos();
+        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+
+    }
+
+    @Override
+    public void setFrequencyUpdatePhotos(int frequency) {
+        view.setFrequencyUpdatePhotos(frequency == -1 ? "" : Integer.toString(frequency));
+    }
+
+    @Override
     public String getRename() {
         return view.getRename();
     }
@@ -321,6 +334,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         }
         view.enableFrequencyWallpaper(checked);
         view.enableFrequencySync(checked);
+        view.enableFrequencyUpdatePhotos(checked);
     }
 
     @Override

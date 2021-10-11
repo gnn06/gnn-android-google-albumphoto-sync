@@ -9,12 +9,15 @@ import android.preference.PreferenceManager;
  */
 public class PersistPrefMain {
 
+    // TODO create default values
+
     private static final String PREF_ALBUM_KEY = "album";
     private static final String PREF_FOLDER_HUMAN_KEY = "folder_human";
     private static final String PREF_QUANTITY_KEY = "quantity";
     private static final String PREF_RENAME = "rename";
     private static final String PREF_FREQ_WALLPAPER = "frequency_wallpaper";
     private static final String PREF_FREQ_SYNC = "frequency_sync";
+    private static final String PREF_FREQ_UPDATE_PHOTOS = "frequency_update_photos";
 
     private final Activity activity;
 
@@ -38,6 +41,7 @@ public class PersistPrefMain {
         String rename = presenter.getRename();
         int frequencyWallpaper = presenter.getFrequencyWallpaper();
         int frequencySync = presenter.getFrequencySync();
+        int frequencyUpdatePhotos = presenter.getFrequencyUpdatePhotos();
 
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
@@ -45,6 +49,7 @@ public class PersistPrefMain {
         editor.putString(PREF_RENAME, rename);
         editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
         editor.putInt(PREF_FREQ_SYNC, frequencySync);
+        editor.putInt(PREF_FREQ_UPDATE_PHOTOS, frequencyUpdatePhotos);
 
         editor.apply();
     }
@@ -66,6 +71,10 @@ public class PersistPrefMain {
         presenter.setRename(data.getRename());
         presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
         presenter.setFrequencySync(data.getFrequencySync());
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        int frequencyUpdatePhotos = preferences.getInt(PREF_FREQ_UPDATE_PHOTOS, -1);
+        presenter.setFrequencyUpdatePhotos(frequencyUpdatePhotos);
     }
 
     /**

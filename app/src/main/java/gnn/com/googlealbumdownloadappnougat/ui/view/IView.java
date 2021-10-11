@@ -49,4 +49,9 @@ public interface IView {
 
     void enableFrequencySync(boolean checked);
 
+    String getFrequencyUpdatePhotos();
+
+    void setFrequencyUpdatePhotos(String frequency);
+
+    void enableFrequencyUpdatePhotos(boolean checked);
 }

@@ -51,5 +51,6 @@
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
     <string name="lastWallpaperTimeLabel">Dernier fond d\'écran :</string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours.</string>
 
 </resources>

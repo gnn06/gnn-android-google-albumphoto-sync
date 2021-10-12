@@ -27,6 +27,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.WritePermission;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.sync.PersistWallpaperTime;
@@ -103,9 +104,12 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void refreshLastTime() {
         Log.d(TAG, "refresh UI");
+        // TODO 12/10 un peu génant de devoir configure le cache ici :-(
+        Cache.config(getCacheFile(), getFrequencyUpdatePhotos());
+        Date lastUpdateTime = Cache.getCache().getLastUpdateTime();
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
-        view.updateUI_lastSyncTime(lastSyncTime, lastWallpaperTime);
+        view.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
     }
 
     @Override

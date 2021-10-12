@@ -297,6 +297,21 @@
                                 android:text="@string/lastTimesTitle"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                             <LinearLayout
+                                android:id="@+id/lastUpdatePhotos"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/lastUpdatePhotosLabel"/>
+                                <TextView
+                                    android:id="@+id/lastUpdatePhotosTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textAlignment="textEnd"/>
+                            </LinearLayout>
+                            <LinearLayout
                                 android:id="@+id/lastSync"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

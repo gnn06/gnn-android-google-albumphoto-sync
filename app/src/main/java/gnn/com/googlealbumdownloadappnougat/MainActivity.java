@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.settings.SettingsActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
@@ -236,9 +235,15 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public void updateUI_lastSyncTime(Date lastSyncTime, Date lastWallpaperTime) {
+    public void updateUI_lastSyncTime(Date lastUpdatePhotosTime, Date lastSyncTime, Date lastWallpaperTime) {
         DateFormat sdf = SimpleDateFormat.getInstance();
         // TODO 09/10 visibility de récupérer pas l'espace qui reste vide
+        findViewById(R.id.lastUpdatePhotos).setVisibility(lastUpdatePhotosTime != null ? View.VISIBLE : View.INVISIBLE);
+        if (lastUpdatePhotosTime != null) {
+            String lastTime = lastUpdatePhotosTime != null ? sdf.format(lastUpdatePhotosTime) : null;
+            TextView textView = findViewById(R.id.lastUpdatePhotosTime);
+            textView.setText(lastTime);
+        }
         findViewById(R.id.lastSync).setVisibility(lastSyncTime != null ? View.VISIBLE : View.INVISIBLE);
         if (lastSyncTime != null) {
             String stringLastSyncTime = lastSyncTime != null ? sdf.format(lastSyncTime) : null;

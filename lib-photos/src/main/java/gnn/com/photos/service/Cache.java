@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
@@ -30,7 +31,7 @@ public class Cache {
     private static Cache _cache;
 
     // Used to Unit test
-    static Cache getCache() {
+    public static Cache getCache() {
         if (_cache == null) {
             _cache = new Cache();
         }
@@ -61,6 +62,16 @@ public class Cache {
             photos = this.photos;
         }
         return photos;
+    }
+
+    /**
+     * @return Date or null
+     */
+    public Date getLastUpdateTime() {
+        if (file != null && file.exists()) {
+            return new Date(file.lastModified());
+        }
+        return null;
     }
 
     public void put(ArrayList<Photo> photos) throws IOException {

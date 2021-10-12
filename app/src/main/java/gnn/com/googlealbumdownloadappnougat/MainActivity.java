@@ -238,19 +238,19 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void updateUI_lastSyncTime(Date lastUpdatePhotosTime, Date lastSyncTime, Date lastWallpaperTime) {
         DateFormat sdf = SimpleDateFormat.getInstance();
         // TODO 09/10 visibility de récupérer pas l'espace qui reste vide
-        findViewById(R.id.lastUpdatePhotos).setVisibility(lastUpdatePhotosTime != null ? View.VISIBLE : View.INVISIBLE);
+        findViewById(R.id.lastUpdatePhotos).setVisibility(lastUpdatePhotosTime != null ? View.VISIBLE : View.GONE);
         if (lastUpdatePhotosTime != null) {
             String lastTime = lastUpdatePhotosTime != null ? sdf.format(lastUpdatePhotosTime) : null;
             TextView textView = findViewById(R.id.lastUpdatePhotosTime);
             textView.setText(lastTime);
         }
-        findViewById(R.id.lastSync).setVisibility(lastSyncTime != null ? View.VISIBLE : View.INVISIBLE);
+        findViewById(R.id.lastSync).setVisibility(lastSyncTime != null ? View.VISIBLE : View.GONE);
         if (lastSyncTime != null) {
             String stringLastSyncTime = lastSyncTime != null ? sdf.format(lastSyncTime) : null;
             TextView textView = findViewById(R.id.lastSyncTime);
             textView.setText(stringLastSyncTime);
         }
-        findViewById(R.id.lastWallpaper).setVisibility(lastWallpaperTime != null ? View.VISIBLE : View.INVISIBLE);
+        findViewById(R.id.lastWallpaper).setVisibility(lastWallpaperTime != null ? View.VISIBLE : View.GONE);
         if (lastWallpaperTime != null) {
             String stringLastWallpaperTime = lastWallpaperTime != null ? sdf.format(lastWallpaperTime) : null;
             TextView textView = findViewById(R.id.lastWallpaperTime);

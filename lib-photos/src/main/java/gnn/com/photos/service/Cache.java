@@ -64,16 +64,6 @@ public class Cache {
         return photos;
     }
 
-    /**
-     * @return Date or null
-     */
-    public Date getLastUpdateTime() {
-        if (file != null && file.exists()) {
-            return new Date(file.lastModified());
-        }
-        return null;
-    }
-
     public void put(ArrayList<Photo> photos) throws IOException {
         this.photos = photos;
         if (file != null) {
@@ -105,5 +95,15 @@ public class Cache {
         if (file != null) {
             file.delete();
         }
+    }
+
+    /**
+     * @return Date or null
+     */
+    static public Date getLastUpdateTime(File file) {
+        if (file != null && file.exists()) {
+            return new Date(file.lastModified());
+        }
+        return null;
     }
 }

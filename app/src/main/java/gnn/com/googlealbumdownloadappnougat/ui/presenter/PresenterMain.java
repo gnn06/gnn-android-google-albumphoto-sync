@@ -104,9 +104,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void refreshLastTime() {
         Log.d(TAG, "refresh UI");
-        // TODO 12/10 un peu génant de devoir configure le cache ici :-(
-        Cache.config(getCacheFile(), getFrequencyUpdatePhotos());
-        Date lastUpdateTime = Cache.getCache().getLastUpdateTime();
+        Date lastUpdateTime = Cache.getLastUpdateTime(getCacheFile());
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
         view.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
@@ -381,7 +379,6 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         Intent intent = new Intent(activity, ActivitySchedule.class);
 //        intent.putE
         activity.startActivity(intent);
-        // TODO 08/10 manque refresh UI pour afficher la last wallpaper time
     }
 
     // --- private methods ---

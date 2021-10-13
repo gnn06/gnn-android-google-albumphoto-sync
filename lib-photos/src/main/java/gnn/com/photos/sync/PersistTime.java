@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import javax.annotation.Nonnull;
+
 abstract public class PersistTime {
 
     private final File processFolder;
     private final String filename;
 
-    public PersistTime(File processFolder, String filename) {
+    public PersistTime(@Nonnull File processFolder, String filename) {
         this.processFolder = processFolder;
         this.filename = filename;
     }
@@ -41,5 +43,10 @@ abstract public class PersistTime {
             }
         }
         return stringLastModified;
+    }
+
+    public void reset() {
+        File file = new File(processFolder, filename);
+        file.delete();
     }
 }

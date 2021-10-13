@@ -30,6 +30,7 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.sync.PersistSyncTime;
 import gnn.com.photos.sync.PersistWallpaperTime;
 
 public class PresenterMain implements IPresenterMain, IPresenterSettings {
@@ -372,6 +373,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onMenuResetCache() {
         getSync().resetCache();
+        new PersistSyncTime(getProcessFolder()).reset();
     }
 
     @Override

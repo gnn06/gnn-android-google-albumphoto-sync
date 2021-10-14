@@ -96,175 +96,197 @@
                                 android:text="@string/folder" />
 
                         </RelativeLayout>
-                        <!-- Quantity -->
-                        <RelativeLayout
-                            android:id="@+id/SectionSyncQuantity"
+                        <!-- Option de téléchargement -->
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="16dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp">
-
+                            android:orientation="vertical">
+                            <!-- Quantity -->
                             <TextView
-                                android:id="@+id/titleQuantity"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/quantity"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                                android:text="Options de téléchargement"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                android:paddingLeft="16dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp"/>
 
-                            <EditText
-                                android:id="@+id/textQuantity"
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:id="@+id/SectionSyncQuantity"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/titleQuantity"
-                                android:autofillHints="no"
-                                android:ems="5"
-                                android:inputType="number" />
+                                android:background="?android:attr/selectableItemBackground"
+                                android:paddingLeft="16dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp">
 
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/titleQuantity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/quantity"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                                <EditText
+                                    android:id="@+id/textQuantity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleQuantity"
+                                    android:autofillHints="no"
+                                    android:ems="5"
+                                    android:inputType="number" />
+
+                                <TextView
+                                    android:id="@+id/textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleQuantity"
+                                    android:layout_toEndOf="@id/textQuantity"
+                                    android:layout_marginStart="16dp"
+                                    android:text="@string/quantity_explenation" />
+                            </RelativeLayout>
+                            <!-- Rename -->
+                            <RelativeLayout
+                                android:id="@+id/SectionRename"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/titleQuantity"
-                                android:layout_toEndOf="@id/textQuantity"
-                                android:layout_marginStart="16dp"
-                                android:text="@string/quantity_explenation" />
-                        </RelativeLayout>
-                        <!-- Rename -->
-                        <RelativeLayout
-                            android:id="@+id/SectionRename"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="16dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp">
-                            <TextView
-                                android:id="@+id/titleRename"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/rename"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-                            <EditText
-                                android:id="@+id/textRename"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleRename"
-                                android:ems="10"/>
-                        </RelativeLayout>
+                                android:background="?android:attr/selectableItemBackground"
+                                android:paddingLeft="16dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp">
+                                <TextView
+                                    android:id="@+id/titleRename"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/rename"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                <EditText
+                                    android:id="@+id/textRename"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleRename"
+                                    android:ems="10"/>
+                            </RelativeLayout>
+                        </LinearLayout>
                         <!-- Frequencies -->
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/frequencyGroup"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:paddingLeft="16dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp"/>
-                        <RelativeLayout
-                            android:id="@+id/SectionFreqeuncyUpdatePhotos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="24dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp">
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/frequencyGroup"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                android:paddingLeft="16dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp"/>
+                            <RelativeLayout
+                                android:id="@+id/SectionFreqeuncyUpdatePhotos"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?android:attr/selectableItemBackground"
+                                android:paddingLeft="24dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp">
 
-                            <TextView
-                                android:id="@+id/titleFrequenceyUpdatePhotos"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/titleFrequenceyUpdatePhotos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/frequencyUpdatePhotos"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                <EditText
+                                    android:id="@+id/textFrequencyUpdatePhotos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceyUpdatePhotos"
+                                    android:autofillHints="no"
+                                    android:ems="5"
+                                    android:inputType="number" />
+                                <TextView
+                                    android:id="@+id/textExplenationFrequencyUpdatePhotos"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceyUpdatePhotos"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_toEndOf="@id/textFrequencyUpdatePhotos"
+                                    android:text="@string/frequenceUpdatePhotosExplenation" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/SectionFreqeuncySync"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/frequencyUpdatePhotos"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                            <EditText
-                                android:id="@+id/textFrequencyUpdatePhotos"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                                android:autofillHints="no"
-                                android:ems="5"
-                                android:inputType="number" />
-                            <TextView
-                                android:id="@+id/textExplenationFrequencyUpdatePhotos"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                                android:layout_marginStart="16dp"
-                                android:layout_toEndOf="@id/textFrequencyUpdatePhotos"
-                                android:text="@string/frequenceUpdatePhotosExplenation" />
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:id="@+id/SectionFreqeuncySync"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="24dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp">
+                                android:background="?android:attr/selectableItemBackground"
+                                android:paddingLeft="24dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp">
 
-                            <TextView
-                                android:id="@+id/titleFrequenceySync"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/frequencySync"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                            <EditText
-                                android:id="@+id/textFrequencySync"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceySync"
-                                android:autofillHints="no"
-                                android:ems="5"
-                                android:inputType="number" />
+                                <TextView
+                                    android:id="@+id/titleFrequenceySync"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/frequencySync"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                <EditText
+                                    android:id="@+id/textFrequencySync"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceySync"
+                                    android:autofillHints="no"
+                                    android:ems="5"
+                                    android:inputType="number" />
 
-                            <TextView
-                                android:id="@+id/textExplenationFrequencySync"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/textExplenationFrequencySync"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceySync"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_toEndOf="@id/textFrequencySync"
+                                    android:text="@string/frequenceSyncExplenation" />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/SectionFreqeuncyWallpaper"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceySync"
-                                android:layout_marginStart="16dp"
-                                android:layout_toEndOf="@id/textFrequencySync"
-                                android:text="@string/frequenceSyncExplenation" />
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:id="@+id/SectionFreqeuncyWallpaper"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="24dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp">
-                            <TextView
-                                android:id="@+id/titleFrequenceyWallpaper"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/frequencyWallpaper"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                            <EditText
-                                android:id="@+id/textFrequencyWallpaper"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceyWallpaper"
-                                android:autofillHints="no"
-                                android:ems="5"
-                                android:inputType="number" />
+                                android:background="?android:attr/selectableItemBackground"
+                                android:paddingLeft="24dp"
+                                android:paddingTop="8dp"
+                                android:paddingRight="16dp"
+                                android:paddingBottom="8dp">
+                                <TextView
+                                    android:id="@+id/titleFrequenceyWallpaper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/frequencyWallpaper"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                                <EditText
+                                    android:id="@+id/textFrequencyWallpaper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceyWallpaper"
+                                    android:autofillHints="no"
+                                    android:ems="5"
+                                    android:inputType="number" />
 
-                            <TextView
-                                android:id="@+id/textExplenationFrequencyWallpaper"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/titleFrequenceyWallpaper"
-                                android:layout_marginStart="16dp"
-                                android:layout_toEndOf="@id/textFrequencyWallpaper"
-                                android:text="@string/frequenceWallpaperExplenation" />
-                        </RelativeLayout>
+                                <TextView
+                                    android:id="@+id/textExplenationFrequencyWallpaper"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/titleFrequenceyWallpaper"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_toEndOf="@id/textFrequencyWallpaper"
+                                    android:text="@string/frequenceWallpaperExplenation" />
+                            </RelativeLayout>
+                        </LinearLayout>
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/SwitchWallPaper"
                             android:layout_width="match_parent"

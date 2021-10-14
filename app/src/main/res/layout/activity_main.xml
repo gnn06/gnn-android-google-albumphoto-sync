@@ -165,11 +165,12 @@
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
+
                             <TextView
                                 android:id="@+id/titleFrequenceyUpdatePhotos"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/frequencySync"
+                                android:text="@string/frequencyUpdatePhotos"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                             <EditText
                                 android:id="@+id/textFrequencyUpdatePhotos"
@@ -197,6 +198,7 @@
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
+
                             <TextView
                                 android:id="@+id/titleFrequenceySync"
                                 android:layout_width="wrap_content"
@@ -258,7 +260,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/textFrequencyWallpaper"
-                                android:text="Changement automatique du fond d'écran ">
+                                android:text="Changement automatique du fond d'écran "
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                                >
                             </androidx.appcompat.widget.SwitchCompat>
                         </RelativeLayout>
                         <!-- Buttons (sync, scheduler, wallpaper) -->

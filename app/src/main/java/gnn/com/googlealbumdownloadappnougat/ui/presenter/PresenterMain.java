@@ -374,6 +374,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onMenuResetCache() {
         getSync().resetCache();
         new PersistSyncTime(getProcessFolder()).reset();
+        new PersistWallpaperTime(getProcessFolder()).reset();
+        refreshLastTime();
     }
 
     @Override

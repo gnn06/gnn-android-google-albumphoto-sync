@@ -156,12 +156,21 @@
                                 android:ems="10"/>
                         </RelativeLayout>
                         <!-- Frequencies -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/frequencyGroup"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp"/>
                         <RelativeLayout
                             android:id="@+id/SectionFreqeuncyUpdatePhotos"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="24dp"
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
@@ -171,7 +180,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/frequencyUpdatePhotos"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             <EditText
                                 android:id="@+id/textFrequencyUpdatePhotos"
                                 android:layout_width="wrap_content"
@@ -194,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="24dp"
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
@@ -204,7 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/frequencySync"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             <EditText
                                 android:id="@+id/textFrequencySync"
                                 android:layout_width="wrap_content"
@@ -228,7 +237,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="?android:attr/selectableItemBackground"
-                            android:paddingLeft="16dp"
+                            android:paddingLeft="24dp"
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
                             android:paddingBottom="8dp">
@@ -237,7 +246,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/frequencyWallpaper"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                             <EditText
                                 android:id="@+id/textFrequencyWallpaper"
                                 android:layout_width="wrap_content"
@@ -255,16 +264,20 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_toEndOf="@id/textFrequencyWallpaper"
                                 android:text="@string/frequenceWallpaperExplenation" />
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/SwitchWallPaper"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/textFrequencyWallpaper"
-                                android:text="Changement automatique du fond d'écran "
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                >
-                            </androidx.appcompat.widget.SwitchCompat>
                         </RelativeLayout>
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/SwitchWallPaper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/textFrequencyWallpaper"
+                            android:text="Changement automatique du fond d'écran "
+                            android:paddingLeft="24dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            >
+                        </androidx.appcompat.widget.SwitchCompat>
                         <!-- Buttons (sync, scheduler, wallpaper) -->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/SectionSync"

@@ -54,5 +54,6 @@
     <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours.</string>
     <string name="lastUpdatePhotosLabel">"Dernière récupération des photos : "</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
+    <string name="frequencyGroup">Fréquences</string>
 
 </resources>

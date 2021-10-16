@@ -22,7 +22,7 @@ public class Logger {
 
     private FileWriter fw;
 
-    public Logger(String filename) {
+    private Logger(String filename) {
         try {
             fw = new FileWriter(filename, true);
         } catch (IOException e) {

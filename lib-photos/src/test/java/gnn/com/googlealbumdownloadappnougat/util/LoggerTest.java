@@ -10,7 +10,7 @@ public class LoggerTest {
 
     @Test
     public void log() throws IOException {
-        File folder = Files.createTempDirectory("gnn").toFile();
+        File folder = new File(System.getProperty("java.io.tmpdir"));
         System.out.println(folder.getAbsolutePath());
 
         Logger.configure(folder.getAbsolutePath());

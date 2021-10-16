@@ -20,14 +20,7 @@ public class Logger {
         return _logger;
     }
 
-    private FileWriter fw;
-
     private Logger(String filename) {
-        try {
-            fw = new FileWriter(filename, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void info(String message)  {
@@ -47,20 +40,22 @@ public class Logger {
     }
 
     private void message(String message) {
+        FileWriter fw = null;
         try {
+            fw = new FileWriter(_filename, true);
             Date date = new Date();
             fw.write(date.toString() + " " + message + "\n");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void close()  {
-        try {
-            fw.close();
-            _logger = null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

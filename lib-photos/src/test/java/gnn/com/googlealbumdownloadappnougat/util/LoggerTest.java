@@ -23,12 +23,12 @@ public class LoggerTest {
 
         logger = Logger.getLogger();
 
-        logger.info("info222222");
+        logger.info("info après 2° getLogger");
 
         logger.close();
 
         logger = Logger.getLogger();
-        logger.info("info appended");
+        logger.info("info après close");
         logger.close();
     }
 }

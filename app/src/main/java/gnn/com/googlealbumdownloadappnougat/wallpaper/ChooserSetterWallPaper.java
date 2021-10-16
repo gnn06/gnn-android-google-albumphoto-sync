@@ -13,11 +13,10 @@ import androidx.annotation.NonNull;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
-import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PersistWallpaperTime;
@@ -42,7 +41,7 @@ public class ChooserSetterWallPaper {
     }
 
     public void setWallpaper() {
-        Logger logger = AppLogger.getLogger(activity);
+        Logger logger = Logger.getLogger(null);
         Photo photo = chooseLocalPhoto(photoFolder);
         logger.info("wallpaper.setWallpaper has choose " + photo.getId());
         if (photo != null) {
@@ -67,7 +66,7 @@ public class ChooserSetterWallPaper {
         PhotosLocalService pls = new PhotosLocalService();
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
         if (localPhotos.size() > 0) {
-            Logger logger = AppLogger.getLogger(this.activity);
+            Logger logger = Logger.getLogger(null);
             ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }
@@ -81,7 +80,7 @@ public class ChooserSetterWallPaper {
 
     private void setWallpaper(Bitmap bitmap) {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(activity);
-        Logger logger = AppLogger.getLogger(activity);
+        Logger logger = Logger.getLogger(null);
         try {
             Point point = getScreenSize();
             // portail = 1080x1977 and paysage = 1977x1080

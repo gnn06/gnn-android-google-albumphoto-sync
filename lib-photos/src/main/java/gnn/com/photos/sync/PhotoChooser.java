@@ -2,8 +2,8 @@ package gnn.com.photos.sync;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Logger;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 
 /*
@@ -34,9 +34,7 @@ public class PhotoChooser {
      * @param previousPhotos
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos) {
-        Logger logger = Logger.getLogger("worker");
-        logger.finest("thread id=" + Thread.currentThread().getId() + "@PhotoChooser=" + this.hashCode() + ", @logger" + logger.hashCode() +
-                ", @fileHandler=" + (logger.getHandlers().length > 0 ? logger.getHandlers()[0].hashCode() : ""));
+        Logger logger = Logger.getLogger(null);
         ArrayList<Photo> result = new ArrayList<>();
         if (quantity < remoteLst.size()) {
             if (previousPhotos != null) {

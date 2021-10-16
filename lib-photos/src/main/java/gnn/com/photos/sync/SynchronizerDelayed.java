@@ -3,8 +3,8 @@ package gnn.com.photos.sync;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Logger;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.util.ExpirationChecker;
 

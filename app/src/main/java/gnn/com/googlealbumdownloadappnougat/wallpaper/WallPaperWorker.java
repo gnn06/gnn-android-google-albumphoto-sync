@@ -8,10 +8,9 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
-import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 /**
  * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired
@@ -23,8 +22,6 @@ import gnn.com.googlealbumdownloadappnougat.util.AppLogger;
  */
 public class WallPaperWorker extends Worker {
 
-    private final static String TAG = "WalllPaperWorker";
-
     public WallPaperWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
@@ -32,40 +29,39 @@ public class WallPaperWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Logger logger = AppLogger.getLogger(getApplicationContext());
-        try {
-            logger.info("start wallpaper worker");
-            String destinationPath = getInputData().getString("folderPath");
-            File destinationFolder = getDestinationFolder(destinationPath);
+        Logger logger = Logger.getLogger(getApplicationContext().getCacheDir().getAbsolutePath() + "/gnnapp.log");
+            try {
+                logger.info("start wallpaper worker");
+                String destinationPath = getInputData().getString("folderPath");
+                File destinationFolder = getDestinationFolder(destinationPath);
 
-            int delay = getInputData().getInt("syncMaxAge", 0);
+                int delay = getInputData().getInt("syncMaxAge", 0);
 
-            File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-            long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
-            File processFolder = new File(getInputData().getString("processAbsolutePath"));
+                File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
+                long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
+                File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
-            logger.finest("Wallpaper.doWork start thread id=" + Thread.currentThread().getId() + ", @logger=" + logger.hashCode() + ", @logger=" + logger.hashCode() + ", @fileHandler=" + logger.getHandlers()[0].hashCode());
-            logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
+                logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
 
-            String albumName = getInputData().getString("album");
-            String rename = getInputData().getString("rename");
-            int quantity = getInputData().getInt("quantity", -1);
+                String albumName = getInputData().getString("album");
+                String rename = getInputData().getString("rename");
+                int quantity = getInputData().getInt("quantity", -1);
 
-            // make a sync to doownload photo if necessary
-            SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
-            sync.syncRandom(albumName, destinationFolder, rename, quantity);
+                // make a sync to download photo if necessary
+                SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
+                sync.syncRandom(albumName, destinationFolder, rename, quantity);
 
-            ChooserSetterWallPaper chooserSetterWallPaper =
-                    new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
-                            processFolder);
-            chooserSetterWallPaper.setWallpaper();
-            logger.getHandlers()[0].close();
-            return Result.success();
-        } catch (Exception e) {
-            logger.severe(e.getMessage());
-            logger.getHandlers()[0].close();
-            return Result.failure();
-        }
+                ChooserSetterWallPaper chooserSetterWallPaper =
+                        new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
+                                processFolder);
+                chooserSetterWallPaper.setWallpaper();
+                return Result.success();
+            } catch (Exception e) {
+                logger.severe(e.getMessage());
+                return Result.failure();
+            } finally {
+                logger.close();
+            }
     }
 
     private File getDestinationFolder(String album) {

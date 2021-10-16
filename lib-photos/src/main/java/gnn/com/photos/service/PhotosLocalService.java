@@ -34,7 +34,7 @@ public class PhotosLocalService {
      */
     public void delete(ArrayList<Photo> toDelete, File folder, Synchronizer synchronizer) {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
 
         int delete = 0;
         for (Photo photo : toDelete) {

@@ -21,7 +21,7 @@ abstract public class PersistTime {
 
     public void storeTime() throws IOException {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
         if (processFolder != null) {
             File file = new File(processFolder, filename);
             logger.finest(file.getAbsolutePath());

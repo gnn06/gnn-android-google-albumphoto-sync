@@ -21,7 +21,7 @@ public class DownloadManager {
      */
     public void download(ArrayList<Photo> toDownload, File destinationFolder, String rename, Synchronizer synchronizer) throws IOException {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
 
         logger.fine("start download for " + toDownload.size() + " photo");
     // rename Id before download

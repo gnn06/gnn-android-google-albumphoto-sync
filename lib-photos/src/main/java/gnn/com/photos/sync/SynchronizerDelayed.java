@@ -26,7 +26,7 @@ public class SynchronizerDelayed {
 
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
@@ -38,7 +38,7 @@ public class SynchronizerDelayed {
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
         boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();

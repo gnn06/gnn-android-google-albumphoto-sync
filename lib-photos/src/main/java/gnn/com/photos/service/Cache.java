@@ -44,7 +44,7 @@ public class Cache {
      * @throws IOException
      */
     public ArrayList<Photo> get() throws IOException {
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
         ArrayList<Photo> photos;
         if (file != null && file.exists()) {
             long delay = System.currentTimeMillis() - file.lastModified();
@@ -77,7 +77,7 @@ public class Cache {
     }
 
     ArrayList<Photo> read() throws IOException {
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
         if (file != null) {
             ObjectInputStream iis = new ObjectInputStream(new FileInputStream(file));
             ArrayList<Photo> result = null;

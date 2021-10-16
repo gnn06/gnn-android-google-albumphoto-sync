@@ -24,7 +24,7 @@ class SyncMethod {
 
     void sync(String albumName, File imageFolder, String rename, int quantity) throws IOException, RemoteException {
         // require Logger was initialized
-        Logger logger = Logger.getLogger("worker");
+        Logger logger = Logger.getLogger();
 
         synchronizer.resetCurrent();
         logger.fine("get photos of album : " + albumName);

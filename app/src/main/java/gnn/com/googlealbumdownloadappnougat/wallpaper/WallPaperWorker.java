@@ -29,7 +29,8 @@ public class WallPaperWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Logger logger = Logger.getLogger(getApplicationContext().getCacheDir().getAbsolutePath() + "/gnnapp.log");
+        Logger.configure(getApplicationContext().getCacheDir().getAbsolutePath());
+        Logger logger = Logger.getLogger();
             try {
                 logger.info("start wallpaper worker");
                 String destinationPath = getInputData().getString("folderPath");

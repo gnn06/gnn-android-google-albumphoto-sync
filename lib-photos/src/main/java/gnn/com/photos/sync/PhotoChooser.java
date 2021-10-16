@@ -34,7 +34,7 @@ public class PhotoChooser {
      * @param previousPhotos
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos) {
-        Logger logger = Logger.getLogger(null);
+        Logger logger = Logger.getLogger();
         ArrayList<Photo> result = new ArrayList<>();
         if (quantity < remoteLst.size()) {
             if (previousPhotos != null) {

@@ -195,6 +195,14 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     @Override
+    public void alertFrequencyError() {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.frequency_too_low))
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+    }
+
+    @Override
     public void setProgressBarVisibility(int visible) {
         View pb = findViewById(R.id.pb_layout);
         pb.setVisibility(visible);

@@ -16,6 +16,8 @@ public interface IView {
 
     void alertNoAlbum();
 
+    void alertFrequencyError();
+
     void updateUI_User();
 
     void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step);

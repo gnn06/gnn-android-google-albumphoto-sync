@@ -1,0 +1,6 @@
+1.1
+
+1.2 17/10/2021
+reset de tous les caches
+log personnel
+regroupement des champ de UI par groupes

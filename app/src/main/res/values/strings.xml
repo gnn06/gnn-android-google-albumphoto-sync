@@ -55,5 +55,6 @@
     <string name="lastUpdatePhotosLabel">"Dernière récupération des photos : "</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
     <string name="frequencyGroup">Fréquences</string>
+    <string name="frequency_too_low">Fréquence min de 15 minutes</string>
 
 </resources>

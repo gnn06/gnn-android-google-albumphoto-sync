@@ -338,18 +338,26 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onSwitchWallpaper(boolean checked) {
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         if (checked) {
-            ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
-            scheduler.schedule(
-                    this.getFolderHuman(),
-                    getFrequencyWallpaper(),
-                    getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
-                    getFrequencyUpdatePhotosMinute(), appContext);
+            if (getFrequencyWallpaper() < 15) {
+                view.setSwitchWallpaper(false);
+                view.alertFrequencyError();
+            } else {
+                ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
+                scheduler.schedule(
+                        this.getFolderHuman(),
+                        getFrequencyWallpaper(),
+                        getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
+                        getFrequencyUpdatePhotosMinute(), appContext);
+                view.enableFrequencyWallpaper(checked);
+                view.enableFrequencySync(checked);
+                view.enableFrequencyUpdatePhotos(checked);
+            }
         } else {
             scheduler.cancel();
+            view.enableFrequencyWallpaper(checked);
+            view.enableFrequencySync(checked);
+            view.enableFrequencyUpdatePhotos(checked);
         }
-        view.enableFrequencyWallpaper(checked);
-        view.enableFrequencySync(checked);
-        view.enableFrequencyUpdatePhotos(checked);
     }
 
     @Override

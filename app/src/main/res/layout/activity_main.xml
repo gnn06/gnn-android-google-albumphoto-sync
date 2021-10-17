@@ -100,7 +100,12 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp"
+                            >
                             <!-- Quantity -->
                             <TextView
                                 android:id="@+id/textView2"
@@ -108,7 +113,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Options de téléchargement"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                                android:paddingLeft="16dp"
+                                android:paddingLeft="8dp"
                                 android:paddingTop="8dp"
                                 android:paddingRight="16dp"
                                 android:paddingBottom="8dp"/>
@@ -287,19 +292,27 @@
                                     android:text="@string/frequenceWallpaperExplenation" />
                             </RelativeLayout>
                         </LinearLayout>
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/SwitchWallPaper"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/textFrequencyWallpaper"
-                            android:text="Changement automatique du fond d'écran "
-                            android:paddingLeft="24dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingLeft="16dp"
                             android:paddingTop="8dp"
                             android:paddingRight="16dp"
-                            android:paddingBottom="8dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            >
-                        </androidx.appcompat.widget.SwitchCompat>
+                            android:paddingBottom="8dp">
+                            <androidx.appcompat.widget.SwitchCompat
+                                android:id="@+id/SwitchWallPaper"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/textFrequencyWallpaper"
+                                android:text="Changement automatique du fond d'écran "
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+                            </androidx.appcompat.widget.SwitchCompat>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Désactiver pour changer les fréquences"
+                        </LinearLayout>
                         <!-- Buttons (sync, scheduler, wallpaper) -->
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/SectionSync"
@@ -404,7 +417,6 @@
                                 android:text="@string/result" />
                         </RelativeLayout>
                     </LinearLayout>
-
                     <!-- Progress Bar -->
                     <RelativeLayout
                         android:id="@+id/pb_layout"

@@ -33,6 +33,7 @@ import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             }
         });
 
+        new Notification(this).createNotificationChannel();
     }
 
     @Override

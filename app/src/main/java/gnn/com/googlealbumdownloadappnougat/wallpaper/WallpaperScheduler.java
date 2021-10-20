@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 public class WallpaperScheduler {
 
@@ -34,6 +35,9 @@ public class WallpaperScheduler {
                          int syncMaxAge,
                          String album, int quantity, String rename, long cacheMaxAge,
                          ApplicationContext appContext) {
+        Logger.configure(context.getCacheDir().getAbsolutePath());
+        Logger logger = Logger.getLogger();
+        logger.fine("schedule");
         // TODO envoi des argmunent trop laborieux
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())

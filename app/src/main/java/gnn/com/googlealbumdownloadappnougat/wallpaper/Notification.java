@@ -22,8 +22,8 @@ public class Notification {
 
     void show(CharSequence message) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.ic_menu_help)
-                .setContentTitle("sync")
+                .setSmallIcon(android.R.mipmap.sym_def_app_icon)
+                .setContentTitle("Erreur")
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 

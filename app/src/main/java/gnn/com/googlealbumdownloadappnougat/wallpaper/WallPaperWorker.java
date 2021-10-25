@@ -33,31 +33,30 @@ public class WallPaperWorker extends Worker {
         Logger logger = Logger.getLogger();
             try {
                 logger.info("start wallpaper worker");
-                throw new Exception("gnn");
-//                String destinationPath = getInputData().getString("folderPath");
-//                File destinationFolder = getDestinationFolder(destinationPath);
-//
-//                int delay = getInputData().getInt("syncMaxAge", 0);
-//
-//                File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-//                long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
-//                File processFolder = new File(getInputData().getString("processAbsolutePath"));
-//
-//                logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
-//
-//                String albumName = getInputData().getString("album");
-//                String rename = getInputData().getString("rename");
-//                int quantity = getInputData().getInt("quantity", -1);
-//
-//                // make a sync to download photo if necessary
-//                SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
-//                sync.syncRandom(albumName, destinationFolder, rename, quantity);
-//
-//                ChooserSetterWallPaper chooserSetterWallPaper =
-//                        new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
-//                                processFolder);
-//                chooserSetterWallPaper.setWallpaper();
-//                return Result.success();
+                String destinationPath = getInputData().getString("folderPath");
+                File destinationFolder = getDestinationFolder(destinationPath);
+
+                int delay = getInputData().getInt("syncMaxAge", 0);
+
+                File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
+                long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
+                File processFolder = new File(getInputData().getString("processAbsolutePath"));
+
+                logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
+
+                String albumName = getInputData().getString("album");
+                String rename = getInputData().getString("rename");
+                int quantity = getInputData().getInt("quantity", -1);
+
+                // make a sync to download photo if necessary
+                SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
+                sync.syncRandom(albumName, destinationFolder, rename, quantity);
+
+                ChooserSetterWallPaper chooserSetterWallPaper =
+                        new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
+                                processFolder);
+                chooserSetterWallPaper.setWallpaper();
+                return Result.success();
             } catch (Exception e) {
                 logger.severe(e.getMessage());
                 new Notification(getApplicationContext()).show(e.getMessage());

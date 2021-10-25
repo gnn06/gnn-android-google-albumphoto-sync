@@ -35,7 +35,6 @@ public class WallpaperScheduler {
                          int syncMaxAge,
                          String album, int quantity, String rename, long cacheMaxAge,
                          ApplicationContext appContext) {
-        Logger.configure(context.getCacheDir().getAbsolutePath());
         Logger logger = Logger.getLogger();
         logger.fine("schedule");
         // TODO envoi des argmunent trop laborieux

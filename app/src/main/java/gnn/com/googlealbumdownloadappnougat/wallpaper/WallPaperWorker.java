@@ -48,9 +48,14 @@ public class WallPaperWorker extends Worker {
                 String rename = getInputData().getString("rename");
                 int quantity = getInputData().getInt("quantity", -1);
 
-                // make a sync to download photo if necessary
-                SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
-                sync.syncRandom(albumName, destinationFolder, rename, quantity);
+                try {
+                    // make a sync to download photo if necessary
+                    SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
+                    sync.syncRandom(albumName, destinationFolder, rename, quantity);
+                } catch (Exception e) {
+                    logger.severe(e.getMessage());
+                    new Notification(getApplicationContext()).show(e.getMessage());
+                }
 
                 ChooserSetterWallPaper chooserSetterWallPaper =
                         new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,

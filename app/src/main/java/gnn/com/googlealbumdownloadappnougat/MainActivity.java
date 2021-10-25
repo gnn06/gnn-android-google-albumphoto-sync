@@ -33,6 +33,7 @@ import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
 
 public class MainActivity extends AppCompatActivity implements IView {
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements IView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Logger.configure(getCacheDir().getAbsolutePath());
+        Logger.getLogger().fine("onCreate");
 
         presenter = new PresenterMain(this, this);
 
@@ -104,12 +108,14 @@ public class MainActivity extends AppCompatActivity implements IView {
     @Override
     protected void onStart() {
         super.onStart();
+        Logger.getLogger().fine("onStart");
         presenter.refreshLastTime();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Logger.getLogger().fine("onPause");
         new PersistPrefMain(this).save(presenter);
         // not necessary to save settings as settings can not be changed in this activity
     }

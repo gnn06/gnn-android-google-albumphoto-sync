@@ -7,13 +7,13 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 
 import static org.mockito.Mockito.verify;
 
-public class WritePermissionTest {
+public class WritePermissionRequirementTest {
 
     @Test
     public void test() {
         AuthManager auth = Mockito.mock(AuthManager.class);
         MainActivity view = Mockito.mock(MainActivity.class);
-        WritePermission permission = new WritePermission(null, auth, view);
+        WritePermissionRequirement permission = new WritePermissionRequirement(null, auth, view);
         permission.postRequireFailure();
         verify(view).showError("message");
     }

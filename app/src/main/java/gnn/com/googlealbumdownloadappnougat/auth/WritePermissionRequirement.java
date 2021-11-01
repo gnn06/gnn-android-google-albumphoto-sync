@@ -4,12 +4,12 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
-public class WritePermission extends Require {
+public class WritePermissionRequirement extends Require {
 
     private AuthManager auth;
     private IView view;
 
-    public WritePermission(@Nonnull Exec exec, AuthManager auth, IView view) {
+    public WritePermissionRequirement(@Nonnull Exec exec, AuthManager auth, IView view) {
         super(exec);
         this.auth = auth;
         this.view = view;

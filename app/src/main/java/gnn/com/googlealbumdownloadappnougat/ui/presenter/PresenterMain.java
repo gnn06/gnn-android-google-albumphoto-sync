@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirement;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -23,7 +24,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInAndGoogleAuthRequirement;
-import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -394,14 +394,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     // --- private methods ---
 
     private void taskWithPermissions(final SyncTask task) {
-        Exec exec = new Exec() {
-            @Override
-            public void exec() {
-                task.execute();
-            }
-        };
-        Require writeReq = new WritePermissionRequirement(exec, auth, view);
-        Require signInReq = new SignInAndGoogleAuthRequirement(writeReq, auth, view);
+        Require signInReq = SignInGoogleAPIWriteRequirement.build(task, auth, view);
         startRequirement(signInReq);
     }
 

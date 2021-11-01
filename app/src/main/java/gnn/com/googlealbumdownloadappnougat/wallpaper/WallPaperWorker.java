@@ -1,7 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Environment;
+import android.os.PowerManager;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -26,13 +29,27 @@ public class WallPaperWorker extends Worker {
         super(context, workerParams);
     }
 
+
+    private BroadcastReceiver receiver;
+
+    private void method() {
+        if (receiver == null) {
+            receiver = new MyBroadcastReceiver();
+            IntentFilter intent = new IntentFilter(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
+            getApplicationContext().registerReceiver(receiver, intent);
+            Logger logger = Logger.getLogger();
+            logger.fine("registered receiver after work");
+        }
+    }
+
     @NonNull
     @Override
     public Result doWork() {
         Logger.configure(getApplicationContext().getCacheDir().getAbsolutePath());
         Logger logger = Logger.getLogger();
-            try {
-                logger.info("start wallpaper worker");
+        try {
+                logger.info("start wallpaper worker, @WallPaperWork=" + this.hashCode());
+
                 String destinationPath = getInputData().getString("folderPath");
                 File destinationFolder = getDestinationFolder(destinationPath);
 
@@ -61,10 +78,12 @@ public class WallPaperWorker extends Worker {
                         new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
                                 processFolder);
                 chooserSetterWallPaper.setWallpaper();
+                method();
                 return Result.success();
             } catch (Exception e) {
                 logger.severe(e.getMessage());
                 new Notification(getApplicationContext()).show(e.getMessage());
+                method();
                 return Result.failure();
             } finally {
                 logger.close();

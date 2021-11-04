@@ -31,6 +31,16 @@ public class AuthManager {
         return account != null && account.getAccount() != null;
     }
 
+    public  boolean hasScope() {
+        // normal granted scopes
+        // https://www.googleapis.com/auth/photoslibrary.readonly
+        // https://www.googleapis.com/auth/userinfo.profile
+        // https://www.googleapis.com/auth/userinfo.email
+        // openid, profile, emaol
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        return GoogleSignIn.hasPermissions(account, SCOPE_PHOTOS_READ)&& GoogleSignIn.hasPermissions(account, new Scope(Scopes.EMAIL));
+    }
+
     public void signInWithPermission() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ)

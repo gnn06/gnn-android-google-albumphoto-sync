@@ -15,7 +15,7 @@ public class SignInAndGoogleAuthRequirement extends Require {
 
     @Override
     boolean check() {
-        return auth.isSignIn();
+        return auth.isSignIn() && auth.hasScope();
     }
 
     @Override

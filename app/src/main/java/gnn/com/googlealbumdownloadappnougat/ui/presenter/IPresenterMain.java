@@ -79,5 +79,7 @@ public interface IPresenterMain {
     void onMenuResetCache();
 
     void onMenuScheduleDetail();
+
+    void onRequestGooglePermission();
 }
 

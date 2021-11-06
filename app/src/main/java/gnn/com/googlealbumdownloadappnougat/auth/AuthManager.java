@@ -59,6 +59,16 @@ public class AuthManager {
         activity.startActivityForResult(signInIntent, MainActivity.RC_AUTHORIZE_PHOTOS);
     }
 
+    public boolean isAuthorized() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        return GoogleSignIn.hasPermissions(account, SCOPE_PHOTOS_READ, new Scope(Scopes.EMAIL));
+    }
+
+    public void requestGooglePermission() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        GoogleSignIn.requestPermissions(activity, MainActivity.RC_AUTHORIZE_PHOTOS, account, new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ);
+    }
+
     public void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

@@ -58,5 +58,6 @@
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
+    <string name="requestGooglePermission">demander permission</string>
 
 </resources>

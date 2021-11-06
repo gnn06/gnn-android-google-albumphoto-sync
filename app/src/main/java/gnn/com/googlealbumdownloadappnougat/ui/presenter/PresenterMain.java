@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -394,7 +394,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     // --- private methods ---
 
     private void taskWithPermissions(final SyncTask task) {
-        Require signInReq = SignInGoogleAPIWriteRequirement.build(task, auth, view);
+        Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view);
         startRequirement(signInReq);
     }
 

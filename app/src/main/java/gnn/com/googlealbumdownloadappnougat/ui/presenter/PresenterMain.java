@@ -441,5 +441,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             pendingRequirement.resumeRequirement(result);
         }
     }
+
+    @Override
+    public void onRequestGooglePermission() {
+        auth.requestGooglePermission();
+    }
 }
 

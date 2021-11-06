@@ -3,7 +3,7 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
-public class SignInGoogleAPIWriteRequirement {
+public class SignInGoogleAPIWriteRequirementBuilder {
 
     static public Require build(final SyncTask task, AuthManager auth, IView view) {
         Exec exec = new Exec() {

@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
@@ -24,7 +25,7 @@ import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.auth.SignInAndGoogleAuthRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -114,7 +115,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onSignIn() {
-        Require require = new SignInAndGoogleAuthRequirement(null, auth, view);
+        Require require = new SignInRequirement(null, auth, view);
         startRequirement(require);
     }
 
@@ -166,7 +167,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                     task.execute();
                 }
             };
-            Require signInReq = new SignInAndGoogleAuthRequirement(exec, auth, view);
+            Require signInReq = new GoogleAuthRequirement(exec, auth, view);
             startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");

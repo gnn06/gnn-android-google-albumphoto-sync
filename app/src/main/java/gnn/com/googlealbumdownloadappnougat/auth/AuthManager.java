@@ -41,13 +41,22 @@ public class AuthManager {
         return GoogleSignIn.hasPermissions(account, SCOPE_PHOTOS_READ)&& GoogleSignIn.hasPermissions(account, new Scope(Scopes.EMAIL));
     }
 
+    public void signIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestScopes(new Scope(Scopes.EMAIL))
+                .build();
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
+    }
+
     public void signInWithPermission() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.EMAIL), SCOPE_PHOTOS_READ)
                 .build();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        activity.startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN);
+        activity.startActivityForResult(signInIntent, MainActivity.RC_AUTHORIZE_PHOTOS);
     }
 
     public void signOut() {

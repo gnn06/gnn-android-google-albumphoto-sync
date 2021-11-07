@@ -234,8 +234,15 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onChooseFolder() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        this.activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
+            }
+        };
+        WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view);
+        startRequirement(requirement);
     }
 
     @Override

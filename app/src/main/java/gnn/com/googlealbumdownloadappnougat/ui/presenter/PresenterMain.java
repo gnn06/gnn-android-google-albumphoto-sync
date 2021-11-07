@@ -343,15 +343,22 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 view.setSwitchWallpaper(false);
                 view.alertFrequencyError();
             } else {
-                ApplicationContext appContext = ApplicationContext.getInstance(this.activity);
-                scheduler.schedule(
-                        this.getFolderHuman(),
-                        getFrequencyWallpaper(),
-                        getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
-                        getFrequencyUpdatePhotosMinute(), appContext);
-                view.enableFrequencyWallpaper(checked);
-                view.enableFrequencySync(checked);
-                view.enableFrequencyUpdatePhotos(checked);
+                Exec exec = new Exec() {
+                    @Override
+                    public void exec() {
+                        ApplicationContext appContext = ApplicationContext.getInstance(activity);
+                        scheduler.schedule(
+                                getFolderHuman(),
+                                getFrequencyWallpaper(),
+                                getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
+                                getFrequencyUpdatePhotosMinute(), appContext);
+                        view.enableFrequencyWallpaper(checked);
+                        view.enableFrequencySync(checked);
+                        view.enableFrequencyUpdatePhotos(checked);
+                    }
+                };
+                Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view);
+                startRequirement(require);
             }
         } else {
             scheduler.cancel();

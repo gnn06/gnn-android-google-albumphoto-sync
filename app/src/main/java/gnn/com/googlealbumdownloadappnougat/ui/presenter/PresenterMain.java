@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
+import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -373,9 +374,16 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onButtonWallpaperOnce() {
-        // TODO check folder is not null
-        new ChooserSetterWallPaper(activity, getFolder(), getProcessFolder()).setWallpaper();
-        refreshLastTime();
+        Exec exec = new Exec() {
+            @Override
+            public void exec() {
+                // TODO check folder is not null
+                new ChooserSetterWallPaper(activity, getFolder(), getProcessFolder()).setWallpaper();
+                refreshLastTime();
+            }
+        };
+        Require require = new WritePermissionRequirement(exec, auth, view);
+        startRequirement(require);
     }
 
     @Override

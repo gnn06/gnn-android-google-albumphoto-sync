@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         findViewById(R.id.SectionFolder).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                presenter.chooseFolder();
+                presenter.onChooseFolder();
             }
         });
 

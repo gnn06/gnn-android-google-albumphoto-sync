@@ -32,7 +32,7 @@ public interface IPresenterMain {
 
     void setFolderHuman(String folderHuman);
 
-    void chooseFolder();
+    void onChooseFolder();
 
     void setFolder(Intent data);
 

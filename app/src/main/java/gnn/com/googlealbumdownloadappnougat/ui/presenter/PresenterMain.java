@@ -233,7 +233,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     @Override
-    public void chooseFolder() {
+    public void onChooseFolder() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         this.activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
     }

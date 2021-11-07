@@ -351,6 +351,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 view.setSwitchWallpaper(false);
                 view.alertFrequencyError();
             } else {
+                // TODO manage permission refused and toggle siwtch off
                 Exec exec = new Exec() {
                     @Override
                     public void exec() {

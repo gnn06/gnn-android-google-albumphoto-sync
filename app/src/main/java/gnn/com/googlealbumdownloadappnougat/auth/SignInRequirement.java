@@ -2,12 +2,12 @@ package gnn.com.googlealbumdownloadappnougat.auth;
 
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
-public class SignInAndGoogleAuthRequirement extends Require {
+public class SignInRequirement extends Require {
 
     private AuthManager auth;
     private IView view;
 
-    public SignInAndGoogleAuthRequirement(Exec exec, AuthManager auth, IView view) {
+    public SignInRequirement(Exec exec, AuthManager auth, IView view) {
         super(exec);
         this.auth = auth;
         this.view = view;
@@ -15,13 +15,13 @@ public class SignInAndGoogleAuthRequirement extends Require {
 
     @Override
     boolean check() {
-        return auth.isSignIn() && auth.hasScope();
+        return auth.isSignIn();
     }
 
     @Override
     void require() {
         view.updateUI_User();
-        auth.signInWithPermission();
+        auth.signIn();
     }
 
     @Override

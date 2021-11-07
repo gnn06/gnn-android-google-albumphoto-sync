@@ -60,4 +60,8 @@ public abstract class Require extends Exec {
             postRequireFailure();
         }
     }
+
+    public Require getNextRequire() {
+        return exec instanceof Require ? (Require) exec : null;
+    }
 }

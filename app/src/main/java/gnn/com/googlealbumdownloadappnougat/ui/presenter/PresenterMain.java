@@ -438,7 +438,11 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void handlePermission(int result) {
         if (pendingRequirement != null) {
+            Require nextRequirement = pendingRequirement.getNextRequire();
             pendingRequirement.resumeRequirement(result);
+            if (nextRequirement != null) {
+                pendingRequirement = nextRequirement;
+            }
         }
     }
 

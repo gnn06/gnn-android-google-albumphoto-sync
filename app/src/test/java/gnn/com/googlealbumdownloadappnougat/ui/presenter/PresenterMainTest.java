@@ -76,23 +76,6 @@ public class PresenterMainTest {
     }
 
     @Test
-    public void startRequirement () {
-        // TODO
-        // given
-        MainActivity view = Mockito.mock(MainActivity.class);
-        PermissionHandler permissionHandler = new PermissionHandler();
-        Require require = Mockito.mock(Require.class);
-
-        // when
-        permissionHandler.startRequirement(require);
-
-        // then
-        // verify that the require is stored and started
-        assertEquals(require, permissionHandler.getPendingRequirement());
-        verify(require).exec();
-    }
-
-    @Test
     public void test_resetCache() {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);

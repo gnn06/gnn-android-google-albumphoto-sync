@@ -40,18 +40,20 @@ public class Logger {
     }
 
     private void message(String message) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(_filename, true);
-            Date date = new Date();
-            fw.write(date.toString() + " " + message + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
+        if (_filename != null) {
+            FileWriter fw = null;
             try {
-                fw.close();
+                fw = new FileWriter(_filename, true);
+                Date date = new Date();
+                fw.write(date.toString() + " " + message + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

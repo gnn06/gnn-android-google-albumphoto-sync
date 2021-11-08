@@ -44,7 +44,7 @@ public class CacheTest {
     @Test
     public void test_notEmpty_no_persistence() throws IOException {
         // given an not empty cache
-        Cache.config(null, 24 * 60 * 60 * 1000);
+        Cache.config(null, 24);
         Cache cache = Cache.getCache();
         ArrayList<Photo> photos = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
@@ -59,7 +59,7 @@ public class CacheTest {
     @Test
     public void test_put_noPersistence() throws IOException {
         // given empty cache
-        Cache.config(null, 24 * 60 * 60 * 1000);
+        Cache.config(null, 24);
         Cache cache = Cache.getCache();
         Assert.assertNull(cache.get());
         // when
@@ -75,7 +75,7 @@ public class CacheTest {
     public void test_put_persistent() throws IOException {
         // given empty cache
         File file = Mockito.mock(File.class);
-        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache.config(file, 24);
         Cache cache = Mockito.spy(Cache.getCache());
         Mockito.doNothing().when(cache).write();
         Assert.assertNull(cache.get());
@@ -115,7 +115,7 @@ public class CacheTest {
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (60 * 1000));
 
-        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache.config(file, 24);
         Cache cache = Mockito.spy(Cache.getCache());
         ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")

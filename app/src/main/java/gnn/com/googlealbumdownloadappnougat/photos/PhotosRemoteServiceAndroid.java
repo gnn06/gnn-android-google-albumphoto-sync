@@ -12,8 +12,8 @@ public class PhotosRemoteServiceAndroid extends PhotosRemoteService {
     private final Context activity;
     private PhotoProviderAndroid _provider;
 
-    public PhotosRemoteServiceAndroid(Context activity, File cacheFile, long cacheMaxAge) {
-        super(cacheFile, cacheMaxAge);
+    public PhotosRemoteServiceAndroid(Context activity, File cacheFile, long cacheMaxAgeHour) {
+        super(cacheFile, cacheMaxAgeHour);
         this.activity = activity;
     }
 

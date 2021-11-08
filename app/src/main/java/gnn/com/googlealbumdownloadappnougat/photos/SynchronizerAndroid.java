@@ -27,7 +27,7 @@ public class SynchronizerAndroid extends Synchronizer {
 
     @Override
     protected PhotosRemoteService getRemoteServiceImpl() {
-        return new PhotosRemoteServiceAndroid(activity, cacheFile, cacheMaxAge);
+        return new PhotosRemoteServiceAndroid(activity, cacheFile, cacheMaxAgeSecond);
     }
 
     public void incCurrentDownload() {

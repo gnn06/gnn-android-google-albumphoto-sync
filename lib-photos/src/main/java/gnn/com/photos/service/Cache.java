@@ -15,12 +15,14 @@ import gnn.com.photos.Photo;
 public class Cache {
 
     private static File file = null;
-    // -1 => no cache
-    private static long maxAge = -1;
 
-    public static void config(File file, long maxAge) {
+    // -1 => no cache
+    // in seconds
+    private static long maxAgeHour = -1;
+
+    public static void config(File file, long maxAgeHour) {
         Cache.file = file;
-        Cache.maxAge = maxAge;
+        Cache.maxAgeHour = maxAgeHour;
     }
 
     private ArrayList<Photo> photos;
@@ -47,15 +49,15 @@ public class Cache {
         Logger logger = Logger.getLogger();
         ArrayList<Photo> photos;
         if (file != null && file.exists()) {
-            long delay = System.currentTimeMillis() - file.lastModified();
-            if (delay < maxAge) {
+            long delayMilli = System.currentTimeMillis() - file.lastModified();
+            if (delayMilli < maxAgeHour * 60 * 60 * 1000) {
                 // valid cache
                 photos = read();
                 logger.fine("use photo list cache");
             } else {
                 // cache expired
                 reset();
-                logger.fine("photo list cache expired with delay=" + maxAge);
+                logger.fine("photo list cache expired with delay=" + maxAgeHour);
                 return null;
             }
         } else {

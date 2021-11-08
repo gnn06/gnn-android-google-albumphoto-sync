@@ -264,9 +264,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         // TODO 09/10 visibility de récupérer pas l'espace qui reste vide
         findViewById(R.id.lastUpdatePhotos).setVisibility(lastUpdatePhotosTime != null ? View.VISIBLE : View.GONE);
         if (lastUpdatePhotosTime != null) {
-            String lastTime = lastUpdatePhotosTime != null ? sdf.format(lastUpdatePhotosTime) : null;
+            String lastUpdatePhotoTime = lastUpdatePhotosTime != null ? sdf.format(lastUpdatePhotosTime) : null;
             TextView textView = findViewById(R.id.lastUpdatePhotosTime);
-            textView.setText(lastTime);
+            textView.setText(lastUpdatePhotoTime);
         }
         findViewById(R.id.lastSync).setVisibility(lastSyncTime != null ? View.VISIBLE : View.GONE);
         if (lastSyncTime != null) {

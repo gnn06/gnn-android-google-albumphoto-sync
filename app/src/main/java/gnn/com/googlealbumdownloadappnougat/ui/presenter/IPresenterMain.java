@@ -64,7 +64,7 @@ public interface IPresenterMain {
 
     int getFrequencyUpdatePhotos();
 
-    int getFrequencyUpdatePhotosMinute();
+    int getFrequencyUpdatePhotosHour();
 
     void setFrequencyUpdatePhotos(int frequency);
 

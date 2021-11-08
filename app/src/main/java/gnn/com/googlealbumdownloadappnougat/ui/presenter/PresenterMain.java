@@ -62,7 +62,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosMinute(), getProcessFolder());
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosHour(), getProcessFolder());
         }
         return sync;
     }
@@ -162,7 +162,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosMinute());
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosHour());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs);
             Exec exec = new Exec() {
                 @Override
@@ -326,7 +326,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
      * @return fréquence en minute
      */
     @Override
-    public int getFrequencyUpdatePhotosMinute() {
+    public int getFrequencyUpdatePhotosHour() {
         return getFrequencyUpdatePhotos() * 24 * 60;
     }
 
@@ -363,7 +363,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                                 getFolderHuman(),
                                 getFrequencyWallpaper(),
                                 getFrequencySyncMinute(), getAlbum(), getQuantity(), getRename(),
-                                getFrequencyUpdatePhotosMinute(), appContext);
+                                getFrequencyUpdatePhotosHour(), appContext);
                         view.enableFrequencyWallpaper(checked);
                         view.enableFrequencySync(checked);
                         view.enableFrequencyUpdatePhotos(checked);

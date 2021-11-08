@@ -14,12 +14,12 @@ import gnn.com.photos.service.RemoteException;
 public abstract class Synchronizer implements SyncData {
 
     protected final File cacheFile;
-    protected final long cacheMaxAge;
+    protected final long cacheMaxAgeSecond;
     protected final File processFolder;
 
     public Synchronizer(File cacheFile, long cacheMaxAge, File processFolder) {
         this.cacheFile = cacheFile;
-        this.cacheMaxAge = cacheMaxAge;
+        this.cacheMaxAgeSecond = cacheMaxAge;
         this.processFolder = processFolder;
     }
 

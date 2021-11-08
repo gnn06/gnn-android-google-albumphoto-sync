@@ -14,8 +14,8 @@ public abstract class PhotosRemoteService {
 
     }
 
-    public PhotosRemoteService(File cacheFile, long cacheMaxAge) {
-        Cache.config(cacheFile, cacheMaxAge);
+    public PhotosRemoteService(File cacheFile, long cacheMaxAgeHour) {
+        Cache.config(cacheFile, cacheMaxAgeHour);
     }
 
     private Cache getCache() {

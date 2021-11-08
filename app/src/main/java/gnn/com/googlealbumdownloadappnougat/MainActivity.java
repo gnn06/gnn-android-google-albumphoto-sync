@@ -149,9 +149,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
-        } else if (requestCode == RC_AUTHORIZE_PHOTOS) {
+        if (requestCode == RC_SIGN_IN || requestCode == RC_AUTHORIZE_PHOTOS) {
             presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
             // return to app without choosing a folder : data == null && resultCode == 0

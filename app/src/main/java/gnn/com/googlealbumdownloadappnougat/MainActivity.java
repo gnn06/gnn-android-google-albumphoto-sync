@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.onMenuScheduleDetail();
             return true;
         } else if (item.getItemId() == R.id.requestGooglePermission) {
-            presenter.onRequestGooglePermission();
+            presenter.onMenuRequestGooglePermission();
             return true;
         }
         return super.onOptionsItemSelected(item);

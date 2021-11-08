@@ -78,6 +78,6 @@ public interface IPresenterMain {
 
     void onMenuScheduleDetail();
 
-    void onRequestGooglePermission();
+    void onMenuRequestGooglePermission();
 }
 

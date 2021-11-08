@@ -45,7 +45,7 @@ public class PresenterMainTest {
     }
 
     @Test
-    public void onSyncClick_MissingPermission() {
+    public void onSyncClick_store_requirement() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
@@ -54,12 +54,14 @@ public class PresenterMainTest {
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
+        // when
         presenter.onButtonSyncOnce();
+        // then
         assertNotNull(permissionHandler.getPendingRequirement());
     }
 
     @Test
-    public void onShowAlbumList_NoCache_NoPermission () {
+    public void onShowAlbumList_store_requirement () {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
@@ -67,14 +69,15 @@ public class PresenterMainTest {
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
-
+        // when
         presenter.onShowAlbumList();
-
+        // then
         assertNotNull(permissionHandler.getPendingRequirement());
     }
 
     @Test
     public void startRequirement () {
+        // TODO
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
         PermissionHandler permissionHandler = new PermissionHandler();
@@ -87,7 +90,6 @@ public class PresenterMainTest {
         // verify that the require is stored and started
         assertEquals(require, permissionHandler.getPendingRequirement());
         verify(require).exec();
-
     }
 
     @Test

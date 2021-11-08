@@ -96,7 +96,7 @@ public class CacheTest {
         File file = Mockito.mock(File.class);
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (25 * 60 * 60 * 1000));
-        Cache.config(file, 24 * 60 * 60 * 1000);
+        Cache.config(file, 24);
         Cache cache = Mockito.spy(Cache.getCache());
 
         // when

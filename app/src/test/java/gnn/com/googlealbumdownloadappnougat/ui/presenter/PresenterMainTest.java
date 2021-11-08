@@ -24,7 +24,7 @@ public class PresenterMainTest {
     @Test
     public void onSyncClick_NoAlbum() {
         MainActivity activity = Mockito.mock(MainActivity.class);
-        PresenterMain presenter = spy(new PresenterMain(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity, null));
         presenter.setAlbum(null);
         IView view = spy(IView.class);
         presenter.onButtonSyncOnce();
@@ -35,7 +35,7 @@ public class PresenterMainTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterMain presenter = spy(new PresenterMain(activity, activity));
+        PresenterMain presenter = spy(new PresenterMain(activity, activity, null));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -48,42 +48,44 @@ public class PresenterMainTest {
     public void onSyncClick_MissingPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterMain presenter = spy(new PresenterMain(activity, activity));
+        PermissionHandler permissionHandler = new PermissionHandler();
+        PresenterMain presenter = spy(new PresenterMain(activity, activity, permissionHandler));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
         presenter.onButtonSyncOnce();
-        assertNotNull(presenter.getPendingRequirement());
+        assertNotNull(permissionHandler.getPendingRequirement());
     }
 
     @Test
     public void onShowAlbumList_NoCache_NoPermission () {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterMain presenter = spy(new PresenterMain(activity, activity));
+        PermissionHandler permissionHandler = new PermissionHandler();
+        PresenterMain presenter = spy(new PresenterMain(activity, activity, permissionHandler));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
 
         presenter.onShowAlbumList();
 
-        assertNotNull(presenter.getPendingRequirement());
+        assertNotNull(permissionHandler.getPendingRequirement());
     }
 
     @Test
     public void startRequirement () {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
-        PresenterMain presenter = new PresenterMain(view, view);
+        PermissionHandler permissionHandler = new PermissionHandler();
         Require require = Mockito.mock(Require.class);
 
         // when
-        presenter.startRequirement(require);
+        permissionHandler.startRequirement(require);
 
         // then
         // verify that the require is stored and started
-        assertEquals(require, presenter.getPendingRequirement());
+        assertEquals(require, permissionHandler.getPendingRequirement());
         verify(require).exec();
 
     }
@@ -93,7 +95,7 @@ public class PresenterMainTest {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
         when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterMain presenter = new PresenterMain(view, view);
+        PresenterMain presenter = new PresenterMain(view, view, null);
         // when
         presenter.onMenuResetCache();
         // then
@@ -106,7 +108,7 @@ public class PresenterMainTest {
         IView view = mock(IView.class);
         MainActivity activity = mock(MainActivity.class);
 
-        PresenterMain presenter = spy(new PresenterMain(view, activity));
+        PresenterMain presenter = spy(new PresenterMain(view, activity, null));
 
         SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
         doReturn(synchronizer).when(presenter).getSync();
@@ -123,7 +125,7 @@ public class PresenterMainTest {
     public void getQuantity_empty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        PresenterMain presenter = new PresenterMain(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity, null);
 
         when(view.getQuantity()).thenReturn("");
 
@@ -136,7 +138,7 @@ public class PresenterMainTest {
     public void getQuantity_notEmpty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        PresenterMain presenter = new PresenterMain(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity, null);
 
         when(view.getQuantity()).thenReturn("5");
 
@@ -149,7 +151,7 @@ public class PresenterMainTest {
     public void setQuantity_notEmpty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        PresenterMain presenter = new PresenterMain(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity, null);
 
         presenter.setQuantity(5);
 
@@ -160,7 +162,7 @@ public class PresenterMainTest {
     public void setQuantity_empty() {
         IView view = mock(MainActivity.class);
         MainActivity activity = mock(MainActivity.class);
-        PresenterMain presenter = new PresenterMain(view, activity);
+        PresenterMain presenter = new PresenterMain(view, activity, null);
 
         presenter.setQuantity(-1);
 

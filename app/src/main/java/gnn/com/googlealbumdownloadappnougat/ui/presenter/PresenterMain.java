@@ -41,11 +41,13 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     private final IView view;
     private final MainActivity activity;
+    private PermissionHandler permissionHandler;
 
-    public PresenterMain(IView view, MainActivity activity) {
+    public PresenterMain(IView view, MainActivity activity, PermissionHandler permissionHandler) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
+        this.permissionHandler = permissionHandler;
     }
 
     private AuthManager auth;
@@ -116,7 +118,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view);
-        startRequirement(require);
+        permissionHandler.startRequirement(require);
     }
 
     @Override
@@ -168,7 +170,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 }
             };
             Require signInReq = new GoogleAuthRequirement(exec, auth, view);
-            startRequirement(signInReq);
+            permissionHandler.startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
             view.showChooseAlbumDialog(mAlbums);
@@ -242,7 +244,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             }
         };
         WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view);
-        startRequirement(requirement);
+        permissionHandler.startRequirement(requirement);
     }
 
     @Override
@@ -367,7 +369,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                     }
                 };
                 Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view);
-                startRequirement(require);
+                permissionHandler.startRequirement(require);
             }
         } else {
             scheduler.cancel();
@@ -384,7 +386,9 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            taskWithPermissions(new SyncTask(this, getSync()));
+            SyncTask task = new SyncTask(this, getSync());
+            Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view);
+            permissionHandler.startRequirement(signInReq);
         }
     }
 
@@ -399,7 +403,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             }
         };
         Require require = new WritePermissionRequirement(exec, auth, view);
-        startRequirement(require);
+        permissionHandler.startRequirement(require);
     }
 
     @Override
@@ -415,40 +419,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         activity.startActivity(intent);
     }
 
-    // --- private methods ---
-
-    private void taskWithPermissions(final SyncTask task) {
-        Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view);
-        startRequirement(signInReq);
-    }
-
-    // --- Requirement ---
-
-    private Require pendingRequirement;
-
-    void startRequirement(Require require) {
-        this.pendingRequirement = require;
-        require.exec();
-    }
-
-    Require getPendingRequirement() {
-        return this.pendingRequirement;
-    }
-
-    @Override
-    public void handlePermission(int result) {
-        if (pendingRequirement != null) {
-            Require nextRequirement = pendingRequirement.getNextRequire();
-            pendingRequirement.resumeRequirement(result);
-            if (nextRequirement != null) {
-                pendingRequirement = nextRequirement;
-            }
-        }
-    }
-
     @Override
     public void onRequestGooglePermission() {
         auth.requestGooglePermission();
     }
+
 }
 

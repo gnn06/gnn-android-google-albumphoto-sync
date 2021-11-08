@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     private PresenterMain presenter;
 
+    private PermissionHandler permissionHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity implements IView {
         Logger.configure(getCacheDir().getAbsolutePath());
         Logger.getLogger().fine("onCreate");
 
-        presenter = new PresenterMain(this, this);
+        permissionHandler = new PermissionHandler();
+
+        presenter = new PresenterMain(this, this, permissionHandler);
 
         new PersistPrefMain(this).restore(presenter);
         new PersistPrefSettings(this).restore(presenter);
@@ -150,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN || requestCode == RC_AUTHORIZE_PHOTOS) {
-            presenter.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
+            permissionHandler.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
         } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
             // return to app without choosing a folder : data == null && resultCode == 0
             presenter.setFolder(data);
@@ -164,9 +169,9 @@ public class MainActivity extends AppCompatActivity implements IView {
             Log.d(TAG, "handle write permission");
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter.handlePermission(Require.SUCCESS);
+                permissionHandler.handlePermission(Require.SUCCESS);
             } else {
-                presenter.handlePermission(Require.FAILURE);
+                permissionHandler.handlePermission(Require.FAILURE);
             }
         }
     }

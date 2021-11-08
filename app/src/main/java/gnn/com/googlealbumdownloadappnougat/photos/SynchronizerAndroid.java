@@ -13,8 +13,8 @@ public class SynchronizerAndroid extends Synchronizer {
     // transmited to PhotoSRemoteService
     private final Context activity;
 
-    public SynchronizerAndroid(Context activity, File cacheFile, long cacheMaxAge, File processFolder) {
-        super(cacheFile, cacheMaxAge, processFolder);
+    public SynchronizerAndroid(Context activity, File cacheFile, long cacheMaxAgeHour, File processFolder) {
+        super(cacheFile, cacheMaxAgeHour, processFolder);
         this.activity = activity;
     }
 
@@ -27,7 +27,7 @@ public class SynchronizerAndroid extends Synchronizer {
 
     @Override
     protected PhotosRemoteService getRemoteServiceImpl() {
-        return new PhotosRemoteServiceAndroid(activity, cacheFile, cacheMaxAgeSecond);
+        return new PhotosRemoteServiceAndroid(activity, cacheFile, cacheMaxAgeHour);
     }
 
     public void incCurrentDownload() {

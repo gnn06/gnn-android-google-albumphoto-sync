@@ -21,7 +21,7 @@ public class PermissionHandler {
         }
     }
 
-    Require getPendingRequirement() {
+    public Require getPendingRequirement() {
         return this.pendingRequirement;
     }
 }

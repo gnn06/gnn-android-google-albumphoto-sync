@@ -53,13 +53,13 @@ public class WallPaperWorker extends Worker {
                 String destinationPath = getInputData().getString("folderPath");
                 File destinationFolder = getDestinationFolder(destinationPath);
 
-                int delay = getInputData().getInt("syncMaxAge", 0);
+                int delayMinute = getInputData().getInt("syncMaxAge", 0);
 
                 File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-                long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
+                long cacheMaxAgeHour = getInputData().getLong("cacheMaxAge", -1);
                 File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
-                logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delay);
+                logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delayMinute);
 
                 String albumName = getInputData().getString("album");
                 String rename = getInputData().getString("rename");
@@ -67,7 +67,7 @@ public class WallPaperWorker extends Worker {
 
                 try {
                     // make a sync to download photo if necessary
-                    SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delay, getApplicationContext(), cacheFile, cacheMaxAge, processFolder);
+                    SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delayMinute, getApplicationContext(), cacheFile, cacheMaxAgeHour, processFolder);
                     sync.syncRandom(albumName, destinationFolder, rename, quantity);
                 } catch (Exception e) {
                     logger.severe(e.getMessage());

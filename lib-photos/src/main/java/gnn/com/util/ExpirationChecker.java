@@ -7,16 +7,16 @@ import java.util.GregorianCalendar;
 public class ExpirationChecker {
 
     private Date cacheDate;
-    private int maxAge;
+    private int maxAgeMinute;
 
     /**
      *
      * @param cacheDate
-     * @param maxAge in minutes
+     * @param maxAgeMinute in minutes
      */
-    public ExpirationChecker(Date cacheDate, int maxAge) {
+    public ExpirationChecker(Date cacheDate, int maxAgeMinute) {
         this.cacheDate = cacheDate;
-        this.maxAge = maxAge;
+        this.maxAgeMinute = maxAgeMinute;
     }
 
     public boolean isExpired() {
@@ -30,7 +30,7 @@ public class ExpirationChecker {
 
         Calendar cacheExpirationDate = new GregorianCalendar();
         cacheExpirationDate.setTime(this.cacheDate);
-        cacheExpirationDate.add(Calendar.MINUTE, maxAge);
+        cacheExpirationDate.add(Calendar.MINUTE, maxAgeMinute);
         Calendar currentDate = new GregorianCalendar();
         boolean expired = cacheExpirationDate.before(currentDate);
         return expired;

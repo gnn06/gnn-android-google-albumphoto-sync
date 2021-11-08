@@ -18,10 +18,10 @@ public class SynchronizerDelayed {
     // instanciated by descendant
     protected Synchronizer synchronizer;
 
-    final private int delay;
+    final private int delayMinute;
 
-    public SynchronizerDelayed(int delay) {
-        this.delay = delay;
+    public SynchronizerDelayed(int delayMinute) {
+        this.delayMinute = delayMinute;
     }
 
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
@@ -29,8 +29,8 @@ public class SynchronizerDelayed {
         Logger logger = Logger.getLogger();
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
-        logger.info("sync expired=" + expired + " with delay=" + delay + " in minutes");
+        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delayMinute).isExpired();
+        logger.info("sync expired=" + expired + " with delay=" + delayMinute + " in minutes");
         if (expired) {
             synchronizer.syncAll(albumName, folder, rename);
         } // else do noting
@@ -41,8 +41,8 @@ public class SynchronizerDelayed {
         Logger logger = Logger.getLogger();
 
         Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delay).isExpired();
-        logger.info("sync expired=" + expired + " with delay=" + delay + " in minutes");
+        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delayMinute).isExpired();
+        logger.info("sync expired=" + expired + " with delay=" + delayMinute + " in minutes");
         if (expired) {
             synchronizer.syncRandom(albumName, folder, rename, quantity);
         } // else do noting

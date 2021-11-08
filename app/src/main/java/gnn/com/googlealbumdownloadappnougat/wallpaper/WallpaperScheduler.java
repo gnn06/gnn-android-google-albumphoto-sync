@@ -32,8 +32,8 @@ public class WallpaperScheduler {
      * maxAge in minutes
      */
     public void schedule(String destinationFolder, long wallpaperMaxAge,
-                         int syncMaxAge,
-                         String album, int quantity, String rename, long cacheMaxAge,
+                         int syncMaxAgeMinute,
+                         String album, int quantity, String rename, long cacheMaxAgeHour,
                          ApplicationContext appContext) {
         Logger logger = Logger.getLogger();
         logger.fine("schedule");
@@ -41,9 +41,9 @@ public class WallpaperScheduler {
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", cacheMaxAge)
+                .putLong("cacheMaxAge", cacheMaxAgeHour)
                 .putString("folderPath", destinationFolder)
-                .putInt("syncMaxAge", syncMaxAge)
+                .putInt("syncMaxAge", syncMaxAgeMinute)
                 .putString("album", album)
                 .putString("folderPath", destinationFolder)
                 .putInt("quantity", quantity)

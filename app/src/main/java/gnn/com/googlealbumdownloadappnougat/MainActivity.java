@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PermissionHandler;
+import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;

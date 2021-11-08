@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.ui.presenter;
+package gnn.com.googlealbumdownloadappnougat.auth;
 
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 
@@ -6,7 +6,7 @@ public class PermissionHandler {
 
     private Require pendingRequirement;
 
-    void startRequirement(Require require) {
+    public void startRequirement(Require require) {
         this.pendingRequirement = require;
         require.exec();
     }

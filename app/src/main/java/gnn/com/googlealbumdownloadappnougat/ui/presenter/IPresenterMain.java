@@ -24,8 +24,6 @@ public interface IPresenterMain {
 
     void setAlbums(ArrayList<String> mAlbums);
 
-    void handlePermission(int i);
-
     String getFolderHuman();
 
     File getFolder();

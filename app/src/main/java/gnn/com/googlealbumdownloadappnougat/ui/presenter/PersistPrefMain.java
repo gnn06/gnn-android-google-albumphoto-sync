@@ -19,6 +19,10 @@ public class PersistPrefMain {
     private static final String PREF_FREQ_SYNC = "frequency_sync";
     private static final String PREF_FREQ_UPDATE_PHOTOS = "frequency_update_photos";
 
+    public static final int DEF_FREQ_WALLPAPER_MINUTE = 60;
+    public static final int DEF_FREQ_SYNC_HOUR = 72;
+    public static final int DEF_FREQ_UPDATE_PHOTO_DAY = 30;
+
     private final Activity activity;
 
     public PersistPrefMain(Activity activity) {
@@ -96,11 +100,11 @@ public class PersistPrefMain {
             data.setQuantity(quantity);
             String rename = preferences.getString(PREF_RENAME, null);
             data.setRename(rename);
-            int frequencyWallpaper = preferences.getInt(PREF_FREQ_WALLPAPER, -1);
+            int frequencyWallpaper = preferences.getInt(PREF_FREQ_WALLPAPER, DEF_FREQ_WALLPAPER_MINUTE);
             data.setFrequencyWallpaper(frequencyWallpaper);
-            int frequencySync = preferences.getInt(PREF_FREQ_SYNC, -1);
+            int frequencySync = preferences.getInt(PREF_FREQ_SYNC, DEF_FREQ_SYNC_HOUR);
             data.setFrequencySync(frequencySync);
-            int frequencyUpdatePhotos = preferences.getInt(PREF_FREQ_UPDATE_PHOTOS, -1);
+            int frequencyUpdatePhotos = preferences.getInt(PREF_FREQ_UPDATE_PHOTOS, DEF_FREQ_UPDATE_PHOTO_DAY);
             data.setFrequencyUpdatePhotos(frequencyUpdatePhotos);
         }
         return data;

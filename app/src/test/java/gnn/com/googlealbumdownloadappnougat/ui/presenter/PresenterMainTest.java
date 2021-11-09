@@ -99,7 +99,7 @@ public class PresenterMainTest {
         doReturn(synchronizer).when(presenter).getSync();
 
         // when call init
-        presenter.init();
+        presenter.onAppStart();
 
         // then have called update_UI and updateUI_lastSyncTime
         verify(view, times(1)).updateUI_User();

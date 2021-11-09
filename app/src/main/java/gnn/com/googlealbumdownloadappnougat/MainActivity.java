@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         new PersistPrefSettings(this).restore(presenter);
 
         // avoid to call click event when initialize UI
-        presenter.init();
+        presenter.onAppStart();
 
         findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -114,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     protected void onStart() {
         super.onStart();
         Logger.getLogger().fine("onStart");
-        presenter.refreshLastTime();
+        presenter.onAppForeground();
+
     }
 
     @Override

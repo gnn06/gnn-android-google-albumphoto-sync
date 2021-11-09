@@ -88,12 +88,13 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         return activity.getApplicationContext().getFilesDir();
     }
 
+    // called by onCreate
     @Override
-    public void init() {
+    public void onAppStart() {
         // item saved in preferences are restored by Persisxxx.restore
         view.updateUI_User();
 
-        // refreshLastTime will be called by onStart;
+        // refreshLastTime will be called by onAppForeground;
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();
@@ -101,6 +102,11 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
         view.enableFrequencyUpdatePhotos(scheduled);
+    }
+
+    @Override
+    public void onAppForeground() {
+        refreshLastTime();
     }
 
     /**

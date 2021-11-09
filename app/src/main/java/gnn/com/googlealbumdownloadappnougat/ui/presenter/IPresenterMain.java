@@ -40,7 +40,7 @@ public interface IPresenterMain {
 
     void setSyncResult(SynchronizerAndroid sync, SyncStep starting);
 
-    void init();
+    void onAppStart();
 
     void refreshLastTime();
 
@@ -79,5 +79,7 @@ public interface IPresenterMain {
     void onMenuScheduleDetail();
 
     void onMenuRequestGooglePermission();
+
+    void onAppForeground();
 }
 

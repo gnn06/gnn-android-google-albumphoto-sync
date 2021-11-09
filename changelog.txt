@@ -4,3 +4,9 @@
 reset de tous les caches
 log personnel
 regroupement des champ de UI par groupes
+
+1.3 09/11/2021
+notification en cas d'erreur
+rajout menu redemander les permissions
+amélioration des demandes de permissions y compris quand l'appli vient d'être installée
+correction : cache en milliseconde

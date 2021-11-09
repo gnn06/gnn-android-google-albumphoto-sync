@@ -77,6 +77,7 @@ public class PersistPrefMain {
     /**
      * Get Data from Preferences and return them as SyncData.
      * Used to restore main UI and from schedule UI to enqueue work
+     * UI Unit and Préference Unit are the same
      * @return
      */
     private SyncData getData() {

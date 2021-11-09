@@ -27,4 +27,16 @@ public class ExpirationCheckerTest {
         boolean expired = checker.isExpired();
         assertTrue(expired);
     }
+
+    @Test
+    public void always_expired() {
+        // given a cache in the future :-o
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.add(Calendar.MINUTE, 10);
+        Date cacheDate = calendar.getTime();
+        // when delay = 0
+        ExpirationChecker checker = new ExpirationChecker(cacheDate, 0);
+        // then cache is always expired
+        assertTrue(checker.isExpired());
+    }
 }

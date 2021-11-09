@@ -18,6 +18,9 @@ public class SynchronizerDelayed {
     // instanciated by descendant
     protected Synchronizer synchronizer;
 
+    /**
+     * 0 = no cache
+     */
     final private int delayMinute;
 
     public SynchronizerDelayed(int delayMinute) {

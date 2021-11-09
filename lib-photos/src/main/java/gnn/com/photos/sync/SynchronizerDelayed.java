@@ -20,6 +20,7 @@ public class SynchronizerDelayed {
 
     /**
      * 0 = no cache
+     * MAX = cache never expire
      */
     final private int delayMinute;
 

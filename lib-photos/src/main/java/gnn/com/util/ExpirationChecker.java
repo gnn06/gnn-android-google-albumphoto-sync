@@ -28,15 +28,15 @@ public class ExpirationChecker {
         //           |
         //           Current => not expired
 
-        if (maxAgeMinute > 0) {
+        if (maxAgeMinute == 0) {
+            return true;
+        } else {
             Calendar cacheExpirationDate = new GregorianCalendar();
             cacheExpirationDate.setTime(this.cacheDate);
             cacheExpirationDate.add(Calendar.MINUTE, maxAgeMinute);
             Calendar currentDate = new GregorianCalendar();
             boolean expired = cacheExpirationDate.before(currentDate);
             return expired;
-        } else {
-            return true;
         }
     }
 }

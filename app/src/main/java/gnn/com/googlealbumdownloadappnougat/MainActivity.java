@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new PresenterMain(this, this, permissionHandler);
 
-        new PersistPrefMain(this).restore(presenter);
-        new PersistPrefSettings(this).restore(presenter);
-
         // avoid to call click event when initialize UI
         presenter.onAppStart();
 

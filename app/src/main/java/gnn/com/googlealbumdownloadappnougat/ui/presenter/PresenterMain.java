@@ -21,6 +21,7 @@ import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
+import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -91,10 +92,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     // called by onCreate
     @Override
     public void onAppStart() {
-        // item saved in preferences are restored by Persisxxx.restore
-        view.updateUI_User();
+        new PersistPrefMain(activity).restore(this);
+        new PersistPrefSettings(activity).restore(this);
 
-        // refreshLastTime will be called by onAppForeground;
+        // some init will be done in onAppForeground
 
         WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
         boolean scheduled = scheduler.isScheduled();
@@ -106,6 +107,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onAppForeground() {
+        view.updateUI_User();
         refreshLastTime();
     }
 

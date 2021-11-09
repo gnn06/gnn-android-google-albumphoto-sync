@@ -8,6 +8,7 @@ public class SyncData {
     private String folderHuman;
     private int frequencyWallpaper;
     private int frequencySync;
+    private int frequencyUpdatePhotos;
 
     public int getFrequencyWallpaper() {
         return frequencyWallpaper;
@@ -23,6 +24,14 @@ public class SyncData {
 
     public void setFrequencySync(int frequencySync) {
         this.frequencySync = frequencySync;
+    }
+
+    public void setFrequencyUpdatePhotos(int frequencyUpdatePhotos) {
+        this.frequencyUpdatePhotos = frequencyUpdatePhotos;
+    }
+
+    public int getFrequencyUpdatePhotos() {
+        return frequencyUpdatePhotos;
     }
 
     public String getAlbum() {

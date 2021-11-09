@@ -69,12 +69,9 @@ public class PersistPrefMain {
         }
         presenter.setQuantity(data.getQuantity());
         presenter.setRename(data.getRename());
-        presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
+        presenter.setFrequencyUpdatePhotos(data.getFrequencyUpdatePhotos());
         presenter.setFrequencySync(data.getFrequencySync());
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        int frequencyUpdatePhotos = preferences.getInt(PREF_FREQ_UPDATE_PHOTOS, -1);
-        presenter.setFrequencyUpdatePhotos(frequencyUpdatePhotos);
+        presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
     }
 
     /**
@@ -102,6 +99,8 @@ public class PersistPrefMain {
             data.setFrequencyWallpaper(frequencyWallpaper);
             int frequencySync = preferences.getInt(PREF_FREQ_SYNC, -1);
             data.setFrequencySync(frequencySync);
+            int frequencyUpdatePhotos = preferences.getInt(PREF_FREQ_UPDATE_PHOTOS, -1);
+            data.setFrequencyUpdatePhotos(frequencyUpdatePhotos);
         }
         return data;
     }

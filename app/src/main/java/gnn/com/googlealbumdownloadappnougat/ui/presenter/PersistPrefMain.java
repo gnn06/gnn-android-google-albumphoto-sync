@@ -79,7 +79,7 @@ public class PersistPrefMain {
      * Used to restore main UI and from schedule UI to enqueue work
      * @return
      */
-    public SyncData getData() {
+    private SyncData getData() {
         SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {

@@ -284,12 +284,20 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
     }
 
+    /**
+     *
+     * @return in minute
+     */
     @Override
     public int getFrequencyWallpaper() {
         String frequency = view.getFrequencyWallpaper();
         return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
     }
 
+    /**
+     *
+     * @param frequency in minute
+     */
     @Override
     public void setFrequencyWallpaper(int frequency) {
         view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
@@ -314,6 +322,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         return getFrequencySync() * 60;
     }
 
+    /**
+     *
+     * @param frequency in hour
+     */
     @Override
     public void setFrequencySync(int frequency) {
         view.setFrequencySync(frequency == -1 ? "" : Integer.toString(frequency));
@@ -338,6 +350,10 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         return getFrequencyUpdatePhotos() * 24 * 60;
     }
 
+    /**
+     *
+     * @param frequency in days
+     */
     @Override
     public void setFrequencyUpdatePhotos(int frequency) {
         view.setFrequencyUpdatePhotos(frequency == -1 ? "" : Integer.toString(frequency));

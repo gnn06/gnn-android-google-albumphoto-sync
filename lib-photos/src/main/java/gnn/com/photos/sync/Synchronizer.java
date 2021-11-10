@@ -14,6 +14,7 @@ import gnn.com.photos.service.RemoteException;
 public abstract class Synchronizer implements SyncData {
 
     protected final File cacheFile;
+    // 0 = update photo each time
     protected final long cacheMaxAgeHour;
     protected final File processFolder;
 

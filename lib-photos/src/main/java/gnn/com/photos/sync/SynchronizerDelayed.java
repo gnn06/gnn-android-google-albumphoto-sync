@@ -19,7 +19,7 @@ public class SynchronizerDelayed {
     protected Synchronizer synchronizer;
 
     /**
-     * 0 = no cache
+     * 0 = no cache, sync each times
      * MAX = cache never expire
      */
     final private int delayMinute;

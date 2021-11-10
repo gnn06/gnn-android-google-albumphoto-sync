@@ -39,4 +39,16 @@ public class ExpirationCheckerTest {
         // then cache is always expired
         assertTrue(checker.isExpired());
     }
+
+    @Test
+    public void never_expired() {
+        // given a cache in the future :-o
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.add(Calendar.MINUTE, -10);
+        Date cacheDate = calendar.getTime();
+        // when delay = 0
+        ExpirationChecker checker = new ExpirationChecker(cacheDate, Integer.MAX_VALUE);
+        // then cache is always expired
+        assertFalse(checker.isExpired());
+    }
 }

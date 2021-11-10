@@ -30,6 +30,8 @@ public class ExpirationChecker {
 
         if (maxAgeMinute == 0) {
             return true;
+        } else if (maxAgeMinute == Integer.MAX_VALUE) {
+            return false;
         } else {
             Calendar cacheExpirationDate = new GregorianCalendar();
             cacheExpirationDate.setTime(this.cacheDate);

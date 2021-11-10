@@ -131,6 +131,52 @@ public class CacheTest {
         Mockito.verify(cache, Mockito.never()).reset();
     }
 
+    @Test
+    public void cache_always_expire() throws IOException {
+        // given a "future" cache
+        File file = Mockito.mock(File.class);
+        Mockito.when(file.exists()).thenReturn(true);
+        Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() + (60 * 1000));
+
+        Cache.config(file, 0);
+        Cache cache = Mockito.spy(Cache.getCache());
+        ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
+                new Photo("url1", "id1")
+        ));
+        Mockito.doReturn(expected).when(cache).read();
+
+        // when
+        ArrayList<Photo> actual = cache.get();
+
+        // then
+        Assert.assertEquals(expected,actual);
+        Mockito.verify(cache).read();
+        Mockito.verify(cache, Mockito.never()).reset();
+    }
+
+    @Test
+    public void cache_never_expire() throws IOException {
+        // given an existing expired cache
+        File file = Mockito.mock(File.class);
+        Mockito.when(file.exists()).thenReturn(true);
+        Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (30 * 24 * 60 * 60 * 1000));
+
+        Cache.config(file, Integer.MAX_VALUE);
+        Cache cache = Mockito.spy(Cache.getCache());
+        ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
+                new Photo("url1", "id1")
+        ));
+        Mockito.doReturn(expected).when(cache).read();
+
+        // when
+        ArrayList<Photo> actual = cache.get();
+
+        // then
+        Assert.assertEquals(expected,actual);
+        Mockito.verify(cache).read();
+        Mockito.verify(cache, Mockito.never()).reset();
+    }
+
     @Rule
     public TemporaryFolder folder= new TemporaryFolder();
 

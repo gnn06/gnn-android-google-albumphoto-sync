@@ -16,9 +16,10 @@ public class Cache {
 
     private static File file = null;
 
-    // -1 => no cache
+    // 0 => no cache
+    // MAX_VALUE => always use cache
     // in seconds
-    private static long maxAgeHour = -1;
+    private static long maxAgeHour = 0;
 
     public static void config(File file, long maxAgeHour) {
         Cache.file = file;

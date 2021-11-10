@@ -17,6 +17,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -36,6 +37,7 @@ import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.sync.PersistWallpaperTime;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
@@ -310,7 +312,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public int getFrequencySync() {
         String frequency = view.getFrequencySync();
-        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+        return frequency.equals("") ? SynchronizerDelayed.DELAY_NO_CACHE : Integer.parseInt(frequency);
     }
 
     /**
@@ -338,7 +340,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public int getFrequencyUpdatePhotos() {
         String frequency = view.getFrequencyUpdatePhotos();
-        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+        return frequency.equals("") ? Cache.DELAY_NO_CACHE : Integer.parseInt(frequency);
 
     }
 

@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -233,12 +234,14 @@ public class MainActivity extends AppCompatActivity implements IView {
         String name;
         if (account != null) {
             name = account.getEmail();
-//            String GoogleAuthorization = account.getGrantedScopes().toString();
+            String GoogleAuthorization = account.getGrantedScopes().toString();
+            name += "\nGoogle permission=" + GoogleAuthorization;
 //            String writeAuthorization;
 //            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                writeAuthorization = "write";
 //            else writeAuthorization = "no write";
 //            name += "\n" + GoogleAuthorization + ", " + writeAuthorization;
+            name += "\nIsExpired() = " + account.isExpired();
         } else {
             name = getResources().getString(R.string.login);
         }

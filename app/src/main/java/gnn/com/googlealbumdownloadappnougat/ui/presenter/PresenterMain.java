@@ -446,7 +446,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onMenuRequestGooglePermission() {
-        auth.requestGooglePermission();
+        Require require = new GoogleAuthRequirement(null, auth, view);
+        permissionHandler.startRequirement(require);
     }
 
 }

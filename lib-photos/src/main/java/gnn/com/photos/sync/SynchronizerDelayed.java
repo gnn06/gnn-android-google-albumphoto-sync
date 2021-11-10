@@ -18,6 +18,8 @@ public class SynchronizerDelayed {
     // instanciated by descendant
     protected Synchronizer synchronizer;
 
+    public static final int DELAY_NO_CACHE = 0;
+
     /**
      * 0 = no cache, sync each times
      * MAX = cache never expire

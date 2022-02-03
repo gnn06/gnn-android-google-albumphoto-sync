@@ -27,7 +27,6 @@ class PersistWallpaperStat {
 
     WallpaperStat read() throws FileNotFoundException {
         Reader reader = new FileReader(new File(processFolder, STAT_FILENAME));
-        WallpaperStat wallpaperStat = new Gson().fromJson(reader, WallpaperStat.class);
-        return wallpaperStat;
+        return new Gson().fromJson(reader, WallpaperStat.class);
     }
 }

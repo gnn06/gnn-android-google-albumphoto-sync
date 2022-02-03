@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
-class WallpaperStatPersistent {
+class PersistWallpaperStat {
 
     private static final String STAT_FILENAME = "wallpaper.json";
 

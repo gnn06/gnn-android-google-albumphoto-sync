@@ -22,9 +22,10 @@ public class PersistWallpaperStatTest {
     @Test
 //    @Ignore
     public void write() throws IOException {
-        final File tempFile = new File("wallpaper.json");
+        File folder = tempFolder.newFolder();
+        final File tempFile = new File(folder, "wallpaper.json");
         tempFile.delete();
-        PersistWallpaperStat persistent = new PersistWallpaperStat();
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat stat = new WallpaperStat(12, new Date());
         persistent.write(stat);
         assertThat(tempFile.exists(), Is.is(true));
@@ -33,10 +34,11 @@ public class PersistWallpaperStatTest {
     @Test
 //    @Ignore
     public void read() throws IOException {
-        final File tempFile = new File("wallpaper.json");
+        File folder = tempFolder.newFolder();
+        final File tempFile = new File(folder, "wallpaper.json");
         Files.write(tempFile.toPath(), "{\"changeByDay\":24,\"lastWallpaper\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
 
-        PersistWallpaperStat persistent = new PersistWallpaperStat();
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat result = persistent.read();
         assertThat(result.getChangeByDay(), is(24));
     }

@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class WallpaperStat {
@@ -31,15 +29,13 @@ public class WallpaperStat {
         this.lastChangeDate = lastChangeDate;
     }
 
-    void updateOnNewChange() {
-        Date updateDate = new Date();
-        Instant instantNewChange = updateDate.toInstant().truncatedTo(ChronoUnit.CENTURIES);
-        Instant instantLastChange = this.lastChangeDate.toInstant().truncatedTo(ChronoUnit.DAYS);
-        if (instantNewChange == instantLastChange) {
-            this.nbChangeOnLastDay += 1;
-        } else {
-            this.nbChangeOnLastDay = 0;
-        }
-        this.lastChangeDate = updateDate;
+    public void increase(Date date) {
+        this.nbChangeOnLastDay += 1;
+        this.lastChangeDate = date;
+    }
+
+    public void reset(Date date) {
+        this.nbChangeOnLastDay = 1;
+        this.lastChangeDate = date;
     }
 }

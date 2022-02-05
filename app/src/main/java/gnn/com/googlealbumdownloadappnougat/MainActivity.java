@@ -37,6 +37,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -383,6 +384,13 @@ public class MainActivity extends AppCompatActivity implements IView {
     public void enableFrequencyUpdatePhotos(boolean switchChecked) {
         View text = findViewById(R.id.textFrequencyUpdatePhotos);
         text.setEnabled(!switchChecked);
+    }
+
+    @Override
+    public void setStat(WallpaperStat stat) {
+        TextView view = findViewById(R.id.stat);
+        String text = UITextHelper.getStat(stat);
+        view.setText(text);
     }
 
 }

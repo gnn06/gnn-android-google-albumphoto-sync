@@ -1,5 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import java.util.Date;
+
+import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
 import gnn.com.photos.sync.Synchronizer;
 
 public class UITextHelper {
@@ -60,4 +64,10 @@ public class UITextHelper {
         return result;
     }
 
+    public String getStat(WallpaperStat stat) {
+        String result = "";
+        result += "nombre wallpaperr " + stat.getNbChangeOnLastDay() + " le "
+        + stat.getLastChangeDate().toString();
+        return result;
+    }
 }

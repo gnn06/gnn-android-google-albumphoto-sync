@@ -416,6 +416,29 @@
                                 android:layout_below="@id/titleResult"
                                 android:text="@string/result" />
                         </RelativeLayout>
+                        <!-- Stat -->
+                        <RelativeLayout
+                            android:id="@+id/SectionStat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/titleStat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/titleResult"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                            <TextView
+                                android:id="@+id/stat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/titleStat"
+                                android:text="@string/result" />
+                        </RelativeLayout>
                     </LinearLayout>
                     <!-- Progress Bar -->
                     <RelativeLayout

@@ -107,14 +107,14 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
         view.enableFrequencyUpdatePhotos(scheduled);
-        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
-        view.setStat(stat);
     }
 
     @Override
     public void onAppForeground() {
         view.updateUI_User();
         refreshLastTime();
+        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
+        view.setStat(stat);
     }
 
     /**

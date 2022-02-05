@@ -5,6 +5,7 @@ import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
 
 public interface IView {
 
@@ -56,4 +57,6 @@ public interface IView {
     void setFrequencyUpdatePhotos(String frequency);
 
     void enableFrequencyUpdatePhotos(boolean checked);
+
+    void setStat(WallpaperStat stat);
 }

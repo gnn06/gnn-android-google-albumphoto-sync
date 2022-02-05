@@ -9,13 +9,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
-class PersistWallpaperStat {
+public class PersistWallpaperStat {
 
     private static final String STAT_FILENAME = "wallpaper.json";
 
     private final File processFolder;
 
-    PersistWallpaperStat(File processFolder) {
+    public PersistWallpaperStat(File processFolder) {
         this.processFolder = processFolder;
     }
 

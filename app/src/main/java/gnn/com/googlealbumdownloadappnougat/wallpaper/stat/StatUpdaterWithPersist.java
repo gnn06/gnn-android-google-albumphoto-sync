@@ -4,16 +4,16 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
 
-class StatUpdaterWithPersist {
+public class StatUpdaterWithPersist {
 
     // Injected
     private final File processFolder;
 
-    StatUpdaterWithPersist(File processFolder) {
+    public StatUpdaterWithPersist(File processFolder) {
         this.processFolder = processFolder;
     }
 
-    void  onWallpaperChange() {
+    public void  onWallpaperChange() {
         PersistWallpaperStat persist = new PersistWallpaperStat(processFolder);
         WallpaperStat stat;
         try {

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.StatUpdaterWithPersist;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PersistWallpaperTime;
@@ -49,6 +50,7 @@ public class ChooserSetterWallPaper {
             setWallpaper(bitmap);
             try {
                 new PersistWallpaperTime(this.processFolder).storeTime();
+                new StatUpdaterWithPersist(this.processFolder).onWallpaperChange();
             } catch (IOException e) {
                 Log.e(TAG, "can not write last wallpaper time");
             }

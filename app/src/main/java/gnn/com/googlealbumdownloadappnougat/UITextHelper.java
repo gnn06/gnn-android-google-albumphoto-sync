@@ -1,9 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import java.text.DateFormat;
-import java.util.Locale;
-
-import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.sync.Synchronizer;
 
 public class UITextHelper {

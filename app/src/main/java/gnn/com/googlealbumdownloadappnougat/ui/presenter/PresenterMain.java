@@ -17,6 +17,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -29,15 +30,14 @@ import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperSetter;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
-import gnn.com.photos.stat.stat.WallpaperStat;
-import gnn.com.photos.stat.stat.WallpaperStatProvider;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStatProvider;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.PersistWallpaperTime;
 import gnn.com.photos.sync.SynchronizerDelayed;
 
@@ -113,7 +113,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onAppForeground() {
         view.updateUI_User();
         refreshLastTime();
-        WallpaperStat stat = new WallpaperStatProvider(this.getProcessFolder()).get();
+        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
         view.setStat(stat);
     }
 

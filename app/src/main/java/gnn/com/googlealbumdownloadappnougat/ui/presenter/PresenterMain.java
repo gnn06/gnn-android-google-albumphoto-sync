@@ -32,6 +32,8 @@ import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStatProvider;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;
@@ -105,6 +107,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
         view.enableFrequencyUpdatePhotos(scheduled);
+        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
+        view.setStat(stat);
     }
 
     @Override

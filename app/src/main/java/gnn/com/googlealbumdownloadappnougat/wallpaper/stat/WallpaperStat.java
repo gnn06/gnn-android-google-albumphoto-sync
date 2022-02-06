@@ -34,9 +34,8 @@ public class WallpaperStat {
         this.lastChangeDate = lastChangeDate;
     }
 
-    public void increase(Date date) {
+    public void increase() {
         this.nbChangeOnLastDay += 1;
-        this.lastChangeDate = date;
     }
 
     public void reset(Date date) {

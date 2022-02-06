@@ -18,7 +18,7 @@ class StatUpdater {
         Date newChangeDate = currentDateProvider.get();
         DateUtil dateUtil = new DateUtil(currentDateProvider);
         if (dateUtil.isToday(stat.getLastChangeDate())) {
-            stat.increase(newChangeDate);
+            stat.increase();
         } else {
             stat.reset(newChangeDate);
         }

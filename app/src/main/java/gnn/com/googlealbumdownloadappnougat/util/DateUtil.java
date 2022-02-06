@@ -6,12 +6,12 @@ import java.util.Date;
 
 import gnn.com.photos.service.Cache;
 
-class DateUtil {
+public class DateUtil {
 
     // Injected
     final private DateProvider currentDateProvider;
 
-    DateUtil(DateProvider currentDateProvider) {
+    public DateUtil(DateProvider currentDateProvider) {
         this.currentDateProvider = currentDateProvider;
     }
 
@@ -21,7 +21,7 @@ class DateUtil {
         return truncDate.equals(truncOtherDate);
     }
 
-    boolean isToday(Date date) {
+    public boolean isToday(Date date) {
         return isSameDay(date, currentDateProvider.get());
     }
 

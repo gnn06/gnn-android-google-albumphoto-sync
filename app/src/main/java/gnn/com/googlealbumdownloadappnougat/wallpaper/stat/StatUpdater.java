@@ -1,10 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.googlealbumdownloadappnougat.util.DateUtil;
 
 class StatUpdater {
 
@@ -17,9 +16,8 @@ class StatUpdater {
 
     void updateOnNewChange(WallpaperStat stat) {
         Date newChangeDate = currentDateProvider.get();
-        Instant instantNewChange = newChangeDate.toInstant().truncatedTo(ChronoUnit.DAYS);
-        Instant instantLastChange = stat.getLastChangeDate().toInstant().truncatedTo(ChronoUnit.DAYS);
-        if (instantNewChange.equals(instantLastChange)) {
+        DateUtil dateUtil = new DateUtil(currentDateProvider);
+        if (dateUtil.isToday(stat.getLastChangeDate())) {
             stat.increase(newChangeDate);
         } else {
             stat.reset(newChangeDate);

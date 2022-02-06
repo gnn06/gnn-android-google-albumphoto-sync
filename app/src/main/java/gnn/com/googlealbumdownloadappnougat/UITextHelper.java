@@ -1,6 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
@@ -66,8 +68,9 @@ public class UITextHelper {
 
     public String getStat(WallpaperStat stat) {
         String result = "";
-        result += "nombre wallpaperr " + stat.getNbChangeOnLastDay() + " le "
-        + stat.getLastChangeDate().toString();
+
+        result += "nombre de changement " + stat.getNbChangeOnLastDay() + " le "
+        + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.FRANCE).format(stat.getLastChangeDate());
         return result;
     }
 }

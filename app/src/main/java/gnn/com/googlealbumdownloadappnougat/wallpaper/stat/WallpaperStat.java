@@ -11,7 +11,8 @@ public class WallpaperStat {
 
     private Date lastChangeDate;
 
-    WallpaperStat(int changeByDay, Date lastWallpaper) {
+    // public for test
+    public WallpaperStat(int changeByDay, Date lastWallpaper) {
         this.nbChangeOnLastDay = changeByDay;
         this.lastChangeDate = lastWallpaper;
     }

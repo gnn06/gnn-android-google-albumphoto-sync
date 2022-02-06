@@ -4,8 +4,6 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import gnn.com.photos.service.Cache;
-
 public class DateUtil {
 
     // Injected

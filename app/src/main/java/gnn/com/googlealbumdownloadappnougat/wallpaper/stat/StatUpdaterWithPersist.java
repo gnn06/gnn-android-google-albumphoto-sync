@@ -4,8 +4,10 @@ import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.googlealbumdownloadappnougat.util.DateUtil;
 
 public class StatUpdaterWithPersist {
 
@@ -25,12 +27,11 @@ public class StatUpdaterWithPersist {
         if (stat == null) {
             stat = new WallpaperStatFactory(new DateProvider()).get();
         }
-        new StatUpdater(new DateProvider()).updateOnNewChange(stat);
+        stat.updateOnNewChange(new DateProvider());
         try {
             persist.write(stat);
         } catch (IOException e) {
             Log.e("GOI", "can not write stat");
         }
-
     }
 }

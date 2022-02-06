@@ -2,6 +2,9 @@ package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
 
 import java.util.Date;
 
+import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.googlealbumdownloadappnougat.util.DateUtil;
+
 public class WallpaperStat {
 
     private int nbChangeOnLastDay = 0;
@@ -41,5 +44,15 @@ public class WallpaperStat {
     public void reset(Date date) {
         this.nbChangeOnLastDay = 1;
         this.lastChangeDate = date;
+    }
+
+    void updateOnNewChange(DateProvider currentDateProvider) {
+        DateUtil dateUtil = new DateUtil(currentDateProvider);
+        if (dateUtil.isToday(this.getLastChangeDate())) {
+            this.increase();
+        } else {
+            Date newChangeDate = currentDateProvider.get();
+            this.reset(newChangeDate);
+        }
     }
 }

@@ -1,0 +1,49 @@
+package gnn.com.googlealbumdownloadappnougat.util;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static org.hamcrest.core.Is.*;
+import org.junit.Test;
+
+import java.util.Date;
+
+public class DateUtilTest {
+
+    @Test
+    public void is_yesterday() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isYesterday(new Date(2022, 3, 8));
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void is_not_yesterday_today() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isYesterday(new Date(2022, 3, 9));
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void is_not_yesterday_before() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isYesterday(new Date(2022, 3, 10));
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void is_not_yesterday_after() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isYesterday(new Date(2022, 3, 11));
+        assertThat(result, is(false));
+    }
+}

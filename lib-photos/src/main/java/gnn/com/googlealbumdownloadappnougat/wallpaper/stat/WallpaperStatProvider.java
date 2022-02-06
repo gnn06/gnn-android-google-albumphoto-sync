@@ -1,11 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
 
-import android.util.Log;
-
 import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 public class WallpaperStatProvider {
 
@@ -42,7 +41,7 @@ public class WallpaperStatProvider {
         try {
             persist.write(stat);
         } catch (IOException e) {
-            Log.e("GOI", "can not write stat");
+            Logger.getLogger().severe("can not write stat");
         }
     }
 }

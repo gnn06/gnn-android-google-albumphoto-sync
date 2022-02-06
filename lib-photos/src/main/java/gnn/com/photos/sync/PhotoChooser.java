@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
+import gnn.com.photos.stat.stat.WallpaperStatProvider;
 
 public class PhotoChooser {
 
@@ -30,7 +31,7 @@ public class PhotoChooser {
             persist.storeTime();
             statProvider.onWallpaperChange();
         } catch (IOException e) {
-            Log.e(TAG, "can not write last wallpaper time");
+            Logger.getLogger().severe("can not write last wallpaper time");
         }
         return photo;
     }

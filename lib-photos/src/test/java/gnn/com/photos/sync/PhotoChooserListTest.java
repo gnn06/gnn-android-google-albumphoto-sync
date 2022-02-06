@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserTest {
+public class PhotoChooserListTest {
 
     ArrayList<Photo> remote;
 
@@ -36,28 +36,28 @@ public class PhotoChooserTest {
 
     @Test
     public void chooseOne_1() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 1, null);
+        ArrayList<Photo> result1 = new PhotoChooserList().chooseOneList(remote, 1, null);
 
         Assert.assertEquals(1, result1.size());
     }
 
     @Test
     public void chooseOne_2() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 2, null);
+        ArrayList<Photo> result1 = new PhotoChooserList().chooseOneList(remote, 2, null);
 
         Assert.assertEquals(2, result1.size());
     }
 
     @Test
     public void chooseOne_max() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 5, null);
+        ArrayList<Photo> result1 = new PhotoChooserList().chooseOneList(remote, 5, null);
 
         Assert.assertEquals(3, result1.size());
     }
 
     @Test
     public void chooseOne_size() {
-        ArrayList<Photo> result1 = new PhotoChooser().chooseOneList(remote, 3, null);
+        ArrayList<Photo> result1 = new PhotoChooserList().chooseOneList(remote, 3, null);
 
         Assert.assertEquals(3, result1.size());
     }
@@ -72,7 +72,7 @@ public class PhotoChooserTest {
         ArrayList<Photo> local = new ArrayList<>();
         local.add(new Photo("url3", "id3"));
 
-        ArrayList<Photo> result = new PhotoChooser().firstMinusSecondList(remote, local);
+        ArrayList<Photo> result = new PhotoChooserList().firstMinusSecondList(remote, local);
 
         Assert.assertEquals(2, result.size());
         Assert.assertFalse(result.contains(new Photo("url3", "id3")));
@@ -80,7 +80,7 @@ public class PhotoChooserTest {
 
     @Test
     public void choosen_nothing_to_download_and_to_delete() {
-        PhotoChooser chooser = Mockito.spy(PhotoChooser.class);
+        PhotoChooserList chooser = Mockito.spy(PhotoChooserList.class);
         SyncData syncData = Mockito.spy(SyncData.class);
 
         ArrayList<Photo> remote = new ArrayList<>(Arrays.asList(
@@ -107,7 +107,7 @@ public class PhotoChooserTest {
 
     @Test
     public void choosen_all_to_download_and_all_to_delete() {
-        PhotoChooser chooser = Mockito.spy(PhotoChooser.class);
+        PhotoChooserList chooser = Mockito.spy(PhotoChooserList.class);
         SyncData syncData = Mockito.spy(SyncData.class);
 
         ArrayList<Photo> remote = new ArrayList<>(Arrays.asList(
@@ -138,7 +138,7 @@ public class PhotoChooserTest {
 
     @Test
     public void choosen_something_to_download_and_something_to_delete() {
-        PhotoChooser chooser = Mockito.spy(PhotoChooser.class);
+        PhotoChooserList chooser = Mockito.spy(PhotoChooserList.class);
         SyncData syncData = Mockito.spy(SyncData.class);
 
         ArrayList<Photo> remote = new ArrayList<>(Arrays.asList(

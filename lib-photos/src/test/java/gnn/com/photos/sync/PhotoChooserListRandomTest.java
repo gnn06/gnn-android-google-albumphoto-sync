@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserRandomTest {
+public class PhotoChooserListRandomTest {
 
     @InjectMocks
-    PhotoChooser chooser;
+    PhotoChooserList chooser;
 
     @Mock
     ThreadLocalRandom randomiser;

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserRenameTest {
+public class PhotoChooserListRenameTest {
 
     private SyncData syncData;
     private ArrayList<Photo> remote;
@@ -34,7 +34,7 @@ public class PhotoChooserRenameTest {
 
     @Test
     public void choose_full_rename_nothing_to_delete() {
-        PhotoChooser chooser = new PhotoChooser();
+        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -52,7 +52,7 @@ public class PhotoChooserRenameTest {
 
     @Test
     public void choose_full_rename_delete_remaining() {
-        PhotoChooser chooser = new PhotoChooser();
+        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -71,7 +71,7 @@ public class PhotoChooserRenameTest {
 
     @Test
     public void choose_random_rename_nothing_to_delete() {
-        PhotoChooser chooser = Mockito.spy(new PhotoChooser());
+        PhotoChooserList chooser = Mockito.spy(new PhotoChooserList());
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -94,7 +94,7 @@ public class PhotoChooserRenameTest {
 
     @Test
     public void choose_random_rename_delete_remaining() {
-        PhotoChooser chooser = new PhotoChooser();
+        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));

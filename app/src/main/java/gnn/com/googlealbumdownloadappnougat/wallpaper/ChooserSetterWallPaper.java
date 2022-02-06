@@ -21,7 +21,7 @@ import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PersistWallpaperTime;
-import gnn.com.photos.sync.PhotoChooser;
+import gnn.com.photos.sync.PhotoChooserList;
 
 /**
  * Choose a photo and set the wall paper
@@ -70,7 +70,7 @@ public class ChooserSetterWallPaper {
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
         if (localPhotos.size() > 0) {
             Logger logger = Logger.getLogger();
-            ArrayList<Photo> photos = new PhotoChooser().chooseOneList(localPhotos, 1, null);
+            ArrayList<Photo> photos = new PhotoChooserList().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }
         // TODO manage no local photo

@@ -9,7 +9,7 @@ import gnn.com.photos.Photo;
 /*
  * Use by SyncMethod and PhotoWallpaper
  */
-public class PhotoChooser {
+public class PhotoChooserList {
 
     // randomizer must not be final to be mocked by mockito
     // test randomizer instancié à chaque appel

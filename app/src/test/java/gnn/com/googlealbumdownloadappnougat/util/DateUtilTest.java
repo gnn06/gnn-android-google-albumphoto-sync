@@ -73,4 +73,24 @@ public class DateUtilTest {
         boolean result = dateUtil.isYesterday(new Date(2022, 3, 11));
         assertThat(result, is(false));
     }
+
+    @Test
+    public void is_sameDay_true() {
+        DateUtil dateUtil = new DateUtil(null);
+        boolean result = dateUtil
+                .isSameDay(
+                        new Date(2022, 3, 11),
+                        new Date(2022, 3, 11));
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void is_sameDay_false() {
+        DateUtil dateUtil = new DateUtil(null);
+        boolean result = dateUtil
+                .isSameDay(
+                        new Date(2022, 3, 9),
+                        new Date(2022, 3, 10));
+        assertThat(result, is(false));
+    }
 }

@@ -2,8 +2,9 @@ package gnn.com.googlealbumdownloadappnougat.util;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Date;
+
+import gnn.com.photos.service.Cache;
 
 class DateUtil {
 
@@ -28,7 +29,9 @@ class DateUtil {
         return truncYesterdayDate.equals(truncGivenDate);
     }
 
-    boolean isSameDay() {
-        return false;
+    boolean isSameDay(Date date, Date otherDate) {
+        Instant truncDate      = date.toInstant().truncatedTo(ChronoUnit.DAYS);
+        Instant truncOtherDate = otherDate.toInstant().truncatedTo(ChronoUnit.DAYS);
+        return truncDate.equals(truncOtherDate);
     }
 }

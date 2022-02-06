@@ -15,6 +15,7 @@ public class PhotoChooserPersist {
     private final File processFolder;
     private final PersistWallpaperTime persist;
     private final WallpaperStatProvider statProvider;
+    private WallpaperObserver observer;
 
     public PhotoChooserPersist(File photoFolder, File processFolder) {
         this.photoFolder = photoFolder;
@@ -31,11 +32,18 @@ public class PhotoChooserPersist {
             try {
                 persist.storeTime();
                 statProvider.onWallpaperChange();
+                if (observer != null) {
+                    observer.onWallpaper(photo);
+                }
             } catch (IOException e) {
                 Logger.getLogger().severe("can not write last wallpaper time");
             }
         }
         return photo;
+    }
+
+    public void addObserver(WallpaperObserver observer) {
+        this.observer = observer;
     }
 
     /**
@@ -46,8 +54,8 @@ public class PhotoChooserPersist {
     private Photo chooseLocalPhoto(File folder) {
         PhotosLocalService pls = new PhotosLocalService();
         ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
+        Logger logger = Logger.getLogger();
         if (localPhotos.size() > 0) {
-            Logger logger = Logger.getLogger();
             ArrayList<Photo> photos = new PhotoChooserList().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }

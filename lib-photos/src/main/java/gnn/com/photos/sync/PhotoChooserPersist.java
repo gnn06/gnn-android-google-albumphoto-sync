@@ -26,12 +26,14 @@ public class PhotoChooserPersist {
     public Photo chooseOne() {
         Logger logger = Logger.getLogger();
         Photo photo = chooseLocalPhoto(photoFolder);
-        logger.info("PhotoChooser has choose " + photo.getId());
-        try {
-            persist.storeTime();
-            statProvider.onWallpaperChange();
-        } catch (IOException e) {
-            Logger.getLogger().severe("can not write last wallpaper time");
+        if (photo != null) {
+            logger.info("PhotoChooser has choose " + photo.getId());
+            try {
+                persist.storeTime();
+                statProvider.onWallpaperChange();
+            } catch (IOException e) {
+                Logger.getLogger().severe("can not write last wallpaper time");
+            }
         }
         return photo;
     }

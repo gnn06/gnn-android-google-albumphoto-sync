@@ -32,6 +32,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.PersistWallpaperStat;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStatProvider;
 import gnn.com.photos.service.Cache;
@@ -113,7 +114,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onAppForeground() {
         view.updateUI_User();
         refreshLastTime();
-        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder(), new DateProvider()).get();
+        WallpaperStat stat = new WallpaperStatProvider(new PersistWallpaperStat(this.getProcessFolder()), new DateProvider()).get();
         view.setStat(stat);
     }
 

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserPersistListRenameTest {
+public class PhotoChooserListRenameTest {
 
     private SyncData syncData;
     private ArrayList<Photo> remote;

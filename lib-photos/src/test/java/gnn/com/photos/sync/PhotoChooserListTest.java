@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserPersistListTest {
+public class PhotoChooserListTest {
 
     ArrayList<Photo> remote;
 

@@ -37,6 +37,7 @@ public class ChooserSetterWallPaper {
         this.activity = activity;
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
+        this.chooser = new PhotoChooserPersist(photoFolder, processFolder);
     }
 
     public void setWallpaper() {

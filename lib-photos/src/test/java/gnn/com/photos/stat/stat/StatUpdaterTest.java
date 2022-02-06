@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
+package gnn.com.photos.stat.stat;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.util.DateProvider;
 
 public class StatUpdaterTest {
 

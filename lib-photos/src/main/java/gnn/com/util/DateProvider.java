@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.util;
+package gnn.com.util;
 
 import java.util.Date;
 

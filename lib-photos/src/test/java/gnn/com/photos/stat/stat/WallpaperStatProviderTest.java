@@ -1,6 +1,5 @@
-package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
+package gnn.com.photos.stat.stat;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -9,10 +8,9 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 
-import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
+import gnn.com.util.DateProvider;
 
 public class WallpaperStatProviderTest {
 

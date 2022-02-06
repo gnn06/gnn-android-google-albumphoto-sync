@@ -1,4 +1,4 @@
-package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
+package gnn.com.photos.stat.stat;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

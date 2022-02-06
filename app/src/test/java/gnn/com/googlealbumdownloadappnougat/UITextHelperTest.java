@@ -8,13 +8,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
+import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.Photo;
 
 import static org.junit.Assert.assertEquals;

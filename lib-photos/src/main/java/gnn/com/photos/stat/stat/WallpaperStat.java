@@ -1,9 +1,9 @@
-package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
+package gnn.com.photos.stat.stat;
 
 import java.util.Date;
 
-import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
-import gnn.com.googlealbumdownloadappnougat.util.DateUtil;
+import gnn.com.util.DateProvider;
+import gnn.com.util.DateUtil;
 
 public class WallpaperStat {
 

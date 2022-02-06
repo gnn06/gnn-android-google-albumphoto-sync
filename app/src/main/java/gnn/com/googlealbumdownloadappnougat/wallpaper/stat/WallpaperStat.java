@@ -29,11 +29,11 @@ public class WallpaperStat {
         return lastChangeDate;
     }
 
-    public void increase() {
+    private void increase() {
         this.nbChangeOnLastDay += 1;
     }
 
-    public void reset(Date date) {
+    private void reset(Date date) {
         this.nbChangeOnLastDay = 1;
         this.lastChangeDate = date;
     }

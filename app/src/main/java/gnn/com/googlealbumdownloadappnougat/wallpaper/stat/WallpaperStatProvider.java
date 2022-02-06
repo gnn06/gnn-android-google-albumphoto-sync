@@ -2,8 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.wallpaper.stat;
 
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;

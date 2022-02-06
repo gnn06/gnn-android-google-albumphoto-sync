@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.PersistWallpaperStat;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStatProvider;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
@@ -52,7 +51,7 @@ public class ChooserSetterWallPaper {
             setWallpaper(bitmap);
             try {
                 new PersistWallpaperTime(this.processFolder).storeTime();
-                new WallpaperStatProvider(new PersistWallpaperStat(this.processFolder), new DateProvider()).onWallpaperChange();
+                new WallpaperStatProvider(this.processFolder).onWallpaperChange();
             } catch (IOException e) {
                 Log.e(TAG, "can not write last wallpaper time");
             }

@@ -22,7 +22,7 @@ public class WallpaperStatProvider {
     public WallpaperStat get() {
         WallpaperStat stat = this.persist.read();
         if (stat == null) {
-            stat = new WallpaperStatFactory(currentDateProvider).get();
+            stat = new WallpaperStat(currentDateProvider.get());
         }
         return stat;
     }
@@ -30,7 +30,7 @@ public class WallpaperStatProvider {
     public void  onWallpaperChange() {
         WallpaperStat stat = persist.read();
         if (stat == null) {
-            stat = new WallpaperStatFactory(new DateProvider()).get();
+            stat = new WallpaperStat(currentDateProvider.get());
         }
         stat.updateOnNewChange(new DateProvider());
         try {

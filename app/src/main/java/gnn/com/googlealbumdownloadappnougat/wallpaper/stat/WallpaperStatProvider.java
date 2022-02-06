@@ -9,16 +9,18 @@ public class WallpaperStatProvider {
 
     // injected
     private final File processFolder;
+    private final DateProvider currentDateProvider;
 
-    public WallpaperStatProvider(File processFolder) {
+    public WallpaperStatProvider(File processFolder, DateProvider currentDateProvider) {
         this.processFolder = processFolder;
+        this.currentDateProvider = currentDateProvider;
     }
 
     public WallpaperStat get() {
-        try {
-            return new PersistWallpaperStat(processFolder).read();
-        } catch (FileNotFoundException e) {
-            return new WallpaperStatFactory(new DateProvider()).get();
+        WallpaperStat stat = new PersistWallpaperStat(processFolder).read();
+        if (stat == null) {
+            stat = new WallpaperStatFactory(currentDateProvider).get();
         }
+        return stat;
     }
 }

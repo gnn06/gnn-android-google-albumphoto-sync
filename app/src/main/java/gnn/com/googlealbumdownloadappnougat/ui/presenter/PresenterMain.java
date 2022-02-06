@@ -17,7 +17,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
@@ -30,6 +29,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
+import gnn.com.googlealbumdownloadappnougat.util.DateProvider;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
@@ -113,7 +113,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onAppForeground() {
         view.updateUI_User();
         refreshLastTime();
-        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
+        WallpaperStat stat = new WallpaperStatProvider(getProcessFolder(), new DateProvider()).get();
         view.setStat(stat);
     }
 

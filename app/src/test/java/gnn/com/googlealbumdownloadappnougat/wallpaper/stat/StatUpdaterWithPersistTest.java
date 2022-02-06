@@ -21,7 +21,7 @@ public class StatUpdaterWithPersistTest {
     @Test
     public void no_previous_stat() throws IOException {
         PersistWallpaperStat persistMock = mock(PersistWallpaperStat.class);
-        when(persistMock.read()).thenThrow(new FileNotFoundException());
+        when(persistMock.read()).thenReturn(null);
         StatUpdaterWithPersist updater = new StatUpdaterWithPersist(persistMock, new DateProvider());
         updater.onWallpaperChange();
         verify(persistMock, atLeastOnce()).write(any());

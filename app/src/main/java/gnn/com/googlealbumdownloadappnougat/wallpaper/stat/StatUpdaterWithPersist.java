@@ -21,11 +21,9 @@ public class StatUpdaterWithPersist {
     }
 
     public void  onWallpaperChange() {
-        WallpaperStat stat;
-        try {
-            stat = persist.read();
-        } catch (FileNotFoundException e) {
-            stat = new WallpaperStat(this.dateProvider.get());
+        WallpaperStat stat = persist.read();
+        if (stat == null) {
+            stat = new WallpaperStatFactory(new DateProvider()).get();
         }
         new StatUpdater(new DateProvider()).updateOnNewChange(stat);
         try {

@@ -23,7 +23,7 @@ public class PersistWallpaperStatTest {
 //    @Ignore
     public void write() throws IOException {
         File folder = tempFolder.newFolder();
-        final File tempFile = new File(folder, "wallpaper.json");
+        final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
         tempFile.delete();
         PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat stat = new WallpaperStat(12, new Date());
@@ -35,7 +35,7 @@ public class PersistWallpaperStatTest {
 //    @Ignore
     public void read() throws IOException {
         File folder = tempFolder.newFolder();
-        final File tempFile = new File(folder, "wallpaper.json");
+        final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
         Files.write(tempFile.toPath(), "{\"nbChangeOnLastDay\":24,\"lastChangeDate\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
 
         PersistWallpaperStat persistent = new PersistWallpaperStat(folder);

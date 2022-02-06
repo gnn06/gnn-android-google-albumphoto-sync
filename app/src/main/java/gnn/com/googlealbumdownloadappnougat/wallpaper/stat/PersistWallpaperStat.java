@@ -11,7 +11,7 @@ import java.io.Reader;
 
 class PersistWallpaperStat {
 
-    private static final String STAT_FILENAME = "stat_wallpaper.json";
+    static final String STAT_FILENAME = "stat_wallpaper.json";
 
     private final File processFolder;
 

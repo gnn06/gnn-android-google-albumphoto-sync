@@ -7,9 +7,9 @@ import gnn.com.googlealbumdownloadappnougat.util.DateUtil;
 
 public class WallpaperStat {
 
-    private int nbChangeOnLastDay = 0;
+    private int nbChangeOnLastDay;
 
-    private Date lastChangeDate = null;
+    private Date lastChangeDate;
 
     public WallpaperStat(int changeByDay, Date lastWallpaper) {
         this.nbChangeOnLastDay = changeByDay;
@@ -25,16 +25,8 @@ public class WallpaperStat {
         return nbChangeOnLastDay;
     }
 
-    private void setNbChangeOnLastDay(int nbChangeOnLastDay) {
-        this.nbChangeOnLastDay = nbChangeOnLastDay;
-    }
-
     public Date getLastChangeDate() {
         return lastChangeDate;
-    }
-
-    private void setLastChangeDate(Date lastChangeDate) {
-        this.lastChangeDate = lastChangeDate;
     }
 
     public void increase() {

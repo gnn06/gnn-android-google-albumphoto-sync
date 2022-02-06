@@ -11,12 +11,12 @@ public class WallpaperStat {
 
     private Date lastChangeDate;
 
-    public WallpaperStat(int changeByDay, Date lastWallpaper) {
+    WallpaperStat(int changeByDay, Date lastWallpaper) {
         this.nbChangeOnLastDay = changeByDay;
         this.lastChangeDate = lastWallpaper;
     }
 
-    public WallpaperStat(Date lastChangeDate) {
+    WallpaperStat(Date lastChangeDate) {
         this.nbChangeOnLastDay = 0;
         this.lastChangeDate = lastChangeDate;
     }

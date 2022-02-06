@@ -29,6 +29,7 @@ import gnn.com.photos.sync.PhotoChooser;
  * params :
  * - folder where choose a
  * - android context to create log
+ * Used for schedule or one time wallpaper
  */
 public class ChooserSetterWallPaper {
     private static final String TAG = "PhotoWallPaper";

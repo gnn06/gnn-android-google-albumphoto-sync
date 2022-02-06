@@ -21,6 +21,7 @@ import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.sync.PersistWallpaperTime;
+import gnn.com.photos.sync.PhotoChooser;
 import gnn.com.photos.sync.PhotoChooserList;
 
 /**
@@ -35,6 +36,7 @@ public class ChooserSetterWallPaper {
     private final Context activity;
     private final File photoFolder;
     private File processFolder;
+    private PhotoChooser chooser;
 
     public ChooserSetterWallPaper(Context activity, File photoFolder, File processFolder) {
         this.activity = activity;
@@ -44,37 +46,14 @@ public class ChooserSetterWallPaper {
 
     public void setWallpaper() {
         Logger logger = Logger.getLogger();
-        Photo photo = chooseLocalPhoto(photoFolder);
+        Photo photo = chooser.setWallpaper();
         logger.info("wallpaper.setWallpaper has choose " + photo.getId());
         if (photo != null) {
             Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(photoFolder).getAbsolutePath());
             setWallpaper(bitmap);
-            try {
-                new PersistWallpaperTime(this.processFolder).storeTime();
-                new WallpaperStatProvider(this.processFolder).onWallpaperChange();
-            } catch (IOException e) {
-                Log.e(TAG, "can not write last wallpaper time");
-            }
         } else {
             Log.w(TAG, "no photo to use as wallpaper");
         }
-    }
-
-    /**
-     *
-     * @return null if no photo found
-     * @param folder
-     */
-    private Photo chooseLocalPhoto(File folder) {
-        PhotosLocalService pls = new PhotosLocalService();
-        ArrayList<Photo> localPhotos = pls.getLocalPhotos(folder);
-        if (localPhotos.size() > 0) {
-            Logger logger = Logger.getLogger();
-            ArrayList<Photo> photos = new PhotoChooserList().chooseOneList(localPhotos, 1, null);
-            return photos.get(0);
-        }
-        // TODO manage no local photo
-        return null;
     }
 
     private Bitmap getBitmap(@Nonnull String path) {

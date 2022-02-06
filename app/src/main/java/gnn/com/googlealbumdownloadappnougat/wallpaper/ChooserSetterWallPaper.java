@@ -12,17 +12,12 @@ import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
-import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.Photo;
-import gnn.com.photos.service.PhotosLocalService;
-import gnn.com.photos.sync.PersistWallpaperTime;
-import gnn.com.photos.sync.PhotoChooser;
-import gnn.com.photos.sync.PhotoChooserList;
+import gnn.com.photos.sync.PhotoChooserPersist;
 
 /**
  * Choose a photo and set the wall paper
@@ -36,7 +31,7 @@ public class ChooserSetterWallPaper {
     private final Context activity;
     private final File photoFolder;
     private File processFolder;
-    private PhotoChooser chooser;
+    private PhotoChooserPersist chooser;
 
     public ChooserSetterWallPaper(Context activity, File photoFolder, File processFolder) {
         this.activity = activity;
@@ -46,7 +41,7 @@ public class ChooserSetterWallPaper {
 
     public void setWallpaper() {
         Logger logger = Logger.getLogger();
-        Photo photo = chooser.setWallpaper();
+        Photo photo = chooser.chooseOne();
         logger.info("wallpaper.setWallpaper has choose " + photo.getId());
         if (photo != null) {
             Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(photoFolder).getAbsolutePath());

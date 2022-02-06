@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserListRandomTest {
+public class PhotoChooserPersistListRandomTest {
 
     @InjectMocks
     PhotoChooserList chooser;

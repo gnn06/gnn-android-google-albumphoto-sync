@@ -9,21 +9,21 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
 
-public class PhotoChooser {
+public class PhotoChooserPersist {
 
     private final File photoFolder;
     private final File processFolder;
     private final PersistWallpaperTime persist;
     private final WallpaperStatProvider statProvider;
 
-    public PhotoChooser(File photoFolder, File processFolder) {
+    public PhotoChooserPersist(File photoFolder, File processFolder) {
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
         persist = new PersistWallpaperTime(this.processFolder);
         statProvider = new WallpaperStatProvider(this.processFolder);
     }
 
-    public Photo setWallpaper() {
+    public Photo chooseOne() {
         Logger logger = Logger.getLogger();
         Photo photo = chooseLocalPhoto(photoFolder);
         logger.info("PhotoChooser has choose " + photo.getId());

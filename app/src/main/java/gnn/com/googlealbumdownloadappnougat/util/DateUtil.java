@@ -15,23 +15,18 @@ class DateUtil {
         this.currentDateProvider = currentDateProvider;
     }
 
-    boolean isToday(Date date) {
-        Instant truncCurrentDate = currentDateProvider.get().toInstant().truncatedTo(ChronoUnit.DAYS);
-        Instant truncGivenDate = date.toInstant().truncatedTo(ChronoUnit.DAYS);
-        return truncCurrentDate.equals(truncGivenDate);
-    }
-
-    boolean isYesterday(Date date) {
-        Instant truncYesterdayDate = currentDateProvider.get().toInstant()
-                .truncatedTo(ChronoUnit.DAYS)
-                .minus(1, ChronoUnit.DAYS);
-        Instant truncGivenDate = date.toInstant().truncatedTo(ChronoUnit.DAYS);
-        return truncYesterdayDate.equals(truncGivenDate);
-    }
-
     boolean isSameDay(Date date, Date otherDate) {
         Instant truncDate      = date.toInstant().truncatedTo(ChronoUnit.DAYS);
         Instant truncOtherDate = otherDate.toInstant().truncatedTo(ChronoUnit.DAYS);
         return truncDate.equals(truncOtherDate);
+    }
+
+    boolean isToday(Date date) {
+        return isSameDay(date, currentDateProvider.get());
+    }
+
+    boolean isYesterday(Date date) {
+        Instant yesterday = currentDateProvider.get().toInstant().minus(1, ChronoUnit.DAYS);
+        return isSameDay(date, Date.from(yesterday));
     }
 }

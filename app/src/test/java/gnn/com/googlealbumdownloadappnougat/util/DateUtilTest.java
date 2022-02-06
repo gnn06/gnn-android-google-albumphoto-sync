@@ -12,6 +12,33 @@ import java.util.Date;
 public class DateUtilTest {
 
     @Test
+    public void is_today() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isToday(new Date(2022, 3, 9));
+        assertThat(result, is(true));
+    }
+
+    @Test
+    public void is_today_after() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isToday(new Date(2022, 3, 10));
+        assertThat(result, is(false));
+    }
+
+    @Test
+    public void is_today_before() {
+        DateProvider dateProvider = mock(DateProvider.class);
+        when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));
+        DateUtil dateUtil = new DateUtil(dateProvider);
+        boolean result = dateUtil.isToday(new Date(2022, 3, 8));
+        assertThat(result, is(false));
+    }
+
+    @Test
     public void is_yesterday() {
         DateProvider dateProvider = mock(DateProvider.class);
         when(dateProvider.get()).thenReturn(new Date(2022, 3, 9));

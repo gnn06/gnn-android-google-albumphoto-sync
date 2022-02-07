@@ -20,11 +20,16 @@ public class WallpaperStat {
 
     WallpaperStat(Date date) {
         this.changeOnDate = 0;
+        this.changeOnDayBefore = 0;
         this.date = date;
     }
 
     public int getChangeOnDate() {
         return changeOnDate;
+    }
+
+    public int getChangeOnDayBefore() {
+        return changeOnDayBefore;
     }
 
     public Date getDate() {
@@ -36,6 +41,7 @@ public class WallpaperStat {
     }
 
     private void reset(Date date) {
+        this.changeOnDayBefore = this.changeOnDate;
         this.changeOnDate = 1;
         this.date = date;
     }

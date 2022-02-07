@@ -36,10 +36,10 @@ public class PersistWallpaperStatTest {
     public void read() throws IOException {
         File folder = tempFolder.newFolder();
         final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
-        Files.write(tempFile.toPath(), "{\"nbChangeOnLastDay\":24,\"lastChangeDate\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
+        Files.write(tempFile.toPath(), "{\"nbChangeOnDate\":24,\"lastChangeDate\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
 
         PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat result = persistent.read();
-        assertThat(result.getNbChangeOnLastDay(), is(24));
+        assertThat(result.getNbChangeOnDate(), is(24));
     }
 }

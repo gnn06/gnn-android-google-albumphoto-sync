@@ -7,41 +7,41 @@ import gnn.com.util.DateUtil;
 
 public class WallpaperStat {
 
-    private int nbChangeOnLastDay;
+    private int nbChangeOnDate;
 
-    private Date lastChangeDate;
+    private Date date;
 
     // public for test
     public WallpaperStat(int changeByDay, Date lastWallpaper) {
-        this.nbChangeOnLastDay = changeByDay;
-        this.lastChangeDate = lastWallpaper;
+        this.nbChangeOnDate = changeByDay;
+        this.date = lastWallpaper;
     }
 
-    WallpaperStat(Date lastChangeDate) {
-        this.nbChangeOnLastDay = 0;
-        this.lastChangeDate = lastChangeDate;
+    WallpaperStat(Date date) {
+        this.nbChangeOnDate = 0;
+        this.date = date;
     }
 
-    public int getNbChangeOnLastDay() {
-        return nbChangeOnLastDay;
+    public int getNbChangeOnDate() {
+        return nbChangeOnDate;
     }
 
-    public Date getLastChangeDate() {
-        return lastChangeDate;
+    public Date getDate() {
+        return date;
     }
 
     private void increase() {
-        this.nbChangeOnLastDay += 1;
+        this.nbChangeOnDate += 1;
     }
 
     private void reset(Date date) {
-        this.nbChangeOnLastDay = 1;
-        this.lastChangeDate = date;
+        this.nbChangeOnDate = 1;
+        this.date = date;
     }
 
     void updateOnNewChange(DateProvider currentDateProvider) {
         DateUtil dateUtil = new DateUtil(currentDateProvider);
-        if (dateUtil.isToday(this.getLastChangeDate())) {
+        if (dateUtil.isToday(this.getDate())) {
             this.increase();
         } else {
             Date newChangeDate = currentDateProvider.get();

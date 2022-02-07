@@ -67,8 +67,8 @@ public class UITextHelper {
     public String getStat(WallpaperStat stat) {
         String result = "";
 
-        result += "nombre de changement " + stat.getNbChangeOnLastDay() + " le "
-        + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.FRANCE).format(stat.getLastChangeDate());
+        result += "nombre de changement " + stat.getNbChangeOnDate() + " le "
+        + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.FRANCE).format(stat.getDate());
         return result;
     }
 }

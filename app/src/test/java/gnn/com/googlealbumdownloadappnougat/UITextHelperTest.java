@@ -132,9 +132,9 @@ public class UITextHelperTest {
     }
 
     @Test
-    public void stat() {
+    public void stat_with_dayBefore() {
         UITextHelper helper = new UITextHelper(activityMock);
         String text = helper.getStat(new WallpaperStat(12, 14, new Date(74, 3-1, 9, 12, 00)));
-        assertThat(text, Is.is("nombre de changement 12 le 9 mars 1974"));
+        assertThat(text, Is.is("nombre de changement 14 la veille du 9 mars 1974"));
     }
 }

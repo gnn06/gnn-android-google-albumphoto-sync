@@ -7,23 +7,24 @@ import gnn.com.util.DateUtil;
 
 public class WallpaperStat {
 
-    private int nbChangeOnDate;
-
+    private int changeOnDate;
+    private int changeOnDayBefore;
     private Date date;
 
     // public for test
-    public WallpaperStat(int changeByDay, Date lastWallpaper) {
-        this.nbChangeOnDate = changeByDay;
+    public WallpaperStat(int changeByDay, int changeOnDayBefore, Date lastWallpaper) {
+        this.changeOnDate = changeByDay;
+        this.changeOnDayBefore = changeOnDayBefore;
         this.date = lastWallpaper;
     }
 
     WallpaperStat(Date date) {
-        this.nbChangeOnDate = 0;
+        this.changeOnDate = 0;
         this.date = date;
     }
 
-    public int getNbChangeOnDate() {
-        return nbChangeOnDate;
+    public int getChangeOnDate() {
+        return changeOnDate;
     }
 
     public Date getDate() {
@@ -31,11 +32,11 @@ public class WallpaperStat {
     }
 
     private void increase() {
-        this.nbChangeOnDate += 1;
+        this.changeOnDate += 1;
     }
 
     private void reset(Date date) {
-        this.nbChangeOnDate = 1;
+        this.changeOnDate = 1;
         this.date = date;
     }
 

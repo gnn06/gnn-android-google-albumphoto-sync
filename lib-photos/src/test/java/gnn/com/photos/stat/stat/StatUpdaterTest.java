@@ -26,15 +26,15 @@ public class StatUpdaterTest {
 
     @Test
     public void updateOnChange_on_same_day() {
-        WallpaperStat stat = new WallpaperStat(12, new Date(2022, 5, 12, 17, 32));
+        WallpaperStat stat = new WallpaperStat(12, 14, new Date(2022, 5, 12, 17, 32));
         stat.updateOnNewChange(currentDateProvider);
-        assertThat(stat.getNbChangeOnDate(), Is.is(13));
+        assertThat(stat.getChangeOnDate(), Is.is(13));
     }
 
     @Test
     public void updateOnChange_on_other_day() {
-        WallpaperStat stat = new WallpaperStat(12, new Date(2022, 5, 10, 17, 32));
+        WallpaperStat stat = new WallpaperStat(12, 14, new Date(2022, 5, 10, 17, 32));
         stat.updateOnNewChange(currentDateProvider);
-        assertThat(stat.getNbChangeOnDate(), Is.is(1));
+        assertThat(stat.getChangeOnDate(), Is.is(1));
     }
 }

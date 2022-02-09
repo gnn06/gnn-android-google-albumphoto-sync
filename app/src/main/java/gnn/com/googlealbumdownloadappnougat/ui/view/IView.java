@@ -5,7 +5,7 @@ import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.stat.WallpaperStat;
+import gnn.com.photos.stat.stat.WallpaperStat;
 
 public interface IView {
 

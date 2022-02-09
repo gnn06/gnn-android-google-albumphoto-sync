@@ -430,7 +430,7 @@
                                 android:id="@+id/titleStat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/titleStat"
+                                android:text="@string/titleResult"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
                             <TextView
                                 android:id="@+id/stat"
@@ -438,6 +438,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/titleStat"
                                 android:text="@string/noStat" />
+                                android:text="@string/result" />
                         </RelativeLayout>
                     </LinearLayout>
                     <!-- Progress Bar -->

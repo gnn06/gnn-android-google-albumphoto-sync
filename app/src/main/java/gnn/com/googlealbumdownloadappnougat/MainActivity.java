@@ -1,6 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -37,6 +36,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
+import gnn.com.photos.stat.stat.WallpaperStat;
 
 public class MainActivity extends AppCompatActivity implements IView {
 

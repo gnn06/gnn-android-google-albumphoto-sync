@@ -9,7 +9,12 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
 
-public class PhotoChooserPersist {
+/**
+ * Choose a photo from local folder
+ * persist the choice, update stat and notify observer
+ * Use service to retrieve photo
+ */
+public class ChooseOneLocalPhotoPersist {
 
     private final File photoFolder;
     private final File processFolder;
@@ -17,7 +22,7 @@ public class PhotoChooserPersist {
     private final WallpaperStatProvider statProvider;
     private WallpaperObserver observer;
 
-    public PhotoChooserPersist(File photoFolder, File processFolder) {
+    public ChooseOneLocalPhotoPersist(File photoFolder, File processFolder) {
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
         persist = new PersistWallpaperTime(this.processFolder);

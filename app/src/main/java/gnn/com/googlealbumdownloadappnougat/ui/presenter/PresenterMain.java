@@ -29,7 +29,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.ChooserSetterWallPaper;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperSetter;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
@@ -37,6 +37,7 @@ import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.PersistWallpaperTime;
 import gnn.com.photos.sync.SynchronizerDelayed;
 
@@ -428,8 +429,12 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             @Override
             public void exec() {
                 // TODO check folder is not null
-                new ChooserSetterWallPaper(activity, getFolder(), getProcessFolder()).setWallpaper();
-                refreshLastTime();
+                ChooseOneLocalPhotoPersist chooser = new ChooseOneLocalPhotoPersist(getFolder(), getProcessFolder());
+                WallpaperSetter wallpaperSetter = new WallpaperSetter(activity, getFolder(), getProcessFolder());
+                chooser.addObserver(wallpaperSetter);
+                chooser.chooseOne();
+                // TODO call it from observer
+                // refreshLastTime();
             }
         };
         Require require = new WritePermissionRequirement(exec, auth, view);

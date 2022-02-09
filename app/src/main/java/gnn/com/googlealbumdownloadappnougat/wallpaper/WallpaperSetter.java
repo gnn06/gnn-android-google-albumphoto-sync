@@ -17,35 +17,26 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
-import gnn.com.photos.sync.PhotoChooserPersist;
+import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.WallpaperObserver;
 
 /**
- * Choose a photo and set the wall paper
+ * Set a wallpaper. Called by Chooser.
  * params :
  * - folder where choose a
  * - android context to create log
  * Used for schedule or one time wallpaper
  */
-public class ChooserSetterWallPaper implements WallpaperObserver {
+public class WallpaperSetter implements WallpaperObserver {
     private static final String TAG = "PhotoWallPaper";
     private final Context activity;
     private final File photoFolder;
     private File processFolder;
-    private PhotoChooserPersist chooser;
 
-    public ChooserSetterWallPaper(Context activity, File photoFolder, File processFolder) {
+    public WallpaperSetter(Context activity, File photoFolder, File processFolder) {
         this.activity = activity;
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
-        this.chooser = new PhotoChooserPersist(photoFolder, processFolder);
-        this.chooser.addObserver(this);
-    }
-
-    public void setWallpaper() {
-        Logger logger = Logger.getLogger();
-        Photo photo = chooser.chooseOne();
-        logger.info("wallpaper.setWallpaper has choose " + photo.getId());
     }
 
     @Override

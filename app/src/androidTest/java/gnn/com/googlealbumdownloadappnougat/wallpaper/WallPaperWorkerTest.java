@@ -51,8 +51,8 @@ public class WallPaperWorkerTest {
 
     @Test
     public void test_getScreenSize() throws IOException {
-        ChooserSetterWallPaper chooserSetterWallPaper = new ChooserSetterWallPaper(context, tmpFolder.newFolder(), null);
-        Point size = chooserSetterWallPaper.getScreenSize();
+        WallpaperSetter wallpaperSetter = new WallpaperSetter(context, tmpFolder.newFolder(), null);
+        Point size = wallpaperSetter.getScreenSize();
         assertThat("width", size.x, equalTo(1080));
     }
 

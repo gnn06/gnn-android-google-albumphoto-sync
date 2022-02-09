@@ -14,6 +14,8 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
+import gnn.com.photos.sync.WallpaperObserver;
 
 /**
  * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired
@@ -74,10 +76,10 @@ public class WallPaperWorker extends Worker {
                     new Notification(getApplicationContext()).show(e.getMessage());
                 }
 
-                ChooserSetterWallPaper chooserSetterWallPaper =
-                        new ChooserSetterWallPaper(getApplicationContext(), destinationFolder,
-                                processFolder);
-                chooserSetterWallPaper.setWallpaper();
+                ChooseOneLocalPhotoPersist chooser = new ChooseOneLocalPhotoPersist(destinationFolder, processFolder);
+                WallpaperObserver wallpaperSetter = new WallpaperSetter(getApplicationContext(), destinationFolder, processFolder);
+                chooser.addObserver(wallpaperSetter);
+                chooser.chooseOne();
                 method();
                 return Result.success();
             } catch (Exception e) {

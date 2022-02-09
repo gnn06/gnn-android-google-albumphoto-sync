@@ -6,7 +6,8 @@ import java.util.Random;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 
-/*
+/**
+ * Choose a photo from a given list. Avoid to choose previously chosen photos.
  * Use by SyncMethod and PhotoWallpaper
  */
 public class PhotoChooserList {
@@ -29,7 +30,7 @@ public class PhotoChooserList {
     }
 
     /**
-     *
+     * try to choose photo that was not previously chosen
      * @param quantity should be > 0
      * @param previousPhotos
      */

@@ -5,6 +5,10 @@ public class SyncData {
     private String album;
     private int quantity;
     private String rename;
+
+    /**
+     * Example : Pictures/wallpaper
+     */
     private String folderHuman;
     private int frequencyWallpaper;
     private int frequencySync;

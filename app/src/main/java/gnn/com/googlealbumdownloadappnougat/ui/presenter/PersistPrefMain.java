@@ -111,8 +111,8 @@ public class PersistPrefMain {
         return data;
     }
 
-    public String getAlbum() {
-        return getData().getAlbum();
+    public String getPhotoFolder() {
+        return getData().getFolderHuman();
     }
 
 }

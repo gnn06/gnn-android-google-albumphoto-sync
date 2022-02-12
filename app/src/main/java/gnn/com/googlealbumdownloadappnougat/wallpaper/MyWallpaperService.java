@@ -84,6 +84,11 @@ public class MyWallpaperService extends WallpaperService {
 
         @Override
         public void onVisibilityChanged(boolean visible) {
+            /**
+             * when wallpaper becomes visible after a wallpaper change
+             2022-02-12 15:11:04.688 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-12 15:11:04.688 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             */
             super.onVisibilityChanged(visible);
             Log.d("GOI-WALLPAPER","onVisibility" + Boolean.toString(visible));
         }

@@ -34,6 +34,21 @@ public class MyWallpaperService extends WallpaperService {
         public void onCreate(SurfaceHolder surfaceHolder) {
             /**
              * on reboot phone, it is called, previous wallpaper is not restored
+             2022-02-12 15:08:23.999 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: observe added from livewallpaper create
+             2022-02-12 15:08:24.013 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceCreated
+             2022-02-12 15:08:24.013 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceChanged
+             2022-02-12 15:08:24.013 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceRedrawNeeded
+             2022-02-12 15:08:24.013 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-12 15:08:24.013 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-12 15:08:24.042 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-12 15:08:24.042 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-12 15:08:24.064 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-12 15:08:31.801 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-12 15:08:31.951 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-12 15:08:31.951 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-12 15:08:32.669 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-12 15:08:32.679 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-12 15:08:32.679 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
              */
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
@@ -52,43 +67,43 @@ public class MyWallpaperService extends WallpaperService {
         @Override
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
-            Log.d("GOI","onSurfaceCreated");
+            Log.d("GOI-WALLPAPER","onSurfaceCreated");
         }
 
         @Override
         public void onOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset) {
             super.onOffsetsChanged(xOffset, yOffset, xOffsetStep, yOffsetStep, xPixelOffset, yPixelOffset);
-            Log.d("GOI","onOffsetsChanged");
+            Log.d("GOI-WALLPAPER","onOffsetsChanged");
         }
 
         @Override
         public void onSurfaceRedrawNeeded(SurfaceHolder holder) {
             super.onSurfaceRedrawNeeded(holder);
-            Log.d("GOI", "onSurfaceRedrawNeeded");
+            Log.d("GOI-WALLPAPER", "onSurfaceRedrawNeeded");
         }
 
         @Override
         public void onVisibilityChanged(boolean visible) {
             super.onVisibilityChanged(visible);
-            Log.d("GOI","onVisibility" + Boolean.toString(visible));
+            Log.d("GOI-WALLPAPER","onVisibility" + Boolean.toString(visible));
         }
 
         @Override
         public void onSurfaceDestroyed(SurfaceHolder holder) {
             super.onSurfaceDestroyed(holder);
-            Log.d("GOI","onSurfaceDestroyed, isPreview=" + isPreview());
+            Log.d("GOI-WALLPAPER","onSurfaceDestroyed, isPreview=" + isPreview());
         }
 
         @Override
         public void onDesiredSizeChanged(int desiredWidth, int desiredHeight) {
             super.onDesiredSizeChanged(desiredWidth, desiredHeight);
-            Log.d("GOI","onDesiredSizeChanged");
+            Log.d("GOI-WALLPAPER","onDesiredSizeChanged");
         }
 
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
-            Log.d("GOI","onSurfaceChanged");
+            Log.d("GOI-WALLPAPER","onSurfaceChanged");
         }
     }
 

@@ -22,7 +22,16 @@ public class ChooseOneLocalPhotoPersist {
     private final WallpaperStatProvider statProvider;
     private WallpaperObserver observer;
 
-    public ChooseOneLocalPhotoPersist(File photoFolder, File processFolder) {
+    private static ChooseOneLocalPhotoPersist mInstance;
+
+    static public ChooseOneLocalPhotoPersist getInstance(File destinationFolder, File processFolder) {
+        if (mInstance == null) {
+            mInstance = new ChooseOneLocalPhotoPersist(destinationFolder, processFolder);
+        }
+        return mInstance;
+    }
+
+    private ChooseOneLocalPhotoPersist(File photoFolder, File processFolder) {
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
         persist = new PersistWallpaperTime(this.processFolder);

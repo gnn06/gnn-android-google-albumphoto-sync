@@ -429,7 +429,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
             @Override
             public void exec() {
                 // TODO check folder is not null
-                ChooseOneLocalPhotoPersist chooser = new ChooseOneLocalPhotoPersist(getFolder(), getProcessFolder());
+                ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(getFolder(), getProcessFolder());
                 WallpaperSetter wallpaperSetter = new WallpaperSetter(activity);
                 chooser.addObserver(wallpaperSetter);
                 chooser.chooseOne();

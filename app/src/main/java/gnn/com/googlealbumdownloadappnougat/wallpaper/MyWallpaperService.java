@@ -1,20 +1,20 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.content.Context;
+import android.os.Environment;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import androidx.annotation.NonNull;
 import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
+
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 
 /**
  * onCreate, onSurfaceCreated, onSurfaceChanged, onSurfaceREdraNeeded, onVisibility true, false, true, onOffsetsChanged
@@ -35,11 +35,12 @@ public class MyWallpaperService extends WallpaperService {
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
             if (!isPreview()) {
-                PeriodicWorkRequest request = new PeriodicWorkRequest.Builder(TestWork.class, 15, TimeUnit.MINUTES)
-                        .build();
-                WorkManager.getInstance()
-                        .enqueueUniquePeriodicWork("GNN-TEST-WORK", ExistingPeriodicWorkPolicy.REPLACE, request);
-                Log.d("GOI", "request enqueued");
+                File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
+                File processPath = getFolder(ApplicationContext.getInstance(getApplicationContext()).getProcessPath());
+                ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);
+                WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
+                chooser.addObserver(wallpaperSetter);
+                Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
             }
         }
 

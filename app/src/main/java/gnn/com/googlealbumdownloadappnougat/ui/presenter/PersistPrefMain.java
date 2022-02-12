@@ -110,4 +110,8 @@ public class PersistPrefMain {
         return data;
     }
 
+    public String getAlbum() {
+        return getData().getAlbum();
+    }
+
 }

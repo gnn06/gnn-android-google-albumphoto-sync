@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -23,9 +24,9 @@ public class PersistPrefMain {
     public static final int DEF_FREQ_SYNC_HOUR = 72;
     public static final int DEF_FREQ_UPDATE_PHOTO_DAY = 30;
 
-    private final Activity activity;
+    private final Context activity;
 
-    public PersistPrefMain(Activity activity) {
+    public PersistPrefMain(Context activity) {
         // Presenter is injected as methods parameter
         // because Presenter can be PresenterMain or PresenterSettings
         this.activity = activity;

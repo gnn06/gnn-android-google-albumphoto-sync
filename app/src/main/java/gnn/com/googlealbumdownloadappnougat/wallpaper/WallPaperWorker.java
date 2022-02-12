@@ -31,19 +31,6 @@ public class WallPaperWorker extends Worker {
         super(context, workerParams);
     }
 
-
-    private BroadcastReceiver receiver;
-
-    private void method() {
-        if (receiver == null) {
-            receiver = new MyBroadcastReceiver();
-            IntentFilter intent = new IntentFilter(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
-            getApplicationContext().registerReceiver(receiver, intent);
-            Logger logger = Logger.getLogger();
-            logger.fine("registered receiver after work");
-        }
-    }
-
     @NonNull
     @Override
     public Result doWork() {
@@ -78,12 +65,10 @@ public class WallPaperWorker extends Worker {
 
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(destinationFolder, processFolder);
                 chooser.chooseOne();
-                method();
                 return Result.success();
             } catch (Exception e) {
                 logger.severe(e.getMessage());
                 new Notification(getApplicationContext()).show(e.getMessage());
-                method();
                 return Result.failure();
             } finally {
                 logger.close();

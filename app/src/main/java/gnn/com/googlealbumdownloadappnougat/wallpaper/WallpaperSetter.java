@@ -43,7 +43,7 @@ public class WallpaperSetter implements WallpaperObserver {
     }
 
     private File getPhotoFolder() {
-        String album = new PersistPrefMain(activity).getPhotoFolder();
+        String album = new PersistPrefMain(activity).getPhotoPath();
         File directory = Environment.getExternalStoragePublicDirectory(album);
         return directory;
     }

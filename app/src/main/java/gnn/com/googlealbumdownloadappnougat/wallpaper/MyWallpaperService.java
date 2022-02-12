@@ -85,4 +85,8 @@ public class MyWallpaperService extends WallpaperService {
             Log.d("GOI","onSurfaceChanged");
         }
     }
+
+    private File getFolder(String path) {
+        return Environment.getExternalStoragePublicDirectory(path);
+    }
 }

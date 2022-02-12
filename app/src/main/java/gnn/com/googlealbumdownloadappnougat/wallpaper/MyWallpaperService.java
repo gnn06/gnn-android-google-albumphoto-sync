@@ -32,6 +32,9 @@ public class MyWallpaperService extends WallpaperService {
 
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
+            /**
+             * on reboot phone, it is called, previous wallpaper is not restored
+             */
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
             if (!isPreview()) {
@@ -41,6 +44,7 @@ public class MyWallpaperService extends WallpaperService {
                 WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
                 chooser.addObserver(wallpaperSetter);
                 Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
+                // TODO set wallpaper on create.
             }
         }
 

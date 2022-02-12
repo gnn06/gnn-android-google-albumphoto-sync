@@ -77,7 +77,7 @@ public class WallPaperWorker extends Worker {
                 }
 
                 ChooseOneLocalPhotoPersist chooser = new ChooseOneLocalPhotoPersist(destinationFolder, processFolder);
-                WallpaperObserver wallpaperSetter = new WallpaperSetter(getApplicationContext(), destinationFolder, processFolder);
+                WallpaperObserver wallpaperSetter = new WallpaperSetter(getApplicationContext(), destinationFolder);
                 chooser.addObserver(wallpaperSetter);
                 chooser.chooseOne();
                 method();

@@ -31,12 +31,10 @@ public class WallpaperSetter implements WallpaperObserver {
     private static final String TAG = "PhotoWallPaper";
     private final Context activity;
     private final File photoFolder;
-    private File processFolder;
 
-    public WallpaperSetter(Context activity, File photoFolder, File processFolder) {
+    public WallpaperSetter(Context activity, File photoFolder) {
         this.activity = activity;
         this.photoFolder = photoFolder;
-        this.processFolder = processFolder;
     }
 
     @Override

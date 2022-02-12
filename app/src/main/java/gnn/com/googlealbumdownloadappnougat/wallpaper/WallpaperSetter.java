@@ -42,6 +42,10 @@ public class WallpaperSetter implements WallpaperObserver {
         setWallpaper(bitmap);
     }
 
+    public void visible() {
+        on
+    }
+
     private File getPhotoFolder() {
         String album = new PersistPrefMain(activity).getPhotoPath();
         File directory = Environment.getExternalStoragePublicDirectory(album);

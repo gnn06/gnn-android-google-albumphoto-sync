@@ -28,6 +28,9 @@ public class MyWallpaperService extends WallpaperService {
     }
 
     private class MyWallpaperEngine extends Engine {
+
+        private WallpaperSetter wallpaperSetter;
+
         public MyWallpaperEngine() {}
 
         @Override
@@ -57,7 +60,7 @@ public class MyWallpaperService extends WallpaperService {
                 File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
                 File processPath = getFolder(ApplicationContext.getInstance(getApplicationContext()).getProcessPath());
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);
-                WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
+                wallpaperSetter = new WallpaperSetter(getApplicationContext());
                 chooser.addObserver(wallpaperSetter);
                 Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
                 // TODO set wallpaper on create.
@@ -91,6 +94,9 @@ public class MyWallpaperService extends WallpaperService {
              */
             super.onVisibilityChanged(visible);
             Log.d("GOI-WALLPAPER","onVisibility" + Boolean.toString(visible));
+            if (visible) {
+                wallpaperSetter.visible();
+            }
         }
 
         @Override

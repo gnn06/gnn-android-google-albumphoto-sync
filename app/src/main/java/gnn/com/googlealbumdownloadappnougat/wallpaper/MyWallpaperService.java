@@ -38,6 +38,7 @@ public class MyWallpaperService extends WallpaperService {
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
             if (!isPreview()) {
+                // TODO avoid have to give parameters
                 File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
                 File processPath = getFolder(ApplicationContext.getInstance(getApplicationContext()).getProcessPath());
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);

@@ -40,6 +40,8 @@ public class WallpaperSetter implements WallpaperObserver {
 
     @Override
     public void onWallpaper(Photo photo) {
+        // TODO remove photo param and call getCurrentPhoto
+        // TODO move onWallpaper in WallpaperService
         Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
         setWallpaper(bitmap);
     }

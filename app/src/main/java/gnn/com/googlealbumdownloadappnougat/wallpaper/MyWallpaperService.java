@@ -66,6 +66,9 @@ public class MyWallpaperService extends WallpaperService {
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
             Log.d("GOI-WALLPAPER","onSurfaceCreated");
+            if (wallpaperSetter != null) {
+                wallpaperSetter.refreshFromCurrent();
+            }
         }
 
         @Override
@@ -83,17 +86,38 @@ public class MyWallpaperService extends WallpaperService {
         @Override
         public void onVisibilityChanged(boolean visible) {
             /**
+             * when wallpaper preview
+             2022-02-13 20:54:49.254 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceCreated
+             2022-02-13 20:54:49.254 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceChanged
+             2022-02-13 20:54:49.255 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceRedrawNeeded
+             2022-02-13 20:54:49.255 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-13 20:54:49.255 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-13 20:54:49.265 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-13 20:54:49.279 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceRedrawNeeded
+             2022-02-13 20:54:49.280 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+
+             * when wallpaper set both
+             2022-02-13 20:55:52.914 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: observe added from livewallpaper create
+             2022-02-13 20:55:52.951 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceCreated
+             2022-02-13 20:55:52.951 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceChanged
+             2022-02-13 20:55:52.951 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceRedrawNeeded
+             2022-02-13 20:55:52.951 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-13 20:55:52.951 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-13 20:55:52.969 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilityfalse
+             2022-02-13 20:55:53.688 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onSurfaceDestroyed, isPreview=true
+
+             * on home button
+             2022-02-13 20:56:58.878 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+             2022-02-13 20:56:58.878 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
+             2022-02-13 20:56:58.943 6610-6610/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
+
+
              * when wallpaper becomes visible after a wallpaper change
              2022-02-12 15:11:04.688 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onOffsetsChanged
              2022-02-12 15:11:04.688 2662-2662/gnn.com.googlealbumdownloadappnougat D/GOI-WALLPAPER: onVisibilitytrue
              */
             super.onVisibilityChanged(visible);
             Log.d("GOI-WALLPAPER","onVisibility" + Boolean.toString(visible));
-            if (visible) {
-                if (wallpaperSetter != null) {
-                    wallpaperSetter.refreshFromCurrent();
-                }
-            }
         }
 
         @Override

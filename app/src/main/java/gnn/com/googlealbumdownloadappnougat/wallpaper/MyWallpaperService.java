@@ -5,12 +5,7 @@ import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
@@ -58,7 +53,7 @@ public class MyWallpaperService extends WallpaperService {
             if (!isPreview()) {
                 // TODO avoid have to give parameters
                 File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
-                File processPath = getFolder(ApplicationContext.getInstance(getApplicationContext()).getProcessPath());
+                File processPath = getApplicationContext().getFilesDir();
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);
                 wallpaperSetter = new WallpaperSetter(getApplicationContext());
                 chooser.addObserver(wallpaperSetter);
@@ -95,7 +90,9 @@ public class MyWallpaperService extends WallpaperService {
             super.onVisibilityChanged(visible);
             Log.d("GOI-WALLPAPER","onVisibility" + Boolean.toString(visible));
             if (visible) {
-                wallpaperSetter.visible();
+                if (wallpaperSetter != null) {
+                    wallpaperSetter.refreshFromCurrent();
+                }
             }
         }
 

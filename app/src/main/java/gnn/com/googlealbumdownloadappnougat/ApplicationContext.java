@@ -1,6 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.content.Context;
+import android.os.Environment;
+
+import java.io.File;
 
 public class ApplicationContext {
 
@@ -31,4 +34,7 @@ public class ApplicationContext {
         return processPath;
     }
 
+    public File getProcessFolder() {
+        return Environment.getExternalStoragePublicDirectory(getProcessPath());
+    }
 }

@@ -18,7 +18,8 @@ public class ChooseOneLocalPhotoPersist {
 
     private final File photoFolder;
     private final File processFolder;
-    private final PersistWallpaperTime persist;
+    private final PersistWallpaperTime persistChooseTime;
+    private final PersistChoose persistChoose;
     private final WallpaperStatProvider statProvider;
     private WallpaperObserver observer;
 
@@ -34,7 +35,8 @@ public class ChooseOneLocalPhotoPersist {
     private ChooseOneLocalPhotoPersist(File photoFolder, File processFolder) {
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
-        persist = new PersistWallpaperTime(this.processFolder);
+        persistChooseTime = new PersistWallpaperTime(this.processFolder);
+        persistChoose = new PersistChoose(this.processFolder);
         statProvider = new WallpaperStatProvider(this.processFolder);
     }
 
@@ -44,7 +46,8 @@ public class ChooseOneLocalPhotoPersist {
         if (photo != null) {
             logger.info("PhotoChooser has choose " + photo.getId());
             try {
-                persist.storeTime();
+                persistChoose.write(photo);
+                persistChooseTime.storeTime();
                 statProvider.onWallpaperChange();
                 if (observer != null) {
                     observer.onWallpaper(photo);

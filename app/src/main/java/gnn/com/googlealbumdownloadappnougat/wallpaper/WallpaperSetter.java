@@ -16,9 +16,11 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
+import gnn.com.photos.sync.PersistChoose;
 import gnn.com.photos.sync.WallpaperObserver;
 
 /**
@@ -42,8 +44,12 @@ public class WallpaperSetter implements WallpaperObserver {
         setWallpaper(bitmap);
     }
 
-    public void visible() {
-        on
+    public void refreshFromCurrent() {
+        File processFolder = activity.getApplicationContext().getFilesDir();
+        Photo currentPhoto = new PersistChoose(processFolder).getCurrentPhoto();
+        if (currentPhoto != null) {
+            onWallpaper(currentPhoto);
+        }
     }
 
     private File getPhotoFolder() {

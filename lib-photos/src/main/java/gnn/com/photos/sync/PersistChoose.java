@@ -39,14 +39,14 @@ public class PersistChoose {
         }
     }
 
-    Photo getCurrentPhoto() {
+    public Photo getCurrentPhoto() {
         PhotoChoose photoChoose = read();
-        return photoChoose.photo;
+        return photoChoose != null ? photoChoose.photo : null;
     }
 
-    Date getLastChooseDate() {
+    public Date getLastChooseDate() {
         PhotoChoose photoChoose = read();
-        return photoChoose.chooseDate;
+        return photoChoose != null ? photoChoose.chooseDate : null;
     }
 }
 

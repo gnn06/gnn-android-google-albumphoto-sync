@@ -65,20 +65,21 @@ public class WallpaperSetter implements WallpaperObserver {
     }
 
     private void setWallpaper(Bitmap bitmap) {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(activity);
-        Logger logger = Logger.getLogger();
-        try {
-            Point point = getScreenSize();
-            // portail = 1080x1977 and paysage = 1977x1080
-            logger.finest("screen size " + point.x + "x" + point.y);
-            Log.i(TAG, "screen size " + point.x + "x" + point.y);
-            Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
-            wallpaperManager.setBitmap(scaledBitmap);
-            logger.info("wallpaper correctly set");
-        } catch (IOException e) {
-            logger.severe("WallpaperManager error " + e.getMessage());
-            Log.e("WALLPAPER", e.getMessage());
-        }
+          // WallpaperManager.setBitmap set bitmap but unset current live wallpaper
+//        WallpaperManager wallpaperManager = WallpaperManager.getInstance(activity);
+//        Logger logger = Logger.getLogger();
+//        try {
+//            Point point = getScreenSize();
+//            // portail = 1080x1977 and paysage = 1977x1080
+//            logger.finest("screen size " + point.x + "x" + point.y);
+//            Log.i(TAG, "screen size " + point.x + "x" + point.y);
+//            Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
+//            wallpaperManager.setBitmap(scaledBitmap);
+//            logger.info("wallpaper correctly set");
+//        } catch (IOException e) {
+//            logger.severe("WallpaperManager error " + e.getMessage());
+//            Log.e("WALLPAPER", e.getMessage());
+//        }
     }
 
     @NonNull

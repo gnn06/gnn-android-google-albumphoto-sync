@@ -7,7 +7,6 @@ import android.view.SurfaceHolder;
 
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 
@@ -67,7 +66,7 @@ public class MyWallpaperService extends WallpaperService {
             super.onSurfaceCreated(holder);
             Log.d("GOI-WALLPAPER","onSurfaceCreated");
             if (wallpaperSetter != null) {
-                wallpaperSetter.refreshFromCurrent();
+                wallpaperSetter.refreshFromCurrent(holder);
             }
         }
 

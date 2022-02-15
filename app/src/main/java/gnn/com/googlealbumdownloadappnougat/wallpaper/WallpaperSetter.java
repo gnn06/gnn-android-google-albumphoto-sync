@@ -32,21 +32,12 @@ import gnn.com.photos.sync.WallpaperObserver;
  * - android context to create log
  * Used for schedule or one time wallpaper
  */
-public class WallpaperSetter implements WallpaperObserver {
+public class WallpaperSetter {
     private static final String TAG = "PhotoWallPaper";
     private final Context activity;
 
     public WallpaperSetter(Context activity) {
         this.activity = activity;
-    }
-
-    @Override
-    public void onWallpaper(Photo photo) {
-        // TODO remove photo param and call getCurrentPhoto
-        // TODO move onWallpaper in WallpaperService
-        Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
-        // TODO move onWallpaper in WallpaperService
-//        setWallpaper(bitmap);
     }
 
     public void refreshFromCurrent(SurfaceHolder holder) {
@@ -56,6 +47,11 @@ public class WallpaperSetter implements WallpaperObserver {
             Bitmap bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
             setWallpaper(bitmap, holder);
         }
+    }
+
+    void setWallpaper(Photo photo, SurfaceHolder holder) {
+        Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
+        setWallpaper(bitmap, holder);
     }
 
     private File getPhotoFolder() {
@@ -75,18 +71,17 @@ public class WallpaperSetter implements WallpaperObserver {
         // portail = 1080x1977 and paysage = 1977x1080
         logger.finest("screen size " + point.x + "x" + point.y);
         Log.i(TAG, "screen size " + point.x + "x" + point.y);
-        Canvas canvas = holder.lockCanvas();
-        Paint paint = new Paint();
-        if (canvas != null) {
-            Matrix matrix = PhotoScaleAndroid.getMatrix(bitmap, point.x, point.y);
-            canvas.drawBitmap(bitmap, matrix, paint);
+        if (holder != null) {
+            Canvas canvas = holder.lockCanvas();
+            Paint paint = new Paint();
+            if (canvas != null) {
+                Matrix matrix = PhotoScaleAndroid.getMatrix(bitmap, point.x, point.y);
+                canvas.drawBitmap(bitmap, matrix, paint);
+            }
+            holder.unlockCanvasAndPost(canvas);
+            logger.info("wallpaper correctly set");
+            Log.i(TAG, "wallpaper correctly set");
         }
-        holder.unlockCanvasAndPost(canvas);
-        logger.info("wallpaper correctly set");
-    }
-
-    private Matrix getMatrix() {
-        return null;
     }
 
     @NonNull

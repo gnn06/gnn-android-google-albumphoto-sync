@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
@@ -8,7 +9,9 @@ import android.view.SurfaceHolder;
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.photos.Photo;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
+import gnn.com.photos.sync.WallpaperObserver;
 
 /**
  * onCreate, onSurfaceCreated, onSurfaceChanged, onSurfaceREdraNeeded, onVisibility true, false, true, onOffsetsChanged
@@ -21,9 +24,7 @@ public class MyWallpaperService extends WallpaperService {
         return new MyWallpaperEngine();
     }
 
-    private class MyWallpaperEngine extends Engine {
-
-        private WallpaperSetter wallpaperSetter;
+    private class MyWallpaperEngine extends Engine implements WallpaperObserver {
 
         public MyWallpaperEngine() {}
 
@@ -54,20 +55,25 @@ public class MyWallpaperService extends WallpaperService {
                 File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
                 File processPath = getApplicationContext().getFilesDir();
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);
-                wallpaperSetter = new WallpaperSetter(getApplicationContext());
-                chooser.addObserver(wallpaperSetter);
+                chooser.addObserver(this);
                 Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
                 // TODO set wallpaper on create.
             }
         }
 
         @Override
+        public void onWallpaper(Photo photo) {
+            // TODO remove photo param and call getCurrentPhoto
+            WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
+            wallpaperSetter.setWallpaper(photo, getSurfaceHolder());
+        }
+
+        @Override
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
             Log.d("GOI-WALLPAPER","onSurfaceCreated");
-            if (wallpaperSetter != null) {
-                wallpaperSetter.refreshFromCurrent(holder);
-            }
+            WallpaperSetter wallpapersetter = new WallpaperSetter(getApplicationContext());
+            wallpapersetter.refreshFromCurrent(holder);
         }
 
         @Override

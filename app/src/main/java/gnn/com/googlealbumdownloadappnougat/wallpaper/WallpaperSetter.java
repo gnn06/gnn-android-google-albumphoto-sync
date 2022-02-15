@@ -1,22 +1,24 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Environment;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.annotation.Nonnull;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
@@ -43,14 +45,16 @@ public class WallpaperSetter implements WallpaperObserver {
         // TODO remove photo param and call getCurrentPhoto
         // TODO move onWallpaper in WallpaperService
         Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
-        setWallpaper(bitmap);
+        // TODO move onWallpaper in WallpaperService
+//        setWallpaper(bitmap);
     }
 
-    public void refreshFromCurrent() {
+    public void refreshFromCurrent(SurfaceHolder holder) {
         File processFolder = activity.getApplicationContext().getFilesDir();
         Photo currentPhoto = new PersistChoose(processFolder).getCurrentPhoto();
         if (currentPhoto != null) {
-            onWallpaper(currentPhoto);
+            Bitmap bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
+            setWallpaper(bitmap, holder);
         }
     }
 
@@ -64,22 +68,25 @@ public class WallpaperSetter implements WallpaperObserver {
         return BitmapFactory.decodeFile(path);
     }
 
-    private void setWallpaper(Bitmap bitmap) {
-          // WallpaperManager.setBitmap set bitmap but unset current live wallpaper
-//        WallpaperManager wallpaperManager = WallpaperManager.getInstance(activity);
-//        Logger logger = Logger.getLogger();
-//        try {
-//            Point point = getScreenSize();
-//            // portail = 1080x1977 and paysage = 1977x1080
-//            logger.finest("screen size " + point.x + "x" + point.y);
-//            Log.i(TAG, "screen size " + point.x + "x" + point.y);
-//            Bitmap scaledBitmap = PhotoScaleAndroid.scale(bitmap, point.x, point.y);
-//            wallpaperManager.setBitmap(scaledBitmap);
-//            logger.info("wallpaper correctly set");
-//        } catch (IOException e) {
-//            logger.severe("WallpaperManager error " + e.getMessage());
-//            Log.e("WALLPAPER", e.getMessage());
-//        }
+    private void setWallpaper(Bitmap bitmap, SurfaceHolder holder) {
+        // WallpaperManager.setBitmap set bitmap but unset current live wallpaper
+        Logger logger = Logger.getLogger();
+        Point point = getScreenSize();
+        // portail = 1080x1977 and paysage = 1977x1080
+        logger.finest("screen size " + point.x + "x" + point.y);
+        Log.i(TAG, "screen size " + point.x + "x" + point.y);
+        Canvas canvas = holder.lockCanvas();
+        Paint paint = new Paint();
+        if (canvas != null) {
+            Matrix matrix = PhotoScaleAndroid.getMatrix(bitmap, point.x, point.y);
+            canvas.drawBitmap(bitmap, matrix, paint);
+        }
+        holder.unlockCanvasAndPost(canvas);
+        logger.info("wallpaper correctly set");
+    }
+
+    private Matrix getMatrix() {
+        return null;
     }
 
     @NonNull

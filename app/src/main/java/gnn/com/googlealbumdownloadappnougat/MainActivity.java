@@ -2,6 +2,8 @@ package gnn.com.googlealbumdownloadappnougat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.WallpaperInfo;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -113,6 +115,11 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onStart();
         Logger.getLogger().fine("onStart");
         presenter.onAppForeground();
+
+        WallpaperManager wlppMgr = WallpaperManager.getInstance(this);
+        WallpaperInfo wallpaperInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
+        Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
+                (wallpaperInfo != null ? wallpaperInfo.getPackageName() : "no package"));
 
     }
 

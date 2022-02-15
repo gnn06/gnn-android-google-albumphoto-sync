@@ -6,6 +6,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import androidx.annotation.NonNull;
+
 public class PhotoScaleAndroid {
 
     static public Bitmap scale(Bitmap bitmap, int displayWidth, int displayHeight) {
@@ -13,6 +15,19 @@ public class PhotoScaleAndroid {
         // TODO BG_Bitmap est inutile en mode maximize où il n'y a jamais de background à remplir
         Bitmap BG_Bitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(BG_Bitmap);
+
+        Matrix transformation = getMatrix(BG_Bitmap, displayWidth, displayHeight);
+
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+
+        canvas.drawBitmap(bitmap, transformation, paint);
+        return BG_Bitmap;
+    }
+
+    @NonNull
+    static Matrix getMatrix(Bitmap bitmap, int displayWidth, int displayHeight) {
+        Matrix matrix = new Matrix();
 
         int originalWidth = bitmap.getWidth();
         int originalHeight = bitmap.getHeight();
@@ -28,18 +43,14 @@ public class PhotoScaleAndroid {
             // photo à resizer par la hauteur, la hauteur au max, la largeur suit
             scale = (float)displayHeight  / originalHeight;
         }
+
         translateY = (int)((displayHeight - (originalHeight * scale)) / 2);
         translateX = (int)((displayWidth - (originalWidth * scale)) / 2);
 
-        Matrix transformation = new Matrix();
-        transformation.postScale(scale, scale);
-        transformation.postTranslate(translateX, translateY);
+        matrix.postScale(scale, scale);
+        matrix.postTranslate(translateX, translateY);
 
-        Paint paint = new Paint();
-        paint.setFilterBitmap(true);
-
-        canvas.drawBitmap(bitmap, transformation, paint);
-        return BG_Bitmap;
+        return matrix;
     }
 
     public static Rect scale(int photoWidth, int photoHeight, int displayWidth, int displayHeight) {

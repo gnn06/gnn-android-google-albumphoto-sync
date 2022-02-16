@@ -65,7 +65,6 @@ public class MyWallpaperService extends WallpaperService {
 
         @Override
         public void onWallpaper() {
-            // TODO remove photo param and call getCurrentPhoto
             PersistChoose persistChoose = new PersistChoose(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
             Photo photo = persistChoose.getCurrentPhoto();
             WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());

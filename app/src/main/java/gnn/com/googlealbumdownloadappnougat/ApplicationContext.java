@@ -35,6 +35,6 @@ public class ApplicationContext {
     }
 
     public File getProcessFolder() {
-        return Environment.getExternalStoragePublicDirectory(getProcessPath());
+        return new File(getProcessPath());
     }
 }

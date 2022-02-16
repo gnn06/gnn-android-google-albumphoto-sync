@@ -48,9 +48,10 @@ public class ChooseOneLocalPhotoPersist {
             try {
                 persistChoose.write(photo);
                 persistChooseTime.storeTime();
+                // TODO transform observers into list
                 statProvider.onWallpaperChange();
                 if (observer != null) {
-                    observer.onWallpaper(photo);
+                    observer.onWallpaper();
                 }
             } catch (IOException e) {
                 Logger.getLogger().severe("can not write last wallpaper time");

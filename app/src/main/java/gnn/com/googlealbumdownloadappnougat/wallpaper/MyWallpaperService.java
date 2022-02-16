@@ -8,9 +8,11 @@ import android.view.SurfaceHolder;
 
 import java.io.File;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
+import gnn.com.photos.sync.PersistChoose;
 import gnn.com.photos.sync.WallpaperObserver;
 
 /**
@@ -62,8 +64,10 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         @Override
-        public void onWallpaper(Photo photo) {
+        public void onWallpaper() {
             // TODO remove photo param and call getCurrentPhoto
+            PersistChoose persistChoose = new PersistChoose(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
+            Photo photo = persistChoose.getCurrentPhoto();
             WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
             wallpaperSetter.setWallpaper(photo, getSurfaceHolder());
         }

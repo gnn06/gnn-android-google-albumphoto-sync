@@ -91,6 +91,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     }
 
     private File getProcessFolder() {
+        // TODO replace with ApplicationContext.getProcessFolder()
         // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
         return activity.getApplicationContext().getFilesDir();
     }

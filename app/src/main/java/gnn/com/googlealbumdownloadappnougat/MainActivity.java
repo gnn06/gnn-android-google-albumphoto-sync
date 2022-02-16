@@ -115,12 +115,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         super.onStart();
         Logger.getLogger().fine("onStart");
         presenter.onAppForeground();
-
-        WallpaperManager wlppMgr = WallpaperManager.getInstance(this);
-        WallpaperInfo wallpaperInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
-        Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
-                (wallpaperInfo != null ? wallpaperInfo.getPackageName() : "no package"));
-
     }
 
     @Override
@@ -397,6 +391,12 @@ public class MainActivity extends AppCompatActivity implements IView {
         TextView view = findViewById(R.id.stat);
         String text = UITextHelper.getStat(stat);
         view.setText(text);
+    }
+
+    @Override
+    public void setWarningWallpaperActive(boolean active) {
+        TextView view = findViewById(R.id.warning_wallpaper_active);
+        view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
 
 }

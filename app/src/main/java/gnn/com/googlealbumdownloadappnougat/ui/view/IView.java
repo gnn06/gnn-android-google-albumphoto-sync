@@ -59,4 +59,6 @@ public interface IView {
     void enableFrequencyUpdatePhotos(boolean checked);
 
     void setStat(WallpaperStat stat);
+
+    void setWarningWallpaperActive(boolean active);
 }

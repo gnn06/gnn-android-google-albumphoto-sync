@@ -68,14 +68,15 @@ public class WallpaperSetter {
         // WallpaperManager.setBitmap set bitmap but unset current live wallpaper
         Logger logger = Logger.getLogger();
         Point point = getScreenSize();
-        // portail = 1080x1977 and paysage = 1977x1080
+        // WindowManager.getSize = portail = 1080x1977 and paysage = 1977x1080
+        // surface = 1080x2280
         logger.finest("screen size " + point.x + "x" + point.y);
         Log.i(TAG, "screen size " + point.x + "x" + point.y);
         if (holder != null) {
             Canvas canvas = holder.lockCanvas();
             Paint paint = new Paint();
             if (canvas != null) {
-                Matrix matrix = PhotoScaleAndroid.getMatrix(bitmap, point.x, point.y);
+                Matrix matrix = PhotoScaleAndroid.getMatrix(bitmap, canvas.getWidth(), canvas.getHeight());
                 canvas.drawBitmap(bitmap, matrix, paint);
             }
             holder.unlockCanvasAndPost(canvas);

@@ -81,6 +81,9 @@ public class MyWallpaperService extends WallpaperService {
 
         @Override
         public void onOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset) {
+            /**
+             * called quand on fait glisser le desktop pour voir les icones des apps de gauche et droite
+             */
             super.onOffsetsChanged(xOffset, yOffset, xOffsetStep, yOffsetStep, xPixelOffset, yPixelOffset);
             Log.d("GOI-WALLPAPER","onOffsetsChanged");
         }

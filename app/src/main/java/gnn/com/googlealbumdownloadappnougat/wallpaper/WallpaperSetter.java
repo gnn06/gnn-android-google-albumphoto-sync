@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -19,6 +20,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
@@ -46,12 +48,16 @@ public class WallpaperSetter {
         if (currentPhoto != null) {
             Bitmap bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
             setWallpaper(bitmap, holder);
+        } else {
+            noPhotoWallpaper(holder);
         }
     }
 
     void setWallpaper(Photo photo, SurfaceHolder holder) {
-        Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
-        setWallpaper(bitmap, holder);
+        if (photo != null) {
+            Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
+            setWallpaper(bitmap, holder);
+        }
     }
 
     private File getPhotoFolder() {
@@ -82,6 +88,22 @@ public class WallpaperSetter {
             holder.unlockCanvasAndPost(canvas);
             logger.info("wallpaper correctly set");
             Log.i(TAG, "wallpaper correctly set");
+        }
+    }
+
+    private void noPhotoWallpaper(SurfaceHolder holder) {
+        if (holder != null) {
+            Canvas canvas = holder.lockCanvas();
+            if (canvas != null) {
+                Paint paint = new Paint();
+                Point point = getScreenSize();
+                paint.setColor(Color.WHITE);
+                paint.setTextAlign(Paint.Align.CENTER);
+                double relation = Math.sqrt(canvas.getWidth() * canvas.getHeight()) / 20;
+                paint.setTextSize((float) (relation));
+                canvas.drawText("Pas de photo", point.x/2, point.y/2, paint);
+            }
+            holder.unlockCanvasAndPost(canvas);
         }
     }
 

@@ -12,11 +12,16 @@ import static org.mockito.Mockito.when;
 import android.content.ContextWrapper;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.IOException;
+
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
@@ -24,7 +29,6 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 @RunWith(MockitoJUnitRunner.class)
-@Ignore
 public class PresenterMainTest {
 
     @Test
@@ -38,6 +42,7 @@ public class PresenterMainTest {
     }
 
     @Test
+    @Ignore
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
@@ -51,6 +56,7 @@ public class PresenterMainTest {
     }
 
     @Test
+    @Ignore
     public void onSyncClick_store_requirement() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
@@ -73,19 +79,27 @@ public class PresenterMainTest {
         PermissionHandler permissionHandler = new PermissionHandler();
         PresenterMain presenter = spy(new PresenterMain(activity, activity, permissionHandler));
         AuthManager authMock = Mockito.mock(AuthManager.class);
-        Mockito.when(authMock.isSignIn()).thenReturn(false);
         presenter.setAuth(authMock);
+        when(activity.getFrequencyUpdatePhotos()).thenReturn("1");
         // when
         presenter.onShowAlbumList();
         // then
         assertNotNull(permissionHandler.getPendingRequirement());
     }
 
+    @Rule
+    public TemporaryFolder tmpFolder = new TemporaryFolder();
+
     @Test
-    public void test_resetCache() {
+    public void test_resetCache() throws IOException {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
-        when(view.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
+        ContextWrapper contextMock = mock(ContextWrapper.class);
+        when(view.getApplicationContext()).thenReturn(contextMock);
+        when(contextMock.getFilesDir()).thenReturn(tmpFolder.newFolder());
+        ApplicationContext.getInstance(contextMock);
+        when(view.getFrequencyUpdatePhotos()).thenReturn("1");
+
         PresenterMain presenter = new PresenterMain(view, view, null);
         // when
         presenter.onMenuResetCache();
@@ -94,6 +108,7 @@ public class PresenterMainTest {
 
 
     @Test
+    @Ignore
     public void init() {
         // given a mocked Presenter
         IView view = mock(IView.class);

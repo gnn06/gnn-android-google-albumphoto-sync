@@ -22,7 +22,6 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.photos.service.RemoteException;
 
 @RunWith(MockitoJUnitRunner.class)
-@Ignore
 public class ChooseTaskTest {
 
     @Test

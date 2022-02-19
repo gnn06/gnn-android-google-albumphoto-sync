@@ -14,7 +14,6 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 
-@Ignore
 public class GetAlbumsTaskTest {
 
     @Test

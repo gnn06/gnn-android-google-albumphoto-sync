@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoScaleAndroid;
 
-class PhotoScaleTest {
+public class PhotoScaleTest {
 
     @Test
     public void scale1() {

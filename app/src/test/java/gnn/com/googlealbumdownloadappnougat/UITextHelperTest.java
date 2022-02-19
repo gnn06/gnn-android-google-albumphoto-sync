@@ -32,7 +32,6 @@ public class UITextHelperTest {
     }
 
     @Test
-    @Ignore
     public void getResultText_inProgress() {
         MainActivity activity = new MainActivity();
         UITextHelper UITextHelper = new UITextHelper(activity);
@@ -58,7 +57,6 @@ public class UITextHelperTest {
     }
 
     @Test
-    @Ignore
     public void getResultText_finish() {
         MainActivity activity = new MainActivity();
         UITextHelper UITextHelper = new UITextHelper(activity);
@@ -84,7 +82,6 @@ public class UITextHelperTest {
     }
 
     @Test
-    @Ignore
     public void getLastSyncTimeString_null_null() {
         MainActivity activity = mock(MainActivity.class);
 

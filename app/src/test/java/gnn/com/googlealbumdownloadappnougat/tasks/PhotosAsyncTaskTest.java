@@ -12,7 +12,6 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 
-@Ignore
 public class PhotosAsyncTaskTest {
 
     @Test

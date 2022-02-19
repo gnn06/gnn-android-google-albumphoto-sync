@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -35,7 +36,7 @@ import gnn.com.photos.service.RemoteException;
 // N'utilise ni WorkManagerTestInitHelper ni TestWorkerBuilderl
 // ca a l'avantage de ne pas avoir à s'éxécuter dans le virtual device
 // ca permet surtout d'utiliser powermock pour mocker les private et les news
-@Ignore
+//@Ignore
 public class SyncWorkerBasicTest {
 
     @Mock
@@ -71,7 +72,7 @@ public class SyncWorkerBasicTest {
         when(UT_myWorker.getInputData()).thenReturn(data);
         // use powerMockito to mock private getFilename method
         // and use doReturn to avoid null pointer exception caused by when-thenReturn
-        PowerMockito.doReturn(tmpFolder.newFile().getAbsolutePath()).when(UT_myWorker, "getFilename");
+        PowerMockito.doReturn(destinationFolder).when(UT_myWorker, "getDestinationFolder", anyString());
         synchronizerMock = PowerMockito.mock(SynchronizerAndroid.class);
     }
 

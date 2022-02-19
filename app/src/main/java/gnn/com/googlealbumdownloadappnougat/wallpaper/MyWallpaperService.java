@@ -5,6 +5,11 @@ import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
@@ -63,8 +68,22 @@ public class MyWallpaperService extends WallpaperService {
         }
 
         @Override
+        public void onDestroy() {
+            /**
+             * called when live wallpaper is dessactivate (isPreview == false)
+             */
+            super.onDestroy();
+            Log.d("GOI-WALLPAPER","onDestroy");
+            if (!isPreview()) {
+                ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(null, null);
+                chooser.removeObserver(this);
+            }
+        }
+
+        @Override
         public void onWallpaper() {
             PersistChoose persistChoose = new PersistChoose(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
+            // TODO call refreshFromCurrent
             Photo photo = persistChoose.getCurrentPhoto();
             WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
             wallpaperSetter.setWallpaper(photo, getSurfaceHolder());

@@ -64,6 +64,10 @@ public class ChooseOneLocalPhotoPersist {
         this.observer = observer;
     }
 
+    public void removeObserver(WallpaperObserver observer) {
+        this.observer = null;
+    }
+
     /**
      *
      * @return null if no photo found

@@ -6,10 +6,12 @@ import static org.junit.Assert.assertThat;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
+@Ignore
 public class ApplicationContextTest {
 
     @Test

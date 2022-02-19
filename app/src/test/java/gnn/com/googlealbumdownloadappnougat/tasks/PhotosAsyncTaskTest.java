@@ -1,16 +1,16 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 @Ignore
 public class PhotosAsyncTaskTest {

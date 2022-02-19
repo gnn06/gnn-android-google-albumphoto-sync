@@ -1,5 +1,14 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import android.content.ContextWrapper;
 
 import org.junit.Ignore;
@@ -13,9 +22,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore

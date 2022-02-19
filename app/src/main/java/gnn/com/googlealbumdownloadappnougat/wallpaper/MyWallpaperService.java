@@ -1,6 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.graphics.Bitmap;
 import android.os.Environment;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;

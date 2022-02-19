@@ -1,16 +1,13 @@
 package gnn.com.util;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import static org.hamcrest.core.Is.*;
 import org.junit.Test;
 
 import java.util.Date;
-
-import gnn.com.util.DateProvider;
-import gnn.com.util.DateUtil;
 
 public class DateUtilTest {
 

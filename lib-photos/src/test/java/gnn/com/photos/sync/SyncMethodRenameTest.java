@@ -4,13 +4,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,18 +15,6 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
-import gnn.com.photos.sync.Synchronizer;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class SyncMethodRenameTest {
 

@@ -1,9 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import static org.mockito.Mockito.*;
 
 public class PermissionRequirementBisTest {
 

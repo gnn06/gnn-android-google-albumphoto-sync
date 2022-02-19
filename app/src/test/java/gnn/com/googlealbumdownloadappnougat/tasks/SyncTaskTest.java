@@ -1,6 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
-import com.google.android.gms.auth.GoogleAuthException;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,15 +11,10 @@ import org.mockito.Mockito;
 import java.io.File;
 import java.io.IOException;
 
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @Ignore
 public class SyncTaskTest {

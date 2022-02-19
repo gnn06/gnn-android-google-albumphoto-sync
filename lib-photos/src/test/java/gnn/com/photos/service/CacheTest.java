@@ -1,17 +1,15 @@
 package gnn.com.photos.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;

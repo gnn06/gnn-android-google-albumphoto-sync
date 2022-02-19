@@ -1,7 +1,7 @@
 package gnn.com.photos.stat.stat;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import org.hamcrest.core.Is;
 import org.junit.Rule;

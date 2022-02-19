@@ -33,7 +33,6 @@ import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperSetter;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;

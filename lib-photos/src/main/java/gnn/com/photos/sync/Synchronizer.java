@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.Photo;
+import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 

@@ -1,5 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -14,10 +18,6 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import gnn.com.googlealbumdownloadappnougat.wallpaper.PhotoScaleAndroid;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 //@RunWith(RobolectricTestRunner.class)
 @RunWith(AndroidJUnit4.class)

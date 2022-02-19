@@ -7,7 +7,6 @@ import com.google.photos.library.v1.proto.MediaItemResult;
 import com.google.photos.types.proto.Album;
 import com.google.photos.types.proto.MediaItem;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.util;
 
+import android.content.Context;
 import android.util.Log;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
@@ -10,7 +10,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import android.content.Context;
 
 public class AppLogger {
 

@@ -2,17 +2,17 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import android.content.Context;
 
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.work.Data;
+import androidx.work.testing.TestWorkerBuilder;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.work.Data;
-import androidx.work.testing.TestWorkerBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;

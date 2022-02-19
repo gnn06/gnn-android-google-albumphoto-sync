@@ -1,5 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -33,10 +37,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
 
 /**
  * not an real unit test

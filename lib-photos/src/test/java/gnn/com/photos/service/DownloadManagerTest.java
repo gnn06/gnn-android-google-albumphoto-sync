@@ -11,18 +11,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import gnn.com.photos.Photo;
-import gnn.com.photos.service.DownloadManager;
 import gnn.com.photos.sync.Synchronizer;
 
 public class DownloadManagerTest {

@@ -1,11 +1,11 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
+import static org.mockito.Mockito.verify;
+
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-
-import static org.mockito.Mockito.verify;
 
 public class SignInRequirementTest {
 

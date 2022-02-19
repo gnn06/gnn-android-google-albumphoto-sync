@@ -1,5 +1,7 @@
 package gnn.com.photos.service;
 
+import static org.junit.Assert.assertEquals;
+
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.proto.BatchGetMediaItemsResponse;
 import com.google.photos.library.v1.proto.MediaItemResult;
@@ -18,11 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gnn.com.photos.Photo;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoProviderTest {

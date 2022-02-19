@@ -1,10 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.settings;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 

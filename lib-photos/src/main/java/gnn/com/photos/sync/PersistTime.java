@@ -5,9 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-import gnn.com.googlealbumdownloadappnougat.util.Logger;
-
 import javax.annotation.Nonnull;
+
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 abstract public class PersistTime {
 

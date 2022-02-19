@@ -2,17 +2,10 @@ package gnn.com.googlealbumdownloadappnougat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.WallpaperInfo;
-import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +13,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,13 +27,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
+import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
 import gnn.com.photos.stat.stat.WallpaperStat;

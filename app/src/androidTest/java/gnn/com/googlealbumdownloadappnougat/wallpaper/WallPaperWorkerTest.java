@@ -1,7 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 import android.content.Context;
 import android.graphics.Point;

@@ -2,9 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.tasks;
 
 import android.util.Log;
 
-import com.google.android.gms.auth.GoogleAuthException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;

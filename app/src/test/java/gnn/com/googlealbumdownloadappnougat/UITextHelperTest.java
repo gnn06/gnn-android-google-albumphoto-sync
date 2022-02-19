@@ -1,5 +1,12 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import android.content.res.Resources;
 
 import org.hamcrest.core.Is;
@@ -12,15 +19,8 @@ import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
-import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.Photo;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import gnn.com.photos.stat.stat.WallpaperStat;
 
 public class UITextHelperTest {
 

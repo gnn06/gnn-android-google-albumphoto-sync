@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import static org.junit.Assert.*;
-
 import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;

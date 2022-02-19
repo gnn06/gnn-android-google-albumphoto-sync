@@ -10,10 +10,6 @@ import java.util.ArrayList;
 
 import gnn.com.photos.Photo;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
 @RunWith(MockitoJUnitRunner.class)
 public class PhotoChooserListRenameTest {
 

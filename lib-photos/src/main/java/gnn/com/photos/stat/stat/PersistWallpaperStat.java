@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
-import gnn.com.photos.stat.stat.WallpaperStat;
-
 class PersistWallpaperStat {
 
     static final String STAT_FILENAME = "stat_wallpaper.json";

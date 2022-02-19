@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
-import gnn.com.googlealbumdownloadappnougat.settings.PresenterSettings;
-
 /**
  * Default values are taken from Presenter
  */

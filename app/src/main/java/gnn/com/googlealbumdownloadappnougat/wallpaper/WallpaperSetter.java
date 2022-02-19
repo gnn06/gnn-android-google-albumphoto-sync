@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -20,12 +19,10 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
-import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.PersistChoose;
-import gnn.com.photos.sync.WallpaperObserver;
 
 /**
  * Set a wallpaper. Called by Chooser.

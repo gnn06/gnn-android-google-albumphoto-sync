@@ -1,10 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.os.Environment;
-import android.os.PowerManager;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -15,7 +12,6 @@ import java.io.File;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
-import gnn.com.photos.sync.WallpaperObserver;
 
 /**
  * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired

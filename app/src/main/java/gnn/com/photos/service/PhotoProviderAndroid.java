@@ -3,7 +3,6 @@ package gnn.com.photos.service;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -12,8 +11,6 @@ import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
-
-import java.io.IOException;
 
 public class PhotoProviderAndroid extends PhotoProvider {
 

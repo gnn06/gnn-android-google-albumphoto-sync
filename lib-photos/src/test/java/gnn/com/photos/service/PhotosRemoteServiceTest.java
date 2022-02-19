@@ -1,12 +1,12 @@
 package gnn.com.photos.service;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-
-import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,8 +14,6 @@ import java.util.Arrays;
 
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
-
-import static org.mockito.Mockito.*;
 
 public class PhotosRemoteServiceTest {
 

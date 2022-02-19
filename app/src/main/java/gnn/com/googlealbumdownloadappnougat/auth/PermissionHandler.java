@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
-import gnn.com.googlealbumdownloadappnougat.auth.Require;
-
 public class PermissionHandler {
 
     private Require pendingRequirement;

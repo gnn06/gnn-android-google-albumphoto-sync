@@ -1,5 +1,12 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import android.content.Context;
 
 import androidx.work.Data;
@@ -21,13 +28,6 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SyncWorker.class)

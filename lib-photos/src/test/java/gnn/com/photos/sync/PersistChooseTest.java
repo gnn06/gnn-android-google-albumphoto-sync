@@ -1,12 +1,11 @@
 package gnn.com.photos.sync;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.hamcrest.core.Is;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.util.Date;

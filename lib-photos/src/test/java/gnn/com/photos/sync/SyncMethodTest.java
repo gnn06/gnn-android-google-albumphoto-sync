@@ -20,18 +20,6 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
-import gnn.com.photos.sync.Synchronizer;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class SyncMethodTest {
 

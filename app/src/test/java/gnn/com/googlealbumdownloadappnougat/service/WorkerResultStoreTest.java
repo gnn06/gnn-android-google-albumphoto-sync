@@ -1,5 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.service;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import android.content.Context;
 
 import org.junit.Rule;
@@ -7,9 +10,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -5,8 +5,6 @@ import org.mockito.Mockito;
 
 import gnn.com.photos.service.PhotosRemoteService;
 
-import static org.mockito.Mockito.*;
-
 public class SynchronizerTest {
 
     @Test

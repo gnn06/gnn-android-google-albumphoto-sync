@@ -11,7 +11,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
-import static org.junit.Assert.assertThat;
 
 import gnn.com.photos.Photo;
 

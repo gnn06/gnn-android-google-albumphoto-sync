@@ -1,15 +1,14 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowBitmapFactory;
-
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class TestRobolectric {

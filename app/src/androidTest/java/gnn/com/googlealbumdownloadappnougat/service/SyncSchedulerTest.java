@@ -90,20 +90,13 @@ public class SyncSchedulerTest {
                 .setInputData(data)
                 .build();
         this.UT_SyncScheduler = new SyncScheduler(context);
-        new File(context.getCacheDir().getAbsolutePath() + WorkerResultStore.FILE_NAME).delete();
     }
 
     @Test
     public void schedule() throws ExecutionException, InterruptedException, FileNotFoundException {
-        // given a store
-        WorkerResultStore store = new WorkerResultStore(ApplicationProvider.getApplicationContext().getFilesDir());
-
         // given an empty queue
         info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
         assertThat(info.get().size(), is(0));
-
-        Item[] items = store.readItems();
-        assertThat(items, is(nullValue()));
 
         // when
         UT_SyncScheduler.schedule("album", "folder", null, -1, 24, ApplicationContext.getInstance(context));
@@ -117,11 +110,6 @@ public class SyncSchedulerTest {
 
         // then assert work was created with input
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
-
-        // can not assert inputData given, just check work store a Result
-        // assert store contains a result
-        items = store.readItems();
-        assertThat(items.length, is(1));
     }
 
     @Test

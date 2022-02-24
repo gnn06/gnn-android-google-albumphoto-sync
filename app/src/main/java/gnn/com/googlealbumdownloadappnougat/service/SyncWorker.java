@@ -11,7 +11,6 @@ import androidx.work.WorkerParameters;
 import java.io.File;
 import java.io.IOException;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
@@ -27,8 +26,6 @@ public class SyncWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        WorkerResultStore store = new WorkerResultStore(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
-
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
         long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
@@ -45,16 +42,10 @@ public class SyncWorker extends Worker {
 
         try {
             synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
-            store.store(Item.State.SUCCESS);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty
             return Result.success();
         } catch (IOException | RemoteException e) {
-            try {
-                store.store(Item.State.FAILURE);
-            } catch (IOException ioException) {
-                Log.e(TAG, "can not store result");
-            }
             Log.e(TAG, e.toString());
             return Result.failure();
         }

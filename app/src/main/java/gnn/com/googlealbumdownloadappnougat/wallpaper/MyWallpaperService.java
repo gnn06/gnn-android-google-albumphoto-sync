@@ -60,7 +60,6 @@ public class MyWallpaperService extends WallpaperService {
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance();
                 chooser.addObserver(this);
                 Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
-                // TODO set wallpaper on create.
             }
         }
 

@@ -56,7 +56,7 @@ public class ChooseOneLocalPhotoPersist {
         this.statProvider = new WallpaperStatProvider(this.processFolder);
     }
 
-    public Photo chooseOne() {
+    public void chooseOne() {
         Logger logger = Logger.getLogger();
         Photo photo = chooseLocalPhoto(photoFolder);
         if (photo != null) {
@@ -73,7 +73,6 @@ public class ChooseOneLocalPhotoPersist {
                 Logger.getLogger().severe("can not write last wallpaper time");
             }
         }
-        return photo;
     }
 
     public void addObserver(WallpaperObserver observer) {
@@ -97,7 +96,6 @@ public class ChooseOneLocalPhotoPersist {
             ArrayList<Photo> photos = new PhotoChooserList().chooseOneList(localPhotos, 1, null);
             return photos.get(0);
         }
-        // TODO manage no local photo
         return null;
     }
 

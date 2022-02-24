@@ -21,9 +21,8 @@ class WorkerResultStore {
 
     private final File processFolder;
 
-    WorkerResultStore(Context context) {
-        this.processFolder = new File(ApplicationContext.getInstance(context).getProcessPath()
-                + "/" + FILE_NAME);
+    WorkerResultStore(File processFolder) {
+        this.processFolder = processFolder;
     }
 
     void store(Item.State result) throws IOException {

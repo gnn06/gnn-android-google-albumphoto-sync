@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -28,7 +30,7 @@ public class WorkerResultStoreTest {
         Context context = mock(Context.class);
         File folder = tmpFolder.newFolder();
         when(context.getFilesDir()).thenReturn(folder);
-        WorkerResultStore store = new WorkerResultStore(context);
+        WorkerResultStore store = new WorkerResultStore(ApplicationProvider.getApplicationContext().getFilesDir());
         store.store(Item.State.SUCCESS);
         store.store(Item.State.FAILURE);
 
@@ -54,7 +56,7 @@ public class WorkerResultStoreTest {
         Context context = mock(Context.class);
         when(context.getFilesDir()).thenReturn(folder);
 
-        WorkerResultStore store = new WorkerResultStore(context);
+        WorkerResultStore store = new WorkerResultStore(ApplicationProvider.getApplicationContext().getFilesDir());
         store.store(Item.State.SUCCESS);
     }
 }

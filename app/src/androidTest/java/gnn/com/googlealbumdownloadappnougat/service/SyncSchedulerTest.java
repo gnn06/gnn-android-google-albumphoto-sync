@@ -96,7 +96,7 @@ public class SyncSchedulerTest {
     @Test
     public void schedule() throws ExecutionException, InterruptedException, FileNotFoundException {
         // given a store
-        WorkerResultStore store = new WorkerResultStore(context);
+        WorkerResultStore store = new WorkerResultStore(ApplicationProvider.getApplicationContext().getFilesDir());
 
         // given an empty queue
         info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
@@ -175,7 +175,6 @@ public class SyncSchedulerTest {
         testDriver.setPeriodDelayMet(id);
 
         ListenableFuture<WorkInfo> workInfoById = workManager.getWorkInfoById(id);
-        String toto = workInfoById.get().getOutputData().getString("toto");
 
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.SUCCEEDED));
     }

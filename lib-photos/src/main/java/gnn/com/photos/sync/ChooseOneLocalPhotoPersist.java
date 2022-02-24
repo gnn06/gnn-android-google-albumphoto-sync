@@ -16,28 +16,44 @@ import gnn.com.photos.stat.stat.WallpaperStatProvider;
  */
 public class ChooseOneLocalPhotoPersist {
 
-    private final File photoFolder;
-    private final File processFolder;
-    private final PersistWallpaperTime persistChooseTime;
-    private final PersistChoose persistChoose;
-    private final WallpaperStatProvider statProvider;
+    private File photoFolder;
+    private File processFolder;
+    private PersistWallpaperTime persistChooseTime;
+    private PersistChoose persistChoose;
+    private WallpaperStatProvider statProvider;
     private WallpaperObserver observer;
 
     private static ChooseOneLocalPhotoPersist mInstance;
+    private boolean isConfigured;
+
+    static public ChooseOneLocalPhotoPersist getInstance() {
+        if (mInstance == null) {
+            mInstance = new ChooseOneLocalPhotoPersist();
+        }
+        return mInstance;
+    }
 
     static public ChooseOneLocalPhotoPersist getInstance(File destinationFolder, File processFolder) {
         if (mInstance == null) {
             mInstance = new ChooseOneLocalPhotoPersist(destinationFolder, processFolder);
         }
+        mInstance.config(destinationFolder, processFolder);
         return mInstance;
     }
 
+    private ChooseOneLocalPhotoPersist() {}
+
     private ChooseOneLocalPhotoPersist(File photoFolder, File processFolder) {
+        config(photoFolder, processFolder);
+    }
+
+    private void config(File photoFolder, File processFolder) {
+        this.isConfigured = true;
         this.photoFolder = photoFolder;
         this.processFolder = processFolder;
-        persistChooseTime = new PersistWallpaperTime(this.processFolder);
-        persistChoose = new PersistChoose(this.processFolder);
-        statProvider = new WallpaperStatProvider(this.processFolder);
+        this.persistChooseTime = new PersistWallpaperTime(this.processFolder);
+        this.persistChoose = new PersistChoose(this.processFolder);
+        this.statProvider = new WallpaperStatProvider(this.processFolder);
     }
 
     public Photo chooseOne() {
@@ -83,5 +99,9 @@ public class ChooseOneLocalPhotoPersist {
         }
         // TODO manage no local photo
         return null;
+    }
+
+    public boolean isConfigured() {
+        return isConfigured;
     }
 }

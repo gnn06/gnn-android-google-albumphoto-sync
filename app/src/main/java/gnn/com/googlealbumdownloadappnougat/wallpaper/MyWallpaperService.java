@@ -57,10 +57,7 @@ public class MyWallpaperService extends WallpaperService {
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
             if (!isPreview()) {
-                // TODO avoid have to give parameters
-                File photoFolder = getFolder(new PersistPrefMain(getApplicationContext()).getPhotoPath());
-                File processPath = ApplicationContext.getInstance(getApplicationContext()).getProcessFolder();
-                ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(photoFolder, processPath);
+                ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance();
                 chooser.addObserver(this);
                 Log.d("GOI-WALLPAPER","observe added from livewallpaper create");
                 // TODO set wallpaper on create.

@@ -438,8 +438,6 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 // TODO check folder is not null
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(getFolder(), getProcessFolder());
                 chooser.chooseOne();
-                // TODO call it from observer
-                // refreshLastTime();
             }
         };
         Require require = new WritePermissionRequirement(exec, auth, view);

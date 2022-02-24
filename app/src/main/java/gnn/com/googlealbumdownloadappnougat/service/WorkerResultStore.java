@@ -13,14 +13,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+
 class WorkerResultStore {
 
     public static final String FILE_NAME = "work.json";
 
-    private final Context context;
+    private final File processFolder;
 
     WorkerResultStore(Context context) {
-        this.context = context;
+        this.processFolder = new File(ApplicationContext.getInstance(context).getProcessPath()
+                + "/" + FILE_NAME);
     }
 
     void store(Item.State result) throws IOException {
@@ -38,8 +41,8 @@ class WorkerResultStore {
 
     Item[] readItems() throws FileNotFoundException {
         Gson gson = new Gson();
-        if (new File(getFileStore()).exists()) {
-            FileReader reader = new FileReader(getFileStore());
+        if (this.processFolder.exists()) {
+            FileReader reader = new FileReader(this.processFolder);
             Item[] items = gson.fromJson(reader, Item[].class);
             return items;
         } else {
@@ -49,16 +52,12 @@ class WorkerResultStore {
 
     private void writeItems(Item[] items) throws IOException {
         Gson gson = new Gson();
-        FileWriter writer = new FileWriter(getFileStore());
+        FileWriter writer = new FileWriter(this.processFolder);
         gson.toJson(items, writer);
         writer.close();
     }
 
     private Item convert(Item.State result) {
         return new Item(result);
-    }
-
-    private String getFileStore() {
-        return context.getFilesDir().getAbsoluteFile() + "/" + FILE_NAME;
     }
 }

@@ -82,11 +82,8 @@ public class MyWallpaperService extends WallpaperService {
 
         @Override
         public void onWallpaper() {
-            PersistChoose persistChoose = new PersistChoose(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
-            // TODO call refreshFromCurrent
-            Photo photo = persistChoose.getCurrentPhoto();
             WallpaperSetter wallpaperSetter = new WallpaperSetter(getApplicationContext());
-            wallpaperSetter.setWallpaper(photo, getSurfaceHolder());
+            wallpaperSetter.refreshFromCurrent(getSurfaceHolder());
         }
 
         @Override

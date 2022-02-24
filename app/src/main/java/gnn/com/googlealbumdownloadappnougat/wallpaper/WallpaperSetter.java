@@ -51,13 +51,6 @@ public class WallpaperSetter {
         }
     }
 
-    void setWallpaper(Photo photo, SurfaceHolder holder) {
-        if (photo != null) {
-            Bitmap bitmap = getBitmap(photo.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
-            setWallpaper(bitmap, holder);
-        }
-    }
-
     private File getPhotoFolder() {
         String album = new PersistPrefMain(activity).getPhotoPath();
         File directory = Environment.getExternalStoragePublicDirectory(album);

@@ -8,7 +8,7 @@ public class ApplicationContext {
 
     private static ApplicationContext instance;
 
-    public ApplicationContext(String cachePath, String processPath) {
+    private ApplicationContext(String cachePath, String processPath) {
         this.cachePath = cachePath;
         this.processPath = processPath;
     }

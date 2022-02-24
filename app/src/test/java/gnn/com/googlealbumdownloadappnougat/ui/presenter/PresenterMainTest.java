@@ -73,14 +73,15 @@ public class PresenterMainTest {
     }
 
     @Test
-    public void onShowAlbumList_store_requirement () {
+    public void onShowAlbumList_store_requirement () throws IOException {
         MainActivity activity = Mockito.mock(MainActivity.class);
-        when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
         PresenterMain presenter = spy(new PresenterMain(activity, activity, permissionHandler));
         AuthManager authMock = Mockito.mock(AuthManager.class);
         presenter.setAuth(authMock);
         when(activity.getFrequencyUpdatePhotos()).thenReturn("1");
+        when(activity.getFilesDir()).thenReturn(tmpFolder.newFolder());
+        ApplicationContext.getInstance(activity);
         // when
         presenter.onShowAlbumList();
         // then
@@ -94,10 +95,6 @@ public class PresenterMainTest {
     public void test_resetCache() throws IOException {
         // given
         MainActivity view = Mockito.mock(MainActivity.class);
-        ContextWrapper contextMock = mock(ContextWrapper.class);
-        when(view.getApplicationContext()).thenReturn(contextMock);
-        when(contextMock.getFilesDir()).thenReturn(tmpFolder.newFolder());
-        ApplicationContext.getInstance(contextMock);
         when(view.getFrequencyUpdatePhotos()).thenReturn("1");
 
         PresenterMain presenter = new PresenterMain(view, view, null);

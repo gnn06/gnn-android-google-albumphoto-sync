@@ -81,7 +81,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
      */
     private File getCacheFile() {
         if (this.cacheFile == null) {
-            File dir = activity.getApplicationContext().getFilesDir();
+            File dir = ApplicationContext.getInstance(activity).getProcessFolder();
             // Example : "/data/user/0/gnn.com.googlealbumdownloadappnougat/files"
             this.cacheFile = new File(dir, "cache");
             Log.d(TAG, "cache dir = " + this.cacheFile.getAbsolutePath());

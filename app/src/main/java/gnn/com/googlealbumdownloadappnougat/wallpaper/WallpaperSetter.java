@@ -19,6 +19,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
@@ -40,7 +41,7 @@ public class WallpaperSetter {
     }
 
     public void refreshFromCurrent(SurfaceHolder holder) {
-        File processFolder = activity.getApplicationContext().getFilesDir();
+        File processFolder = ApplicationContext.getInstance(activity).getProcessFolder();
         Photo currentPhoto = new PersistChoose(processFolder).getCurrentPhoto();
         if (currentPhoto != null) {
             Bitmap bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());

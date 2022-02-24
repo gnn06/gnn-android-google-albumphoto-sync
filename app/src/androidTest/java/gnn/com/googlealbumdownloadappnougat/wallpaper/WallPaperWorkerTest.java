@@ -54,7 +54,7 @@ public class WallPaperWorkerTest {
         // , tmpFolder.newFolder()
         WallpaperSetter wallpaperSetter = new WallpaperSetter(context);
         Point size = wallpaperSetter.getScreenSize();
-        assertThat("width", size.x, equalTo(320));
+        assertThat("width", size.x, equalTo(1080));
     }
 
 //    @Test

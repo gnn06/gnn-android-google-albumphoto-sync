@@ -1,10 +1,15 @@
+// android 9 = api 28
+// nova = android 8.1 = api 27
+// one plus 8 pro = android 11 = api 30
+// samsung tab s7 = android 12 = api 31
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "gnn.com.googlealbumdownloadappnougat"
-        minSdkVersion 27 // nova = android 8.1 = api 27
+        minSdkVersion 28
+        // targetSdkVersion à 30 depuis Novembre 2021
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

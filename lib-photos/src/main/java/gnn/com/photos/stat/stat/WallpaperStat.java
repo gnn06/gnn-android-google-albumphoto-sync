@@ -48,7 +48,7 @@ public class WallpaperStat {
 
     void updateOnNewChange(DateProvider currentDateProvider) {
         DateUtil dateUtil = new DateUtil(currentDateProvider);
-        if (dateUtil.isToday(this.getDate())) {
+        if (this.getDate() != null && dateUtil.isToday(this.getDate())) {
             this.increase();
         } else {
             Date newChangeDate = currentDateProvider.get();

@@ -66,9 +66,12 @@ public class UITextHelper {
 
     public String getStat(WallpaperStat stat) {
         String result = "";
-
-        result += "nombre de changement " + stat.getChangeOnDayBefore() + " la veille du "
-        + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.FRANCE).format(stat.getDate());
+        if (stat != null && stat.getDate() != null) {
+            result += "nombre de changement " + stat.getChangeOnDayBefore() + " la veille du "
+                    + DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.FRANCE).format(stat.getDate());
+        } else {
+            result = "Aucune stat.";
+        }
         return result;
     }
 }

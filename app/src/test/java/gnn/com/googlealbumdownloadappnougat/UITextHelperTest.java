@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -132,6 +133,20 @@ public class UITextHelperTest {
     public void stat_with_dayBefore() {
         UITextHelper helper = new UITextHelper(activityMock);
         String text = helper.getStat(new WallpaperStat(12, 14, new Date(74, 3-1, 9, 12, 00)));
-        assertThat(text, Is.is("nombre de changement 14 la veille du 9 mars 1974"));
+        assertThat(text, is("nombre de changement 14 la veille du 9 mars 1974"));
+    }
+
+    @Test
+    public void stat_null() {
+        UITextHelper helper = new UITextHelper(activityMock);
+        String text = helper.getStat(null);
+        assertThat(text, is("Aucune stat."));
+    }
+
+    @Test
+    public void stat_date_null() {
+        UITextHelper helper = new UITextHelper(activityMock);
+        String text = helper.getStat(new WallpaperStat(0, 0, null));
+        assertThat(text, is("Aucune stat."));
     }
 }

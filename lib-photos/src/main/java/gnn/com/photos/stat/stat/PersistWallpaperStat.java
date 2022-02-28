@@ -25,10 +25,18 @@ class PersistWallpaperStat {
         writer.close();
     }
 
+    /**
+     *
+     * @return null if no file exists, null if file not contains date
+     */
     WallpaperStat read() {
         try {
             Reader reader = new FileReader(new File(processFolder, STAT_FILENAME));
-            return new Gson().fromJson(reader, WallpaperStat.class);
+            WallpaperStat result = new Gson().fromJson(reader, WallpaperStat.class);
+            if (result.getDate() == null) {
+                return null;
+            }
+            return result;
         } catch (FileNotFoundException e) {
             return null;
         }

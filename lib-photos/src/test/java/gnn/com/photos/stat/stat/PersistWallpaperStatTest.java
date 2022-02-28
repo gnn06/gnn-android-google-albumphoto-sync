@@ -1,7 +1,8 @@
 package gnn.com.photos.stat.stat;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 import org.hamcrest.core.Is;
 import org.junit.Rule;
@@ -20,7 +21,6 @@ public class PersistWallpaperStatTest {
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
     @Test
-//    @Ignore
     public void write() throws IOException {
         File folder = tempFolder.newFolder();
         final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
@@ -32,14 +32,46 @@ public class PersistWallpaperStatTest {
     }
 
     @Test
-//    @Ignore
     public void read() throws IOException {
         File folder = tempFolder.newFolder();
         final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
-        Files.write(tempFile.toPath(), "{\"changeOnDate\":24,\"lastChangeDate\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
+        Files.write(tempFile.toPath(), "{\"changeOnDate\":24,\"changeOnDayBefore\":36,\"date\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
 
         PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat result = persistent.read();
         assertThat(result.getChangeOnDate(), is(24));
+        assertThat(result.getChangeOnDayBefore(), is(36));
+        assertThat(result.getDate(), is(new Date(122, 1, 1, 21, 44, 28)));
+    }
+
+    @Test
+    public void read_missing_file() throws IOException {
+        File folder = tempFolder.newFolder();
+
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
+        WallpaperStat result = persistent.read();
+        assertThat(result, nullValue());
+    }
+
+    @Test
+    public void read_too_much_fields() throws IOException {
+        File folder = tempFolder.newFolder();
+        final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
+        Files.write(tempFile.toPath(), "{\"changeOnDate\":24,\"changeOnDayBefore\":36,\"date\":\"Feb 1, 2022, 9:44:28 PM\", \"toto\":12}".getBytes(StandardCharsets.UTF_8));
+
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
+        WallpaperStat result = persistent.read();
+        assertThat(result.getChangeOnDate(), is(24));
+    }
+
+    @Test
+    public void read_missing_fields() throws IOException {
+        File folder = tempFolder.newFolder();
+        final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
+        Files.write(tempFile.toPath(), "{\"changeOnDate\":24}".getBytes(StandardCharsets.UTF_8));
+
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
+        WallpaperStat result = persistent.read();
+        assertThat(result, nullValue());
     }
 }

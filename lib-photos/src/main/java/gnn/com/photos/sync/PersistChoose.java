@@ -15,7 +15,7 @@ import gnn.com.util.DateProvider;
 
 public class PersistChoose {
 
-    static final String FILENAME = "lastchoose";
+    static final String FILENAME = "lastchoose.json";
 
     private final File processFolder;
 
@@ -30,10 +30,19 @@ public class PersistChoose {
         writer.close();
     }
 
+    /**
+     *
+     * @return null if FileNotFound, null if file mal formated
+     */
     PhotoChoose read() {
         try {
             Reader reader = new FileReader(new File(processFolder, FILENAME));
-            return new Gson().fromJson(reader, PhotoChoose.class);
+            PhotoChoose choose = new Gson().fromJson(reader, PhotoChoose.class);
+            if (choose.photo == null || choose.chooseDate == null) {
+                return null;
+            } else {
+                return choose;
+            }
         } catch (FileNotFoundException e) {
             return null;
         }

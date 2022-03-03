@@ -62,5 +62,7 @@
     <string name="titleStat">Statistiques</string>
     <string name="noStat">Pas de statistique</string>
     <string name="wallpaper_description">description</string>
+    <string name="error_wallpaper_chooser">impossible de définir le fond d\'écran animé automatiquement</string>
+    <string name="warning_wallpaper_not_active">Le fond d\'écran animée n\'est pas actif. Cliquez ici pour le faire.</string>
 
 </resources>

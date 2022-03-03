@@ -105,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements IView {
         });
 
         new Notification(this).createNotificationChannel();
+
+        findViewById(R.id.warning_wallpaper_active).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onWarningWallpaperActive();
+            }
+        });
     }
 
     @Override

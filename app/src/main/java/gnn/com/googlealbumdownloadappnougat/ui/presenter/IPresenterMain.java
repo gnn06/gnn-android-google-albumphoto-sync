@@ -81,5 +81,7 @@ public interface IPresenterMain {
     void onMenuRequestGooglePermission();
 
     void onAppForeground();
+
+    void onWarningWallpaperActive();
 }
 

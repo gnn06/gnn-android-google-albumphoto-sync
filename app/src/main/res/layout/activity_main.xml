@@ -14,7 +14,7 @@
         android:background="@android:color/holo_orange_dark"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="live wallpaper not active"
+        android:text="@string/warning_wallpaper_not_active"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"

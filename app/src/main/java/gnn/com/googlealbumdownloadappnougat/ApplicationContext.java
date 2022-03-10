@@ -36,4 +36,8 @@ public class ApplicationContext {
     public File getProcessFolder() {
         return new File(getProcessPath());
     }
+
+    public File getCacheFile() {
+        return new File(getCachePath());
+    }
 }

@@ -34,9 +34,8 @@ public class UITextHelperTest {
 
     @Test
     public void getResultText_inProgress() {
-        MainActivity activity = new MainActivity();
-        UITextHelper UITextHelper = new UITextHelper(activity);
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null);
+        UITextHelper UITextHelper = new UITextHelper(activityMock);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activityMock, null, 24 * 60 * 60 * 1000, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze", "12"));
         toDownloadList.add(new Photo("ZER", "13"));
@@ -59,9 +58,8 @@ public class UITextHelperTest {
 
     @Test
     public void getResultText_finish() {
-        MainActivity activity = new MainActivity();
-        UITextHelper UITextHelper = new UITextHelper(activity);
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activity, null, 24 * 60 * 60 * 1000, null);
+        UITextHelper UITextHelper = new UITextHelper(activityMock);
+        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activityMock, null, 24 * 60 * 60 * 1000, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze", "12"));
         toDownloadList.add(new Photo("ZER", "13"));

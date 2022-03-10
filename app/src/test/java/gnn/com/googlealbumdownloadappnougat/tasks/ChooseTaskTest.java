@@ -8,7 +8,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Ignore;
+import android.content.Context;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -17,20 +19,30 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.photos.service.RemoteException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ChooseTaskTest {
 
+    private PersistPrefMain preferences;
+    private Context context;
+
+    @Before
+    public void setUp() throws Exception {
+        preferences = mock(PersistPrefMain.class);
+        context = mock(Context.class);
+    }
+
     @Test
     public void syncAll() throws IOException, RemoteException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
-        IPresenterMain presenter = mock(PresenterMain.class);
-        SyncTask chooseTask = new SyncTask(presenter, synchroniser);
+        IPresenterHome presenter = mock(PresenterHome.class);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
         // given
-        when(presenter.getQuantity()).thenReturn(-1);
+        when(preferences.getQuantity()).thenReturn(-1);
         when(presenter.getAlbum()).thenReturn("album");
         when(presenter.getFolder()).thenReturn(mock(File.class));
         // when
@@ -42,10 +54,10 @@ public class ChooseTaskTest {
     @Test
     public void syncRandom() throws IOException, RemoteException {
         SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
-        IPresenterMain presenter = mock(PresenterMain.class);
-        SyncTask chooseTask = new SyncTask(presenter, synchroniser);
+        IPresenterHome presenter = mock(PresenterHome.class);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
         // given
-        when(presenter.getQuantity()).thenReturn(5);
+        when(preferences.getQuantity()).thenReturn(5);
         when(presenter.getAlbum()).thenReturn("album");
         when(presenter.getFolder()).thenReturn(mock(File.class));
         // when

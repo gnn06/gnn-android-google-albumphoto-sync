@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentHome">
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentHome"
+        android:label="fragment_home" >
+        <action
+            android:id="@+id/action_FragmentHome_to_FragmentDownloadOptions"
+            app:destination="@id/fragmentDownloadOptions" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentFrequencies"
+            app:destination="@id/fragmentFrequencies" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDownloadOptions"
+        android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentDownloadOptions"
+        android:label="fragment_destination"
+        tools:layout="@layout/fragment_downloadoptions" />
+    <fragment
+        android:id="@+id/fragmentFrequencies"
+        android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentFrequencies"
+        android:label="fragment_frequencies"
+        tools:layout="@layout/fragment_frequencies" />
+</navigation>

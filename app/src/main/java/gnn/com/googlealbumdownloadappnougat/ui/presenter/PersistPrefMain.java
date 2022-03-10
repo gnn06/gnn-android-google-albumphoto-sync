@@ -35,22 +35,40 @@ public class PersistPrefMain {
      * Get data from UI throught Persenter and store then into preferences
      * @param presenter
      */
-    public void save(IPresenterMain presenter) {
+    public void save(IPresenterHome presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
         String album = presenter.getAlbum();
         String folderHuman = presenter.getFolderHuman();
+
+        editor.putString(PREF_ALBUM_KEY, album);
+        editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
+
+        editor.apply();
+    }
+
+    public void saveDownloadOption(IPresenterDownloadOptions presenter) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
         int quantity = presenter.getQuantity();
         String rename = presenter.getRename();
+
+        editor.putInt(PREF_QUANTITY_KEY, quantity);
+        editor.putString(PREF_RENAME, rename);
+
+        editor.apply();
+    }
+
+    public void saveFrequencies(IPresenterFrequencies presenter) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
         int frequencyWallpaper = presenter.getFrequencyWallpaper();
         int frequencySync = presenter.getFrequencySync();
         int frequencyUpdatePhotos = presenter.getFrequencyUpdatePhotos();
 
-        editor.putString(PREF_ALBUM_KEY, album);
-        editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
-        editor.putInt(PREF_QUANTITY_KEY, quantity);
-        editor.putString(PREF_RENAME, rename);
         editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
         editor.putInt(PREF_FREQ_SYNC, frequencySync);
         editor.putInt(PREF_FREQ_UPDATE_PHOTOS, frequencyUpdatePhotos);
@@ -62,7 +80,7 @@ public class PersistPrefMain {
      * retrieves data from Preferences and inject into Presenter
      * @param presenter
      */
-    public void restore(IPresenterMain presenter) {
+    public void restore(IPresenterHome presenter) {
         // Restore data
         SyncData data = getData();
         if (data.getAlbum() != null) {
@@ -71,8 +89,17 @@ public class PersistPrefMain {
         if (data.getFolderHuman() != null) {
             presenter.setFolderHuman(data.getFolderHuman());
         }
+    }
+
+    public void restoreDownloadOptions(IPresenterDownloadOptions presenter) {
+        // Restore data
+        SyncData data = getData();
         presenter.setQuantity(data.getQuantity());
         presenter.setRename(data.getRename());
+    }
+
+    public void restoreFrequencies(IPresenterFrequencies presenter) {
+        SyncData data = getData();
         presenter.setFrequencyUpdatePhotos(data.getFrequencyUpdatePhotos());
         presenter.setFrequencySync(data.getFrequencySync());
         presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
@@ -114,4 +141,22 @@ public class PersistPrefMain {
         return getData().getFolderHuman();
     }
 
+    public int getQuantity() {
+        return getData().getQuantity();
+    }
+
+    public String getRename() {
+        return getData().getRename();
+    }
+
+    /**
+     * @return fréquence en minute
+     */
+    public int getFrequencyUpdatePhotosHour() {
+        return getData().getFrequencyUpdatePhotos() * 24 * 60;
+    }
+
+    public String getAlbum() {
+        return getData().getAlbum();
+    }
 }

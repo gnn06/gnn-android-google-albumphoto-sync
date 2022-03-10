@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
@@ -11,11 +12,13 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
 
     private boolean error = false;
     private String errorMessage;
-    protected IPresenterMain presenter;
+    protected IPresenterHome presenter;
+    final protected PersistPrefMain persistPref;
 
 
-    PhotosAsyncTask(IPresenterMain presenter) {
+    PhotosAsyncTask(IPresenterMain presenter, Context context) {
         this.presenter = presenter;
+        this.context = context;
     }
 
     void markAsError(String message) {

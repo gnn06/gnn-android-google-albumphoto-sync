@@ -85,4 +85,9 @@ public class AuthManager {
     public void requestWritePermission() {
         activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.RC_AUTHORIZE_WRITE);
     }
+
+    public GoogleSignInAccount getAccount() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        return account;
+    }
 }

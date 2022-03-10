@@ -20,7 +20,6 @@ import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.UserModel;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
@@ -38,7 +37,6 @@ import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.CacheManager;
 import gnn.com.photos.service.PhotosRemoteService;
@@ -46,23 +44,20 @@ import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.PersistWallpaperTime;
-import gnn.com.photos.sync.SynchronizerDelayed;
 
-public class PresenterMain implements IPresenterMain, IPresenterSettings {
+public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private static final String TAG = "goi";
 
     private final IView view;
     private final MainActivity activity;
     private PermissionHandler permissionHandler;
-    final private UserModel userModel;
 
-    public PresenterMain(IView view, MainActivity activity, PermissionHandler permissionHandler, UserModel userModel) {
+    public PresenterHome(IView view, MainActivity activity, PermissionHandler permissionHandler) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
         this.permissionHandler = permissionHandler;
-        this.userModel = userModel;
     }
 
     private AuthManager auth;
@@ -76,7 +71,8 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosHour(), getProcessFolder());
+            PersistPrefMain persistPref = new PersistPrefMain(this.activity);
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotosHour(), getProcessFolder());
         }
         return sync;
     }
@@ -106,22 +102,12 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onAppStart() {
         new PersistPrefMain(activity).restore(this);
-        new PersistPrefMain(activity).restoreDownloadOptions(this);
         new PersistPrefSettings(activity).restore(this);
-
-        // some init will be done in onAppForeground
-
-        WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
-        boolean scheduled = scheduler.isScheduled();
-        view.setSwitchWallpaper(scheduled);
-        view.enableFrequencyWallpaper(scheduled);
-        view.enableFrequencySync(scheduled);
-        view.enableFrequencyUpdatePhotos(scheduled);
     }
 
     @Override
     public void onAppForeground() {
-        userModel.getUser().setValue(auth.getAccount());
+        view.updateUI_User();
         refreshLastTime();
         WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
         view.setStat(stat);
@@ -148,7 +134,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onSignIn() {
-        Require require = new SignInRequirement(null, auth, view, userModel);
+        Require require = new SignInRequirement(null, auth, view);
         permissionHandler.startRequirement(require);
     }
 
@@ -156,7 +142,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     public void onSignOut() {
         auth.signOut();
         getSync().resetCache();
-        userModel.getUser().setValue(null);
+        view.updateUI_User();
     }
 
     @Override
@@ -192,15 +178,16 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
     @Override
     public void onShowAlbumList() {
         if (mAlbums == null) {
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), getFrequencyUpdatePhotosHour());
-            final GetAlbumsTask task = new GetAlbumsTask(this, prs, activity);
+            PersistPrefMain persist = new PersistPrefMain(this.activity);
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), persist.getFrequencyUpdatePhotosHour());
+            final GetAlbumsTask task = new GetAlbumsTask(this, prs, persist);
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
                     task.execute();
                 }
             };
-            Require signInReq = new GoogleAuthRequirement(exec, auth, view, userModel);
+            Require signInReq = new GoogleAuthRequirement(exec, auth, view);
             permissionHandler.startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
@@ -274,7 +261,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
             }
         };
-        WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view, userModel);
+        WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view);
         permissionHandler.startRequirement(requirement);
     }
 
@@ -288,155 +275,17 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
         view.updateUI_Folder(humanPath);
     }
 
-
-    // --- quantity ---
-    /**
-     * @return -1 if no quantity specified
-     */
-    @Override
-    public int getQuantity() {
-        String quantity = view.getQuantity();
-        // replace "" into "-1"
-        return Integer.parseInt(quantity.equals("") ? "-1" : quantity);
-    }
-
-    @Override
-    public void setQuantity(int quantity) {
-        // replace -1 into ""
-        view.setQuantity(quantity == -1 ? "" : Integer.toString(quantity));
-    }
-
-    /**
-     *
-     * @return in minute
-     */
-    @Override
-    public int getFrequencyWallpaper() {
-        String frequency = view.getFrequencyWallpaper();
-        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
-    }
-
-    /**
-     *
-     * @param frequency in minute
-     */
-    @Override
-    public void setFrequencyWallpaper(int frequency) {
-        view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
-    }
-
-    /**
-     *
-     * int frequencySync fréquence de téléchargement en heure
-     */
-    @Override
-    public int getFrequencySync() {
-        String frequency = view.getFrequencySync();
-        return frequency.equals("") ? SynchronizerDelayed.DELAY_NO_CACHE : Integer.parseInt(frequency);
-    }
-
-    /**
-     *
-     * int frequencySync fréquence de téléchargement en minute
-     */
-    @Override
-    public int getFrequencySyncMinute() {
-        return getFrequencySync() * 60;
-    }
-
-    /**
-     *
-     * @param frequency in hour
-     */
-    @Override
-    public void setFrequencySync(int frequency) {
-        view.setFrequencySync(frequency == -1 ? "" : Integer.toString(frequency));
-    }
-
-    /**
-     *
-     * @return frequence de recupération des nouvelles phtos in days
-     */
-    @Override
-    public int getFrequencyUpdatePhotos() {
-        String frequency = view.getFrequencyUpdatePhotos();
-        return frequency.equals("") ? Cache.DELAY_NO_CACHE : Integer.parseInt(frequency);
-
-    }
-
-    /**
-     * @return fréquence en minute
-     */
-    @Override
-    public int getFrequencyUpdatePhotosHour() {
-        return getFrequencyUpdatePhotos() * 24 * 60;
-    }
-
-    /**
-     *
-     * @param frequency in days
-     */
-    @Override
-    public void setFrequencyUpdatePhotos(int frequency) {
-        view.setFrequencyUpdatePhotos(frequency == -1 ? "" : Integer.toString(frequency));
-    }
-
-    @Override
-    public String getRename() {
-        return view.getRename();
-    }
-
-    public void setRename(String rename) {
-        view.setRename(rename);
-    }
-
     // --- Actions ---
-
-    @Override
-    public void onSwitchWallpaper(boolean checked) {
-        WallpaperScheduler scheduler = new WallpaperScheduler(this.activity);
-        if (checked) {
-            if (getFrequencyWallpaper() < 15) {
-                view.setSwitchWallpaper(false);
-                view.alertFrequencyError();
-            } else {
-                // TODO manage permission refused and toggle siwtch off
-                Exec exec = new Exec() {
-                    @Override
-                    public void exec() {
-                        ApplicationContext appContext = ApplicationContext.getInstance(activity);
-                        PersistPrefMain preferences = new PersistPrefMain(activity);
-                        scheduler.schedule(
-                                getFolderHuman(),
-                                getFrequencyWallpaper(),
-                                getFrequencySyncMinute(), getAlbum(), preferences.getQuantity(), preferences.getRename(),
-                                getFrequencyUpdatePhotosHour(), appContext);
-                        view.enableFrequencyWallpaper(checked);
-                        view.enableFrequencySync(checked);
-                        view.enableFrequencyUpdatePhotos(checked);
-                    }
-                };
-                Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-                permissionHandler.startRequirement(require);
-            }
-        } else {
-            scheduler.cancel();
-            view.enableFrequencyWallpaper(checked);
-            view.enableFrequencySync(checked);
-            view.enableFrequencyUpdatePhotos(checked);
-        }
-    }
 
     @Override
     public void onButtonSyncOnce() {
         Log.d(TAG, "onSyncClick");
-        String album = getAlbum();
+        String album = this.album;
         if (album == null || album.equals("")) {
             view.alertNoAlbum();
         } else {
-            PersistPrefMain preferences = new PersistPrefMain(activity);
-            SyncTask task = new SyncTask(this, getSync(), activity.getApplicationContext(), preferences);
-            Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view, userModel);
+            SyncTask task = new SyncTask(this, getSync(), new PersistPrefMain(activity.getApplicationContext()));
+            Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view);
             permissionHandler.startRequirement(signInReq);
         }
     }
@@ -451,7 +300,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
                 chooser.chooseOne();
             }
         };
-        Require require = new WritePermissionRequirement(exec, auth, view, userModel);
+        Require require = new WritePermissionRequirement(exec, auth, view);
         permissionHandler.startRequirement(require);
     }
 
@@ -470,7 +319,7 @@ public class PresenterMain implements IPresenterMain, IPresenterSettings {
 
     @Override
     public void onMenuRequestGooglePermission() {
-        Require require = new GoogleAuthRequirement(null, auth, view, userModel);
+        Require require = new GoogleAuthRequirement(null, auth, view);
         permissionHandler.startRequirement(require);
     }
 

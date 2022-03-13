@@ -40,7 +40,7 @@ public class PersistPrefMain {
         SharedPreferences.Editor editor = preferences.edit();
 
         String album = presenter.getAlbum();
-        String folderHuman = presenter.getFolderHuman();
+        String folderHuman = presenter.getDefaultFolderHuman();
 
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
@@ -87,7 +87,7 @@ public class PersistPrefMain {
             presenter.setAlbum(data.getAlbum());
         }
         if (data.getFolderHuman() != null) {
-            presenter.setFolderHuman(data.getFolderHuman());
+            presenter.setDefaultFolderHuman(data.getFolderHuman());
         }
     }
 

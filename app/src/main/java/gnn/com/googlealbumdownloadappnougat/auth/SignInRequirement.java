@@ -25,7 +25,6 @@ public class SignInRequirement extends Require {
 
     @Override
     void require() {
-        this.userModel.getUser().setValue(null);
         auth.signIn();
     }
 

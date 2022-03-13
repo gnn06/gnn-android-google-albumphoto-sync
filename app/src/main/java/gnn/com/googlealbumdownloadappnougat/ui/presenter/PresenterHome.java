@@ -20,15 +20,12 @@ import java.util.Date;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
-import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
@@ -39,6 +36,8 @@ import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
 import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
+import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
+import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
 import gnn.com.photos.service.Cache;
@@ -54,25 +53,25 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private final IViewHome view;
     private final MainActivity activity;
-    private PermissionHandler permissionHandler;
+    private final FragmentHome fragment;
     private UserModel userModel;
     private FolderModel folderModel;
 
-    public PresenterHome(IViewHome view, MainActivity activity, PermissionHandler permissionHandler) {
+    public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
-        this.permissionHandler = permissionHandler;
-        userModel = new ViewModelProvider(this.activity).get(UserModel.class);
-        folderModel = new ViewModelProvider(this.activity).get(FolderModel.class);
+        this.fragment = fragmentHome;
+        userModel = new ViewModelProvider(fragmentHome).get(UserModel.class);
+        folderModel = new ViewModelProvider(fragmentHome).get(FolderModel.class);
     }
 
-    public PresenterHome(IViewHome view, MainActivity activity, PermissionHandler permissionHandler,
+    public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome,
                          UserModel userModel, FolderModel folderModel) {
         this.view = view;
         this.activity = activity;
+        this.fragment = fragmentHome;
         this.auth = new AuthManager(activity);
-        this.permissionHandler = permissionHandler;
         this.userModel = userModel;
         this.folderModel = folderModel;
     }
@@ -98,6 +97,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     /**
      * Get File to store cache
+     *
      * @return File
      */
     private File getCacheFile() {
@@ -118,6 +118,9 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     // called by onCreate
     @Override
     public void onAppStart() {
+        if (folderModel.getFolder().getValue() == null) {
+            folderModel.getFolder().setValue(defaultFolderHuman);
+        }
         new PersistPrefMain(activity).restore(this);
         new PersistPrefSettings(activity).restore(this);
     }
@@ -193,7 +196,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                 }
             };
             Require signInReq = new GoogleAuthRequirement(exec, auth, view, userModel);
-            permissionHandler.startRequirement(signInReq);
+            activity.getPermissionHandler().startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
             view.showChooseAlbumDialog(mAlbums);
@@ -220,6 +223,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     /**
      * Called from alertDialog showing album list
+     *
      * @param albumName chosen album
      */
     @Override
@@ -235,27 +239,28 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
      * default value = "Pictures"
      * persistant data
      */
-    private String folderHuman = Environment.DIRECTORY_PICTURES;
+    private String defaultFolderHuman = Environment.DIRECTORY_PICTURES;
 
     @Override
-    public String getFolderHuman() {
-        return this.folderHuman;
+    public String getDefaultFolderHuman() {
+        return folderModel.getFolder().getValue();
     }
 
     // Use from Persistence
+
     /**
      * Get File from human version of folder
+     *
      * @return File
      */
     @Override
     public File getFolder() {
-        return Environment.getExternalStoragePublicDirectory(this.getFolderHuman());
+        return Environment.getExternalStoragePublicDirectory(this.getDefaultFolderHuman());
     }
 
     @Override
-    public void setFolderHuman(String folderHuman) {
-        this.folderHuman = folderHuman;
-        view.updateUI_Folder(folderHuman);
+    public void setDefaultFolderHuman(String defaultFolderHuman) {
+        folderModel.getFolder().setValue(defaultFolderHuman);
     }
 
     @Override
@@ -264,11 +269,11 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
             @Override
             public void exec() {
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                activity.startActivityForResult(intent, MainActivity.RC_CHOOSE_FOLDER);
+                fragment.startActivityForResult(intent, FragmentHome.RC_CHOOSE_FOLDER);
             }
         };
         WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view, userModel);
-        permissionHandler.startRequirement(requirement);
+        activity.getPermissionHandler().startRequirement(requirement);
     }
 
     @Override
@@ -276,9 +281,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Uri uri = data.getData();
         assert uri != null;
         final String humanPath = Folder.getHumanPath(uri);
-        Log.d(TAG,"humanPath=" + humanPath);
-        this.folderHuman = humanPath;
-        view.updateUI_Folder(humanPath);
+        Log.d(TAG, "humanPath=" + humanPath);
+        folderModel.getFolder().setValue(humanPath);
     }
 
     // --- Actions ---
@@ -292,7 +296,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         } else {
             SyncTask task = new SyncTask(this, getSync(), new PersistPrefMain(activity.getApplicationContext()), activity);
             Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view, userModel);
-            permissionHandler.startRequirement(signInReq);
+            activity.getPermissionHandler().startRequirement(signInReq);
         }
     }
 
@@ -307,20 +311,20 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
             }
         };
         Require require = new WritePermissionRequirement(exec, auth, view, userModel);
-        permissionHandler.startRequirement(require);
+        activity.getPermissionHandler().startRequirement(require);
     }
 
     @Override
     public void onWarningWallpaperActive() {
         try {
-            activity.startActivity(new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
+            fragment.startActivity(new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
                     .putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                             new ComponentName(activity,
                                     MyWallpaperService.class))
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } catch (ActivityNotFoundException e) {
             try {
-                activity.startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)
+                fragment.startActivity(new Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             } catch (ActivityNotFoundException e2) {
                 // TODO manage error
@@ -332,7 +336,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     @Override
     public void onSignIn() {
         Require require = new SignInRequirement(null, auth, view, userModel);
-        permissionHandler.startRequirement(require);
+        activity.getPermissionHandler().startRequirement(require);
     }
 
 }

@@ -134,7 +134,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 };
                 AuthManager auth = new AuthManager(this.activity);
                 Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-                new PermissionHandler().startRequirement(require);
+                activity.getPermissionHandler().startRequirement(require);
             }
         } else {
             scheduler.cancel();

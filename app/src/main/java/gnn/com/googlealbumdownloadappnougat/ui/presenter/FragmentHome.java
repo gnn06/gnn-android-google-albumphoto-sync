@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,14 +30,9 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.UITextHelper;
-import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.Folder;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.stat.stat.WallpaperStat;
@@ -45,7 +41,7 @@ public class FragmentHome extends Fragment implements IViewHome {
 
     private static final String TAG = "FRAGMENTHOME";
     private IPresenterHome presenter;
-    private PermissionHandler permissionHandler;
+    private FolderModel folderModel;
 
     public FragmentHome() {
         super(R.layout.fragment_home);
@@ -54,8 +50,7 @@ public class FragmentHome extends Fragment implements IViewHome {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        permissionHandler = new PermissionHandler();
-        presenter = new PresenterHome(this, (MainActivity) getActivity(), permissionHandler);
+        presenter = new PresenterHome(this, (MainActivity) getActivity(), this);
         getView().findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();
@@ -104,7 +99,7 @@ public class FragmentHome extends Fragment implements IViewHome {
             }
         });
 
-        final UserModel userModel = new ViewModelProvider(getActivity()).get(UserModel.class);
+        final UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
         userModel.getUser().observe(getActivity(), new Observer<GoogleSignInAccount>() {
             @Override
             public void onChanged(@Nullable GoogleSignInAccount account) {
@@ -112,13 +107,11 @@ public class FragmentHome extends Fragment implements IViewHome {
             }
         });
 
-        final FolderModel folderModel = new ViewModelProvider(getActivity()).get(FolderModel.class);
-        folderModel.getFolder().observe(getActivity(), new Observer<Uri>() {
+        this.folderModel = new ViewModelProvider(this).get(FolderModel.class);
+        folderModel.getFolder().observe(getActivity(), new Observer<String>() {
             @Override
-            public void onChanged(Uri uri) {
-                final String humanPath = Folder.getHumanPath(uri);
-                Log.d(TAG,"humanPath=" + humanPath);
-                updateUI_Folder(humanPath);
+            public void onChanged(String folder) {
+                updateUI_Folder(folder);
             }
         });
         presenter.onAppStart();
@@ -128,6 +121,20 @@ public class FragmentHome extends Fragment implements IViewHome {
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    public static final int RC_CHOOSE_FOLDER = 504;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(TAG, "onActivityResult, requestCode=" + requestCode + ", resultCode=" + resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
+            // return to app without choosing a folder : data == null && resultCode == 0
+            // data.getDate.Uri = "content:/.....Pictures%2Fwallpaper"
+            presenter.setFolder(data);
+        }
     }
 
     @Override
@@ -243,6 +250,10 @@ public class FragmentHome extends Fragment implements IViewHome {
         }
     }
 
+    /**
+     *
+     * @param humanPath "Pictures/wallpaper"
+     */
     @Override
     public void updateUI_Folder(String humanPath) {
         TextView textView = getView().findViewById(R.id.textFolder);

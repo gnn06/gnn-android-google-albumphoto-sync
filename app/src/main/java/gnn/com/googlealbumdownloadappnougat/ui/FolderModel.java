@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 public class FolderModel extends ViewModel {
 
-    private final MutableLiveData<Uri> data = new MutableLiveData<>();
+    private final MutableLiveData<String> data = new MutableLiveData<>();
 
-    public MutableLiveData<Uri> getFolder() {
+    public MutableLiveData<String> getFolder() {
         return data;
     }
 }

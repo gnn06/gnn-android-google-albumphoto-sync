@@ -20,11 +20,11 @@ public interface IPresenterHome {
 
     void setAlbums(ArrayList<String> mAlbums);
 
-    String getFolderHuman();
+    String getDefaultFolderHuman();
 
     File getFolder();
 
-    void setFolderHuman(String folderHuman);
+    void setDefaultFolderHuman(String defaultFolderHuman);
 
     void onChooseFolder();
 

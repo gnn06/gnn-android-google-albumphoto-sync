@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements IView {
     public static final int RC_SIGN_IN = 501;
     public static final int RC_AUTHORIZE_PHOTOS = 500;
     public static final int RC_AUTHORIZE_WRITE = 503;
-    public static final int RC_CHOOSE_FOLDER = 504;
 
     private static final String TAG = "goi";
 
@@ -40,11 +39,11 @@ public class MainActivity extends AppCompatActivity implements IView {
     private PresenterMain presenter;
 
     private PermissionHandler permissionHandler;
+
     private AuthManager auth;
     private UserModel userModel;
     private FolderModel folderModel;
     private PresenterHome presenterHome;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +61,13 @@ public class MainActivity extends AppCompatActivity implements IView {
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
 
         new Notification(this).createNotificationChannel();
+    }
+
+    /**
+     * Used by fragment to access shared permission handler ; avoid singleton
+     */
+    public PermissionHandler getPermissionHandler() {
+        return permissionHandler;
     }
 
     @Override
@@ -90,15 +96,11 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult, requestCode="+ requestCode + ", resultCode=" + resultCode);
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN || requestCode == RC_AUTHORIZE_PHOTOS) {
             permissionHandler.handlePermission(resultCode == Activity.RESULT_OK ? Require.SUCCESS : Require.FAILURE);
-        } else if (requestCode == RC_CHOOSE_FOLDER && resultCode == MainActivity.RESULT_OK) {
-            // return to app without choosing a folder : data == null && resultCode == 0
-            Uri uri = data.getData();
-            folderModel.getFolder().setValue(uri);
         }
     }
 

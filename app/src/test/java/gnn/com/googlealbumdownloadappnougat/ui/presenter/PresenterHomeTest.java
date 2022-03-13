@@ -11,10 +11,6 @@ import static org.mockito.Mockito.when;
 
 import android.content.ContextWrapper;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -42,6 +38,7 @@ public class PresenterHomeTest {
     private FragmentHome view;
     private UserModel userModel;
     private FolderModel folderModel;
+    private FragmentHome fragmentHome;
 
     @Before
     public void setUp() throws Exception {
@@ -49,6 +46,7 @@ public class PresenterHomeTest {
         view = mock(FragmentHome.class);
         userModel = mock(UserModel.class);
         folderModel = mock(FolderModel.class);
+        fragmentHome = mock(FragmentHome.class);
     }
 
     @Test
@@ -56,7 +54,7 @@ public class PresenterHomeTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         IViewHome view = spy(IViewHome.class);
         UserModel userModel = mock (UserModel.class);
-        PresenterHome presenter = new PresenterHome(view, activity, null, userModel, null);
+        PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         presenter.setAlbum(null);
         presenter.onButtonSyncOnce();
         verify(view, Mockito.atLeastOnce()).alertNoAlbum();
@@ -67,7 +65,7 @@ public class PresenterHomeTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterHome presenter = spy(new PresenterHome(view, activity, null));
+        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -82,7 +80,7 @@ public class PresenterHomeTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
-        PresenterHome presenter = spy(new PresenterHome(view, activity, permissionHandler));
+        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -97,8 +95,8 @@ public class PresenterHomeTest {
     public void onShowAlbumList_store_requirement () throws IOException {
         MainActivity activity = Mockito.mock(MainActivity.class);
         PermissionHandler permissionHandler = mock(PermissionHandler.class);
-        MutableLiveData<GoogleSignInAccount> tmp = mock(MutableLiveData.class);
-        PresenterHome presenter = new PresenterHome(view, activity, permissionHandler, userModel, folderModel);
+        when(activity.getPermissionHandler()).thenReturn(permissionHandler);
+        PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         AuthManager authMock = Mockito.mock(AuthManager.class);
         presenter.setAuth(authMock);
         when(activity.getFilesDir()).thenReturn(tmpFolder.newFolder());
@@ -119,7 +117,7 @@ public class PresenterHomeTest {
         IViewHome view = mock(IViewHome.class);
         MainActivity activity = mock(MainActivity.class);
 
-        PresenterHome presenter = spy(new PresenterHome(view, activity, null));
+        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
 
         SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
         doReturn(synchronizer).when(presenter).getSync();

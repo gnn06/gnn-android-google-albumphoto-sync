@@ -41,21 +41,24 @@
     <string name="titleCacheMaxAge">Cache max age</string>
     <string name="textCacheMaxAge">Cache max age in hours</string>
     <string name="rename">Renaming</string>
+    <string name="download_options_title">Options de téléchargement</string>
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
+
+    <string name="frequencyGroup_title">Fréquences</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
-    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
-    <string name="schedule_details">schedule</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
+    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
     <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées en heures. 0 = sync à chaque fois.</string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours. 0 = Recherche à chaque fois.</string>
+    <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
+    <string name="frequency_too_low">Fréquence min de 15 minutes</string>
+
+    <string name="schedule_details">schedule</string>
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
     <string name="lastWallpaperTimeLabel">Dernier fond d\'écran :</string>
-    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours. 0 = Recherche à chaque fois.</string>
     <string name="lastUpdatePhotosLabel">"Dernière récupération des photos : "</string>
-    <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
-    <string name="frequencyGroup">Fréquences</string>
-    <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="requestGooglePermission">demander permission</string>

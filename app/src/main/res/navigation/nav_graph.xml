@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentHome"
-        android:label="fragment_home" >
+        android:label="@string/app_name" >
         <action
             android:id="@+id/action_FragmentHome_to_FragmentDownloadOptions"
             app:destination="@id/fragmentDownloadOptions" />
@@ -18,11 +18,11 @@
     <fragment
         android:id="@+id/fragmentDownloadOptions"
         android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentDownloadOptions"
-        android:label="fragment_destination"
+        android:label="@string/download_options_title"
         tools:layout="@layout/fragment_downloadoptions" />
     <fragment
         android:id="@+id/fragmentFrequencies"
         android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentFrequencies"
-        android:label="fragment_frequencies"
+        android:label="@string/frequencyGroup_title"
         tools:layout="@layout/fragment_frequencies" />
 </navigation>

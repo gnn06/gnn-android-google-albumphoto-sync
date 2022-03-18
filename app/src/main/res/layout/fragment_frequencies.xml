@@ -10,16 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/sectionDownloadOptions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:text="Options de téléchargement"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         <RelativeLayout
             android:id="@+id/SectionFreqeuncyUpdatePhotos"
             android:layout_width="match_parent"

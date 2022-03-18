@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.30512820512820515" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2831050228310502" />
         <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_downloadoptions.xml" value="0.2923076923076923" />
+        <entry key="app/src/main/res/layout/fragment_frequencies.xml" value="0.2923076923076923" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.15897435897435896" />
         <entry key="app/src/main/res/xml/mywallpaper.xml" value="0.15654008438818565" />
       </map>

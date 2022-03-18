@@ -10,10 +10,14 @@
         android:label="@string/app_name" >
         <action
             android:id="@+id/action_FragmentHome_to_FragmentDownloadOptions"
-            app:destination="@id/fragmentDownloadOptions" />
+            app:destination="@id/fragmentDownloadOptions"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_fragmentHome_to_fragmentFrequencies"
-            app:destination="@id/fragmentFrequencies" />
+            app:destination="@id/fragmentFrequencies"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDownloadOptions"

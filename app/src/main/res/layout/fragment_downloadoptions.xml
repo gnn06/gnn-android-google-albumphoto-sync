@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:divider="@color/colorPrimary"
+        android:showDividers="middle">
         <!-- Quantity -->
 
         <RelativeLayout
@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="16dp"
+            android:layout_marginLeft="24dp"
             android:paddingTop="8dp"
-            android:paddingRight="16dp"
+            android:layout_marginRight="24dp"
             android:paddingBottom="8dp">
 
             <TextView
@@ -59,9 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="16dp"
+            android:layout_marginLeft="24dp"
             android:paddingTop="8dp"
-            android:paddingRight="16dp"
+            android:layout_marginRight="24dp"
             android:paddingBottom="8dp">
 
             <TextView

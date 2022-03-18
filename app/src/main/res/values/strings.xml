@@ -54,7 +54,6 @@
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
 
-    <string name="schedule_details">schedule</string>
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
     <string name="lastWallpaperTimeLabel">Dernier fond d\'écran :</string>
@@ -62,12 +61,17 @@
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="requestGooglePermission">demander permission</string>
+
     <string name="titleStat">Statistiques</string>
     <string name="noStat">Pas de statistique</string>
-    <string name="wallpaper_description">description</string>
+    <string name="noDate">Pas de date</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Destination fragment</string>
     <string name="error_wallpaper_chooser">impossible de définir le fond d\'écran animé automatiquement</string>
     <string name="warning_wallpaper_not_active">Le fond d\'écran animée n\'est pas actif. Cliquez ici pour le faire.</string>
+
+    <string name="wallpaper_description">description</string>
+    <string name="schedule_details">schedule</string>
+    <string name="hello_blank_fragment">Destination fragment</string>
 
 </resources>

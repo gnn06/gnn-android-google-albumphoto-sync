@@ -43,8 +43,8 @@
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
                     android:paddingLeft="16dp"
-                    android:paddingTop="8dp"
                     android:paddingRight="16dp"
+                    android:paddingTop="8dp"
                     android:paddingBottom="8dp">
 
                     <TextView
@@ -118,10 +118,10 @@
                     android:id="@+id/sectionDownloadOptions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingBottom="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
                     android:text="Options de téléchargement"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -131,9 +131,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:paddingTop="8dp"
                     android:paddingRight="16dp"
-                    android:paddingBottom="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
                     android:text="@string/frequencyGroup_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
@@ -166,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingStart="12dp"
+                    android:paddingStart="16dp"
                     android:paddingTop="8dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="8dp">
@@ -192,7 +192,8 @@
                             android:id="@+id/lastUpdatePhotosTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="textEnd" />
+                            android:textAlignment="textEnd"
+                            android:text="@string/noDate"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -210,13 +211,15 @@
                             android:id="@+id/lastSyncTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="textEnd" />
+                            android:textAlignment="textEnd"
+                            android:text="@string/noDate"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/lastWallpaper"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -227,7 +230,8 @@
                             android:id="@+id/lastWallpaperTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="textEnd" />
+                            android:textAlignment="textEnd"
+                            android:text="@string/noDate"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -269,7 +273,7 @@
                         android:id="@+id/titleStat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/titleResult"
+                        android:text="@string/titleStat"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
@@ -278,7 +282,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/titleStat"
                         android:text="@string/noStat" />
-                    android:text="@string/result" />
                 </RelativeLayout>
             </LinearLayout>
             <!-- Progress Bar -->

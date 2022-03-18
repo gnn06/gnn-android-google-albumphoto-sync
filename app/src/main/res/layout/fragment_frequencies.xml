@@ -8,17 +8,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:divider="#AAA"
+        android:showDividers="middle">
 
         <RelativeLayout
             android:id="@+id/SectionFreqeuncyUpdatePhotos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="24dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp">
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:background="?android:attr/selectableItemBackground">
 
             <TextView
                 android:id="@+id/titleFrequenceyUpdatePhotos"
@@ -50,11 +52,10 @@
             android:id="@+id/SectionFreqeuncySync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="24dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="16dp">
 
             <TextView
                 android:id="@+id/titleFrequenceySync"
@@ -86,11 +87,10 @@
             android:id="@+id/SectionFreqeuncyWallpaper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingLeft="24dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp">
+            android:paddingTop="16dp">
 
             <TextView
                 android:id="@+id/titleFrequenceyWallpaper"
@@ -117,18 +117,25 @@
                 android:layout_toEndOf="@id/textFrequencyWallpaper"
                 android:text="@string/frequenceWallpaperExplenation" />
         </RelativeLayout>
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/SwitchWallPaper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textFrequencyWallpaper"
-            android:text="Changement automatique du fond d'écran "
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Désactiver pour changer les fréquences" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/SwitchWallPaper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:paddingTop="16dp"
+                android:text="Changement automatique du fond d'écran "
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_below="@id/SwitchWallPaper"
+                android:text="Désactiver pour changer les fréquences" />
+        </RelativeLayout>
     </LinearLayout>
-
 </FrameLayout>

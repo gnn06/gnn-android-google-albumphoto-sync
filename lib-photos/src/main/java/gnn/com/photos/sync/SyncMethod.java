@@ -22,6 +22,9 @@ class SyncMethod {
         this.localService = localService;
     }
 
+    /**
+     * @param quantity -1 = chooseFull
+     */
     void sync(String albumName, File imageFolder, String rename, int quantity) throws IOException, RemoteException {
         // require Logger was initialized
         Logger logger = Logger.getLogger();
@@ -34,9 +37,9 @@ class SyncMethod {
         ArrayList<Photo> local = localService.getLocalPhotos(imageFolder);
 
         if (quantity != -1)
-            new PhotoChooserList().chooseRandom(synchronizer, local, remote, rename, quantity);
+            new SyncPhotoDispatcher().chooseRandom(synchronizer, local, remote, rename, quantity);
         else
-            new PhotoChooserList().chooseFull(synchronizer, local, remote, rename);
+            new SyncPhotoDispatcher().chooseFull(synchronizer, local, remote, rename);
 
         logger.finest("remote count = " + remote.size());
         logger.finest("local count = " + local.size());

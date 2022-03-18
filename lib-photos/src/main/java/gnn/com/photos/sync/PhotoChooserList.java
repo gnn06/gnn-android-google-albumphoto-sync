@@ -10,24 +10,7 @@ import gnn.com.photos.Photo;
  * Choose a photo from a given list. Avoid to choose previously chosen photos.
  * Use by SyncMethod and PhotoWallpaper
  */
-public class PhotoChooserList {
-
-    // randomizer must not be final to be mocked by mockito
-    // test randomizer instancié à chaque appel
-
-    void chooseRandom(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename, int quantity) {
-        ArrayList<Photo> chosen = chooseOneList(remote, quantity, local);
-        chooseFull(synchronizer, local, chosen, rename);
-    }
-
-    void chooseFull(SyncData synchronizer, ArrayList<Photo> local, ArrayList<Photo> remote, String rename) {
-        synchronizer.setToDownload(firstMinusSecondList(remote, local));
-        if (rename != null) {
-            remote = (ArrayList<Photo>) remote.clone();
-            Photo.renameList(remote, rename);
-        }
-        synchronizer.setToDelete(firstMinusSecondList(local, remote));
-    }
+class PhotoChooserList {
 
     /**
      * try to choose photo that was not previously chosen

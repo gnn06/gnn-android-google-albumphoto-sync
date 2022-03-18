@@ -10,7 +10,6 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
-import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -67,7 +66,13 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public int getFrequencySync() {
         String frequency = view.getFrequencySync();
-        return frequency.equals("") ? SynchronizerDelayed.DELAY_NO_CACHE : Integer.parseInt(frequency);
+        if ("0".equals(frequency)) {
+            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
+        } else if ("".equals(frequency)) {
+            return SynchronizerDelayed.DELAY_NEVER_SYNC;
+        } else {
+            return Integer.parseInt(frequency);
+        }
     }
 
     /**
@@ -76,7 +81,16 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public void setFrequencySync(int frequency) {
-        view.setFrequencySync(frequency == -1 ? "" : Integer.toString(frequency));
+        view.setFrequencySync(frequency == SynchronizerDelayed.DELAY_NEVER_SYNC ? "" : Integer.toString(frequency));
+    }
+
+    /**
+     *
+     * int frequencySync fréquence de téléchargement en minute
+     */
+    @Override
+    public int getFrequencySyncMinute() {
+        return getFrequencySync() < Integer.MAX_VALUE ? getFrequencySync() * 60 : Integer.MAX_VALUE;
     }
 
     /**
@@ -97,15 +111,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void setFrequencyUpdatePhotos(int frequency) {
         view.setFrequencyUpdatePhotos(frequency == -1 ? "" : Integer.toString(frequency));
-    }
-
-    /**
-     *
-     * int frequencySync fréquence de téléchargement en minute
-     */
-    @Override
-    public int getFrequencySyncMinute() {
-        return getFrequencySync() * 60;
     }
 
     @Override

@@ -14,7 +14,9 @@ import gnn.com.photos.Photo;
 
 public class Cache {
 
-    public static final int DELAY_NO_CACHE = 0;
+    public static final int DELAY_ALWAYS_EXPIRE = 0;
+    public static final int DELAY_NEVER_EXPIRE = Integer.MAX_VALUE;
+
     private static File file = null;
 
     // 0 => no cache

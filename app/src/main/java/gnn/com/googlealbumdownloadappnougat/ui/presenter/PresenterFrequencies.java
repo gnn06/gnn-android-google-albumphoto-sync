@@ -27,7 +27,15 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.view = view;
         this.context = context;
         this.activity = activity;
-        userModel = new ViewModelProvider(activity).get(UserModel.class);
+        this.userModel = new ViewModelProvider(activity).get(UserModel.class);
+    }
+
+    // For test
+    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity, UserModel userModel) {
+        this.view = view;
+        this.context = context;
+        this.activity = activity;
+        this.userModel = userModel;
     }
 
     @Override
@@ -100,8 +108,13 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public int getFrequencyUpdatePhotos() {
         String frequency = view.getFrequencyUpdatePhotos();
-        return frequency.equals("") ? Cache.DELAY_NO_CACHE : Integer.parseInt(frequency);
-
+        if ("0".equals(frequency)) {
+            return Cache.DELAY_ALWAYS_EXPIRE;
+        } else if ("".equals(frequency)) {
+            return Cache.DELAY_NEVER_EXPIRE;
+        } else {
+            return Integer.parseInt(frequency);
+        }
     }
 
     /**
@@ -110,7 +123,15 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public void setFrequencyUpdatePhotos(int frequency) {
-        view.setFrequencyUpdatePhotos(frequency == -1 ? "" : Integer.toString(frequency));
+        view.setFrequencyUpdatePhotos(frequency == Cache.DELAY_NEVER_EXPIRE ? "" : Integer.toString(frequency));
+    }
+
+    /**
+     * @return fréquence en minute
+     */
+    public int getFrequencyUpdatePhotosHour() {
+        return getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE ?
+                    getFrequencyUpdatePhotos() * 24 : Cache.DELAY_NEVER_EXPIRE;
     }
 
     @Override
@@ -121,7 +142,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 view.setSwitchWallpaper(false);
                 view.alertFrequencyError();
             } else {
-                // TODO manage permission refused and toggle siwtch off
+                // TODO manage permission refused and toggle switch off
                 Exec exec = new Exec() {
                     @Override
                     public void exec() {
@@ -131,7 +152,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                                 preferences.getPhotoPath(),
                                 getFrequencyWallpaper(),
                                 getFrequencySyncMinute(), preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
-                                preferences.getFrequencyUpdatePhotosHour(), appContext);
+                                getFrequencyUpdatePhotosHour(), appContext);
                         view.enableFrequencyWallpaper(checked);
                         view.enableFrequencySync(checked);
                         view.enableFrequencyUpdatePhotos(checked);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import gnn.com.photos.service.Cache;
+
 /**
  * Default values are taken from Presenter
  */
@@ -153,7 +155,8 @@ public class PersistPrefMain {
      * @return fréquence en minute
      */
     public int getFrequencyUpdatePhotosHour() {
-        return getData().getFrequencyUpdatePhotos() * 24 * 60;
+        return getData().getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE ?
+                    getData().getFrequencyUpdatePhotos() * 24 : Cache.DELAY_NEVER_EXPIRE;
     }
 
     public String getAlbum() {

@@ -76,10 +76,11 @@
     <string name="pick_frequency">Choisir une fréquence</string>
 
     <string-array name="frequencies">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
+        <item>Jamais</item>
+        <item>30 minutes</item>
+        <item>1 heure</item>
+        <item>2 heures</item>
+        <item>24 heures</item>
     </string-array>
 
 </resources>

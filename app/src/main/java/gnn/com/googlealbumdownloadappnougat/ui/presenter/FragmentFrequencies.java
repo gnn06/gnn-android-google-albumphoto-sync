@@ -42,7 +42,6 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.presenter = new PresenterFrequencies( this, getContext(), (MainActivity) getActivity());
-        new PersistPrefMain(getContext()).restoreFrequencies(presenter);
         ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -58,7 +57,7 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     @Override
     public void onPause() {
         super.onPause();
-        new PersistPrefMain(getContext()).saveFrequencies(this.presenter);
+        presenter.onAppStop();
     }
 
     @Override

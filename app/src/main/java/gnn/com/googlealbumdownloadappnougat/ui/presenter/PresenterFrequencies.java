@@ -47,12 +47,19 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStart() {
+        new PersistPrefMain(getContext()).restoreFrequencies(this);
+
         WallpaperScheduler scheduler = new WallpaperScheduler(this.context);
         boolean scheduled = scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
         view.enableFrequencyUpdatePhotos(scheduled);
+    }
+
+    @Override
+    public void onAppStop() {
+        new PersistPrefMain(getContext()).saveFrequencies(this);
     }
 
     /**

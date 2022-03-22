@@ -5,6 +5,9 @@ public interface IPresenterFrequencies {
 
     int getFrequencyWallpaper();
 
+    /**
+     * @param frequency in minute
+     */
     void setFrequencyWallpaper(int frequency);
 
     int getFrequencySync();

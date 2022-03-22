@@ -59,7 +59,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     /**
-     *
      * @param frequency in minute
      */
     @Override
@@ -172,7 +171,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequency() {
-        DialogFrequency dialogFrequency = new DialogFrequency(activity);
+        DialogFrequency dialogFrequency = new DialogFrequency(this, activity);
         dialogFrequency.show();
     }
 

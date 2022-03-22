@@ -75,12 +75,19 @@
     <string name="hello_blank_fragment">Destination fragment</string>
     <string name="pick_frequency">Choisir une fréquence</string>
 
-    <string-array name="frequencies">
-        <item>Jamais</item>
+    <string-array name="frequencies_label">
+        <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 heure</item>
         <item>2 heures</item>
         <item>24 heures</item>
     </string-array>
+    <integer-array name="frequencies_value">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>1440</item>
+    </integer-array>
 
 </resources>

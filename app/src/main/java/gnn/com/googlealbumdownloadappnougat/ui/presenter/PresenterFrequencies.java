@@ -20,6 +20,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     final private IViewFrequencies view;
     final private Context context;
+    private int frequencyMinute;
 
     @Override
     public Context getContext() {
@@ -60,15 +61,15 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public int getFrequencyWallpaper() {
-        String frequency = view.getFrequencyWallpaper();
-        return Integer.parseInt(frequency.equals("") ? "-1" : frequency);
+        return this.frequencyMinute;
     }
 
     /**
-     * @param frequency in minute
+     * @param frequency in minute >= 15 minutes
      */
     @Override
     public void setFrequencyWallpaper(int frequency) {
+        this.frequencyMinute = frequency;
         view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
     }
 

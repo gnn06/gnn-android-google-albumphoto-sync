@@ -1,6 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.content.Context;
+
 public interface IPresenterFrequencies {
+    Context getContext();
+
     void onAppStart();
 
     int getFrequencyWallpaper();

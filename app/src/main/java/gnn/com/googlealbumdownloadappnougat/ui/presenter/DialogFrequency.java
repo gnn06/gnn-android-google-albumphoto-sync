@@ -9,22 +9,22 @@ import gnn.com.googlealbumdownloadappnougat.R;
 
 class DialogFrequency {
 
-    final private Context activity;
+    final private Context context;
     final private IPresenterFrequencies presenter;
 
-    DialogFrequency(IPresenterFrequencies presenter, Context activity) {
+    DialogFrequency(IPresenterFrequencies presenter) {
         this.presenter = presenter;
-        this.activity = activity;
+        this.context = presenter.getContext();
     }
 
     void show() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.pick_frequency)
             .setItems(R.array.frequencies_label, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // The 'which' argument contains the index position
                     // of the selected item
-                    Resources resources = activity.getResources();
+                    Resources resources = context.getResources();
                     int[] frequencyValue = resources.getIntArray(R.array.frequencies_value);
                     presenter.setFrequencyWallpaper(frequencyValue[which]);
                 }

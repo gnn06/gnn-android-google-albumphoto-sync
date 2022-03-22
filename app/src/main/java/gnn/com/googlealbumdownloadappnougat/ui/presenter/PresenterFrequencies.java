@@ -20,6 +20,12 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     final private IViewFrequencies view;
     final private Context context;
+
+    @Override
+    public Context getContext() {
+        return context;
+    }
+
     private MainActivity activity;
     private final UserModel userModel;
 
@@ -171,7 +177,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequency() {
-        DialogFrequency dialogFrequency = new DialogFrequency(this, activity);
+        DialogFrequency dialogFrequency = new DialogFrequency(this);
         dialogFrequency.show();
     }
 

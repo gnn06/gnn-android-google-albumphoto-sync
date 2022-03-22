@@ -20,4 +20,5 @@ public interface IPresenterFrequencies {
     int getFrequencySyncMinute();
 
 
+    void chooseFrequency();
 }

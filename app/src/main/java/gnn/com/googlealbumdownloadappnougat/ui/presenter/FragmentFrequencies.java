@@ -47,6 +47,9 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
                 presenter.onSwitchWallpaper(checked);
             }
         });
+        getView().findViewById(R.id.temp).setOnClickListener(v -> {
+            presenter.chooseFrequency();
+        });
         presenter.onAppStart();
     }
 

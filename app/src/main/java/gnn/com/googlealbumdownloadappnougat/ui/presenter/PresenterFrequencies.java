@@ -170,5 +170,11 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         }
     }
 
+    @Override
+    public void chooseFrequency() {
+        DialogFrequency dialogFrequency = new DialogFrequency(activity);
+        dialogFrequency.show();
+    }
+
 
 }

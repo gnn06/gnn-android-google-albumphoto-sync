@@ -73,5 +73,13 @@
     <string name="wallpaper_description">description</string>
     <string name="schedule_details">schedule</string>
     <string name="hello_blank_fragment">Destination fragment</string>
+    <string name="pick_frequency">Choisir une fréquence</string>
+
+    <string-array name="frequencies">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
 
 </resources>

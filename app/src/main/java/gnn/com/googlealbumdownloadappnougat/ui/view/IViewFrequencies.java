@@ -1,12 +1,10 @@
 package gnn.com.googlealbumdownloadappnougat.ui.view;
 
-import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
-
 public interface IViewFrequencies extends IView {
 
     void setSwitchWallpaper(boolean scheduled);
 
-    void setFrequencyWallpaper(String frequency);
+    void setFrequencyWallpaper(int frequency);
 
     void enableFrequencyWallpaper(boolean switchChecked);
 

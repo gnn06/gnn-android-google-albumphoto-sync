@@ -70,7 +70,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void setFrequencyWallpaper(int frequency) {
         this.frequencyMinute = frequency;
-        view.setFrequencyWallpaper(frequency == -1 ? "" : Integer.toString(frequency));
+        view.setFrequencyWallpaper(frequency);
     }
 
     /**

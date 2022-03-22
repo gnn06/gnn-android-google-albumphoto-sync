@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
@@ -66,9 +68,13 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
-    public void setFrequencyWallpaper(String frequency) {
+    public void setFrequencyWallpaper(int frequency) {
+        int[] codeArray = getResources().getIntArray(R.array.frequencies_value);
+        int index = ArrayUtils.indexOf(codeArray, frequency);
+        String label = getResources().getStringArray(R.array.frequencies_label)[index];
+
         TextView view = getView().findViewById(R.id.textFrequencyWallpaper);
-        view.setText(frequency);
+        view.setText(label);
     }
 
     @Override

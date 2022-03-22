@@ -6,8 +6,6 @@ public interface IViewFrequencies extends IView {
 
     void setSwitchWallpaper(boolean scheduled);
 
-    String getFrequencyWallpaper();
-
     void setFrequencyWallpaper(String frequency);
 
     void enableFrequencyWallpaper(boolean switchChecked);

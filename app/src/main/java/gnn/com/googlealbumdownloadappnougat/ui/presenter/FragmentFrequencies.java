@@ -66,12 +66,6 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
-    public String getFrequencyWallpaper() {
-        TextView view = getView().findViewById(R.id.textFrequencyWallpaper);
-        return view.getText().toString();
-    }
-
-    @Override
     public void setFrequencyWallpaper(String frequency) {
         TextView view = getView().findViewById(R.id.textFrequencyWallpaper);
         view.setText(frequency);

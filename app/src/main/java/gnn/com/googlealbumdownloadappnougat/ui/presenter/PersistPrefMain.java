@@ -114,7 +114,7 @@ public class PersistPrefMain {
      * If no data are préviously saved, return default values
      * @return
      */
-    private SyncData getData() {
+    SyncData getData() {
         SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {

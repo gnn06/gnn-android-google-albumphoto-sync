@@ -29,28 +29,39 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     private MainActivity activity;
     private final UserModel userModel;
+    private final PersistPrefMain persist;
+    private final WallpaperScheduler scheduler;
+    private final AuthManager authManager;
 
     public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity) {
         this.view = view;
         this.context = context;
         this.activity = activity;
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
+        this.persist = new PersistPrefMain(context);
+        this.scheduler = new WallpaperScheduler(context);
+        this.authManager = new AuthManager(activity);
     }
 
     // For test
-    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity, UserModel userModel) {
+    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity,
+                                UserModel userModel, PersistPrefMain persist,
+                                WallpaperScheduler scheduler,
+                                AuthManager authManager) {
         this.view = view;
         this.context = context;
         this.activity = activity;
         this.userModel = userModel;
+        this.persist = persist;
+        this.scheduler = scheduler;
+        this.authManager = authManager;
     }
 
     @Override
     public void onAppStart() {
-        new PersistPrefMain(getContext()).restoreFrequencies(this);
+        this.persist.restoreFrequencies(this);
 
-        WallpaperScheduler scheduler = new WallpaperScheduler(this.context);
-        boolean scheduled = scheduler.isScheduled();
+        boolean scheduled = this.scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
         view.enableFrequencyWallpaper(scheduled);
         view.enableFrequencySync(scheduled);
@@ -59,7 +70,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStop() {
-        new PersistPrefMain(getContext()).saveFrequencies(this);
+        this.persist.saveFrequencies(this);
     }
 
     /**
@@ -149,7 +160,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onSwitchWallpaper(boolean checked) {
-        WallpaperScheduler scheduler = new WallpaperScheduler(this.context);
         if (checked) {
             if (getFrequencyWallpaper() < 15) {
                 view.setSwitchWallpaper(false);
@@ -171,7 +181,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                         view.enableFrequencyUpdatePhotos(checked);
                     }
                 };
-                AuthManager auth = new AuthManager(this.activity);
+                AuthManager auth = this.authManager;
                 Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
                 activity.getPermissionHandler().startRequirement(require);
             }

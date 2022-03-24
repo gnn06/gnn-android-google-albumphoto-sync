@@ -10,8 +10,10 @@ import android.content.Context;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class PresenterFrequenciesTest {
 
@@ -21,7 +23,11 @@ public class PresenterFrequenciesTest {
         Context context = null;
         MainActivity activity = null;
         UserModel usermodel = null;
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel);
+        PersistPrefMain persist = mock(PersistPrefMain.class);
+        WallpaperScheduler scheduler = mock(WallpaperScheduler.class);
+        AuthManager authManager = mock(AuthManager.class);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
+                persist, scheduler, authManager);
         when(view.getFrequencyUpdatePhotos()).thenReturn("10");
         assertThat(presenter.getFrequencyUpdatePhotosHour(), is(10 * 24));
     }

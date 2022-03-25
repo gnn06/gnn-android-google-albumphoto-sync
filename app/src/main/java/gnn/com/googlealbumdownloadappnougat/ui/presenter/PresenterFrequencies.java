@@ -4,14 +4,9 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
-import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
-import gnn.com.googlealbumdownloadappnougat.auth.Exec;
-import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
+import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.sync.SynchronizerDelayed;
@@ -21,6 +16,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     final private IViewFrequencies view;
     final private Context context;
     private int frequencyMinute;
+    private ScheduleTask task;
 
     @Override
     public Context getContext() {
@@ -31,7 +27,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private final UserModel userModel;
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
-    private final AuthManager authManager;
 
     public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity) {
         this.view = view;
@@ -40,21 +35,20 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
         this.scheduler = new WallpaperScheduler(context);
-        this.authManager = new AuthManager(activity);
+        task = new ScheduleTask(activity, context, scheduler, view, userModel);
     }
 
     // For test
     public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity,
                                 UserModel userModel, PersistPrefMain persist,
-                                WallpaperScheduler scheduler,
-                                AuthManager authManager) {
+                                WallpaperScheduler scheduler, ScheduleTask scheduleTask) {
         this.view = view;
         this.context = context;
         this.activity = activity;
         this.userModel = userModel;
         this.persist = persist;
         this.scheduler = scheduler;
-        this.authManager = authManager;
+        this.task = scheduleTask;
     }
 
     @Override
@@ -166,24 +160,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 view.alertFrequencyError();
             } else {
                 // TODO manage permission refused and toggle switch off
-                Exec exec = new Exec() {
-                    @Override
-                    public void exec() {
-                        ApplicationContext appContext = ApplicationContext.getInstance(context);
-                        PersistPrefMain preferences = new PersistPrefMain(context);
-                        scheduler.schedule(
-                                preferences.getPhotoPath(),
-                                getFrequencyWallpaper(),
-                                getFrequencySyncMinute(), preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
-                                getFrequencyUpdatePhotosHour(), appContext);
-                        view.enableFrequencyWallpaper(checked);
-                        view.enableFrequencySync(checked);
-                        view.enableFrequencyUpdatePhotos(checked);
-                    }
-                };
-                AuthManager auth = this.authManager;
-                Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-                activity.getPermissionHandler().startRequirement(require);
+                task.schedule(checked, getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
             }
         } else {
             scheduler.cancel();

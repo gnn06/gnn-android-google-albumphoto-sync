@@ -53,6 +53,7 @@ public class PresenterFrequenciesTest {
         this.scheduleTask = mock(ScheduleTask.class);
         defaultValue = new SyncData();
         defaultValue.setFrequencyWallpaper(60);
+        defaultValue.setFrequencySync(168);
         when(persist.getData()).thenReturn(defaultValue);
     }
 
@@ -75,6 +76,7 @@ public class PresenterFrequenciesTest {
         presenter.onAppStart();
         // then
         verify(view).setFrequencyWallpaper(60);
+        verify(view).setFrequencySync(168);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class PresenterFrequenciesTest {
         presenter.onAppStart();
         presenter.onSwitchWallpaper(true);
         // then
-        verify(scheduleTask).schedule(anyBoolean(), eq(60L), anyInt(), anyLong());
+        verify(scheduleTask).schedule(anyBoolean(), eq(60L), eq(168 * 60), anyLong());
     }
 
     @Test
@@ -100,8 +102,10 @@ public class PresenterFrequenciesTest {
         verify(view).setFrequencyWallpaper(60);
         // when
         presenter.setFrequencyWallpaper(120);
+        presenter.setFrequencySyncHour(720);
         // then
         verify(view).setFrequencyWallpaper(120);
+        verify(view).setFrequencySync(720);
     }
 
     @Test
@@ -111,10 +115,12 @@ public class PresenterFrequenciesTest {
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.onAppStart();
         presenter.setFrequencyWallpaper(120);
+        presenter.setFrequencySyncHour(720);
         // when
         presenter.onSwitchWallpaper(true);
         // then
         verify(scheduleTask).schedule(anyBoolean(), eq(120L), anyInt(), anyLong());
+        verify(scheduleTask).schedule(anyBoolean(), eq(120L), eq(720*60), anyLong());
     }
 
     @Test
@@ -123,9 +129,10 @@ public class PresenterFrequenciesTest {
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.setFrequencyWallpaper(120);
+        presenter.setFrequencySyncHour(720);
         // when
         presenter.onAppStop();
         // then
-        verify(persist).saveFrequencies(eq(120), anyInt(), anyInt());
+        verify(persist).saveFrequencies(eq(120), eq(720), anyInt());
     }
 }

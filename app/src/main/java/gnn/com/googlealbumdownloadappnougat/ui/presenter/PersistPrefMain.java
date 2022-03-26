@@ -99,7 +99,7 @@ public class PersistPrefMain {
     public void restoreFrequencies(IPresenterFrequencies presenter) {
         SyncData data = getData();
         presenter.setFrequencyUpdatePhotos(data.getFrequencyUpdatePhotos());
-        presenter.setFrequencySync(data.getFrequencySync());
+        presenter.setFrequencySyncHour(data.getFrequencySync());
         presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
     }
 

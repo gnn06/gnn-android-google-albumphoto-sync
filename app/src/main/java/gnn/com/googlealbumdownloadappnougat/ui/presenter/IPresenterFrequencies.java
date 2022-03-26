@@ -14,9 +14,9 @@ public interface IPresenterFrequencies {
      */
     void setFrequencyWallpaper(int frequency);
 
-    int getFrequencySync();
+    int getFrequencySyncHour();
 
-    void setFrequencySync(int frequency);
+    void setFrequencySyncHour(int frequency);
 
     int getFrequencyUpdatePhotos();
 

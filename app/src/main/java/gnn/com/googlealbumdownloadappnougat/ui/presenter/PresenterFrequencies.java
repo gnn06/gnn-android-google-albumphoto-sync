@@ -67,7 +67,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStop() {
-        this.persist.saveFrequencies(getFrequencyWallpaper(), getFrequencySync(), getFrequencyUpdatePhotos());
+        this.persist.saveFrequencies(getFrequencyWallpaper(), getFrequencySyncHour(), getFrequencyUpdatePhotos());
     }
 
     /**
@@ -93,7 +93,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      * @return int frequencySync fréquence de téléchargement en heure
      */
     @Override
-    public int getFrequencySync() {
+    public int getFrequencySyncHour() {
         return frequencySync;
     }
 
@@ -102,7 +102,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      * @param frequency in hour
      */
     @Override
-    public void setFrequencySync(int frequency) {
+    public void setFrequencySyncHour(int frequency) {
         this.frequencySync = frequency;
         view.setFrequencySync(frequency);
     }
@@ -113,7 +113,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public int getFrequencySyncMinute() {
-        return getFrequencySync() < Integer.MAX_VALUE ? getFrequencySync() * 60 : Integer.MAX_VALUE;
+        return getFrequencySyncHour() < Integer.MAX_VALUE ? getFrequencySyncHour() * 60 : Integer.MAX_VALUE;
     }
 
     /**
@@ -176,7 +176,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencySync() {
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySync(value),
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
                 R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }

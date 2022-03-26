@@ -64,22 +64,18 @@
                 android:text="@string/frequencySync"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <EditText
+            <TextView
                 android:id="@+id/textFrequencySync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceySync"
-                android:autofillHints="no"
-                android:ems="5"
-                android:inputType="number" />
+                android:text="fréquence "/>
 
             <TextView
                 android:id="@+id/textExplenationFrequencySync"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceySync"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/textFrequencySync"
+                android:layout_below="@id/textFrequencySync"
                 android:text="@string/frequenceSyncExplenation" />
         </RelativeLayout>
 
@@ -104,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceyWallpaper"
-                android:text="fréquence "/>
+                android:text="fréquence " />
 
             <TextView
                 android:id="@+id/textExplenationFrequencyWallpaper"

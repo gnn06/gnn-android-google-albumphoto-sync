@@ -49,7 +49,10 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
             }
         });
         getView().findViewById(R.id.textExplenationFrequencyWallpaper).setOnClickListener(v -> {
-            presenter.chooseFrequency();
+            presenter.chooseFrequencyWallpaper();
+        });
+        getView().findViewById(R.id.textExplenationFrequencySync).setOnClickListener(v -> {
+            presenter.chooseFrequencySync();
         });
         presenter.onAppStart();
     }

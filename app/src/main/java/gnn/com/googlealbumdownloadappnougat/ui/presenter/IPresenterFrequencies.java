@@ -26,8 +26,9 @@ public interface IPresenterFrequencies {
 
     int getFrequencySyncMinute();
 
+    void chooseFrequencyWallpaper();
 
-    void chooseFrequency();
+    void chooseFrequencySync();
 
     void onAppStop();
 }

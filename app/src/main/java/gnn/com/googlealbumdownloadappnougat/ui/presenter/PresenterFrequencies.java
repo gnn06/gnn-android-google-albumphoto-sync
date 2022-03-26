@@ -168,9 +168,16 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     @Override
-    public void chooseFrequency() {
+    public void chooseFrequencyWallpaper() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
                 R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
+        dialogFrequency.show();
+    }
+
+    @Override
+    public void chooseFrequencySync() {
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySync(value),
+                R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }
 

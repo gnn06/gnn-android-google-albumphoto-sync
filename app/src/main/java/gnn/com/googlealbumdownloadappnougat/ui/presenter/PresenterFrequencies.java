@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -168,7 +169,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequency() {
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value));
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
+                R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
     }
 

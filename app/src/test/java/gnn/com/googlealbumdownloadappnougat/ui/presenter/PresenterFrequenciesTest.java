@@ -36,6 +36,7 @@ public class PresenterFrequenciesTest {
     private AuthManager authManager;
     private ApplicationContext applicationContext;
     private ScheduleTask scheduleTask;
+    private SyncData defaultValue;
 
     @Before
     public void setUp() throws Exception {
@@ -50,6 +51,9 @@ public class PresenterFrequenciesTest {
         this.authManager = mock(AuthManager.class);
         this.applicationContext = mock(ApplicationContext.class);
         this.scheduleTask = mock(ScheduleTask.class);
+        defaultValue = new SyncData();
+        defaultValue.setFrequencyWallpaper(60);
+        when(persist.getData()).thenReturn(defaultValue);
     }
 
     @Test
@@ -64,9 +68,6 @@ public class PresenterFrequenciesTest {
     @Test
     public void defaultValue_ui_setted() {
         // given
-        SyncData syncData = new SyncData();
-        syncData.setFrequencyWallpaper(60);
-        when(persist.getData()).thenReturn(syncData);
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
@@ -79,9 +80,6 @@ public class PresenterFrequenciesTest {
     @Test
     public void defaultValue_schedule_ok() {
         // given
-        SyncData syncData = new SyncData();
-        syncData.setFrequencyWallpaper(60);
-        when(persist.getData()).thenReturn(syncData);
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
@@ -95,9 +93,6 @@ public class PresenterFrequenciesTest {
     @Test
     public void defaultValue_change_ui_ok() {
         // given
-        SyncData syncData = new SyncData();
-        syncData.setFrequencyWallpaper(60);
-        when(persist.getData()).thenReturn(syncData);
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
@@ -111,9 +106,6 @@ public class PresenterFrequenciesTest {
 
     @Test
     public void valueChange_toggle_OK() {
-        SyncData syncData = new SyncData();
-        syncData.setFrequencyWallpaper(60);
-        when(persist.getData()).thenReturn(syncData);
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
@@ -127,13 +119,9 @@ public class PresenterFrequenciesTest {
 
     @Test
     public void valueChange_presist_OK() {
-        SyncData syncData = new SyncData();
-        syncData.setFrequencyWallpaper(60);
-        when(persist.getData()).thenReturn(syncData);
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
-        presenter.onAppStart();
         presenter.setFrequencyWallpaper(120);
         // when
         presenter.onAppStop();

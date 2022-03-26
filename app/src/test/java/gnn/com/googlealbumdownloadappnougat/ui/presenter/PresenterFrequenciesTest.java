@@ -101,12 +101,27 @@ public class PresenterFrequenciesTest {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
-        // when
         presenter.onAppStart();
         verify(view).setFrequencyWallpaper(60);
-
+        // when
         presenter.setFrequencyWallpaper(120);
         // then
         verify(view).setFrequencyWallpaper(120);
+    }
+
+    @Test
+    public void valueChange_toggle_OK() {
+        SyncData syncData = new SyncData();
+        syncData.setFrequencyWallpaper(60);
+        when(persist.getData()).thenReturn(syncData);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
+                persist, scheduler, scheduleTask);
+        doCallRealMethod().when(persist).restoreFrequencies(presenter);
+        presenter.onAppStart();
+        presenter.setFrequencyWallpaper(120);
+        // when
+        presenter.onSwitchWallpaper(true);
+        // then
+        verify(scheduleTask).schedule(anyBoolean(), eq(120L), anyInt(), anyLong());
     }
 }

@@ -68,12 +68,7 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
 
     @Override
     public void setFrequencyWallpaper(int frequency) {
-        int[] codeArray = getResources().getIntArray(R.array.frequencies_value);
-        int index = ArrayUtils.indexOf(codeArray, frequency);
-        String label = getResources().getStringArray(R.array.frequencies_label)[index];
-
-        TextView view = getView().findViewById(R.id.textFrequencyWallpaper);
-        view.setText(label);
+        setTextFromFrequency(frequency, R.array.frequencies_value, R.array.frequencies_label, R.id.textFrequencyWallpaper);
     }
 
     @Override
@@ -134,4 +129,14 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
                     .setNegativeButton(android.R.string.ok, null)
                     .show();
     }
+
+    private void setTextFromFrequency(int frequency, int array_value, int array_label, int textView) {
+        int[] codeArray = getResources().getIntArray(array_value);
+        int index = ArrayUtils.indexOf(codeArray, frequency);
+        String label = getResources().getStringArray(array_label)[index];
+
+        TextView view = getView().findViewById(textView);
+        view.setText(label);
+    }
+
 }

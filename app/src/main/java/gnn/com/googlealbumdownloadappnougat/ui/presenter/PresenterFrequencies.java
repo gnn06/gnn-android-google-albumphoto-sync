@@ -64,7 +64,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStop() {
-        this.persist.saveFrequencies(this);
+        this.persist.saveFrequencies(getFrequencyWallpaper(), getFrequencySync(), getFrequencyUpdatePhotos());
     }
 
     /**

@@ -63,13 +63,9 @@ public class PersistPrefMain {
         editor.apply();
     }
 
-    public void saveFrequencies(IPresenterFrequencies presenter) {
+    public void saveFrequencies(int frequencyWallpaper, int frequencySync, int frequencyUpdatePhotos) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
-
-        int frequencyWallpaper = presenter.getFrequencyWallpaper();
-        int frequencySync = presenter.getFrequencySync();
-        int frequencyUpdatePhotos = presenter.getFrequencyUpdatePhotos();
 
         editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
         editor.putInt(PREF_FREQ_SYNC, frequencySync);

@@ -9,7 +9,6 @@ import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
-import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
@@ -169,7 +168,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequency() {
-        DialogFrequency dialogFrequency = new DialogFrequency(this);
+        DialogFrequency dialogFrequency = new DialogFrequency(this, value -> setFrequencyWallpaper(value));
         dialogFrequency.show();
     }
 

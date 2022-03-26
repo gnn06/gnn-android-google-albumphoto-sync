@@ -10,11 +10,11 @@ import gnn.com.googlealbumdownloadappnougat.R;
 class DialogFrequency {
 
     final private Context context;
-    final private IPresenterFrequencies presenter;
+    private final IFrequencyPresenterSetter presenter;
 
-    DialogFrequency(IPresenterFrequencies presenter) {
-        this.presenter = presenter;
+    DialogFrequency(IPresenterFrequencies presenter, IFrequencyPresenterSetter presenterCallback) {
         this.context = presenter.getContext();
+        this.presenter = presenterCallback;
     }
 
     void show() {
@@ -26,9 +26,11 @@ class DialogFrequency {
                     // of the selected item
                     Resources resources = context.getResources();
                     int[] frequencyValue = resources.getIntArray(R.array.frequency_wallpaper_value);
-                    presenter.setFrequencyWallpaper(frequencyValue[which]);
+                    presenter.setFrequency(frequencyValue[which]);
                 }
             });
         builder.create().show();
     }
+
+
 }

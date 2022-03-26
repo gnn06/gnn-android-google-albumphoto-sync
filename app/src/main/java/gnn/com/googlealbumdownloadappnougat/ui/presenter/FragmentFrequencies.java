@@ -68,7 +68,7 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
 
     @Override
     public void setFrequencyWallpaper(int frequency) {
-        setTextFromFrequency(frequency, R.array.frequencies_value, R.array.frequencies_label, R.id.textFrequencyWallpaper);
+        setTextFromFrequency(frequency, R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label, R.id.textFrequencyWallpaper);
     }
 
     @Override
@@ -84,9 +84,8 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
-    public void setFrequencySync(String frequency) {
-        TextView view = getView().findViewById(R.id.textFrequencySync);
-        view.setText(frequency);
+    public void setFrequencySync(int frequency) {
+        setTextFromFrequency(frequency, R.array.frequency_sync_value, R.array.frequency_sync_label, R.id.textFrequencySync);
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface IViewFrequencies extends IView {
 
     String getFrequencySync();
 
-    void setFrequencySync(String frequency);
+    void setFrequencySync(int frequency);
 
     void enableFrequencySync(boolean switchChecked);
 

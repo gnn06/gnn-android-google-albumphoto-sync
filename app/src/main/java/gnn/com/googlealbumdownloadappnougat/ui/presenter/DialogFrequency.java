@@ -20,12 +20,12 @@ class DialogFrequency {
     void show() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.pick_frequency)
-            .setItems(R.array.frequencies_label, new DialogInterface.OnClickListener() {
+            .setItems(R.array.frequency_wallpaper_label, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // The 'which' argument contains the index position
                     // of the selected item
                     Resources resources = context.getResources();
-                    int[] frequencyValue = resources.getIntArray(R.array.frequencies_value);
+                    int[] frequencyValue = resources.getIntArray(R.array.frequency_wallpaper_value);
                     presenter.setFrequencyWallpaper(frequencyValue[which]);
                 }
             });

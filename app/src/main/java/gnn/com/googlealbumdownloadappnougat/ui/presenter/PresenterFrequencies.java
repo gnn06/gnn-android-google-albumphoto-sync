@@ -13,9 +13,12 @@ import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
+    private int frequencyMinute;
+    private int frequencySync;
+    private int frequencyUpdate;
+
     final private IViewFrequencies view;
     final private Context context;
-    private int frequencyMinute;
     private ScheduleTask task;
 
     @Override
@@ -87,18 +90,11 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     /**
      *
-     * int frequencySync fréquence de téléchargement en heure
+     * @return int frequencySync fréquence de téléchargement en heure
      */
     @Override
     public int getFrequencySync() {
-        String frequency = view.getFrequencySync();
-        if ("0".equals(frequency)) {
-            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
-        } else if ("".equals(frequency)) {
-            return SynchronizerDelayed.DELAY_NEVER_SYNC;
-        } else {
-            return Integer.parseInt(frequency);
-        }
+        return frequencySync;
     }
 
     /**
@@ -107,7 +103,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public void setFrequencySync(int frequency) {
-        view.setFrequencySync(frequency == SynchronizerDelayed.DELAY_NEVER_SYNC ? "" : Integer.toString(frequency));
+        this.frequencySync = frequency;
+        view.setFrequencySync(frequency);
     }
 
     /**

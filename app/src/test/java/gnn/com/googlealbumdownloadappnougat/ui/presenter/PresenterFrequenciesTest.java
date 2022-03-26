@@ -91,4 +91,22 @@ public class PresenterFrequenciesTest {
         // then
         verify(scheduleTask).schedule(anyBoolean(), eq(60L), anyInt(), anyLong());
     }
+
+    @Test
+    public void defaultValue_change_ui_ok() {
+        // given
+        SyncData syncData = new SyncData();
+        syncData.setFrequencyWallpaper(60);
+        when(persist.getData()).thenReturn(syncData);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
+                persist, scheduler, scheduleTask);
+        doCallRealMethod().when(persist).restoreFrequencies(presenter);
+        // when
+        presenter.onAppStart();
+        verify(view).setFrequencyWallpaper(60);
+
+        presenter.setFrequencyWallpaper(120);
+        // then
+        verify(view).setFrequencyWallpaper(120);
+    }
 }

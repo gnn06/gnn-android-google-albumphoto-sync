@@ -108,4 +108,20 @@
         <item>168</item>
         <item>720</item>
     </integer-array>
+
+    <!-- hour -->
+    <string-array name="frequency_update_label">
+        <item>Jamais</item>
+        <item>A chaque wallpaper</item>
+        <item>Tous les jours</item>
+        <item>Toutes les semaines</item>
+        <item>Tous les mois</item>
+    </string-array>
+    <integer-array name="frequency_update_value">
+        <item>-1</item>
+        <item>0</item>
+        <item>24</item>
+        <item>168</item>
+        <item>720</item>
+    </integer-array>
 </resources>

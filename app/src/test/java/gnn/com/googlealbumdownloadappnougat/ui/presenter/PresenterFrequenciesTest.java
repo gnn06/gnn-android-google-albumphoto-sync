@@ -4,8 +4,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
@@ -41,8 +39,6 @@ public class PresenterFrequenciesTest {
     @Before
     public void setUp() throws Exception {
         view = spy(IViewFrequencies.class);
-        when(view.getFrequencySync()).thenReturn("60");
-        when(view.getFrequencyUpdatePhotos()).thenReturn("60");
         activity = null;
         context = null;
         usermodel = null;
@@ -54,6 +50,7 @@ public class PresenterFrequenciesTest {
         defaultValue = new SyncData();
         defaultValue.setFrequencyWallpaper(60);
         defaultValue.setFrequencySync(168);
+        defaultValue.setFrequencyUpdatePhotos(720);
         when(persist.getData()).thenReturn(defaultValue);
     }
 
@@ -77,6 +74,7 @@ public class PresenterFrequenciesTest {
         // then
         verify(view).setFrequencyWallpaper(60);
         verify(view).setFrequencySync(168);
+        verify(view).setFrequencyUpdate(720);
     }
 
     @Test
@@ -89,7 +87,7 @@ public class PresenterFrequenciesTest {
         presenter.onAppStart();
         presenter.onSwitchWallpaper(true);
         // then
-        verify(scheduleTask).schedule(anyBoolean(), eq(60L), eq(168 * 60), anyLong());
+        verify(scheduleTask).schedule(anyBoolean(), eq(60L), eq(168 * 60), eq(720L * 24));
     }
 
     @Test
@@ -103,9 +101,10 @@ public class PresenterFrequenciesTest {
         // when
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
+        presenter.setFrequencyUpdatePhotos(168);
         // then
         verify(view).setFrequencyWallpaper(120);
-        verify(view).setFrequencySync(720);
+        verify(view).setFrequencySync(168);
     }
 
     @Test
@@ -116,23 +115,24 @@ public class PresenterFrequenciesTest {
         presenter.onAppStart();
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
+        presenter.setFrequencyUpdatePhotos(168);
         // when
         presenter.onSwitchWallpaper(true);
         // then
-        verify(scheduleTask).schedule(anyBoolean(), eq(120L), anyInt(), anyLong());
-        verify(scheduleTask).schedule(anyBoolean(), eq(120L), eq(720*60), anyLong());
+        verify(scheduleTask).schedule(anyBoolean(), eq(120L), eq(720*60), eq(168L * 24));
     }
 
     @Test
-    public void valueChange_presist_OK() {
+    public void valueChange_persist_OK() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
                 persist, scheduler, scheduleTask);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
+        presenter.setFrequencyUpdatePhotos(168);
         // when
         presenter.onAppStop();
         // then
-        verify(persist).saveFrequencies(eq(120), eq(720), anyInt());
+        verify(persist).saveFrequencies(eq(120), eq(720), eq(168));
     }
 }

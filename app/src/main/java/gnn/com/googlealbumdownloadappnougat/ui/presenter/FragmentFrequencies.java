@@ -54,6 +54,9 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
         getView().findViewById(R.id.textExplenationFrequencySync).setOnClickListener(v -> {
             presenter.chooseFrequencySync();
         });
+        getView().findViewById(R.id.textExplenationFrequencyUpdatePhotos).setOnClickListener(v -> {
+            presenter.chooseFrequencyUpdate();
+        });
         presenter.onAppStart();
     }
 
@@ -81,12 +84,6 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
-    public String getFrequencySync() {
-        TextView view = getView().findViewById(R.id.textFrequencySync);
-        return view.getText().toString();
-    }
-
-    @Override
     public void setFrequencySync(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_sync_value, R.array.frequency_sync_label, R.id.textFrequencySync);
     }
@@ -98,15 +95,8 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
-    public String getFrequencyUpdatePhotos() {
-        TextView view = getView().findViewById(R.id.textFrequencyUpdatePhotos);
-        return view.getText().toString();
-    }
-
-    @Override
-    public void setFrequencyUpdatePhotos(String frequency) {
-        TextView view = getView().findViewById(R.id.textFrequencyUpdatePhotos);
-        view.setText(frequency);
+    public void setFrequencyUpdate(int frequency) {
+        setTextFromFrequency(frequency, R.array.frequency_update_value, R.array.frequency_update_label, R.id.textFrequencyUpdatePhotos);
     }
 
     @Override

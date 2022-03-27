@@ -122,14 +122,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public int getFrequencyUpdatePhotos() {
-        String frequency = view.getFrequencyUpdatePhotos();
-        if ("0".equals(frequency)) {
-            return Cache.DELAY_ALWAYS_EXPIRE;
-        } else if ("".equals(frequency)) {
-            return Cache.DELAY_NEVER_EXPIRE;
-        } else {
-            return Integer.parseInt(frequency);
-        }
+        return this.frequencyUpdate;
     }
 
     /**
@@ -138,7 +131,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public void setFrequencyUpdatePhotos(int frequency) {
-        view.setFrequencyUpdatePhotos(frequency == Cache.DELAY_NEVER_EXPIRE ? "" : Integer.toString(frequency));
+        this.frequencyUpdate = frequency;
+        view.setFrequencyUpdate(frequency);
     }
 
     /**
@@ -178,6 +172,13 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     public void chooseFrequencySync() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
                 R.array.frequency_sync_value, R.array.frequency_sync_label);
+        dialogFrequency.show();
+    }
+
+    @Override
+    public void chooseFrequencyUpdate() {
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyUpdatePhotos(value),
+                R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }
 

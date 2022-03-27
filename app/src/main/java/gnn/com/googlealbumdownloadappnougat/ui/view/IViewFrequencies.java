@@ -8,15 +8,11 @@ public interface IViewFrequencies extends IView {
 
     void enableFrequencyWallpaper(boolean switchChecked);
 
-    String getFrequencySync();
-
     void setFrequencySync(int frequency);
 
+    void setFrequencyUpdate(int frequency);
+
     void enableFrequencySync(boolean switchChecked);
-
-    String getFrequencyUpdatePhotos();
-
-    void setFrequencyUpdatePhotos(String frequency);
 
     void enableFrequencyUpdatePhotos(boolean switchChecked);
 

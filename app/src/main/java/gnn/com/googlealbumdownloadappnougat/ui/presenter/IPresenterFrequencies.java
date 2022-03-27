@@ -30,5 +30,7 @@ public interface IPresenterFrequencies {
 
     void chooseFrequencySync();
 
+    void chooseFrequencyUpdate();
+
     void onAppStop();
 }

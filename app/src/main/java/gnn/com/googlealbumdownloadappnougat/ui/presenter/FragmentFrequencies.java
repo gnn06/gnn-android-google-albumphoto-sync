@@ -1,7 +1,9 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,10 +135,14 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     private void setTextFromFrequency(int frequency, int array_value, int array_label, int textView) {
         int[] codeArray = getResources().getIntArray(array_value);
         int index = ArrayUtils.indexOf(codeArray, frequency);
-        String label = getResources().getStringArray(array_label)[index];
-
-        TextView view = getView().findViewById(textView);
-        view.setText(label);
+        try {
+            String label = null;
+            label = getResources().getStringArray(array_label)[index];
+            TextView view = getView().findViewById(textView);
+            view.setText(label);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Log.e("GOI", "can not retrieve frequency'label for " + frequency + " in " + array_label);
+        }
     }
 
 }

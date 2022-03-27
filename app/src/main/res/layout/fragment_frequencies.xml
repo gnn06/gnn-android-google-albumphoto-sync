@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceySync"
-                android:text="@string/placeholder_frequency"/>
+                android:text="@string/placeholder_frequency" />
 
             <TextView
                 android:id="@+id/textExplenationFrequencySync"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceyWallpaper"
-                android:text="@string/placeholder_frequency " />
+                android:text="@string/placeholder_frequency" />
 
             <TextView
                 android:id="@+id/textExplenationFrequencyWallpaper"

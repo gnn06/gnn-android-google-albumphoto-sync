@@ -48,13 +48,13 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
                 presenter.onSwitchWallpaper(checked);
             }
         });
-        getView().findViewById(R.id.textExplenationFrequencyWallpaper).setOnClickListener(v -> {
+        getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();
         });
-        getView().findViewById(R.id.textExplenationFrequencySync).setOnClickListener(v -> {
+        getView().findViewById(R.id.SectionFreqeuncySync).setOnClickListener(v -> {
             presenter.chooseFrequencySync();
         });
-        getView().findViewById(R.id.textExplenationFrequencyUpdatePhotos).setOnClickListener(v -> {
+        getView().findViewById(R.id.SectionFreqeuncyUpdatePhotos).setOnClickListener(v -> {
             presenter.chooseFrequencyUpdate();
         });
         presenter.onAppStart();

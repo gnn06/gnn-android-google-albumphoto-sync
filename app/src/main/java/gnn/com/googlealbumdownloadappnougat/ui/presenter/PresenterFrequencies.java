@@ -60,9 +60,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
         boolean scheduled = this.scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
-        view.enableFrequencyWallpaper(scheduled);
-        view.enableFrequencySync(scheduled);
-        view.enableFrequencyUpdatePhotos(scheduled);
     }
 
     @Override

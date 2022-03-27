@@ -118,6 +118,7 @@
         <item>Tous les jours</item>
         <item>Toutes les semaines</item>
         <item>Tous les mois</item>
+        <item>Tous les trimestres</item>
     </string-array>
     <integer-array name="frequency_update_value">
         <item>-1</item>
@@ -125,5 +126,6 @@
         <item>24</item>
         <item>168</item>
         <item>720</item>
+        <item>2160</item>
     </integer-array>
 </resources>

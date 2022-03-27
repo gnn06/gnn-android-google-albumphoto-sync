@@ -49,8 +49,8 @@
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes.</string>
-    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées en heures.</string>
-    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours.</string>
+    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées.</string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo.</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="frequency_need_disable_first">Désactiver d\'abord le schedule</string>

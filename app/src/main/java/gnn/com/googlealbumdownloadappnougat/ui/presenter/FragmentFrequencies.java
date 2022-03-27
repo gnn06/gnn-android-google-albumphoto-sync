@@ -77,33 +77,33 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
         setTextFromFrequency(frequency, R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label, R.id.textFrequencyWallpaper);
     }
 
-    @Override
-    public void enableFrequencyWallpaper(boolean switchChecked) {
-        View text = getView().findViewById(R.id.textFrequencyWallpaper);
-        text.setEnabled(!switchChecked);
-    }
+//    @Override
+//    public void enableFrequencyWallpaper(boolean switchChecked) {
+//        View text = getView().findViewById(R.id.textFrequencyWallpaper);
+//        text.setEnabled(!switchChecked);
+//    }
 
     @Override
     public void setFrequencySync(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_sync_value, R.array.frequency_sync_label, R.id.textFrequencySync);
     }
 
-    @Override
-    public void enableFrequencySync(boolean switchChecked) {
-        View text = getView().findViewById(R.id.textFrequencySync);
-        text.setEnabled(!switchChecked);
-    }
+//    @Override
+//    public void enableFrequencySync(boolean switchChecked) {
+//        View text = getView().findViewById(R.id.textFrequencySync);
+//        text.setEnabled(!switchChecked);
+//    }
 
     @Override
     public void setFrequencyUpdate(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_update_value, R.array.frequency_update_label, R.id.textFrequencyUpdatePhotos);
     }
 
-    @Override
-    public void enableFrequencyUpdatePhotos(boolean switchChecked) {
-        View text = getView().findViewById(R.id.textFrequencyUpdatePhotos);
-        text.setEnabled(!switchChecked);
-    }
+//    @Override
+//    public void enableFrequencyUpdatePhotos(boolean switchChecked) {
+//        View text = getView().findViewById(R.id.textFrequencyUpdatePhotos);
+//        text.setEnabled(!switchChecked);
+//    }
 
     @Override
     public void alertFrequencyError() {

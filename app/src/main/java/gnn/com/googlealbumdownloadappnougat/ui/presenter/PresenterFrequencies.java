@@ -152,9 +152,9 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             }
         } else {
             scheduler.cancel();
-            view.enableFrequencyWallpaper(checked);
-            view.enableFrequencySync(checked);
-            view.enableFrequencyUpdatePhotos(checked);
+//            view.enableFrequencyWallpaper(checked);
+//            view.enableFrequencySync(checked);
+//            view.enableFrequencyUpdatePhotos(checked);
         }
     }
 

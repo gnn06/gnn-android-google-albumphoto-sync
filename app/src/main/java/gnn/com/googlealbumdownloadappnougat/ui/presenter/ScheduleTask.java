@@ -41,9 +41,9 @@ class ScheduleTask {
                         frequencyWallpaperMinute,
                         frequencySyncMinute, preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
                         frequencyUpdatePhotosHour, appContext);
-                view.enableFrequencyWallpaper(checked);
-                view.enableFrequencySync(checked);
-                view.enableFrequencyUpdatePhotos(checked);
+//                view.enableFrequencyWallpaper(checked);
+//                view.enableFrequencySync(checked);
+//                view.enableFrequencyUpdatePhotos(checked);
             }
         };
         AuthManager auth = authManager;

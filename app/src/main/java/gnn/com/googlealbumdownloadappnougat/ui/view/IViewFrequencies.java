@@ -17,4 +17,6 @@ public interface IViewFrequencies extends IView {
 //    void enableFrequencyUpdatePhotos(boolean switchChecked);
 
     void alertFrequencyError();
+
+    void alertNeedDisableSchedule();
 }

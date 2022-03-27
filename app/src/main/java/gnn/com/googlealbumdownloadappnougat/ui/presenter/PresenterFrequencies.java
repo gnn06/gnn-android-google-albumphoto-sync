@@ -160,6 +160,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencyWallpaper() {
+        if (scheduler.isScheduled()) {
+            view.alertNeedDisableSchedule();
+            return;
+        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
                 R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
@@ -167,6 +171,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencySync() {
+        if (scheduler.isScheduled()) {
+            view.alertNeedDisableSchedule();
+            return;
+        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
                 R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
@@ -174,6 +182,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencyUpdate() {
+        if (scheduler.isScheduled()) {
+            view.alertNeedDisableSchedule();
+            return;
+        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyUpdatePhotos(value),
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();

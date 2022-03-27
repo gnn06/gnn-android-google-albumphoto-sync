@@ -126,13 +126,7 @@
                 android:paddingTop="16dp"
                 android:text="Changement automatique du fond d'écran "
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_below="@id/SwitchWallPaper"
-                android:text="Désactiver pour changer les fréquences" />
+
         </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

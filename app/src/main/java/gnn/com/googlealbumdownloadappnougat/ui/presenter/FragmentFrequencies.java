@@ -114,6 +114,14 @@ public class FragmentFrequencies extends Fragment implements IViewFrequencies {
     }
 
     @Override
+    public void alertNeedDisableSchedule() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getResources().getString(R.string.frequency_need_disable_first))
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+    }
+
+    @Override
     public void showError(String message) {
             new AlertDialog.Builder(getActivity())
                     .setTitle(getResources().getString(R.string.error))

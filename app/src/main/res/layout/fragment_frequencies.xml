@@ -29,22 +29,18 @@
                 android:text="@string/frequencyUpdatePhotos"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <EditText
+            <TextView
                 android:id="@+id/textFrequencyUpdatePhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                android:autofillHints="no"
-                android:ems="5"
-                android:inputType="number" />
+                android:text="@string/placeholder_frequency"/>
 
             <TextView
                 android:id="@+id/textExplenationFrequencyUpdatePhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/textFrequencyUpdatePhotos"
+                android:layout_below="@id/textFrequencyUpdatePhotos"
                 android:text="@string/frequenceUpdatePhotosExplenation" />
         </RelativeLayout>
 
@@ -69,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceySync"
-                android:text="fréquence "/>
+                android:text="@string/placeholder_frequency"/>
 
             <TextView
                 android:id="@+id/textExplenationFrequencySync"
@@ -100,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleFrequenceyWallpaper"
-                android:text="fréquence " />
+                android:text="@string/placeholder_frequency " />
 
             <TextView
                 android:id="@+id/textExplenationFrequencyWallpaper"

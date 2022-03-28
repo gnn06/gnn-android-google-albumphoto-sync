@@ -37,7 +37,7 @@ class DialogFrequency {
                     int[] frequencyValue = resources.getIntArray(frequency_value);
                     presenterCallback.setFrequency(frequencyValue[which]);
                 }
-            });
+            }).setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
 

@@ -48,7 +48,7 @@
     <string name="frequencyGroup_title">Fréquences</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
-    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes.</string>
+    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
     <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées.</string>
     <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo.</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>

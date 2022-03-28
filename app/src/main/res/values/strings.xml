@@ -45,7 +45,7 @@
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
-    <string name="frequencyGroup_title">Fréquences</string>
+    <string name="frequencyGroup_title">Fond d\'écran dynamique</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
@@ -76,6 +76,7 @@
     <string name="hello_blank_fragment">Destination fragment</string>
     <string name="pick_frequency">Choisir une fréquence</string>
     <string name="placeholder_frequency">Choisissez une fréquence</string>
+    <string name="frequencyGroup_subtitle">Activation et fréquences</string>
 
     <string-array name="frequency_wallpaper_label">
         <item>Toutes les 15 minutes</item>

@@ -41,28 +41,92 @@
     <string name="titleCacheMaxAge">Cache max age</string>
     <string name="textCacheMaxAge">Cache max age in hours</string>
     <string name="rename">Renaming</string>
+    <string name="download_options_title">Options de téléchargement</string>
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
+
+    <string name="frequencyGroup_title">Fond d\'écran dynamique</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
-    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé en minutes (minimum 15).</string>
-    <string name="schedule_details">schedule</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
-    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées en heures. 0 = sync à chaque fois.</string>
+    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
+    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées.</string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo.</string>
+    <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
+    <string name="frequency_too_low">Fréquence min de 15 minutes</string>
+    <string name="frequency_need_disable_first">Désactiver d\'abord le schedule</string>
+
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
     <string name="lastWallpaperTimeLabel">Dernier fond d\'écran :</string>
-    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo en jours. 0 = Recherche à chaque fois.</string>
     <string name="lastUpdatePhotosLabel">"Dernière récupération des photos : "</string>
-    <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
-    <string name="frequencyGroup">Fréquences</string>
-    <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="requestGooglePermission">demander permission</string>
+
     <string name="titleStat">Statistiques</string>
     <string name="noStat">Pas de statistique</string>
-    <string name="wallpaper_description">description</string>
+    <string name="noDate">Pas de date</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="error_wallpaper_chooser">impossible de définir le fond d\'écran animé automatiquement</string>
     <string name="warning_wallpaper_not_active">Le fond d\'écran animée n\'est pas actif. Cliquez ici pour le faire.</string>
 
+    <string name="wallpaper_description">description</string>
+    <string name="schedule_details">schedule</string>
+    <string name="hello_blank_fragment">Destination fragment</string>
+    <string name="pick_frequency">Choisir une fréquence</string>
+    <string name="placeholder_frequency">Choisissez une fréquence</string>
+    <string name="frequencyGroup_subtitle">Activation et fréquences</string>
+
+    <string-array name="frequency_wallpaper_label">
+        <item>Toutes les 15 minutes</item>
+        <item>Toutes les 30 minutes</item>
+        <item>Toutes les heures</item>
+        <item>Toutes les 2 heures</item>
+        <item>Tous les jours</item>
+    </string-array>
+    <integer-array name="frequency_wallpaper_value">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>1440</item>
+    </integer-array>
+
+    <string-array name="frequency_sync_label">
+        <item>Jamais</item>
+        <item>A chaque wallpaper</item>
+        <item>Tous les heures</item>
+        <item>Toutes les 12 heures</item>
+        <item>Tous les jours</item>
+        <item>Toutes les semaines</item>
+        <item>Toutes les mois</item>
+    </string-array>
+    <integer-array name="frequency_sync_value">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>12</item>
+        <item>24</item>
+        <item>168</item>
+        <item>720</item>
+    </integer-array>
+
+    <!-- hour -->
+    <string-array name="frequency_update_label">
+        <item>Jamais</item>
+        <item>A chaque wallpaper</item>
+        <item>Tous les jours</item>
+        <item>Toutes les semaines</item>
+        <item>Tous les mois</item>
+        <item>Tous les trimestres</item>
+    </string-array>
+    <integer-array name="frequency_update_value">
+        <item>-1</item>
+        <item>0</item>
+        <item>24</item>
+        <item>168</item>
+        <item>720</item>
+        <item>2160</item>
+    </integer-array>
 </resources>

@@ -43,12 +43,16 @@ public class WallpaperSetter {
     public void refreshFromCurrent(SurfaceHolder holder) {
         File processFolder = ApplicationContext.getInstance(activity).getProcessFolder();
         Photo currentPhoto = new PersistChoose(processFolder).getCurrentPhoto();
+        Bitmap bitmap = null;
         if (currentPhoto != null) {
-            Bitmap bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
+            bitmap = getBitmap(currentPhoto.getPhotoLocalFile(getPhotoFolder()).getAbsolutePath());
+        }
+        if (bitmap != null) {
             setWallpaper(bitmap, holder);
         } else {
             noPhotoWallpaper(holder);
         }
+
     }
 
     private File getPhotoFolder() {

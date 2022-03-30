@@ -1,5 +1,9 @@
 package gnn.com.photos.sync;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,26 +15,33 @@ import java.util.ArrayList;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PhotoChooserListRenameTest {
+public class SyncPhotoDispatcherTest {
 
     private SyncData syncData;
     private ArrayList<Photo> remote;
     private ArrayList<Photo> local;
     private ArrayList<Photo> expectedToDelete;
     private ArrayList<Photo> chosen;
+    private SyncPhotoDispatcher chooser;
+    private PhotoChooserList photoChooserList;
 
     @Before
     public void init() {
-        syncData = Mockito.mock(SyncData.class);
+        syncData = mock(SyncData.class);
         remote = new ArrayList<>();
         local = new ArrayList<>();
         expectedToDelete = new ArrayList<>();
         chosen = new ArrayList<>();
+        chosen.add(new Photo("url2", "id2"));
+        chosen.add(new Photo("url4", "id4"));
+        photoChooserList = mock(PhotoChooserList.class);
+        when(photoChooserList.chooseOneList(remote, 2, local)).thenReturn(chosen);
+        when(photoChooserList.firstMinusSecondList(any(), any())).thenCallRealMethod();
+        chooser = new SyncPhotoDispatcher(photoChooserList);
     }
 
     @Test
     public void choose_full_rename_nothing_to_delete() {
-        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -48,7 +59,6 @@ public class PhotoChooserListRenameTest {
 
     @Test
     public void choose_full_rename_delete_remaining() {
-        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -67,7 +77,6 @@ public class PhotoChooserListRenameTest {
 
     @Test
     public void choose_random_rename_nothing_to_delete() {
-        PhotoChooserList chooser = Mockito.spy(new PhotoChooserList());
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -80,7 +89,7 @@ public class PhotoChooserListRenameTest {
         chosen.add(new Photo("url2", "id2"));
         chosen.add(new Photo("url4", "id4"));
 
-        Mockito.when(chooser.chooseOneList(remote, 2, local)).thenReturn(chosen);
+        when(photoChooserList.chooseOneList(remote, 2, local)).thenReturn(chosen);
 
         chooser.chooseRandom(syncData, local, remote, "name", 2);
 
@@ -90,7 +99,6 @@ public class PhotoChooserListRenameTest {
 
     @Test
     public void choose_random_rename_delete_remaining() {
-        PhotoChooserList chooser = new PhotoChooserList();
 
         local.add(new Photo("url1", "name1"));
         local.add(new Photo("url3", "name2"));
@@ -98,6 +106,16 @@ public class PhotoChooserListRenameTest {
 
         remote.add(new Photo("url1", "id1"));
         remote.add(new Photo("url1", "id2"));
+
+        ArrayList<Photo> chosen = new ArrayList<>();
+        chosen.add(new Photo("url1", "id1"));
+        chosen.add(new Photo("url2", "id2"));
+
+        PhotoChooserList photoChooserList = mock(PhotoChooserList.class);
+        when(photoChooserList.chooseOneList(remote, 2, local)).thenReturn(chosen);
+        when(photoChooserList.firstMinusSecondList(any(), any())).thenCallRealMethod();
+
+        SyncPhotoDispatcher chooser = new SyncPhotoDispatcher(photoChooserList);
 
         chooser.chooseRandom(syncData, local, remote, "name", 2);
 

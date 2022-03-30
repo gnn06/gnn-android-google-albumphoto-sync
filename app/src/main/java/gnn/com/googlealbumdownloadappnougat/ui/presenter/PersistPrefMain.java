@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import gnn.com.photos.service.Cache;
+
 /**
  * Default values are taken from Presenter
  */
@@ -35,22 +37,36 @@ public class PersistPrefMain {
      * Get data from UI throught Persenter and store then into preferences
      * @param presenter
      */
-    public void save(IPresenterMain presenter) {
+    public void save(IPresenterHome presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
         String album = presenter.getAlbum();
-        String folderHuman = presenter.getFolderHuman();
-        int quantity = presenter.getQuantity();
-        String rename = presenter.getRename();
-        int frequencyWallpaper = presenter.getFrequencyWallpaper();
-        int frequencySync = presenter.getFrequencySync();
-        int frequencyUpdatePhotos = presenter.getFrequencyUpdatePhotos();
+        String folderHuman = presenter.getDefaultFolderHuman();
 
         editor.putString(PREF_ALBUM_KEY, album);
         editor.putString(PREF_FOLDER_HUMAN_KEY, folderHuman);
+
+        editor.apply();
+    }
+
+    public void saveDownloadOption(IPresenterDownloadOptions presenter) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        int quantity = presenter.getQuantity();
+        String rename = presenter.getRename();
+
         editor.putInt(PREF_QUANTITY_KEY, quantity);
         editor.putString(PREF_RENAME, rename);
+
+        editor.apply();
+    }
+
+    public void saveFrequencies(int frequencyWallpaper, int frequencySync, int frequencyUpdatePhotos) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
         editor.putInt(PREF_FREQ_WALLPAPER, frequencyWallpaper);
         editor.putInt(PREF_FREQ_SYNC, frequencySync);
         editor.putInt(PREF_FREQ_UPDATE_PHOTOS, frequencyUpdatePhotos);
@@ -62,19 +78,28 @@ public class PersistPrefMain {
      * retrieves data from Preferences and inject into Presenter
      * @param presenter
      */
-    public void restore(IPresenterMain presenter) {
+    public void restore(IPresenterHome presenter) {
         // Restore data
         SyncData data = getData();
         if (data.getAlbum() != null) {
             presenter.setAlbum(data.getAlbum());
         }
         if (data.getFolderHuman() != null) {
-            presenter.setFolderHuman(data.getFolderHuman());
+            presenter.setDefaultFolderHuman(data.getFolderHuman());
         }
+    }
+
+    public void restoreDownloadOptions(IPresenterDownloadOptions presenter) {
+        // Restore data
+        SyncData data = getData();
         presenter.setQuantity(data.getQuantity());
         presenter.setRename(data.getRename());
+    }
+
+    public void restoreFrequencies(IPresenterFrequencies presenter) {
+        SyncData data = getData();
         presenter.setFrequencyUpdatePhotos(data.getFrequencyUpdatePhotos());
-        presenter.setFrequencySync(data.getFrequencySync());
+        presenter.setFrequencySyncHour(data.getFrequencySync());
         presenter.setFrequencyWallpaper(data.getFrequencyWallpaper());
     }
 
@@ -82,9 +107,10 @@ public class PersistPrefMain {
      * Get Data from Preferences and return them as SyncData.
      * Used to restore main UI and from schedule UI to enqueue work
      * UI Unit and Préference Unit are the same
+     * If no data are préviously saved, return default values
      * @return
      */
-    private SyncData getData() {
+    SyncData getData() {
         SyncData data = new SyncData();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
@@ -114,4 +140,23 @@ public class PersistPrefMain {
         return getData().getFolderHuman();
     }
 
+    public int getQuantity() {
+        return getData().getQuantity();
+    }
+
+    public String getRename() {
+        return getData().getRename();
+    }
+
+    /**
+     * @return fréquence en minute
+     */
+    public int getFrequencyUpdatePhotosHour() {
+        return getData().getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE ?
+                    getData().getFrequencyUpdatePhotos() * 24 : Cache.DELAY_NEVER_EXPIRE;
+    }
+
+    public String getAlbum() {
+        return getData().getAlbum();
+    }
 }

@@ -19,6 +19,7 @@ gestion des fréquences null
 add stat
 create live wallpaper
 
-1.4.2 03/03/2022
-rajout du fond d'écran animé avec lien vers les paramétres pour choisir le fond d'écran
-depuis un clic sur le bandeau orange
+1.5 30/03/2022
+les options de téléchargement et de fréquence sont maintenant dans des écrans séparés
+il est possible de choisir des fréquences qui désactivent le téléchargement et la
+récupération des nouvelles photos.

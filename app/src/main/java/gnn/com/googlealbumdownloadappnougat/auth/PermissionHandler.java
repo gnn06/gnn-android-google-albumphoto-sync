@@ -19,6 +19,7 @@ public class PermissionHandler {
         }
     }
 
+    // For test
     public Require getPendingRequirement() {
         return this.pendingRequirement;
     }

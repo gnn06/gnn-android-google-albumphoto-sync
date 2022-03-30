@@ -136,7 +136,7 @@ public class CacheTest {
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() + (60 * 1000));
 
-        Cache.config(file, 0);
+        Cache.config(file, Cache.DELAY_ALWAYS_EXPIRE);
         Cache cache = Mockito.spy(Cache.getCache());
         ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")
@@ -159,7 +159,7 @@ public class CacheTest {
         Mockito.when(file.exists()).thenReturn(true);
         Mockito.when(file.lastModified()).thenReturn(System.currentTimeMillis() - (30 * 24 * 60 * 60 * 1000));
 
-        Cache.config(file, Integer.MAX_VALUE);
+        Cache.config(file, Cache.DELAY_NEVER_EXPIRE);
         Cache cache = Mockito.spy(Cache.getCache());
         ArrayList<Photo> expected = new ArrayList<>(Collections.singletonList(
                 new Photo("url1", "id1")

@@ -1,21 +1,24 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 
 abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
     static final String TAG = "goi";
 
+    private final Context context;
     private boolean error = false;
     private String errorMessage;
-    protected IPresenterMain presenter;
+    protected IPresenterHome presenter;
 
 
-    PhotosAsyncTask(IPresenterMain presenter) {
+    PhotosAsyncTask(IPresenterHome presenter, Context context) {
         this.presenter = presenter;
+        this.context = context;
     }
 
     void markAsError(String message) {

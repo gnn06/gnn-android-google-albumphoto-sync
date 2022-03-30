@@ -29,7 +29,7 @@ public class UITextHelper {
         return result;
     }
 
-    String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {
+    public String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {
         String result = "";
         switch (step) {
             case STARTING:

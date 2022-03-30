@@ -1,19 +1,21 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentHome;
+import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 
 public class WritePermissionRequirementTest {
 
     @Test
     public void test() {
-        AuthManager auth = Mockito.mock(AuthManager.class);
-        MainActivity view = Mockito.mock(MainActivity.class);
-        WritePermissionRequirement permission = new WritePermissionRequirement(null, auth, view);
+        AuthManager auth = mock(AuthManager.class);
+        FragmentHome view = mock(FragmentHome.class);
+        UserModel userModel = mock(UserModel.class);
+        WritePermissionRequirement permission = new WritePermissionRequirement(null, auth, view, userModel);
         permission.postRequireFailure();
         verify(view).showError("message");
     }

@@ -1,22 +1,26 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
 
     // given from Presenter
     protected SynchronizerAndroid sync;
+    final private PersistPrefMain persist;
 
-    public SyncTask(IPresenterMain presenter, SynchronizerAndroid sync) {
-        super(presenter);
+    public SyncTask(IPresenterHome presenter, SynchronizerAndroid sync, PersistPrefMain persist, Context context) {
+        super(presenter, context);
         this.sync = sync;
         sync.setSyncTask(this);
+        this.persist = persist;
     }
 
     @Override
@@ -24,8 +28,8 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
         String album = presenter.getAlbum();
         File destination = presenter.getFolder();
         assert album != null && destination != null;
-        String rename = presenter.getRename();
-        int quantity = presenter.getQuantity();
+        String rename = persist.getRename();
+        int quantity = persist.getQuantity();
         try {
             if (quantity == -1) {
                 sync.syncAll(album, destination, rename);

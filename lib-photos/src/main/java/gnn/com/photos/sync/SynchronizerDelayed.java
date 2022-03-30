@@ -18,29 +18,39 @@ public class SynchronizerDelayed {
     // instanciated by descendant
     protected Synchronizer synchronizer;
 
-    public static final int DELAY_NO_CACHE = 0;
+    public static final int DELAY_ALWAYS_SYNC = 0;
+    public static final int DELAY_NEVER_SYNC = Integer.MAX_VALUE;
 
     /**
      * 0 = no cache, sync each times
-     * MAX = cache never expire
+     * MAX = cache never expire, never sync
      */
     final private int delayMinute;
 
+    /**
+     * @param delayMinute 0 = always sync, MAX_VALUE = never sync
+     */
     public SynchronizerDelayed(int delayMinute) {
         this.delayMinute = delayMinute;
     }
 
-    public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
-        // require Logger was initialized
-        Logger logger = Logger.getLogger();
-
-        Date lastSyncTime = synchronizer.retrieveLastSyncTime();
-        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delayMinute).isExpired();
-        logger.info("sync expired=" + expired + " with delay=" + delayMinute + " in minutes");
-        if (expired) {
-            synchronizer.syncAll(albumName, folder, rename);
-        } // else do noting
+    // For test
+    public SynchronizerDelayed(int delayMinute, Synchronizer sync) {
+        this.synchronizer = sync;
+        this.delayMinute = delayMinute;
     }
+
+//    public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
+//        // require Logger was initialized
+//        Logger logger = Logger.getLogger();
+//
+//        Date lastSyncTime = synchronizer.retrieveLastSyncTime();
+//        boolean expired = lastSyncTime == null || new ExpirationChecker(lastSyncTime, delayMinute).isExpired();
+//        logger.info("sync expired=" + expired + " with delay=" + delayMinute + " in minutes");
+//        if (expired) {
+//            synchronizer.syncAll(albumName, folder, rename);
+//        } // else do noting
+//    }
 
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
         // require Logger was initialized

@@ -31,7 +31,7 @@ public class WallpaperScheduler {
     /**
      * maxAge in minutes
      */
-    public void schedule(String destinationFolder, long wallpaperMaxAge,
+    public void schedule(String destinationFolder, long wallpaperMaxAgeMinute,
                          int syncMaxAgeMinute,
                          String album, int quantity, String rename, long cacheMaxAgeHour,
                          ApplicationContext appContext) {
@@ -49,7 +49,7 @@ public class WallpaperScheduler {
                 .putInt("quantity", quantity)
                 .putString("rename", rename)
                 .build();
-        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAge, TimeUnit.MINUTES)
+        PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAgeMinute, TimeUnit.MINUTES)
                 .setInputData(data)
                 .build();
         WorkManager.getInstance(context)

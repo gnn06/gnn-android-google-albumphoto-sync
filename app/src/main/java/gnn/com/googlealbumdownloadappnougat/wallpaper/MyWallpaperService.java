@@ -1,22 +1,17 @@
 package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
+import android.app.WallpaperInfo;
+import android.app.WallpaperManager;
+import android.content.Context;
 import android.os.Environment;
 import android.service.wallpaper.WallpaperService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-import gnn.com.photos.Photo;
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
-import gnn.com.photos.sync.PersistChoose;
 import gnn.com.photos.sync.WallpaperObserver;
 
 /**
@@ -24,6 +19,12 @@ import gnn.com.photos.sync.WallpaperObserver;
  */
 
 public class MyWallpaperService extends WallpaperService {
+
+    private final Context context;
+
+    public MyWallpaperService(Context context) {
+        this.context = context;
+    }
 
     @Override
     public Engine onCreateEngine() {
@@ -163,5 +164,13 @@ public class MyWallpaperService extends WallpaperService {
 
     private File getFolder(String path) {
         return Environment.getExternalStoragePublicDirectory(path);
+    }
+
+    public boolean isActive() {
+        WallpaperManager wlppMgr = WallpaperManager.getInstance(context);
+        WallpaperInfo wlppInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
+        Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
+                (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
+        return wlppInfo != null && wlppInfo.getPackageName().equals("gnn.com.googlealbumdownloadappnougat");
     }
 }

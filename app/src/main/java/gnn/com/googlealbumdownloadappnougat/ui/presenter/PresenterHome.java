@@ -132,11 +132,12 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         refreshLastTime();
         WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
         view.setStat(stat);
+
         WallpaperManager wlppMgr = WallpaperManager.getInstance(activity);
         WallpaperInfo wlppInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
                 (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
-        view.setWarningWallpaperActive(wlppInfo != null && wlppInfo.getPackageName().equals("gnn.com.googlealbumdownloadappnougat"));
+        view.setWarningWallpaperActive(new MyWallpaperService(activity).isActive());
 
     }
 

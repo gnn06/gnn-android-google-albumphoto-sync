@@ -31,7 +31,7 @@ public class AuthManager {
         return account != null && account.getAccount() != null;
     }
 
-    public  boolean hasScope() {
+    public  boolean hasGooglePermission() {
         // normal granted scopes
         // https://www.googleapis.com/auth/photoslibrary.readonly
         // https://www.googleapis.com/auth/userinfo.profile

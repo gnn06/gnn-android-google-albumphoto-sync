@@ -156,6 +156,14 @@ public class PersistPrefMain {
                     getData().getFrequencyUpdatePhotos() * 24 : Cache.DELAY_NEVER_EXPIRE;
     }
 
+    public int getFrequencyDownload() {
+        return getData().getFrequencySync();
+    }
+
+    public int getFrequencyWallpaper() {
+        return getData().getFrequencyWallpaper();
+    }
+
     public String getAlbum() {
         return getData().getAlbum();
     }

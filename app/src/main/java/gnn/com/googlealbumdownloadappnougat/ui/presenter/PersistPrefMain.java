@@ -20,10 +20,12 @@ public class PersistPrefMain {
     private static final String PREF_FREQ_WALLPAPER = "frequency_wallpaper";
     private static final String PREF_FREQ_SYNC = "frequency_sync";
     private static final String PREF_FREQ_UPDATE_PHOTOS = "frequency_update_photos";
+    private static final String PREF_WIZARD_ACTIVE = "wizard_active";
 
     public static final int DEF_FREQ_WALLPAPER_MINUTE = 60;
     public static final int DEF_FREQ_SYNC_HOUR = 72;
     public static final int DEF_FREQ_UPDATE_PHOTO_DAY = 30;
+    public static final boolean DEF_WIZARD_ACTIVE = false;
 
     private final Context activity;
 
@@ -166,5 +168,23 @@ public class PersistPrefMain {
 
     public String getAlbum() {
         return getData().getAlbum();
+    }
+
+    public void saveWizardActive(boolean isActive) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putBoolean(PREF_WIZARD_ACTIVE, isActive);
+
+        editor.apply();
+    }
+
+    public boolean restoreWizardActive() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        if (preferences != null) {
+            boolean isActive = preferences.getBoolean(PREF_WIZARD_ACTIVE, DEF_WIZARD_ACTIVE);
+            return isActive;
+        }
+        return DEF_WIZARD_ACTIVE;
     }
 }

@@ -13,7 +13,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
-public class WizardTest {
+public class WizardStepTest {
 
     private AuthManager authManager;
     private PersistPrefMain persistPrefMain;

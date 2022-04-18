@@ -18,6 +18,9 @@
             app:destination="@id/fragmentFrequencies"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentWizard"
+            app:destination="@id/fragmentWizard" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDownloadOptions"
@@ -29,4 +32,12 @@
         android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentFrequencies"
         android:label="@string/frequencyGroup_title"
         tools:layout="@layout/fragment_frequencies" />
+    <fragment
+        android:id="@+id/fragmentWizard"
+        android:name="gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard"
+        android:label="FragmentWizard" >
+        <action
+            android:id="@+id/action_fragmentWizard_to_fragmentHome"
+            app:destination="@id/fragmentHome" />
+    </fragment>
 </navigation>

@@ -29,7 +29,7 @@ public class FragmentWizard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterWizard();
+        this.presenter = new PresenterWizard(getActivity());
         getView().findViewById(R.id.wizard_button_switch_to_app).setOnClickListener(v -> {
             presenter.switchToApp();
         });

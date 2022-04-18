@@ -43,4 +43,12 @@ public class Wizard {
         } else
             return WizardStep.S11_FINISHED;
     }
+
+    public void setActive(boolean isActive) {
+        persistPrefMain.saveWizardActive(isActive);
+    }
+
+    public boolean isActive() {
+        return persistPrefMain.restoreWizardActive();
+    }
 }

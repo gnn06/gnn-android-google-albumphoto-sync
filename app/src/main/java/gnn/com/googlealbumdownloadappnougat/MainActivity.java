@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements IView {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
+        findViewById(R.id.button_switch_to_wizard).setOnClickListener(v -> {
+            presenter.switchToWizard();
+        });
+
     }
 
     @Override

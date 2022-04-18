@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/fragment_downloadoptions.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_frequencies.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3643486777668952" />
+        <entry key="app/src/main/res/layout/fragment_wizard.xml" value="0.15897435897435896" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.216" />
         <entry key="app/src/main/res/xml/mywallpaper.xml" value="0.15654008438818565" />
       </map>

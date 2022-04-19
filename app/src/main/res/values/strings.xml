@@ -133,4 +133,12 @@
         <item>720</item>
         <item>2160</item>
     </integer-array>
+    <string-array name="wizard_explaination">
+        <item>expli1 expli1 expli1 expli1 expli1 expli1 </item>
+        <item>expli2 expli2 expli2 expli2 expli2 expli2 </item>
+        <item>expli3 expli3 expli3 expli3 expli3 expli3 </item>
+        <item>expli4</item>
+        <item>expli5</item>
+        <item>expli6</item>
+    </string-array>
 </resources>

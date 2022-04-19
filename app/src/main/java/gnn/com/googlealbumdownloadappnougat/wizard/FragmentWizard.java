@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,9 +30,16 @@ public class FragmentWizard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterWizard(getActivity());
+        this.presenter = new PresenterWizard(this);
         getView().findViewById(R.id.wizard_button_switch_to_app).setOnClickListener(v -> {
             presenter.switchToApp();
         });
+        presenter.onViewCreated();
+    }
+
+    public void setExplaination(int indice) {
+        String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
+        TextView view = getView().findViewById(R.id.text_wizard_explaination);
+        view.setText(strings[indice]);
     }
 }

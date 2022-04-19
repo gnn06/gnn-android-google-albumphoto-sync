@@ -9,14 +9,18 @@ import gnn.com.googlealbumdownloadappnougat.R;
 
 public class PresenterWizard {
 
-    final private Activity activity;
+    final private FragmentWizard activity;
 
-    public PresenterWizard(Activity activity) {
+    public PresenterWizard(FragmentWizard activity) {
         this.activity = activity;
     }
 
     public void switchToApp() {
-        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
+        NavController controller = Navigation.findNavController(this.activity.getActivity(), R.id.fragment_container_view);
         controller.navigate(R.id.action_fragmentWizard_to_fragmentHome);
+    }
+
+    public void onViewCreated() {
+        this.activity.setExplaination(2);
     }
 }

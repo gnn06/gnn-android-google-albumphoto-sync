@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
 public enum WizardStep {
+    S00_NOT_STARTED,
     S01_LOGIN,
     S02_ASK_GOOGLE_PERMISSION,
     S03_CHOOSE_ALBUM,

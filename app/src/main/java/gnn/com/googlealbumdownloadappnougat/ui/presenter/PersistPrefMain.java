@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.service.Cache;
 
 /**
@@ -20,12 +21,12 @@ public class PersistPrefMain {
     private static final String PREF_FREQ_WALLPAPER = "frequency_wallpaper";
     private static final String PREF_FREQ_SYNC = "frequency_sync";
     private static final String PREF_FREQ_UPDATE_PHOTOS = "frequency_update_photos";
-    private static final String PREF_WIZARD_ACTIVE = "wizard_active";
+    private static final String PREF_WIZARD_STEP = "wizard_active";
 
     public static final int DEF_FREQ_WALLPAPER_MINUTE = 60;
     public static final int DEF_FREQ_SYNC_HOUR = 72;
     public static final int DEF_FREQ_UPDATE_PHOTO_DAY = 30;
-    public static final boolean DEF_WIZARD_ACTIVE = false;
+    public static final WizardStep DEF_WIZARD_STEP = WizardStep.S00_NOT_STARTED;
 
     private final Context activity;
 
@@ -170,21 +171,20 @@ public class PersistPrefMain {
         return getData().getAlbum();
     }
 
-    public void saveWizardActive(boolean isActive) {
+    public void saveWizardStep(WizardStep step) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(PREF_WIZARD_ACTIVE, isActive);
+        editor.putString(PREF_WIZARD_STEP, step.name());
 
         editor.apply();
     }
 
-    public boolean restoreWizardActive() {
+    public WizardStep restoreWizardStep() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            boolean isActive = preferences.getBoolean(PREF_WIZARD_ACTIVE, DEF_WIZARD_ACTIVE);
-            return isActive;
+            return WizardStep.valueOf(preferences.getString(PREF_WIZARD_STEP, DEF_WIZARD_STEP.name()));
         }
-        return DEF_WIZARD_ACTIVE;
+        return DEF_WIZARD_STEP;
     }
 }

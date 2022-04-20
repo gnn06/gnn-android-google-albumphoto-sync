@@ -30,23 +30,23 @@ public class WizardTest {
     }
 
     @Test
-    public void persist_save_isActive() {
+    public void persist_save_step() {
         // Given
         Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        wizard.setActive(true);
+        wizard.setStep(WizardStep.S02_ASK_GOOGLE_PERMISSION);
         // then
-        verify(persistPrefMain).saveWizardActive(true);
+        verify(persistPrefMain).saveWizardStep(WizardStep.S02_ASK_GOOGLE_PERMISSION);
     }
 
     @Test
-    public void persist_restore_isActive() {
+    public void persist_restore_step() {
         // Given
         Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
-        when(persistPrefMain.restoreWizardActive()).thenReturn(true);
+        when(persistPrefMain.restoreWizardStep()).thenReturn(WizardStep.S03_CHOOSE_ALBUM);
         // when
-        boolean active = wizard.isActive();
+        WizardStep step = wizard.getStep();
         // then
-        assertThat(active, Is.is(true));
+        assertThat(step, Is.is(WizardStep.S03_CHOOSE_ALBUM));
     }
 }

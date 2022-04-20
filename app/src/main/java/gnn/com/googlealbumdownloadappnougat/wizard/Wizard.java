@@ -44,8 +44,8 @@ public class Wizard {
             return WizardStep.S11_FINISHED;
     }
 
-    public void setStep(WizardStep isActive) {
-        persistPrefMain.saveWizardStep(isActive);
+    public void setStep(WizardStep step) {
+        persistPrefMain.saveWizardStep(step);
     }
 
     public WizardStep getStep() {

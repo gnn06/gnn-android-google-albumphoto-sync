@@ -51,4 +51,12 @@ public class Wizard {
     public WizardStep getStep() {
         return persistPrefMain.restoreWizardStep();
     }
+
+    public void setActive(boolean isActive) {
+        persistPrefMain.saveWizardActive(isActive);
+    }
+
+    public boolean isActive() {
+        return persistPrefMain.restoreWizardActive();
+    }
 }

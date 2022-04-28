@@ -135,4 +135,18 @@ public class PresenterFrequenciesTest {
         // then
         verify(persist).saveFrequencies(eq(120), eq(720), eq(168));
     }
+
+    @Test
+    public void conversion_with_never() {
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
+                persist, scheduler, scheduleTask);
+        presenter.setFrequencySyncHour(-1);
+        presenter.setFrequencyUpdatePhotos(-1);
+        // when
+        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
+        int resultSync = presenter.getFrequencySyncMinute();
+        // then
+        assertThat(resultUpdate, is(-1));
+        assertThat(resultSync, is(-1));
+    }
 }

@@ -111,7 +111,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public int getFrequencySyncMinute() {
         if (getFrequencySyncHour() == -1)
-            return -1;
+            return Integer.MAX_VALUE;
         if (getFrequencySyncHour() < Integer.MAX_VALUE)
             return getFrequencySyncHour() * 60;
         else
@@ -142,7 +142,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     public int getFrequencyUpdatePhotosHour() {
         if (getFrequencyUpdatePhotos() == -1)
-            return -1;
+            return Integer.MAX_VALUE;
         if (getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE)
             return getFrequencyUpdatePhotos() * 24;
         else

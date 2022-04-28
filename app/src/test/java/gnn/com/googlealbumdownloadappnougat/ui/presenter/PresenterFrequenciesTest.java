@@ -146,7 +146,7 @@ public class PresenterFrequenciesTest {
         int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
         int resultSync = presenter.getFrequencySyncMinute();
         // then
-        assertThat(resultUpdate, is(-1));
-        assertThat(resultSync, is(-1));
+        assertThat(resultUpdate, is(Integer.MAX_VALUE));
+        assertThat(resultSync, is(Integer.MAX_VALUE));
     }
 }

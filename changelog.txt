@@ -23,3 +23,9 @@ create live wallpaper
 les options de téléchargement et de fréquence sont maintenant dans des écrans séparés
 il est possible de choisir des fréquences qui désactivent le téléchargement et la
 récupération des nouvelles photos.
+
+1.5.1 26/04/2022
+Changement d'icone
+Correction synchronisation (et postentielle demande de permission) alors que les fréquence de
+téléchargement sont sur 'jamais'
+Création temporaire fréquence de téléchargement à 6 et 8 jours pour debugguer.

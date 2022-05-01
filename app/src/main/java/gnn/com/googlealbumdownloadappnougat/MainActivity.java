@@ -29,6 +29,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
+import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
     private PresenterMain presenter;
+    private PresenterWizard presenterWizard;
 
     private PermissionHandler permissionHandler;
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         folderModel = new ViewModelProvider(this).get(FolderModel.class);
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
+        presenterWizard = new PresenterWizard(this, null);
 
         new Notification(this).createNotificationChannel();
 
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         findViewById(R.id.button_switch_to_wizard).setOnClickListener(v -> {
-            presenter.switchToWizard();
+            presenterWizard.switchToWizard();
         });
 
     }

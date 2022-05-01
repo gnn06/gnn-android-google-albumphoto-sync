@@ -79,8 +79,4 @@ public class PresenterMain implements IPresenterMain {
         return new SynchronizerAndroid(activity, applicationContext.getCacheFile(), persistPref.getFrequencyUpdatePhotosHour(), applicationContext.getProcessFolder());
     }
 
-    public void switchToWizard() {
-        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
-        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
-    }
 }

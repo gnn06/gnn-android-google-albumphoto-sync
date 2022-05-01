@@ -91,7 +91,6 @@ public class DownloadManagerTest {
         Assert.assertEquals("name2.jpg", allArguments.get(1).getName());
     }
 
-    @Ignore
     @Test
     public void copy_overwrite() throws IOException {
         final File tmpFile = new File(System.getProperty("java.io.tmpdir"), "toto");

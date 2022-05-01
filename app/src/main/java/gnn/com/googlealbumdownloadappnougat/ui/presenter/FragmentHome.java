@@ -53,7 +53,7 @@ public class FragmentHome extends Fragment implements IViewHome {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new PresenterHome(this, (MainActivity) getActivity(), this);
+        presenter = new PresenterHome(this, (MainActivity) getActivity(), requireActivity());
         getView().findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();
@@ -102,7 +102,7 @@ public class FragmentHome extends Fragment implements IViewHome {
             }
         });
 
-        final UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
+        final UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
         userModel.getUser().observe(getActivity(), new Observer<GoogleSignInAccount>() {
             @Override
             public void onChanged(@Nullable GoogleSignInAccount account) {
@@ -110,7 +110,7 @@ public class FragmentHome extends Fragment implements IViewHome {
             }
         });
 
-        this.folderModel = new ViewModelProvider(this).get(FolderModel.class);
+        this.folderModel = new ViewModelProvider(requireActivity()).get(FolderModel.class);
         folderModel.getFolder().observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String folder) {

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
@@ -53,11 +54,11 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private final IViewHome view;
     private final MainActivity activity;
-    private final FragmentHome fragment;
+    private final FragmentActivity fragment;
     private UserModel userModel;
     private FolderModel folderModel;
 
-    public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome) {
+    public PresenterHome(IViewHome view, MainActivity activity, FragmentActivity fragmentHome) {
         this.view = view;
         this.activity = activity;
         this.auth = new AuthManager(activity);
@@ -66,7 +67,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         folderModel = new ViewModelProvider(fragmentHome).get(FolderModel.class);
     }
 
-    public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome,
+    public PresenterHome(IViewHome view, MainActivity activity, FragmentActivity fragmentHome,
                          UserModel userModel, FolderModel folderModel) {
         this.view = view;
         this.activity = activity;

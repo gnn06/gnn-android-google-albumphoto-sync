@@ -11,6 +11,8 @@ import static org.mockito.Mockito.when;
 
 import android.content.ContextWrapper;
 
+import androidx.fragment.app.FragmentActivity;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -38,7 +40,7 @@ public class PresenterHomeTest {
     private FragmentHome view;
     private UserModel userModel;
     private FolderModel folderModel;
-    private FragmentHome fragmentHome;
+    private FragmentActivity fragmentHome;
 
     @Before
     public void setUp() throws Exception {
@@ -46,7 +48,7 @@ public class PresenterHomeTest {
         view = mock(FragmentHome.class);
         userModel = mock(UserModel.class);
         folderModel = mock(FolderModel.class);
-        fragmentHome = mock(FragmentHome.class);
+        fragmentHome = mock(FragmentActivity.class);
     }
 
     @Test

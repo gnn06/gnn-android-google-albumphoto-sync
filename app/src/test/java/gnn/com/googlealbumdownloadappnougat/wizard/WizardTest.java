@@ -3,7 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.wizard;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -89,21 +88,21 @@ public class WizardTest {
     @Test
     public void getNext_first() {
         Wizard wizard = new Wizard(null, null, null, null);
-        WizardStep result = wizard.getNext(WizardStep.S00_NOT_STARTED);
+        WizardStep result = wizard.getNextStep(WizardStep.S00_NOT_STARTED);
         assertThat(result, Is.is(WizardStep.S01_LOGIN));
     }
 
     @Test
     public void getNext_middle() {
         Wizard wizard = new Wizard(null, null, null, null);
-        WizardStep result = wizard.getNext(WizardStep.S01_LOGIN);
+        WizardStep result = wizard.getNextStep(WizardStep.S01_LOGIN);
         assertThat(result, Is.is(WizardStep.S02_ASK_GOOGLE_PERMISSION));
     }
 
     @Test
     public void getNext_last() {
         Wizard wizard = new Wizard(null, null, null, null);
-        WizardStep result = wizard.getNext(WizardStep.S11_FINISHED);
+        WizardStep result = wizard.getNextStep(WizardStep.S11_FINISHED);
         assertThat(result, Is.is(WizardStep.S11_FINISHED));
     }
 }

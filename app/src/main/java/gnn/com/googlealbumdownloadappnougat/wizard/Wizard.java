@@ -19,7 +19,7 @@ public class Wizard {
         this.wallpaperScheduler = wallpaperScheduler;
     }
 
-    public WizardStep getNextStep() {
+    public WizardStep getNextStepDynamic() {
         if (!authManager.isSignIn()) {
             return WizardStep.S01_LOGIN;
         } else if (!authManager.hasGooglePermission()) {
@@ -60,12 +60,12 @@ public class Wizard {
         return persistPrefMain.restoreWizardActive();
     }
 
-    public WizardStep getNext() {
+    public WizardStep getNextStep() {
         WizardStep step = getStep();
-        return getNext(step);
+        return getNextStep(step);
     }
 
-    WizardStep getNext(WizardStep currentStep) {
+    WizardStep getNextStep(WizardStep currentStep) {
         int ordinal = currentStep.ordinal();
         if (ordinal < WizardStep.values().length - 1) {
             return WizardStep.values()[ordinal + 1];

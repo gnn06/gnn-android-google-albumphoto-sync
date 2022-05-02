@@ -32,7 +32,7 @@ public class WizardStepTest {
     public void determine_step_00_none() {
         when(authManager.isSignIn()).thenReturn(false);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         assertThat(step, is(WizardStep.S01_LOGIN));
     }
 
@@ -41,7 +41,7 @@ public class WizardStepTest {
         when(authManager.isSignIn()).thenReturn(true);
         when(authManager.hasGooglePermission()).thenReturn(false);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         assertThat(step, is(WizardStep.S02_ASK_GOOGLE_PERMISSION));
     }
 
@@ -53,7 +53,7 @@ public class WizardStepTest {
         when(persistPrefMain.getAlbum()).thenReturn(null);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S03_CHOOSE_ALBUM));
     }
@@ -66,7 +66,7 @@ public class WizardStepTest {
         when(persistPrefMain.getAlbum()).thenReturn("album");
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S04_ASK_WRITE_PERMISSION));
     }
@@ -81,7 +81,7 @@ public class WizardStepTest {
         when(persistPrefMain.getPhotoPath()).thenReturn(null);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S05_CHOOSE_FOLDER));
     }
@@ -97,7 +97,7 @@ public class WizardStepTest {
         when(wallpaperService.isActive()).thenReturn(false);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S06_ACTIVATE_LIVEWALLPAPER));
     }
@@ -114,7 +114,7 @@ public class WizardStepTest {
         when(persistPrefMain.getFrequencyWallpaper()).thenReturn(PersistPrefMain.DEF_FREQ_WALLPAPER_MINUTE);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY));
     }
@@ -132,7 +132,7 @@ public class WizardStepTest {
         when(persistPrefMain.getFrequencyDownload()).thenReturn(PersistPrefMain.DEF_FREQ_SYNC_HOUR);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S08_CHOOSE_DOWNLOAD_FREQUENCY));
     }
@@ -151,7 +151,7 @@ public class WizardStepTest {
         when(persistPrefMain.getFrequencyUpdatePhotosHour()).thenReturn(PersistPrefMain.DEF_FREQ_UPDATE_PHOTO_DAY);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S09_CHOOSE_UPDATE_FREQUENCY));
     }
@@ -171,7 +171,7 @@ public class WizardStepTest {
         when(wallpaperScheduler.isScheduled()).thenReturn(false);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S10_ACTIVATE_SCHEDULER));
     }
@@ -191,7 +191,7 @@ public class WizardStepTest {
         when(wallpaperScheduler.isScheduled()).thenReturn(true);
         Wizard wizard = new Wizard(authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
         // when
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getNextStepDynamic();
         // then
         assertThat(step, is(WizardStep.S11_FINISHED));
     }

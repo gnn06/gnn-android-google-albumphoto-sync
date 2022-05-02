@@ -59,4 +59,18 @@ public class Wizard {
     public boolean isActive() {
         return persistPrefMain.restoreWizardActive();
     }
+
+    public WizardStep getNext() {
+        WizardStep step = getStep();
+        return getNext(step);
+    }
+
+    WizardStep getNext(WizardStep currentStep) {
+        int ordinal = currentStep.ordinal();
+        if (ordinal < WizardStep.values().length - 1) {
+            return WizardStep.values()[ordinal + 1];
+        } else {
+            return currentStep;
+        }
+    }
 }

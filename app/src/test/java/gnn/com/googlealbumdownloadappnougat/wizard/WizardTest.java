@@ -85,4 +85,25 @@ public class WizardTest {
         // then
         assertThat(active, Is.is(true));
     }
+
+    @Test
+    public void getNext_first() {
+        Wizard wizard = new Wizard(null, null, null, null);
+        WizardStep result = wizard.getNext(WizardStep.S00_NOT_STARTED);
+        assertThat(result, Is.is(WizardStep.S01_LOGIN));
+    }
+
+    @Test
+    public void getNext_middle() {
+        Wizard wizard = new Wizard(null, null, null, null);
+        WizardStep result = wizard.getNext(WizardStep.S01_LOGIN);
+        assertThat(result, Is.is(WizardStep.S02_ASK_GOOGLE_PERMISSION));
+    }
+
+    @Test
+    public void getNext_last() {
+        Wizard wizard = new Wizard(null, null, null, null);
+        WizardStep result = wizard.getNext(WizardStep.S11_FINISHED);
+        assertThat(result, Is.is(WizardStep.S11_FINISHED));
+    }
 }

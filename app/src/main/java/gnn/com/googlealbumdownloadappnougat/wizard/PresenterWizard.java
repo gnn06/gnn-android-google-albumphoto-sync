@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class PresenterWizard {
 
@@ -28,6 +29,9 @@ public class PresenterWizard {
     }
 
     public void onViewCreated() {
-        this.view.setExplaination(2);
+        PersistPrefMain persist = new PersistPrefMain(activity);
+        Wizard wizard = new Wizard(null, persist, null, null);
+        WizardStep step = wizard.getNextStep();
+        this.view.setExplaination(step.ordinal());
     }
 }

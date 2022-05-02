@@ -134,6 +134,7 @@
         <item>2160</item>
     </integer-array>
     <string-array name="wizard_explaination">
+        <item>expli0 expli0 expli0 expli0 expli0 expli0 </item>
         <item>expli1 expli1 expli1 expli1 expli1 expli1 </item>
         <item>expli2 expli2 expli2 expli2 expli2 expli2 </item>
         <item>expli3 expli3 expli3 expli3 expli3 expli3 </item>

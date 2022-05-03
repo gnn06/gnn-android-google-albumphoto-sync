@@ -73,4 +73,9 @@ public class Wizard {
             return currentStep;
         }
     }
+
+    public void shiftToNextStep() {
+        WizardStep step = getNextStep();
+        setStep(step);
+    }
 }

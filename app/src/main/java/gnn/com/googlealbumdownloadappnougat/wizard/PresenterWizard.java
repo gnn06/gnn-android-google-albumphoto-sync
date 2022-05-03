@@ -12,10 +12,12 @@ public class PresenterWizard {
 
     final private FragmentWizard view;
     final private Activity activity;
+    private final PersistPrefMain persist;
 
     public PresenterWizard(Activity activity, FragmentWizard view) {
         this.view = view;
         this.activity = activity;
+        persist = new PersistPrefMain(this.activity);
     }
 
     public void switchToApp() {
@@ -28,8 +30,13 @@ public class PresenterWizard {
         controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
     }
 
+    public void nextStep() {
+        Wizard wizard = new Wizard(null, persist, null, null);
+        wizard.shiftToNextStep();
+        switchToWizard();
+    }
+
     public void onViewCreated() {
-        PersistPrefMain persist = new PersistPrefMain(activity);
         Wizard wizard = new Wizard(null, persist, null, null);
         WizardStep step = wizard.getNextStep();
         this.view.setExplaination(step.ordinal());

@@ -41,4 +41,9 @@ public class PresenterWizard {
         WizardStep step = wizard.getNextStep();
         this.view.setExplaination(step.ordinal());
     }
+
+    public void reset() {
+        Wizard wizard = new Wizard(null, persist, null, null);
+        wizard.resetStep();
+    }
 }

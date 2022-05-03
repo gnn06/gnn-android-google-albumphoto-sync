@@ -78,4 +78,8 @@ public class Wizard {
         WizardStep step = getNextStep();
         setStep(step);
     }
+
+    public void resetStep() {
+        setStep(WizardStep.S00_NOT_STARTED);
+    }
 }

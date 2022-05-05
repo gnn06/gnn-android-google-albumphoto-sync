@@ -134,12 +134,14 @@
         <item>2160</item>
     </integer-array>
     <string-array name="wizard_explaination">
-        <item>expli0 expli0 expli0 expli0 expli0 expli0 </item>
-        <item>expli1 expli1 expli1 expli1 expli1 expli1 </item>
-        <item>expli2 expli2 expli2 expli2 expli2 expli2 </item>
-        <item>expli3 expli3 expli3 expli3 expli3 expli3 </item>
-        <item>expli4</item>
-        <item>expli5</item>
-        <item>expli6</item>
+        <item>Vous allez devoir vous identifier avec votre compte Google. Cliquez sur Login.</item>
+        <item>Vous allez devoir autoriser l\'application à utiliser vos Photos Google.</item>
+        <item>Vous allez devoir choisir l\'album Google qui contient les photos que vous souhaitez afficher.</item>
+        <item>Vous allez devoir autoriser l\'application à stocker les photos sur votre téléphone.</item>
+        <item>L\'application va télécharger vos photos sur votre téléphone. Vous allez devoir choisir le répertoire de votre téléphone qui contiendra les photos en local.</item>
+        <item>Vous allez devoir activier le fond d\'écran dynamique de l\'application.</item>
+        <item>Vous allez devoir choisir la fréquence à laquelle le fond d\'écran est changé.</item>
+        <item>Vous allez devoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone.</item>
+        <item>Vous allez devoir choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google.</item>
     </string-array>
 </resources>

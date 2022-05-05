@@ -38,7 +38,7 @@ public class PresenterWizard {
 
     public void onViewCreated() {
         Wizard wizard = new Wizard(null, persist, null, null);
-        WizardStep step = wizard.getNextStep();
+        WizardStep step = wizard.getStep();
         this.view.setExplaination(step.ordinal());
     }
 

@@ -77,6 +77,7 @@
     <string name="pick_frequency">Choisir une fréquence</string>
     <string name="placeholder_frequency">Choisissez une fréquence</string>
     <string name="frequencyGroup_subtitle">Activation et fréquences</string>
+    <string name="text_wizard_step">Etape %1$d sur %2$d</string>
 
     <string-array name="frequency_wallpaper_label">
         <item>Toutes les 15 minutes</item>
@@ -143,5 +144,6 @@
         <item>Vous allez devoir choisir la fréquence à laquelle le fond d\'écran est changé.</item>
         <item>Vous allez devoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone.</item>
         <item>Vous allez devoir choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google.</item>
+        <item>Vous allez devoir activier le changement automatique des fonds d\'écran</item>
     </string-array>
 </resources>

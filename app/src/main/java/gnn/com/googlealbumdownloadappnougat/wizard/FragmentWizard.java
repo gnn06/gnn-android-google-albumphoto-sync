@@ -38,6 +38,10 @@ public class FragmentWizard extends Fragment {
     }
 
     public void setExplaination(int indice) {
+        TextView stepView = getView().findViewById(R.id.text_wizard_step);
+        String stringStep = getActivity().getResources().getString(R.string.text_wizard_step, indice + 1, WizardStep.values().length - 2);
+        stepView.setText(stringStep);
+
         String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
         TextView view = getView().findViewById(R.id.text_wizard_explaination);
         view.setText(strings[indice]);

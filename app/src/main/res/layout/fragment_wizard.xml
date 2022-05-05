@@ -5,12 +5,20 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/text_wizard_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_wizard_step"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/text_wizard_explaination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EXplciation sur l'étape"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/text_wizard_step" />
 
     <Button
         android:id="@+id/wizard_button_switch_to_app"

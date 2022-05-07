@@ -4,18 +4,11 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/button_switch_to_wizard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wizard" />
-
     <androidx.fragment.app.FragmentContainerView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_container_view"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/button_switch_to_wizard"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 

@@ -78,6 +78,7 @@
     <string name="placeholder_frequency">Choisissez une fréquence</string>
     <string name="frequencyGroup_subtitle">Activation et fréquences</string>
     <string name="text_wizard_step">Etape %1$d sur %2$d</string>
+    <string name="wizard">Assistant</string>
 
     <string-array name="frequency_wallpaper_label">
         <item>Toutes les 15 minutes</item>

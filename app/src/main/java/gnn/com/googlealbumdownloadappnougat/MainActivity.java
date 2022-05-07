@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         final NavController navController = fragmentById.getNavController();
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        findViewById(R.id.button_switch_to_wizard).setOnClickListener(v -> {
-            presenterWizard.switchToWizard();
-        });
     }
 
     @Override
@@ -103,17 +99,20 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.logout) {
+        if (item.getItemId() == R.id.menuLogout) {
             presenter.onSignOut();
             return true;
-        } else if (item.getItemId() == R.id.reset_cache) {
+        } else if (item.getItemId() == R.id.menuReset_cache) {
             presenter.onMenuResetCache();
             return true;
-        } else if (item.getItemId() == R.id.scheduleDetails) {
+        } else if (item.getItemId() == R.id.menuScheduleDetails) {
             presenter.onMenuScheduleDetail();
             return true;
-        } else if (item.getItemId() == R.id.requestGooglePermission) {
+        } else if (item.getItemId() == R.id.menuRequestGooglePermission) {
             presenter.onMenuRequestGooglePermission();
+            return true;
+        } else if (item.getItemId() == R.id.menuStartWizard) {
+            new PresenterWizard(this, null).switchToWizard();
             return true;
         }
         return super.onOptionsItemSelected(item);

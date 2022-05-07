@@ -74,12 +74,15 @@ public class Wizard {
         }
     }
 
-    public void shiftToNextStep() {
+    public WizardStep shiftToNextStep() {
         WizardStep step = getNextStep();
         setStep(step);
+        return step;
     }
 
-    public void resetStep() {
-        setStep(WizardStep.S00_NOT_STARTED);
+    public WizardStep resetStep() {
+        WizardStep step = WizardStep.S00_NOT_STARTED;
+        setStep(step);
+        return step;
     }
 }

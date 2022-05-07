@@ -79,13 +79,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         findViewById(R.id.button_switch_to_wizard).setOnClickListener(v -> {
             presenterWizard.switchToWizard();
         });
-        findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
-            presenterWizard.nextStep();
-        });
-        findViewById(R.id.button_wizard_reset).setOnClickListener(v -> {
-            presenterWizard.reset();
-        });
-
     }
 
     @Override

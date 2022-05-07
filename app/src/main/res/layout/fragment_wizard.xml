@@ -9,16 +9,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_wizard_step"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toTopOf="@id/text_wizard_explaination"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="12dp"/>
 
     <TextView
         android:id="@+id/text_wizard_explaination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EXplciation sur l'étape"
+        android:text="Explication par défaut sur l'étape"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toTopOf="@id/button_wizard_next"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_wizard_step" />
+        android:layout_margin="12dp"/>
 
     <Button
         android:id="@+id/wizard_button_switch_to_app"
@@ -27,4 +31,20 @@
         android:text="Switch to app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/button_wizard_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/wizard_button_switch_to_app" />
+
+    <Button
+        android:id="@+id/button_wizard_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reset"
+        app:layout_constraintLeft_toRightOf="@id/button_wizard_next"
+        app:layout_constraintTop_toTopOf="@id/button_wizard_next" />
 </androidx.constraintlayout.widget.ConstraintLayout>

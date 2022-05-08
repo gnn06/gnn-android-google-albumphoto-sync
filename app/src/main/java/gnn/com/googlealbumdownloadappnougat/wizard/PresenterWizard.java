@@ -30,9 +30,9 @@ public class PresenterWizard {
     public void switchToWizard() {
 //        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
 //        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
-//        FragmentTransaction transaction = this.activity.getSupportFragmentManager().beginTransaction();
-//        transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
-//        transaction.commit();
+        FragmentTransaction transaction = this.activity.getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
+        transaction.commit();
         activity.findViewById(R.id.fragment_container_wizard).setVisibility(View.VISIBLE);
     }
 

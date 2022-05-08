@@ -31,14 +31,14 @@ public class FragmentWizard extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.presenter = new PresenterWizard(this.getActivity(), this);
-        getView().findViewById(R.id.wizard_button_switch_to_app).setOnClickListener(v -> {
-            presenter.switchToApp();
-        });
         getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
             presenter.nextStep();
         });
         getView().findViewById(R.id.button_wizard_reset).setOnClickListener(v -> {
             presenter.reset();
+        });
+        getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> {
+            presenter.stop();
         });
         presenter.onViewCreated();
     }

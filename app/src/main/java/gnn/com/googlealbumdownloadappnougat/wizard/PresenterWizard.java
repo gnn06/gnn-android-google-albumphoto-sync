@@ -53,4 +53,10 @@ public class PresenterWizard {
         WizardStep step = wizard.resetStep();
         this.view.setExplaination(step.ordinal());
     }
+
+    public void stop() {
+        Wizard wizard = new Wizard(null, persist, null, null, activity);
+        wizard.setActive(false);
+        activity.findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
+    }
 }

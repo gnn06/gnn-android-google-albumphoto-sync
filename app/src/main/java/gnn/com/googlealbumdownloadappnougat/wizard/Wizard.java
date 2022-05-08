@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import android.content.Context;
+
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
@@ -11,12 +13,14 @@ public class Wizard {
     private final PersistPrefMain persistPrefMain;
     private final MyWallpaperService wallpaperService;
     private final WallpaperScheduler wallpaperScheduler;
+    private final Context context;
 
-    public Wizard(AuthManager authManager, PersistPrefMain persistPrefMain, MyWallpaperService wallpaperService, WallpaperScheduler wallpaperScheduler) {
+    public Wizard(AuthManager authManager, PersistPrefMain persistPrefMain, MyWallpaperService wallpaperService, WallpaperScheduler wallpaperScheduler, Context context) {
         this.authManager = authManager;
         this.persistPrefMain = persistPrefMain;
         this.wallpaperService = wallpaperService;
         this.wallpaperScheduler = wallpaperScheduler;
+        this.context = context;
     }
 
     public WizardStep getNextStepDynamic() {
@@ -30,7 +34,7 @@ public class Wizard {
             return WizardStep.S04_ASK_WRITE_PERMISSION;
         } else if (persistPrefMain.getPhotoPath() == null) {
             return WizardStep.S05_CHOOSE_FOLDER;
-        } else if (!wallpaperService.isActive()) {
+        } else if (!wallpaperService.isActive(context)) {
             return WizardStep.S06_ACTIVATE_LIVEWALLPAPER;
         } else if (persistPrefMain.getFrequencyWallpaper() == PersistPrefMain.DEF_FREQ_WALLPAPER_MINUTE) {
             return WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY;

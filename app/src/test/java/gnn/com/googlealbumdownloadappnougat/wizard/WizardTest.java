@@ -40,7 +40,7 @@ public class WizardTest {
     @Test
     public void persist_save_step() {
         // Given
-        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
+        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler, null);
         // when
         wizard.setStep(WizardStep.S02_ASK_GOOGLE_PERMISSION);
         // then
@@ -51,7 +51,7 @@ public class WizardTest {
     @Test
     public void persist_restore_step() {
         // Given
-        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
+        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler, null);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString("wizard_step", WizardStep.S03_CHOOSE_ALBUM.name());
         edit.apply();
@@ -64,7 +64,7 @@ public class WizardTest {
     @Test
     public void persist_save_isActive() {
         // Given
-        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
+        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler, null);
         // when
         wizard.setActive(true);
         // then
@@ -75,7 +75,7 @@ public class WizardTest {
     @Test
     public void persist_restore_isActive() {
         // Given
-        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler);
+        Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler, null);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putBoolean("wizard_active", true);
         edit.apply();
@@ -87,21 +87,21 @@ public class WizardTest {
 
     @Test
     public void getNext_first() {
-        Wizard wizard = new Wizard(null, null, null, null);
+        Wizard wizard = new Wizard(null, null, null, null, null);
         WizardStep result = wizard.getNextStep(WizardStep.S00_NOT_STARTED);
         assertThat(result, Is.is(WizardStep.S01_LOGIN));
     }
 
     @Test
     public void getNext_middle() {
-        Wizard wizard = new Wizard(null, null, null, null);
+        Wizard wizard = new Wizard(null, null, null, null, null);
         WizardStep result = wizard.getNextStep(WizardStep.S01_LOGIN);
         assertThat(result, Is.is(WizardStep.S02_ASK_GOOGLE_PERMISSION));
     }
 
     @Test
     public void getNext_last() {
-        Wizard wizard = new Wizard(null, null, null, null);
+        Wizard wizard = new Wizard(null, null, null, null, null);
         WizardStep result = wizard.getNextStep(WizardStep.S11_FINISHED);
         assertThat(result, Is.is(WizardStep.S11_FINISHED));
     }

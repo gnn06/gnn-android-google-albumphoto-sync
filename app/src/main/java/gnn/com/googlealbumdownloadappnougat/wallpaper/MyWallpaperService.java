@@ -10,7 +10,6 @@ import android.view.SurfaceHolder;
 
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.WallpaperObserver;
 
@@ -19,12 +18,6 @@ import gnn.com.photos.sync.WallpaperObserver;
  */
 
 public class MyWallpaperService extends WallpaperService {
-
-    private final Context context;
-
-    public MyWallpaperService(Context context) {
-        this.context = context;
-    }
 
     @Override
     public Engine onCreateEngine() {
@@ -166,7 +159,7 @@ public class MyWallpaperService extends WallpaperService {
         return Environment.getExternalStoragePublicDirectory(path);
     }
 
-    public boolean isActive() {
+    public boolean isActive(Context context) {
         WallpaperManager wlppMgr = WallpaperManager.getInstance(context);
         WallpaperInfo wlppInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +

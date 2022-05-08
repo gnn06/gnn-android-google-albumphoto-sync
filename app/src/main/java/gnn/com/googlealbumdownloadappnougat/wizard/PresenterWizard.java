@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
-import android.view.View;
-
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -36,19 +34,19 @@ public class PresenterWizard {
     }
 
     public void nextStep() {
-        Wizard wizard = new Wizard(null, persist, null, null);
+        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.shiftToNextStep();
         this.view.setExplaination(step.ordinal());
     }
 
     public void onViewCreated() {
-        Wizard wizard = new Wizard(null, persist, null, null);
+        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.getStep();
         this.view.setExplaination(step.ordinal());
     }
 
     public void reset() {
-        Wizard wizard = new Wizard(null, persist, null, null);
+        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.resetStep();
         this.view.setExplaination(step.ordinal());
     }

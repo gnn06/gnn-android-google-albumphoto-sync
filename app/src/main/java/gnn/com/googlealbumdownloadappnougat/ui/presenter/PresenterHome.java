@@ -137,7 +137,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         WallpaperInfo wlppInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
                 (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
-        view.setWarningWallpaperActive(new MyWallpaperService(activity).isActive());
+        view.setWarningWallpaperActive(new MyWallpaperService().isActive(this.activity));
 
     }
 

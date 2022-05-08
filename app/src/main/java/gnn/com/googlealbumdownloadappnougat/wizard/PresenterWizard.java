@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import android.view.View;
+
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -31,6 +33,7 @@ public class PresenterWizard {
         FragmentTransaction transaction = this.activity.getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
         transaction.commit();
+        activity.findViewById(R.id.fragment_container_wizard).setVisibility(View.VISIBLE);
     }
 
     public void nextStep() {

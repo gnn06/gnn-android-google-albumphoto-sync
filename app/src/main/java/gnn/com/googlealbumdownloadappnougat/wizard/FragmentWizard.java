@@ -34,9 +34,6 @@ public class FragmentWizard extends Fragment {
         getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
             presenter.nextStep();
         });
-        getView().findViewById(R.id.button_wizard_reset).setOnClickListener(v -> {
-            presenter.reset();
-        });
         getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> {
             presenter.stop();
         });

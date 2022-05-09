@@ -60,6 +60,8 @@ public class PresenterWizard {
     public void stop() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         wizard.setActive(false);
+        WizardStep step = wizard.resetStep();
+        view.setExplaination(step.ordinal());
         activity.findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
     }
 }

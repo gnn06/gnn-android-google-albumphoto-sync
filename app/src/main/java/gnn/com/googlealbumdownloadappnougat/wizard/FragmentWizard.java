@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 
 public class FragmentWizard extends Fragment {
@@ -31,7 +32,7 @@ public class FragmentWizard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterWizard(null, this);
+        this.presenter = new PresenterWizard((MainActivity) getActivity(), this);
         getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
             presenter.nextStep();
         });

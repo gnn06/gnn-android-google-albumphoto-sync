@@ -34,6 +34,8 @@ public class PresenterWizard {
 //        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
 //        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
         this.activity.makeVisible(true);
+        WizardStep step = persist.restoreWizardStep();
+        this.view.setExplaination(step.ordinal());
     }
 
     public void nextStep() {

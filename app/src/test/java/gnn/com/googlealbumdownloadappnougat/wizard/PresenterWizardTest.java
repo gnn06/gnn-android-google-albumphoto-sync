@@ -24,7 +24,7 @@ public class PresenterWizardTest {
         this.persist = mock(PersistPrefMain.class);
         this.view = mock(FragmentWizard.class);
         this.activity = mock(MainActivity.class);
-        presenter = new PresenterWizard(null, view, this.persist);
+        presenter = new PresenterWizard(activity, view, this.persist);
     }
 
     @Test

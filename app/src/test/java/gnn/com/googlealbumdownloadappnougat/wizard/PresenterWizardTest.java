@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -31,7 +32,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(view.makeVisible());
+        verify(view.makeVisible(true));
     }
 
     @Test
@@ -42,7 +43,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(view.makeVisible(), never());
+        verify(view.makeVisible(anyBoolean()), never());
     }
 
     @Test

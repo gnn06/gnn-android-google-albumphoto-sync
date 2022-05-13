@@ -35,7 +35,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(activity.makeVisible(true));
+        verify(activity).makeVisible(true);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(activity.makeVisible(anyBoolean()), never());
+        verify(activity, never()).makeVisible(anyBoolean());
     }
 
     @Test
@@ -57,8 +57,8 @@ public class PresenterWizardTest {
         // when
         presenter.onStopWizard();
         // then
-        verify(persist.saveWizardStep(WizardStep.S11_FINISHED));
-        verify(activity.makeVisible(false));
+        verify(persist).saveWizardStep(WizardStep.S11_FINISHED);
+        verify(activity).makeVisible(false);
     }
 
     @Test
@@ -66,8 +66,8 @@ public class PresenterWizardTest {
         // when
         presenter.reset();
         // then
-        verify(persist.saveWizardStep(WizardStep.S01_LOGIN));
-        verify(activity.setExplaination(WizardStep.S01_LOGIN.ordinal()))
+        verify(persist).saveWizardStep(WizardStep.S01_LOGIN);
+        verify(view).setExplaination(WizardStep.S01_LOGIN.ordinal());
     }
 
     @Test
@@ -78,8 +78,8 @@ public class PresenterWizardTest {
         // when
         presenter.onShowWizard();
         // then
-        verify(activity.makeVisible(true));
-        verify(view.setExplaination(WizardStep.S06_ACTIVATE_LIVEWALLPAPER.ordinal()));
+        verify(activity).makeVisible(true);
+        verify(view).setExplaination(WizardStep.S06_ACTIVATE_LIVEWALLPAPER.ordinal());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class PresenterWizardTest {
         // when
         presenter.nextStep();
         // then
-        verify(persist.saveWizardStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY));
-        verify(view.setExplaination(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY.ordinal()))
+        verify(persist).saveWizardStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
+        verify(view).setExplaination(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY.ordinal());
     }
 }

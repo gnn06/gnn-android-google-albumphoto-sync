@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 
@@ -35,7 +36,7 @@ public class FragmentWizard extends Fragment {
             presenter.nextStep();
         });
         getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> {
-            presenter.stop();
+            presenter.onStopWizard();
         });
         presenter.onViewCreated();
     }
@@ -48,5 +49,17 @@ public class FragmentWizard extends Fragment {
         String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
         TextView view = getView().findViewById(R.id.text_wizard_explaination);
         view.setText(strings[indice]);
+    }
+
+
+    public void makeVisible(boolean visible) {
+        View button = this.activity.findViewById(R.id.button_wizard_next);
+        if (button == null) {
+            FragmentTransaction transaction = this.activity.getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
+            transaction.commit();
+        }
+        getView().findViewById(R.id.fragment_container_wizard).setVisibility(
+                visible ? View.VISIBLE : View.GONE);
     }
 }

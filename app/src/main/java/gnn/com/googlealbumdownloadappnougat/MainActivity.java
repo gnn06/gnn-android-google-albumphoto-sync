@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.onMenuRequestGooglePermission();
             return true;
         } else if (item.getItemId() == R.id.menuStartWizard) {
-            new PresenterWizard(this, null).switchToWizard();
+            new PresenterWizard(this, null).onShowWizard();
             return true;
         }
         return super.onOptionsItemSelected(item);

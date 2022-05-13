@@ -31,14 +31,13 @@ public class FragmentWizard extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterWizard(this.getActivity(), this);
+        this.presenter = new PresenterWizard(null, this);
         getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
             presenter.nextStep();
         });
         getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> {
             presenter.onStopWizard();
         });
-        presenter.onViewCreated();
     }
 
     public void setExplaination(int indice) {
@@ -49,17 +48,5 @@ public class FragmentWizard extends Fragment {
         String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
         TextView view = getView().findViewById(R.id.text_wizard_explaination);
         view.setText(strings[indice]);
-    }
-
-
-    public void makeVisible(boolean visible) {
-        View button = this.activity.findViewById(R.id.button_wizard_next);
-        if (button == null) {
-            FragmentTransaction transaction = this.activity.getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
-            transaction.commit();
-        }
-        getView().findViewById(R.id.fragment_container_wizard).setVisibility(
-                visible ? View.VISIBLE : View.GONE);
     }
 }

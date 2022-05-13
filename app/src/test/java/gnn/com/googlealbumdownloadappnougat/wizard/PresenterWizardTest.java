@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class PresenterWizardTest {
@@ -16,11 +17,13 @@ public class PresenterWizardTest {
     private PresenterWizard presenter;
     private PersistPrefMain persist;
     private FragmentWizard view;
+    private MainActivity activity;
 
     @Before
     public void setUp() throws Exception {
         this.persist = mock(PersistPrefMain.class);
         this.view = mock(FragmentWizard.class);
+        this.activity = mock(MainActivity.class);
         presenter = new PresenterWizard(null, view, this.persist);
     }
 
@@ -32,7 +35,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(view.makeVisible(true));
+        verify(activity.makeVisible(true));
     }
 
     @Test
@@ -43,7 +46,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(view.makeVisible(anyBoolean()), never());
+        verify(activity.makeVisible(anyBoolean()), never());
     }
 
     @Test
@@ -55,7 +58,7 @@ public class PresenterWizardTest {
         presenter.onStopWizard();
         // then
         verify(persist.saveWizardStep(WizardStep.S11_FINISHED));
-        verify(view.makeVisible(false));
+        verify(activity.makeVisible(false));
     }
 
     @Test
@@ -64,7 +67,7 @@ public class PresenterWizardTest {
         presenter.reset();
         // then
         verify(persist.saveWizardStep(WizardStep.S01_LOGIN));
-        verify(view.setExplaination(WizardStep.S01_LOGIN.ordinal()))
+        verify(activity.setExplaination(WizardStep.S01_LOGIN.ordinal()))
     }
 
     @Test
@@ -75,7 +78,7 @@ public class PresenterWizardTest {
         // when
         presenter.onShowWizard();
         // then
-        verify(view.makeVisible(true));
+        verify(activity.makeVisible(true));
         verify(view.setExplaination(WizardStep.S06_ACTIVATE_LIVEWALLPAPER.ordinal()));
     }
 

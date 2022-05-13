@@ -2,25 +2,23 @@ package gnn.com.googlealbumdownloadappnougat.wizard;
 
 import android.view.View;
 
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class PresenterWizard {
 
     final private FragmentWizard view;
-    final private FragmentActivity activity;
+    final private MainActivity activity;
     private final PersistPrefMain persist;
 
-    public PresenterWizard(FragmentActivity activity, FragmentWizard view) {
+    public PresenterWizard(MainActivity activity, FragmentWizard view) {
         this.view = view;
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
     }
 
-    public PresenterWizard(FragmentActivity activity, FragmentWizard view, PersistPrefMain persist) {
+    public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist) {
         this.view = view;
         this.activity = activity;
         this.persist = persist;
@@ -35,7 +33,7 @@ public class PresenterWizard {
     public void onShowWizard() {
 //        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
 //        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
-        view.makeVisible(true);
+        this.activity.makeVisible(true);
     }
 
     public void nextStep() {
@@ -62,9 +60,4 @@ public class PresenterWizard {
 
     }
 
-    public void onViewCreated() {
-        Wizard wizard = new Wizard(null, persist, null, null, activity);
-        WizardStep step = wizard.getStep();
-        this.view.setExplaination(step.ordinal());
-    }
 }

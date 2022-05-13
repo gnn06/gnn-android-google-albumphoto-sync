@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,6 +31,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
+import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
 
 public class MainActivity extends AppCompatActivity implements IView {
@@ -150,5 +153,16 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .setMessage(message)
                 .setNegativeButton(android.R.string.ok, null)
                 .show();
+    }
+
+    public void makeVisible(boolean visible) {
+        View button = findViewById(R.id.button_wizard_next);
+        if (button == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
+            transaction.commit();
+        }
+        findViewById(R.id.fragment_container_wizard).setVisibility(
+                visible ? View.VISIBLE : View.GONE);
     }
 }

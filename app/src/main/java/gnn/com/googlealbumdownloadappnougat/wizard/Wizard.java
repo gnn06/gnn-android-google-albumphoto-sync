@@ -89,4 +89,10 @@ public class Wizard {
         setStep(step);
         return step;
     }
+
+    public WizardStep stop() {
+        WizardStep step = WizardStep.S11_FINISHED;
+        setStep(step);
+        return step;
+    }
 }

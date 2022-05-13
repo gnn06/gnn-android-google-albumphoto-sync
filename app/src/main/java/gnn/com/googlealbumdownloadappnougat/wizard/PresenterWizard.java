@@ -35,7 +35,8 @@ public class PresenterWizard {
 //        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
         this.activity.makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
-        this.view.setExplaination(step.ordinal());
+        if (this.view != null)
+            this.view.setExplaination(step.ordinal());
     }
 
     public void nextStep() {
@@ -47,9 +48,8 @@ public class PresenterWizard {
     public void onStopWizard() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         wizard.setActive(false);
-        WizardStep step = wizard.resetStep();
-        view.setExplaination(step.ordinal());
-        activity.findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
+        WizardStep step = wizard.stop();
+        activity.makeVisible(false);
     }
 
     public void reset() {

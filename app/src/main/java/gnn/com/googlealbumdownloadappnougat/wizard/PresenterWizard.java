@@ -35,6 +35,10 @@ public class PresenterWizard {
 //        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
         this.activity.makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
+        if (step == WizardStep.S11_FINISHED) {
+            Wizard wizard = new Wizard(null, persist, null, null, activity);
+            step = wizard.resetStep();
+        }
         if (this.view != null)
             this.view.setExplaination(step.ordinal());
     }

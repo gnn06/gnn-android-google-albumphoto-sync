@@ -85,6 +85,18 @@ public class PresenterWizardTest {
     }
 
     @Test
+    public void wizardMenu_finishStep_wizardShown_explanationAsStep() {
+        // when show wizard, and ste=FINISH, when restart wizard
+        // given
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S11_FINISHED);
+        // when
+        presenter.onShowWizard();
+        // then
+        verify(activity).makeVisible(true);
+        verify(view).setExplaination(WizardStep.S00_NOT_STARTED.ordinal());
+    }
+
+    @Test
     public void next() {
         // when next called, increment step
         // given

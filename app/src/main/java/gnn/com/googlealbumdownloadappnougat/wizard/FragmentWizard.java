@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class FragmentWizard extends Fragment {
 
@@ -49,5 +50,13 @@ public class FragmentWizard extends Fragment {
         String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
         TextView view = getView().findViewById(R.id.text_wizard_explaination);
         view.setText(strings[indice]);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PersistPrefMain persist = new PersistPrefMain(requireActivity());
+        WizardStep step = persist.restoreWizardStep();
+        setExplaination(step.ordinal());
     }
 }

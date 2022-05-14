@@ -41,6 +41,8 @@ public class PresenterWizard {
         }
         if (this.view != null)
             this.view.setExplaination(step.ordinal());
+
+        // TODO if already inflate, miss a setExplanation
     }
 
     public void nextStep() {

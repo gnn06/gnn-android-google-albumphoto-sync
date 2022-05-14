@@ -54,6 +54,7 @@ public class FragmentWizard extends Fragment {
 
     @Override
     public void onResume() {
+        // called once on first
         super.onResume();
         PersistPrefMain persist = new PersistPrefMain(requireActivity());
         WizardStep step = persist.restoreWizardStep();

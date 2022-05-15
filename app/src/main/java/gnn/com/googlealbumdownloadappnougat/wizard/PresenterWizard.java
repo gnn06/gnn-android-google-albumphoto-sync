@@ -1,9 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
-import android.view.View;
-
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class PresenterWizard {
@@ -25,14 +22,7 @@ public class PresenterWizard {
         
     }
 
-//    public void switchToApp() {
-//        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
-//        controller.navigate(R.id.action_fragmentWizard_to_fragmentHome);
-//    }
-
     public void onShowWizard() {
-//        NavController controller = Navigation.findNavController(this.activity, R.id.fragment_container_view);
-//        controller.navigate(R.id.action_fragmentHome_to_fragmentWizard);
         this.activity.makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
         if (step == WizardStep.S11_FINISHED) {
@@ -54,7 +44,6 @@ public class PresenterWizard {
     public void onStopWizard() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         wizard.setActive(false);
-        WizardStep step = wizard.stop();
         activity.makeVisible(false);
     }
 

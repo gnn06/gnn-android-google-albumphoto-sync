@@ -69,7 +69,7 @@ public class PresenterWizardTest {
         presenter.reset();
         // then
         verify(persist).saveWizardStep(WizardStep.S00_NOT_STARTED);
-        verify(view).setExplaination(WizardStep.S00_NOT_STARTED.ordinal());
+        verify(view).setExplanation(WizardStep.S00_NOT_STARTED);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class PresenterWizardTest {
         presenter.onShowWizard();
         // then
         verify(activity).makeVisible(true);
-        verify(view).setExplaination(WizardStep.S06_ACTIVATE_LIVEWALLPAPER.ordinal());
+        verify(view).setExplanation(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class PresenterWizardTest {
         presenter.onShowWizard();
         // then
         verify(activity).makeVisible(true);
-        verify(view).setExplaination(WizardStep.S00_NOT_STARTED.ordinal());
+        verify(view).setExplanation(WizardStep.S00_NOT_STARTED);
     }
 
     @Test
@@ -105,6 +105,6 @@ public class PresenterWizardTest {
         presenter.nextStep();
         // then
         verify(persist).saveWizardStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
-        verify(view).setExplaination(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY.ordinal());
+        verify(view).setExplanation(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
     }
 }

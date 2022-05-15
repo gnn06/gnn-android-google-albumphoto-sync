@@ -30,7 +30,7 @@ public class PresenterWizard {
             step = wizard.resetStep();
         }
         if (this.view != null)
-            this.view.setExplaination(step.ordinal());
+            this.view.setExplanation(step);
 
         // TODO if already inflate, miss a setExplanation
     }
@@ -38,7 +38,7 @@ public class PresenterWizard {
     public void nextStep() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.shiftToNextStep();
-        this.view.setExplaination(step.ordinal());
+        this.view.setExplanation(step);
     }
 
     public void onStopWizard() {
@@ -51,7 +51,7 @@ public class PresenterWizard {
     public void reset() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.resetStep();
-        this.view.setExplaination(step.ordinal());
+        this.view.setExplanation(step);
     }
 
     public void onAppStart() {

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
@@ -42,14 +41,15 @@ public class FragmentWizard extends Fragment {
         });
     }
 
-    public void setExplaination(int indice) {
+    public void setExplanation(WizardStep step) {
+        int index = step.ordinal();
         TextView stepView = getView().findViewById(R.id.text_wizard_step);
-        String stringStep = getActivity().getResources().getString(R.string.text_wizard_step, indice + 1, WizardStep.values().length - 2);
+        String stringStep = getActivity().getResources().getString(R.string.text_wizard_step, index + 1, WizardStep.values().length - 2);
         stepView.setText(stringStep);
 
         String[] strings = getActivity().getResources().getStringArray(R.array.wizard_explaination);
         TextView view = getView().findViewById(R.id.text_wizard_explaination);
-        view.setText(strings[indice]);
+        view.setText(strings[index]);
     }
 
     @Override
@@ -58,6 +58,6 @@ public class FragmentWizard extends Fragment {
         super.onResume();
         PersistPrefMain persist = new PersistPrefMain(requireActivity());
         WizardStep step = persist.restoreWizardStep();
-        setExplaination(step.ordinal());
+        setExplanation(step);
     }
 }

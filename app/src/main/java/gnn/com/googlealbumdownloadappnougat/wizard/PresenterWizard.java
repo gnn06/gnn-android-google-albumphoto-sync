@@ -11,6 +11,7 @@ public class PresenterWizard {
 
     public PresenterWizard(MainActivity activity, FragmentWizard view) {
         this.view = view;
+        // TODO try to retrieve activity from fragment
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
     }
@@ -35,6 +36,7 @@ public class PresenterWizard {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.shiftToNextStep();
         this.view.setExplanation(step);
+        // TODO faudrait un observer
     }
 
     public void onStopWizard() {

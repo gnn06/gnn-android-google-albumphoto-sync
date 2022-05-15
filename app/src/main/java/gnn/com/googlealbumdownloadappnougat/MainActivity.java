@@ -13,6 +13,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -157,12 +158,15 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     public void makeVisible(boolean visible) {
         View button = findViewById(R.id.button_wizard_next);
-        if (button == null) {
+        if (visible && button == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container_wizard, FragmentWizard.class, null);
+            transaction.add(R.id.fragment_container_wizard, new FragmentWizard(), "FRAG_WIZARD");
+            transaction.commit();
+        } else if (!visible) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_WIZARD");
+            transaction.remove(fragment);
             transaction.commit();
         }
-        findViewById(R.id.fragment_container_wizard).setVisibility(
-                visible ? View.VISIBLE : View.GONE);
     }
 }

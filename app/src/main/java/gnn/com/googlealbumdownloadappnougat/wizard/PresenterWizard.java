@@ -44,6 +44,7 @@ public class PresenterWizard {
     public void onStopWizard() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         wizard.setActive(false);
+        wizard.stop();
         activity.makeVisible(false);
     }
 

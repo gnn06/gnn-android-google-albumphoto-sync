@@ -81,7 +81,6 @@ public class PresenterWizardTest {
         presenter.onShowWizard();
         // then
         verify(activity).makeVisible(true);
-        verify(view).setExplanation(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
     }
 
     @Test
@@ -93,7 +92,6 @@ public class PresenterWizardTest {
         presenter.onShowWizard();
         // then
         verify(activity).makeVisible(true);
-        verify(view).setExplanation(WizardStep.S00_NOT_STARTED);
     }
 
     @Test

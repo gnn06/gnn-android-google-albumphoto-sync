@@ -29,10 +29,6 @@ public class PresenterWizard {
             Wizard wizard = new Wizard(null, persist, null, null, activity);
             step = wizard.resetStep();
         }
-        if (this.view != null)
-            this.view.setExplanation(step);
-
-        // TODO if already inflate, miss a setExplanation
     }
 
     public void nextStep() {

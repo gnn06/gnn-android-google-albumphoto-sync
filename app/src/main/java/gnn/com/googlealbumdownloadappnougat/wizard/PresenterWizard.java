@@ -5,13 +5,16 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class PresenterWizard {
 
+    // La vue gérant le fragment
+    // non null que qd le presenter est utilisé directement depuis le fragment pour les
+    // commandes next.
     final private FragmentWizard view;
+    // L'activité gérant le menu et rendant le wizard visible
     final private MainActivity activity;
     private final PersistPrefMain persist;
 
     public PresenterWizard(MainActivity activity, FragmentWizard view) {
         this.view = view;
-        // TODO try to retrieve activity from fragment
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
     }

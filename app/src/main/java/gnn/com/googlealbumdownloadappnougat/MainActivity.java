@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
         presenterWizard = new PresenterWizard(this, null);
+        presenterWizard.onAppStart();
 
         new Notification(this).createNotificationChannel();
 
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         final NavController navController = fragmentById.getNavController();
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
     }
 
     @Override

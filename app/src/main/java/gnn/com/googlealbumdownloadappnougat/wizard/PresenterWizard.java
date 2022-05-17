@@ -53,7 +53,11 @@ public class PresenterWizard {
     }
 
     public void onAppStart() {
-
+        Wizard wizard = new Wizard(null, persist, null, null, activity);
+        WizardStep step = wizard.getStep();
+        if (step != WizardStep.S11_FINISHED) {
+            activity.makeVisible(true);
+        }
     }
 
 }

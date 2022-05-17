@@ -29,11 +29,21 @@ public class PresenterWizardTest {
     }
 
     @Test
-    @Ignore("wait onApp implementation")
     public void wizardNeverShown_AppStart_wizardShown() {
         // when app start, and wizard was never started, check that wizard is shown
         // given
         when(persist.restoreWizardStep()).thenReturn(WizardStep.S00_NOT_STARTED);
+        // when
+        presenter.onAppStart();
+        // then
+        verify(activity).makeVisible(true);
+    }
+
+    @Test
+    public void step01_AppStart_wizardShown() {
+        // when app start, and wizard was never started, check that wizard is shown
+        // given
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S01_LOGIN);
         // when
         presenter.onAppStart();
         // then

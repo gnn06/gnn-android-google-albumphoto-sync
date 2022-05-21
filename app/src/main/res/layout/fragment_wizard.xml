@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/text_wizard_step"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/text_wizard_step"
@@ -19,17 +19,17 @@
 
     <TextView
         android:id="@+id/text_wizard_explaination"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Explication par défaut sur l'étape"
+        android:text="Explication par défaut sur l'étape. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut felis lorem, fermentum ac magna in, laoreet porttitor massa. Maecenas lacinia volutpat sem, quis ullamcorper enim scelerisque molestie. Aenean nec elit dui. Phasellus convallis bibendum diam eget mollis. In vel fringilla dolor. Donec fringilla pharetra enim eget dignissim. Pellentesque faucibus, dui nec consectetur porttitor, ante augue cursus libero, at vulputate massa ex in lorem."
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorAccentText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_wizard_step" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:orientation="horizontal"
@@ -40,23 +40,23 @@
             android:id="@+id/button_wizard_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="reset"
-            android:src="@drawable/ic_reset"/>
+            android:src="@drawable/ic_reset"
+            android:text="reset" />
 
         <ImageButton
             android:id="@+id/button_wizard_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="next"
-            android:src="@drawable/ic_next"/>
+            android:src="@drawable/ic_next"
+            android:text="next" />
 
 
         <ImageButton
             android:id="@+id/button_wizard_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quit wizard"
-            android:src="@drawable/ic_stop"/>
+            android:src="@drawable/ic_stop"
+            android:text="Quit wizard" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

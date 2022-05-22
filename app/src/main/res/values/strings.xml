@@ -136,17 +136,17 @@
         <item>2160</item>
     </integer-array>
     <string-array name="wizard_explaination">
-        <item>00-Vous allez devoir vous identifier avec votre compte Google. Cliquez sur Login.</item>
-        <item>01-Vous allez devoir autoriser l\'application à utiliser vos Photos Google.</item>
-        <item>02-Vous allez devoir choisir l\'album Google qui contient les photos que vous souhaitez afficher.</item>
-        <item>03-Vous allez devoir autoriser l\'application à stocker les photos sur votre téléphone.</item>
-        <item>04-L\'application va télécharger vos photos sur votre téléphone. Vous allez devoir choisir le répertoire de votre téléphone qui contiendra les photos en local.</item>
-        <item>05-Vous allez devoir activier le fond d\'écran dynamique de l\'application.</item>
-        <item>06-Vous allez devoir choisir la fréquence à laquelle le fond d\'écran est changé.</item>
-        <item>07-Vous allez devoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone.</item>
+        <item>01-Vous allez devoir vous identifier avec votre compte Google. Cliquez sur Login.</item>
+        <item>02-Vous allez devoir autoriser l\'application à utiliser vos Photos Google.</item>
+        <item>03-Vous allez devoir choisir l\'album Google qui contient les photos que vous souhaitez afficher.</item>
+        <item>04-Vous allez devoir autoriser l\'application à stocker les photos sur votre téléphone.</item>
+        <item>05-L\'application va télécharger vos photos sur votre téléphone. Vous allez devoir choisir le répertoire de votre téléphone qui contiendra les photos en local.</item>
+        <item>06-Vous allez devoir activier le fond d\'écran dynamique de l\'application.</item>
+        <item>07-Vous allez devoir choisir la fréquence à laquelle le fond d\'écran est changé.</item>
+        <item>08-Vous allez devoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone.</item>
         <item>08-Vous allez devoir choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google.</item>
-        <item>09-Vous allez devoir activier le changement automatique des fonds d\'écran</item>
-        <item>10-Assistant termine</item>
+        <item>10-Vous allez devoir activier le changement automatique des fonds d\'écran</item>
         <item>11-Assistant termine</item>
+        <item>12-Assistant termine</item>
     </string-array>
 </resources>

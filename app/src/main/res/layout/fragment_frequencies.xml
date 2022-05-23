@@ -15,36 +15,37 @@
         android:showDividers="middle">
 
         <RelativeLayout
-            android:id="@+id/SectionFreqeuncyUpdatePhotos"
+            android:id="@+id/SectionFreqeuncyWallpaper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="8dp"
-            android:background="?android:attr/selectableItemBackground">
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="16dp">
 
             <TextView
-                android:id="@+id/titleFrequenceyUpdatePhotos"
+                android:id="@+id/titleFrequenceyWallpaper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/frequencyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/frequencyWallpaper"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
-                android:id="@+id/textFrequencyUpdatePhotos"
+                android:id="@+id/textFrequencyWallpaper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyUpdatePhotos"
+                android:layout_below="@id/titleFrequenceyWallpaper"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency"/>
+                android:text="@string/placeholder_frequency" />
 
             <TextView
-                android:id="@+id/textExplenationFrequencyUpdatePhotos"
+                android:id="@+id/textExplenationFrequencyWallpaper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textFrequencyUpdatePhotos"
+                android:layout_below="@+id/textFrequencyWallpaper"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceUpdatePhotosExplenation" />
+                android:text="@string/frequenceWallpaperExplenation" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -62,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/frequencySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/textFrequencySync"
@@ -82,38 +83,38 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/SectionFreqeuncyWallpaper"
+            android:id="@+id/SectionFreqeuncyUpdatePhotos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="8dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="16dp">
+            android:background="?android:attr/selectableItemBackground">
 
             <TextView
-                android:id="@+id/titleFrequenceyWallpaper"
+                android:id="@+id/titleFrequenceyUpdatePhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/frequencyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:text="@string/frequencyUpdatePhotos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
-                android:id="@+id/textFrequencyWallpaper"
+                android:id="@+id/textFrequencyUpdatePhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyWallpaper"
+                android:layout_below="@id/titleFrequenceyUpdatePhotos"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency" />
+                android:text="@string/placeholder_frequency"/>
 
             <TextView
-                android:id="@+id/textExplenationFrequencyWallpaper"
+                android:id="@+id/textExplenationFrequencyUpdatePhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textFrequencyWallpaper"
+                android:layout_below="@id/textFrequencyUpdatePhotos"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceWallpaperExplenation" />
+                android:text="@string/frequenceUpdatePhotosExplenation" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

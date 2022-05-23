@@ -45,7 +45,7 @@
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
-    <string name="frequencyGroup_title">Fond d\'écran dynamique</string>
+    <string name="frequencyGroup_title">Fréquences</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
@@ -136,16 +136,14 @@
         <item>2160</item>
     </integer-array>
     <string-array name="wizard_explanation">
-        <item>01-Vous allez pouvoir vous identifier avec votre compte Google. Cliquez sur Login.</item>
-        <item>02-Vous allez ppouvoir autoriser l\'application à utiliser vos Photos Google.</item>
-        <item>03-Vous allez ppouvoir choisir l\'album Google qui contient les photos que vous souhaitez afficher.</item>
-        <item>04-Vous allez ppouvoir autoriser l\'application à stocker les photos sur votre téléphone.</item>
-        <item>05-L\'application va télécharger vos photos sur votre téléphone. Vous allez ppouvoir choisir le répertoire de votre téléphone qui contiendra les photos en local.</item>
-        <item>06-Vous allez ppouvoir activier le fond d\'écran dynamique de l\'application.</item>
-        <item>07-Vous allez ppouvoir choisir la fréquence à laquelle le fond d\'écran est changé.</item>
-        <item>08-Vous allez ppouvoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone.</item>
-        <item>08-Vous allez ppouvoir choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google.</item>
-        <item>10-Vous allez ppouvoir activier le changement automatique des fonds d\'écran</item>
-        <item>11-Assistant termine</item>
+        <item>01-Vous allez pouvoir vous identifier avec votre compte Google et autoriser l\'application à accéder à vos photos. Appuyez sur User.</item>
+        <item>02-Vous allez pouvoir choisir l\'album Google qui contient les photos que vous souhaitez afficher. Appuyez sur Album.</item>
+        <item>03-L\'application va télécharger vos photos sur votre téléphone. Vous allez pouvoir choisir le répertoire de votre téléphone dans lequel les photos seront enregistrées en local. Vous devrez autoriser l\'application à écrire sur votre téléphone. Appuyez sur Folder</item>
+        <item>04-Vous allez pouvoir activer le fond d\'écran animé de l\'application. Appuyez sur le bandeau orange ou aller dans les paramètres de votre téléphone</item>
+        <item>05-Vous allez pouvoir choisir la fréquence à laquelle le fond d\'écran est changé. Appuyez sur Fréquence puis sur Fréquence fond d\'écran.</item>
+        <item>06-Vous allez pouvoir choisir la fréquence à laquelle des photos sont téléchargées sur votre téléphone. Appuyez sur Fréquence de téléchargement.</item>
+        <item>07-Vous allez pouvoir choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google. Appuyez sur Fréquence nouvelle photos.</item>
+        <item>07-Vous allez pouvoir activer le changement automatique des fonds d\'écran. Appuyez sur le bouton changement automatique.</item>
+        <item>09-L\'application est maintenant totalement configuré. L\'Assistant est terminé.</item>
     </string-array>
 </resources>

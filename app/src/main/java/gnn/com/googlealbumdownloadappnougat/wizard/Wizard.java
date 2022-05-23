@@ -23,30 +23,30 @@ public class Wizard {
         this.context = context;
     }
 
-    public WizardStep getNextStepDynamic() {
-        if (!authManager.isSignIn()) {
-            return WizardStep.S01_LOGIN;
-        } else if (!authManager.hasGooglePermission()) {
-            return WizardStep.S02_ASK_GOOGLE_PERMISSION;
-        } else if (persistPrefMain.getAlbum() == null) {
-            return WizardStep.S03_CHOOSE_ALBUM;
-        } else if (!authManager.hasWritePermission()) {
-            return WizardStep.S04_ASK_WRITE_PERMISSION;
-        } else if (persistPrefMain.getPhotoPath() == null) {
-            return WizardStep.S05_CHOOSE_FOLDER;
-        } else if (!wallpaperService.isActive(context)) {
-            return WizardStep.S06_ACTIVATE_LIVEWALLPAPER;
-        } else if (persistPrefMain.getFrequencyWallpaper() == PersistPrefMain.DEF_FREQ_WALLPAPER_MINUTE) {
-            return WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY;
-        } else if (persistPrefMain.getFrequencyDownload() == PersistPrefMain.DEF_FREQ_SYNC_HOUR) {
-            return WizardStep.S08_CHOOSE_DOWNLOAD_FREQUENCY;
-        } else if (persistPrefMain.getFrequencyUpdatePhotosHour() == PersistPrefMain.DEF_FREQ_UPDATE_PHOTO_DAY) {
-            return WizardStep.S09_CHOOSE_UPDATE_FREQUENCY;
-        } else if (!wallpaperScheduler.isScheduled()) {
-            return WizardStep.S10_ACTIVATE_SCHEDULER;
-        } else
-            return WizardStep.S11_FINISHED;
-    }
+//    public WizardStep getNextStepDynamic() {
+//        if (!authManager.isSignIn()) {
+//            return WizardStep.S01_LOGIN;
+//        } else if (!authManager.hasGooglePermission()) {
+//            return WizardStep.S02_ASK_GOOGLE_PERMISSION;
+//        } else if (persistPrefMain.getAlbum() == null) {
+//            return WizardStep.S03_CHOOSE_ALBUM;
+//        } else if (!authManager.hasWritePermission()) {
+//            return WizardStep.S04_ASK_WRITE_PERMISSION;
+//        } else if (persistPrefMain.getPhotoPath() == null) {
+//            return WizardStep.S05_CHOOSE_FOLDER;
+//        } else if (!wallpaperService.isActive(context)) {
+//            return WizardStep.S06_ACTIVATE_LIVEWALLPAPER;
+//        } else if (persistPrefMain.getFrequencyWallpaper() == PersistPrefMain.DEF_FREQ_WALLPAPER_MINUTE) {
+//            return WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY;
+//        } else if (persistPrefMain.getFrequencyDownload() == PersistPrefMain.DEF_FREQ_SYNC_HOUR) {
+//            return WizardStep.S08_CHOOSE_DOWNLOAD_FREQUENCY;
+//        } else if (persistPrefMain.getFrequencyUpdatePhotosHour() == PersistPrefMain.DEF_FREQ_UPDATE_PHOTO_DAY) {
+//            return WizardStep.S09_CHOOSE_UPDATE_FREQUENCY;
+//        } else if (!wallpaperScheduler.isScheduled()) {
+//            return WizardStep.S10_ACTIVATE_SCHEDULER;
+//        } else
+//            return WizardStep.S11_FINISHED;
+//    }
 
     public void setStep(WizardStep step) {
         persistPrefMain.saveWizardStep(step);

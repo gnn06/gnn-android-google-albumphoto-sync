@@ -2,11 +2,9 @@ package gnn.com.googlealbumdownloadappnougat.wizard;
 
 public enum WizardStep {
     S00_NOT_STARTED,
-    S01_LOGIN,
-    S02_ASK_GOOGLE_PERMISSION,
+    S01_LOGIN_AND_AUTHORISE,
     S03_CHOOSE_ALBUM,
-    S04_ASK_WRITE_PERMISSION,
-    S05_CHOOSE_FOLDER,
+    S05_CHOOSE_FOLDER_AND_ASK_PERMISSION,
     // éventuellement choisir le nombre de photo à synchroniser)
     // (faire un test de synchro)
     S06_ACTIVATE_LIVEWALLPAPER,

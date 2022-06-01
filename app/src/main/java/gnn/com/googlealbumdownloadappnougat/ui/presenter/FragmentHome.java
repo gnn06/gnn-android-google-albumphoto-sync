@@ -284,4 +284,9 @@ public class FragmentHome extends Fragment implements IViewHome {
         TextView view = getView().findViewById(R.id.warning_wallpaper_active);
         view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
+
+    public void highlightStepWizard(boolean highlight) {
+        View view = getView().findViewById(R.id.SectionUser);
+        view.setBackgroundResource(highlight ? R.drawable.border : 0);
+    }
 }

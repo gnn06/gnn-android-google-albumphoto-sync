@@ -281,10 +281,4 @@ public class FragmentHome extends Fragment implements IViewHome {
         view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
 
-    public void highlightStepWizard(boolean highlight, WizardStep step) {
-        View view = new ViewWizard(getView()).getViewFromStep(step);
-        if (view != null) {
-            view.setBackgroundResource(highlight ? R.drawable.border : 0);
-        }
-    }
 }

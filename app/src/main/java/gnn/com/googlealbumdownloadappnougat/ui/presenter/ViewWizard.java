@@ -2,14 +2,15 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.view.View;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizard {
 
-    private final View fragment;
+    private final MainActivity fragment;
 
-    public ViewWizard(View fragment) {
+    public ViewWizard(MainActivity fragment) {
         this.fragment = fragment;
     }
 

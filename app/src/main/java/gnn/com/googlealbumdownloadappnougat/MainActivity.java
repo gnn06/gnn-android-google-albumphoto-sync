@@ -29,11 +29,13 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.ViewWizard;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
 import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -171,4 +173,12 @@ public class MainActivity extends AppCompatActivity implements IView {
             transaction.commit();
         }
     }
+
+    public void highlightStepWizard(boolean highlight, WizardStep step) {
+        View view = new ViewWizard(this).getViewFromStep(step);
+        if (view != null) {
+            view.setBackgroundResource(highlight ? R.drawable.border : 0);
+        }
+    }
+
 }

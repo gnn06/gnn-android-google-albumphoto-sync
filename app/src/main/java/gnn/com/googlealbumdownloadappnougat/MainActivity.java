@@ -175,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     public void highlightStepWizard(boolean highlight, WizardStep step) {
-        View view = new ViewWizard(this).getViewFromStep(step);
+        View fragmentContainer = findViewById(R.id.fragment_container_view);
+        View view = new ViewWizard(fragmentContainer).getViewFromStep(step);
         if (view != null) {
             view.setBackgroundResource(highlight ? R.drawable.border : 0);
         }

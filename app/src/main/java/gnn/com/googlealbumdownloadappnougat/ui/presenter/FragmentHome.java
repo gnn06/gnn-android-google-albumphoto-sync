@@ -3,7 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -38,6 +34,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.stat.stat.WallpaperStat;
 
 public class FragmentHome extends Fragment implements IViewHome {
@@ -254,7 +251,6 @@ public class FragmentHome extends Fragment implements IViewHome {
     }
 
     /**
-     *
      * @param humanPath "Pictures/wallpaper"
      */
     @Override
@@ -285,8 +281,10 @@ public class FragmentHome extends Fragment implements IViewHome {
         view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
 
-    public void highlightStepWizard(boolean highlight) {
-        View view = getView().findViewById(R.id.SectionUser);
-        view.setBackgroundResource(highlight ? R.drawable.border : 0);
+    public void highlightStepWizard(boolean highlight, WizardStep step) {
+        View view = new ViewWizard(getView()).getViewFromStep(step);
+        if (view != null) {
+            view.setBackgroundResource(highlight ? R.drawable.border : 0);
+        }
     }
 }

@@ -14,21 +14,23 @@ public class ViewWizard {
     }
 
     public View getViewFromStep(WizardStep step) {
-        int id = -1;
         switch (step) {
             case S01_LOGIN_AND_AUTHORISE:
-                id = R.id.SectionUser;
+                return fragment.findViewById(R.id.SectionUser);
             case S03_CHOOSE_ALBUM:
-                id = R.id.SectionAlbum;
+                return fragment.findViewById(R.id.SectionAlbum);
             case S05_CHOOSE_FOLDER_AND_ASK_PERMISSION:
-                id = R.id.SectionFolder;
+                return fragment.findViewById(R.id.SectionFolder);
             case S06_ACTIVATE_LIVEWALLPAPER:
-                id = R.id.warning_wallpaper_active;
+                return fragment.findViewById(R.id.warning_wallpaper_active);
             case S07_CHOOSE_WALLPAPER_FREQUENCY:
-//                    id = R.id.sectionFrequencies;
-                    id = R.id.SectionFreqeuncyWallpaper;
+                if (fragment.findViewById(R.id.SectionFreqeuncyWallpaper) != null) {
+                    return fragment.findViewById(R.id.SectionFreqeuncyWallpaper);
+                } else {
+                    return fragment.findViewById(R.id.sectionFrequencies);
+                }
+            default:
+                return null;
         }
-        View view = id != -1 ? fragment.findViewById(id) : null;
-        return view;
     }
 }

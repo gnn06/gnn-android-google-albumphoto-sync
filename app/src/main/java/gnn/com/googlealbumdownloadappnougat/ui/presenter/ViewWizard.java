@@ -25,7 +25,8 @@ public class ViewWizard {
             case S06_ACTIVATE_LIVEWALLPAPER:
                 id = R.id.warning_wallpaper_active;
             case S07_CHOOSE_WALLPAPER_FREQUENCY:
-                id = R.id.sectionFrequencies;
+//                    id = R.id.sectionFrequencies;
+                    id = R.id.SectionFreqeuncyWallpaper;
         }
         View view = id != -1 ? fragment.findViewById(id) : null;
         return view;

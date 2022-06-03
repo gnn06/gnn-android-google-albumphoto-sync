@@ -9,6 +9,7 @@ import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.service.Cache;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
@@ -60,6 +61,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
         boolean scheduled = this.scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
+
+        activity.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
     }
 
     @Override

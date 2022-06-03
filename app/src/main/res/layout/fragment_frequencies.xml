@@ -9,8 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
         android:divider="#AAA"
         android:showDividers="middle">
 
@@ -18,11 +16,12 @@
             android:id="@+id/SectionFreqeuncyWallpaper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="8dp"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="16dp">
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:paddingBottom="8dp"
+            >
 
             <TextView
                 android:id="@+id/titleFrequenceyWallpaper"
@@ -52,11 +51,12 @@
             android:id="@+id/SectionFreqeuncySync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="8dp"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="16dp">
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            >
 
             <TextView
                 android:id="@+id/titleFrequenceySync"
@@ -86,10 +86,11 @@
             android:id="@+id/SectionFreqeuncyUpdatePhotos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/selectableItemBackground">
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <TextView
                 android:id="@+id/titleFrequenceyUpdatePhotos"
@@ -117,14 +118,16 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/SwitchWallPaper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:paddingTop="16dp"
                 android:text="Changement automatique du fond d'écran "
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
 

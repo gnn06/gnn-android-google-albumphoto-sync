@@ -67,7 +67,7 @@ public class PresenterHomeTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -82,7 +82,7 @@ public class PresenterHomeTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -119,7 +119,7 @@ public class PresenterHomeTest {
         IViewHome view = mock(IViewHome.class);
         MainActivity activity = mock(MainActivity.class);
 
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
 
         SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
         doReturn(synchronizer).when(presenter).getSync();

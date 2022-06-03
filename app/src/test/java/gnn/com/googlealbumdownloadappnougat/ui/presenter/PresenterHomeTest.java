@@ -59,7 +59,7 @@ public class PresenterHomeTest {
         PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         presenter.setAlbum(null);
         presenter.onButtonSyncOnce();
-        verify(view, Mockito.atLeastOnce()).alertNoAlbum();
+        verify(fragmentHome, Mockito.atLeastOnce()).alertNoAlbum();
     }
 
     @Test

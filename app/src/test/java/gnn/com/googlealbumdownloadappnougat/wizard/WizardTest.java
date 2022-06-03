@@ -42,10 +42,10 @@ public class WizardTest {
         // Given
         Wizard wizard = new Wizard(this.authManager, persistPrefMain, wallpaperService, wallpaperScheduler, null);
         // when
-        wizard.setStep(WizardStep.S02_ASK_GOOGLE_PERMISSION);
+        wizard.setStep(WizardStep.S03_CHOOSE_ALBUM);
         // then
         String value = preferences.getString("wizard_step", "AZE");
-        assertThat(value, Is.is(WizardStep.S02_ASK_GOOGLE_PERMISSION.name()));
+        assertThat(value, Is.is(WizardStep.S03_CHOOSE_ALBUM.name()));
     }
 
     @Test
@@ -89,14 +89,14 @@ public class WizardTest {
     public void getNext_first() {
         Wizard wizard = new Wizard(null, null, null, null, null);
         WizardStep result = wizard.getNextStep(WizardStep.S00_NOT_STARTED);
-        assertThat(result, Is.is(WizardStep.S01_LOGIN));
+        assertThat(result, Is.is(WizardStep.S01_LOGIN_AND_AUTHORISE));
     }
 
     @Test
     public void getNext_middle() {
         Wizard wizard = new Wizard(null, null, null, null, null);
-        WizardStep result = wizard.getNextStep(WizardStep.S01_LOGIN);
-        assertThat(result, Is.is(WizardStep.S02_ASK_GOOGLE_PERMISSION));
+        WizardStep result = wizard.getNextStep(WizardStep.S01_LOGIN_AND_AUTHORISE);
+        assertThat(result, Is.is(WizardStep.S03_CHOOSE_ALBUM));
     }
 
     @Test

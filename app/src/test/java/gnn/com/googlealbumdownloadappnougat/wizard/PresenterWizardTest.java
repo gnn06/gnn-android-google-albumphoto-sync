@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -43,7 +42,7 @@ public class PresenterWizardTest {
     public void step01_AppStart_wizardShown() {
         // when app start, and wizard was never started, check that wizard is shown
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S01_LOGIN);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S01_LOGIN_AND_AUTHORISE);
         // when
         presenter.onAppStart();
         // then

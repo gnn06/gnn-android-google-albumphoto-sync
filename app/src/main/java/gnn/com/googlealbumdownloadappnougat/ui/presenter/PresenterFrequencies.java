@@ -32,23 +32,23 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
 
-    public PresenterFrequencies(FragmentFrequencies view, Context context, MainActivity activity) {
+    public PresenterFrequencies(FragmentFrequencies fragment, Context context, MainActivity activity) {
         this.context = context;
         this.activity = activity;
-        this.fragment = (FragmentFrequencies) view;
+        this.fragment = (FragmentFrequencies) fragment;
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
         this.scheduler = new WallpaperScheduler(context);
-        task = new ScheduleTask(activity, context, scheduler, view, userModel);
+        task = new ScheduleTask(activity, context, scheduler, fragment, userModel);
     }
 
     // For test
-    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity,
+    public PresenterFrequencies(IViewFrequencies fragment, Context context, MainActivity activity,
                                 UserModel userModel, PersistPrefMain persist,
                                 WallpaperScheduler scheduler, ScheduleTask scheduleTask) {
         this.context = context;
         this.activity = activity;
-        this.fragment = (FragmentFrequencies) view;
+        this.fragment = (FragmentFrequencies) fragment;
         this.userModel = userModel;
         this.persist = persist;
         this.scheduler = scheduler;

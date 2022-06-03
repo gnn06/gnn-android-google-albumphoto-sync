@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -174,9 +175,8 @@ public class MainActivity extends AppCompatActivity implements IView {
         }
     }
 
-    public void highlightStepWizard(boolean highlight, WizardStep step) {
-        View fragmentContainer = findViewById(R.id.fragment_container_view);
-        View view = new ViewWizard(fragmentContainer).getViewFromStep(step);
+    public void highlightStepWizard(boolean highlight, WizardStep step, Fragment fragment) {
+        View view = new ViewWizard(fragment).getViewFromStep(step);
         if (view != null) {
             view.setBackgroundResource(highlight ? R.drawable.border : 0);
         }

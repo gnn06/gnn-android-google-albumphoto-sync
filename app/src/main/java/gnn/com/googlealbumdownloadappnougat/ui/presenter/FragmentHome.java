@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -37,7 +37,7 @@ import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.stat.stat.WallpaperStat;
 
-public class FragmentHome extends Fragment implements IViewHome {
+public class FragmentHome extends FragmentHighlight implements IViewHome {
 
     private static final String TAG = "FRAGMENTHOME";
     private IPresenterHome presenter;

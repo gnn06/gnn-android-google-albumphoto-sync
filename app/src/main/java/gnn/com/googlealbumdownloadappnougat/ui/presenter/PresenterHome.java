@@ -125,7 +125,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         }
         new PersistPrefMain(activity).restore(this);
         new PersistPrefSettings(activity).restore(this);
-        activity.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, this.fragment);
+        this.fragment.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, this.fragment);
     }
 
     @Override

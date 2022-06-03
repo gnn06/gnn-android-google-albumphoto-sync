@@ -29,7 +29,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     private MainActivity activity;
-    private final Fragment fragment;
+    private final FragmentHighlight fragment;
     private final UserModel userModel;
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
@@ -38,7 +38,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.view = view;
         this.context = context;
         this.activity = activity;
-        this.fragment = (Fragment)view;
+        this.fragment = (FragmentHighlight) view;
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
         this.scheduler = new WallpaperScheduler(context);
@@ -52,7 +52,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.view = view;
         this.context = context;
         this.activity = activity;
-        this.fragment = (Fragment) view;
+        this.fragment = (FragmentHighlight) view;
         this.userModel = userModel;
         this.persist = persist;
         this.scheduler = scheduler;
@@ -66,7 +66,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         boolean scheduled = this.scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
 
-        activity.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, this.fragment);
+        this.fragment.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, this.fragment);
     }
 
     @Override

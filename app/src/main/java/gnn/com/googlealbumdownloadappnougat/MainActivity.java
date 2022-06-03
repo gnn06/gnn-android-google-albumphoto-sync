@@ -174,12 +174,4 @@ public class MainActivity extends AppCompatActivity implements IView {
             transaction.commit();
         }
     }
-
-    public void highlightStepWizard(boolean highlight, WizardStep step, Fragment fragment) {
-        View view = new ViewWizard(fragment).getViewFromStep(step);
-        if (view != null) {
-            view.setBackgroundResource(highlight ? R.drawable.border : 0);
-        }
-    }
-
 }

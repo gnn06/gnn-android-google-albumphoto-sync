@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -66,7 +65,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         boolean scheduled = this.scheduler.isScheduled();
         view.setSwitchWallpaper(scheduled);
 
-        this.fragment.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, this.fragment);
+        this.fragment.highlightStepWizard(true, WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
     }
 
     @Override

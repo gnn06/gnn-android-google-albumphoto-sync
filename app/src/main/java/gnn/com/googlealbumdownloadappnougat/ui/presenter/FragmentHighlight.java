@@ -13,8 +13,8 @@ public class FragmentHighlight extends Fragment {
         super(fragment_home);
     }
 
-    public void highlightStepWizard(boolean highlight, WizardStep step, Fragment fragment) {
-        View view = new ViewWizard(fragment).getViewFromStep(step);
+    public void highlightStepWizard(boolean highlight, WizardStep step) {
+        View view = new ViewWizard(this).getViewFromStep(step);
         if (view != null) {
             view.setBackgroundResource(highlight ? R.drawable.border : 0);
         }

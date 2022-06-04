@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 
 public class FragmentHighlight extends Fragment {
 
@@ -12,7 +13,7 @@ public class FragmentHighlight extends Fragment {
 
     public FragmentHighlight(int fragment_home) {
         super(fragment_home);
-        viewWizard = new ViewWizard();
+        viewWizard = new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()));
     }
 
     // For test

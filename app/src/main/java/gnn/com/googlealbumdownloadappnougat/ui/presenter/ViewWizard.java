@@ -1,13 +1,23 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizard {
 
-    public ViewWizard() {
+    private final Wizard wizard;
+
+    public ViewWizard(PersistPrefMain persist, Context context) {
+        this.wizard = new Wizard(null, persist, null, null, context);
+    }
+
+    public ViewWizard(Wizard wizard) {
+        this.wizard = wizard;
     }
 
     int getViewFromStep(WizardStep step, Fragment fragment) {
@@ -32,7 +42,8 @@ public class ViewWizard {
     }
 
     public void highlight(FragmentHighlight fragment) {
-        int id = getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, fragment);
+        WizardStep step = wizard.getStep();
+        int id = getViewFromStep(step, fragment);
         fragment.highlightStepWizard(id, true);
     }
 }

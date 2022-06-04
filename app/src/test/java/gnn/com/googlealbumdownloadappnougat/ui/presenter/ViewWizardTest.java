@@ -3,9 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,6 +10,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizardTest {
@@ -20,7 +18,7 @@ public class ViewWizardTest {
     @Test
     public void getId_fragment_home() {
         // given
-        ViewWizard viewWizard = new ViewWizard();
+        ViewWizard viewWizard = new ViewWizard(null);
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, new FragmentHome());
         // then
@@ -30,7 +28,7 @@ public class ViewWizardTest {
     @Test
     public void getId_fragment_frequencies() {
         // given
-        ViewWizard viewWizard = new ViewWizard();
+        ViewWizard viewWizard = new ViewWizard(null);
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, null);
         // then
@@ -40,11 +38,14 @@ public class ViewWizardTest {
     @Test
     public void highlight_call_view() {
         // given
-        ViewWizard viewWizard = new ViewWizard();
         FragmentHighlight fragment = mock(FragmentHighlight.class);
+        Wizard wizard = mock(Wizard.class);
+        when(wizard.getStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
+        // Unit under test
+        ViewWizard viewWizard = new ViewWizard(wizard);
         // when
         viewWizard.highlight(fragment);
         // then
-        verify(fragment).highlightStepWizard(anyInt(), anyBoolean());
+        verify(fragment).highlightStepWizard(R.id.SectionFreqeuncyWallpaper, true);
     }
 }

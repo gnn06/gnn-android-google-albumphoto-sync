@@ -61,7 +61,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         boolean scheduled = this.scheduler.isScheduled();
         fragment.setSwitchWallpaper(scheduled);
 
-        this.fragment.highlightStepWizard();
+        new ViewWizard().highlight(fragment);
     }
 
     @Override

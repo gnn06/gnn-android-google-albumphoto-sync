@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
+
 public class FragmentHighlightTest {
     @Test
     public void name() {
@@ -14,6 +16,6 @@ public class FragmentHighlightTest {
         when(viewWizard.getViewFromStep(any(), any())).thenReturn(-1);
         FragmentHighlight fragment = new FragmentHighlight(viewWizard);
         // then
-        fragment.highlightStepWizard();
+        fragment.highlightStepWizard(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, true);
     }
 }

@@ -120,7 +120,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         }
         new PersistPrefMain(activity).restore(this);
         new PersistPrefSettings(activity).restore(this);
-        this.fragment.highlightStepWizard();
+        new ViewWizard().highlight(fragment);
     }
 
     @Override

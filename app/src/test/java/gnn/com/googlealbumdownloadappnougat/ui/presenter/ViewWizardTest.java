@@ -2,6 +2,12 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
@@ -30,5 +36,14 @@ public class ViewWizardTest {
         assertThat(id, is(R.id.SectionFreqeuncyWallpaper));
     }
 
-
+    @Test
+    public void getStep() {
+        // given
+        ViewWizard viewWizard = new ViewWizard();
+        FragmentHighlight fragment = mock(FragmentHighlight.class);
+        // when
+        viewWizard.highlight(fragment);
+        // then
+        verify(fragment).highlightStepWizard(any(), anyBoolean());
+    }
 }

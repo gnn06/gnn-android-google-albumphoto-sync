@@ -21,9 +21,7 @@ public class FragmentHighlight extends Fragment {
         this.viewWizard = viewWizard;
     }
 
-    public void highlightStepWizard() {
-        boolean highlight = true;
-        WizardStep step = WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY;
+    public void highlightStepWizard(WizardStep step, boolean highlight) {
         int id = viewWizard.getViewFromStep(step, this);
         if (id != -1) {
             View view = this.getView().findViewById(id);

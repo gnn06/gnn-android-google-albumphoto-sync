@@ -10,7 +10,7 @@ public class ViewWizard {
     public ViewWizard() {
     }
 
-    public int getViewFromStep(WizardStep step, Fragment fragment) {
+    int getViewFromStep(WizardStep step, Fragment fragment) {
         switch (step) {
             case S01_LOGIN_AND_AUTHORISE:
                 return R.id.SectionUser;
@@ -29,5 +29,9 @@ public class ViewWizard {
             default:
                 return -1;
         }
+    }
+
+    public void highlight(FragmentHighlight fragment) {
+        fragment.highlightStepWizard(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, true);
     }
 }

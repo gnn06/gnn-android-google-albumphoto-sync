@@ -18,7 +18,7 @@ import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 public class ViewWizardTest {
 
     @Test
-    public void fragment_home() {
+    public void getId_fragment_home() {
         // given
         ViewWizard viewWizard = new ViewWizard();
         // when
@@ -28,7 +28,7 @@ public class ViewWizardTest {
     }
 
     @Test
-    public void fragment_frequencies() {
+    public void getId_fragment_frequencies() {
         // given
         ViewWizard viewWizard = new ViewWizard();
         // when
@@ -38,7 +38,7 @@ public class ViewWizardTest {
     }
 
     @Test
-    public void getStep() {
+    public void highlight_call_view() {
         // given
         ViewWizard viewWizard = new ViewWizard();
         FragmentHighlight fragment = mock(FragmentHighlight.class);

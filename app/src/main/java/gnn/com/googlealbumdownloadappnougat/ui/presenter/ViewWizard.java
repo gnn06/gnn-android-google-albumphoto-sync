@@ -21,23 +21,37 @@ public class ViewWizard {
     }
 
     int getViewFromStep(WizardStep step, Fragment fragment) {
-        switch (step) {
-            case S01_LOGIN_AND_AUTHORISE:
-                return R.id.SectionUser;
-            case S03_CHOOSE_ALBUM:
-                return R.id.SectionAlbum;
-            case S05_CHOOSE_FOLDER_AND_ASK_PERMISSION:
-                return R.id.SectionFolder;
-            case S06_ACTIVATE_LIVEWALLPAPER:
-                return R.id.warning_wallpaper_active;
-            case S07_CHOOSE_WALLPAPER_FREQUENCY:
-                if (fragment instanceof FragmentHome) {
+        if (fragment instanceof FragmentHome) {
+            switch (step) {
+                case S01_LOGIN_AND_AUTHORISE:
+                    return R.id.SectionUser;
+                case S03_CHOOSE_ALBUM:
+                    return R.id.SectionAlbum;
+                case S05_CHOOSE_FOLDER_AND_ASK_PERMISSION:
+                    return R.id.SectionFolder;
+                case S06_ACTIVATE_LIVEWALLPAPER:
+                    return R.id.warning_wallpaper_active;
+                case S07_CHOOSE_WALLPAPER_FREQUENCY:
+                case S08_CHOOSE_DOWNLOAD_FREQUENCY:
+                case S09_CHOOSE_UPDATE_FREQUENCY:
+                case S10_ACTIVATE_SCHEDULER:
                     return R.id.sectionFrequencies;
-                } else {
+                default:
+                    return -1;
+            }
+        } else {
+            switch (step) {
+                case S07_CHOOSE_WALLPAPER_FREQUENCY:
                     return R.id.SectionFreqeuncyWallpaper;
-                }
-            default:
-                return -1;
+                case S08_CHOOSE_DOWNLOAD_FREQUENCY:
+                    return R.id.SectionFreqeuncySync;
+                case S09_CHOOSE_UPDATE_FREQUENCY:
+                    return R.id.SectionFreqeuncyUpdatePhotos;
+                case S10_ACTIVATE_SCHEDULER:
+                    return R.id.SectionActiveWallpaper;
+                default:
+                    return -1;
+            }
         }
     }
 

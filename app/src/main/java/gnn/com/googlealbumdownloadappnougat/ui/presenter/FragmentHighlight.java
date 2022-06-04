@@ -16,7 +16,8 @@ public class FragmentHighlight extends Fragment {
     public void highlightStepWizard() {
         boolean highlight = true;
         WizardStep step = WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY;
-        View view = new ViewWizard(this).getViewFromStep(step);
+        int id = new ViewWizard().getViewFromStep(step, this);
+        View view = this.getView().findViewById(id);
         if (view != null) {
             view.setBackgroundResource(highlight ? R.drawable.border : 0);
         }

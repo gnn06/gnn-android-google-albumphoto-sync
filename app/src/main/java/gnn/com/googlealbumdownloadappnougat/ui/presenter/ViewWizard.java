@@ -42,7 +42,7 @@ public class ViewWizard {
     }
 
     public void highlight(FragmentHighlight fragment) {
-        WizardStep step = wizard.getStep();
+        WizardStep step = wizard.getNextStep();
         int id = getViewFromStep(step, fragment);
         fragment.highlightStepWizard(id, true);
     }

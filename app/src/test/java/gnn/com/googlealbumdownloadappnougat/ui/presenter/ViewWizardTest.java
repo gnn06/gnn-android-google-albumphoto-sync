@@ -40,7 +40,7 @@ public class ViewWizardTest {
         // given
         FragmentHighlight fragment = mock(FragmentHighlight.class);
         Wizard wizard = mock(Wizard.class);
-        when(wizard.getStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
+        when(wizard.getNextStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
         // Unit under test
         ViewWizard viewWizard = new ViewWizard(wizard);
         // when

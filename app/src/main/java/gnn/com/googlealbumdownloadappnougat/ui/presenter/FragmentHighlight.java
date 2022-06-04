@@ -5,7 +5,6 @@ import android.view.View;
 import androidx.fragment.app.Fragment;
 
 import gnn.com.googlealbumdownloadappnougat.R;
-import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class FragmentHighlight extends Fragment {
 
@@ -21,8 +20,7 @@ public class FragmentHighlight extends Fragment {
         this.viewWizard = viewWizard;
     }
 
-    public void highlightStepWizard(WizardStep step, boolean highlight) {
-        int id = viewWizard.getViewFromStep(step, this);
+    public void highlightStepWizard(int id, boolean highlight) {
         if (id != -1) {
             View view = this.getView().findViewById(id);
             view.setBackgroundResource(highlight ? R.drawable.border : 0);

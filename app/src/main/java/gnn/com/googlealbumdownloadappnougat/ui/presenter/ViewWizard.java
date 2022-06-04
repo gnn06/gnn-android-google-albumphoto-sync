@@ -32,6 +32,7 @@ public class ViewWizard {
     }
 
     public void highlight(FragmentHighlight fragment) {
-        fragment.highlightStepWizard(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, true);
+        int id = getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, fragment);
+        fragment.highlightStepWizard(id, true);
     }
 }

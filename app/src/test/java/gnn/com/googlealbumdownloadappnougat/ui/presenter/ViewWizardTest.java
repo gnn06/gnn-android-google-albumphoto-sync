@@ -4,6 +4,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -44,6 +45,6 @@ public class ViewWizardTest {
         // when
         viewWizard.highlight(fragment);
         // then
-        verify(fragment).highlightStepWizard(any(), anyBoolean());
+        verify(fragment).highlightStepWizard(anyInt(), anyBoolean());
     }
 }

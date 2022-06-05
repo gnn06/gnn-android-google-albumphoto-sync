@@ -6,6 +6,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import androidx.lifecycle.MutableLiveData;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +26,8 @@ public class PresenterWizardTest {
         this.persist = mock(PersistPrefMain.class);
         this.view = mock(FragmentWizard.class);
         this.activity = mock(MainActivity.class);
-        presenter = new PresenterWizard(activity, view, this.persist);
+        MutableLiveData<WizardStep> liveData = mock(MutableLiveData.class);
+        presenter = new PresenterWizard(activity, view, this.persist, liveData);
     }
 
     @Test

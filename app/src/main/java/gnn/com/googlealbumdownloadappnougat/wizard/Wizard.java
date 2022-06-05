@@ -64,6 +64,9 @@ public class Wizard {
         return persistPrefMain.restoreWizardActive();
     }
 
+    /**
+     * @return current step + 1, Don't update persistence
+     */
     public WizardStep getNextStep() {
         WizardStep step = getStep();
         return getNextStep(step);

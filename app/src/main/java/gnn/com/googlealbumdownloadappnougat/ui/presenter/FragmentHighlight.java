@@ -1,11 +1,16 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
+import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class FragmentHighlight extends Fragment {
 
@@ -14,6 +19,17 @@ public class FragmentHighlight extends Fragment {
     public FragmentHighlight(int fragment_home) {
         super(fragment_home);
         viewWizard = new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
+            @Override
+            public void onChanged(WizardStep step) {
+                new ViewWizard(null, null).getViewFromStep(step, getParentFragment());
+            }
+        });
     }
 
     // For test

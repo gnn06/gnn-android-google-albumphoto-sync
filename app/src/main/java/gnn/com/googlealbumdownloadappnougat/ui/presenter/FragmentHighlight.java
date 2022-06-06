@@ -16,6 +16,8 @@ import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class FragmentHighlight extends Fragment {
 
+    private ViewModelWizard modelWizard;
+
     public FragmentHighlight(int fragment_home) {
         super(fragment_home);
     }
@@ -23,7 +25,7 @@ public class FragmentHighlight extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewModelWizard modelWizard = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
+        modelWizard = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
         modelWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
             @Override
             public void onChanged(WizardStep step) {

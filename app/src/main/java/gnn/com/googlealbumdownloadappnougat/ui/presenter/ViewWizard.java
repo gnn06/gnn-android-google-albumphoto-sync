@@ -56,8 +56,11 @@ public class ViewWizard {
     }
 
     public void highlight(FragmentHighlight fragment) {
-        WizardStep step = wizard.getNextStep();
-        int id = getViewFromStep(step, fragment);
+        WizardStep currentStep = wizard.getStep();
+        int id = getViewFromStep(currentStep, fragment);
+        fragment.highlightStepWizard(id, false);
+        WizardStep nextStep = wizard.getNextStep();
+        id = getViewFromStep(nextStep, fragment);
         fragment.highlightStepWizard(id, true);
     }
 }

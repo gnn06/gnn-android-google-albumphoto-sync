@@ -27,7 +27,8 @@ public class PresenterWizardTest {
         this.view = mock(FragmentWizard.class);
         this.activity = mock(MainActivity.class);
         MutableLiveData<WizardStep> liveData = mock(MutableLiveData.class);
-        presenter = new PresenterWizard(activity, view, this.persist, liveData);
+        ViewModelWizard viewModel = mock(ViewModelWizard.class);
+        presenter = new PresenterWizard(activity, view, this.persist, viewModel);
     }
 
     @Test

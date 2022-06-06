@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -30,13 +29,12 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.ViewWizard;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
 import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
-import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -56,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements IView {
     private AuthManager auth;
     private UserModel userModel;
     private FolderModel folderModel;
+    private ViewModelWizard wizardModel;
     private PresenterHome presenterHome;
     private AppBarConfiguration appBarConfiguration;
 
@@ -72,10 +71,11 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         userModel = new ViewModelProvider(this).get(UserModel.class);
         folderModel = new ViewModelProvider(this).get(FolderModel.class);
+        wizardModel = new ViewModelProvider(this).get(ViewModelWizard.class);
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
-        presenterWizard = new PresenterWizard(this, null);
-        presenterWizard.onAppStart();
+        presenterWizard = new PresenterWizard(this, null, wizardModel);
+//        presenterWizard.onAppStart();
 
         new Notification(this).createNotificationChannel();
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             presenter.onMenuRequestGooglePermission();
             return true;
         } else if (item.getItemId() == R.id.menuStartWizard) {
-            new PresenterWizard(this, null).onShowWizard();
+            new PresenterWizard(this, null, this.wizardModel).onShowWizard();
             return true;
         }
         return super.onOptionsItemSelected(item);

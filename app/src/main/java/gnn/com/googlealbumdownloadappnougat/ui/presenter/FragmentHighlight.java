@@ -7,34 +7,35 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class FragmentHighlight extends Fragment {
 
-    private final ViewWizard viewWizard;
-
     public FragmentHighlight(int fragment_home) {
         super(fragment_home);
-        viewWizard = new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()));
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
+        ViewModelWizard modelWizard = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
+        modelWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
             @Override
             public void onChanged(WizardStep step) {
-                new ViewWizard(null, null).getViewFromStep(step, getParentFragment());
+                ViewWizard viewWizard = new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()));
+                viewWizard.highlight(FragmentHighlight.this);
             }
         });
     }
 
     // For test
     public FragmentHighlight(ViewWizard viewWizard) {
-        this.viewWizard = viewWizard;
+
     }
 
     public void highlightStepWizard(int id, boolean highlight) {

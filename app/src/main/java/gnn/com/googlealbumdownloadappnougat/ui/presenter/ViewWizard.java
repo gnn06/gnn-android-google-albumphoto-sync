@@ -3,8 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import android.content.Context;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
@@ -61,9 +59,5 @@ public class ViewWizard {
         WizardStep step = wizard.getNextStep();
         int id = getViewFromStep(step, fragment);
         fragment.highlightStepWizard(id, true);
-    }
-
-    public LiveData<WizardStep> getLiveStep() {
-        return new MutableLiveData();
     }
 }

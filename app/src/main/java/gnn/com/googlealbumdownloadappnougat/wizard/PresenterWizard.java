@@ -1,7 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
-import androidx.lifecycle.MutableLiveData;
-
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
@@ -14,19 +12,22 @@ public class PresenterWizard {
     // L'activité gérant le menu et rendant le wizard visible
     final private MainActivity activity;
     private final PersistPrefMain persist;
+    private final ViewModelWizard viewModelWizard;
 
-    public PresenterWizard(MainActivity activity, FragmentWizard view) {
+    public PresenterWizard(MainActivity activity, FragmentWizard view, ViewModelWizard viewModel) {
         this.view = view;
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
-        liveStep = new MutableLiveData<>();
+        viewModelWizard = viewModel;
     }
 
-    public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist, MutableLiveData<WizardStep> liveData) {
+    // For test
+    public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist,
+                           ViewModelWizard viewModel) {
         this.view = view;
         this.activity = activity;
         this.persist = persist;
-        liveStep = liveData;
+        viewModelWizard = viewModel;
     }
 
     public void onShowWizard() {
@@ -36,13 +37,13 @@ public class PresenterWizard {
             Wizard wizard = new Wizard(null, persist, null, null, activity);
             step = wizard.resetStep();
         }
-        liveStep.setValue(step);
+        viewModelWizard.getLiveStep().setValue(step);
     }
 
     public void nextStep() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.shiftToNextStep();
-        liveStep.setValue(step);
+        viewModelWizard.getLiveStep().setValue(step);
         this.view.setExplanation(step);
         // TODO faudrait un observer
     }
@@ -57,19 +58,16 @@ public class PresenterWizard {
     public void reset() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.resetStep();
-        liveStep.setValue(step);
+        viewModelWizard.getLiveStep().setValue(step);
         this.view.setExplanation(step);
     }
 
     public void onAppStart() {
         Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.getStep();
-        liveStep.setValue(step);
+        viewModelWizard.getLiveStep().setValue(step);
         if (step != WizardStep.S11_FINISHED) {
             activity.makeVisible(true);
         }
     }
-
-    MutableLiveData<WizardStep> liveStep;
-
 }

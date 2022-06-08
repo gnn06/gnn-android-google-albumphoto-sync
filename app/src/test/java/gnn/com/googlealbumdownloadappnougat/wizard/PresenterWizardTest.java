@@ -20,14 +20,17 @@ public class PresenterWizardTest {
     private PersistPrefMain persist;
     private FragmentWizard view;
     private MainActivity activity;
+    private ViewModelWizard viewModel;
+    private MutableLiveData<WizardStep> liveData;
 
     @Before
     public void setUp() throws Exception {
         this.persist = mock(PersistPrefMain.class);
         this.view = mock(FragmentWizard.class);
         this.activity = mock(MainActivity.class);
-        MutableLiveData<WizardStep> liveData = mock(MutableLiveData.class);
-        ViewModelWizard viewModel = mock(ViewModelWizard.class);
+        liveData = mock(MutableLiveData.class);
+        viewModel = mock(ViewModelWizard.class);
+        when(viewModel.getLiveStep()).thenReturn(liveData);
         presenter = new PresenterWizard(activity, view, this.persist, viewModel);
     }
 
@@ -90,6 +93,8 @@ public class PresenterWizardTest {
         // when show wizard,
         // given
         when(persist.restoreWizardStep()).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+        when(viewModel.getLiveStep()).thenReturn(liveData);
+
         // when
         presenter.onShowWizard();
         // then

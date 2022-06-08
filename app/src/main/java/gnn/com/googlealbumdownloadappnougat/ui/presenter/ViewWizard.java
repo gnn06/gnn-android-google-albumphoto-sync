@@ -1,23 +1,31 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
-import android.content.Context;
-
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
+import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizard {
 
     private final Wizard wizard;
+    private final ViewModelWizard viewModel;
 
-    public ViewWizard(PersistPrefMain persist, Context context) {
+    public ViewWizard(PersistPrefMain persist, FragmentActivity context) {
         this.wizard = new Wizard(null, persist, null, null, context);
+        this.viewModel = new ViewModelProvider(context).get(ViewModelWizard.class);
     }
 
-    public ViewWizard(Wizard wizard) {
+    // For test
+    public ViewWizard(Wizard wizard, ViewModelWizard viewModel) {
         this.wizard = wizard;
+        this.viewModel = viewModel;
     }
 
     int getViewFromStep(WizardStep step, Fragment fragment) {
@@ -56,7 +64,7 @@ public class ViewWizard {
     }
 
     public void highlight(FragmentHighlight fragment) {
-        WizardStep currentStep = wizard.getStep();
+        WizardStep currentStep = wizard.getNextStep(viewModel.getPreviousStep());
         int id = getViewFromStep(currentStep, fragment);
         fragment.highlightStepWizard(id, false);
         WizardStep nextStep = wizard.getNextStep();

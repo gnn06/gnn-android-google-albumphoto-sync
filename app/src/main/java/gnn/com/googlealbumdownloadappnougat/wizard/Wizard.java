@@ -72,7 +72,7 @@ public class Wizard {
         return getNextStep(step);
     }
 
-    WizardStep getNextStep(WizardStep currentStep) {
+    public WizardStep getNextStep(WizardStep currentStep) {
         int ordinal = currentStep.ordinal();
         if (ordinal < WizardStep.values().length - 1) {
             return WizardStep.values()[ordinal + 1];

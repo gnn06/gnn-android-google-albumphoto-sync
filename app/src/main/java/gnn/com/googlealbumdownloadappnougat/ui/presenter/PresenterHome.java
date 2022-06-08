@@ -40,6 +40,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.stat.stat.WallpaperStat;
@@ -120,7 +121,6 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         }
         new PersistPrefMain(activity).restore(this);
         new PersistPrefSettings(activity).restore(this);
-        new ViewWizard(new PersistPrefMain(activity), activity).highlight(fragment);
     }
 
     @Override

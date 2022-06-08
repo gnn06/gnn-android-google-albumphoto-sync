@@ -29,7 +29,8 @@ public class FragmentHighlight extends Fragment {
         modelWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
             @Override
             public void onChanged(WizardStep step) {
-                ViewWizard viewWizard = new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()));
+                ViewWizard viewWizard =
+                        new ViewWizard(new PersistPrefMain(getContext()), getActivity());
                 viewWizard.highlight(FragmentHighlight.this);
             }
         });

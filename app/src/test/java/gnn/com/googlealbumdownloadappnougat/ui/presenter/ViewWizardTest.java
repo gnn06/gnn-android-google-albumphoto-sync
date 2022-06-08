@@ -7,18 +7,29 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizardTest {
 
+    private Wizard wizard;
+    private ViewModelWizard viewModel;
+
+    @Before
+    public void setUp() throws Exception {
+        wizard = mock(Wizard.class);
+        viewModel = mock(ViewModelWizard.class);
+    }
+
     @Test
     public void getId_fragment_home() {
         // given
-        ViewWizard viewWizard = new ViewWizard(null);
+        ViewWizard viewWizard = new ViewWizard( null, viewModel);
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, new FragmentHome());
         // then
@@ -28,7 +39,7 @@ public class ViewWizardTest {
     @Test
     public void getId_fragment_frequencies() {
         // given
-        ViewWizard viewWizard = new ViewWizard(null);
+        ViewWizard viewWizard = new ViewWizard( null, viewModel);
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, null);
         // then
@@ -39,10 +50,10 @@ public class ViewWizardTest {
     public void highlight_call_view() {
         // given
         FragmentHighlight fragment = mock(FragmentHighlight.class);
-        Wizard wizard = mock(Wizard.class);
         when(wizard.getNextStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
+        when(wizard.getNextStep(any())).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
         // Unit under test
-        ViewWizard viewWizard = new ViewWizard(wizard);
+        ViewWizard viewWizard = new ViewWizard(wizard, viewModel);
         // when
         viewWizard.highlight(fragment);
         // then

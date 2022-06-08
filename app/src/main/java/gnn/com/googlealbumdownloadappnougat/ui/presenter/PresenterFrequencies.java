@@ -62,7 +62,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         boolean scheduled = this.scheduler.isScheduled();
         fragment.setSwitchWallpaper(scheduled);
 
-        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext())).highlight(fragment);
+//        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()), viewModel).highlight(fragment);
     }
 
     @Override

@@ -13,12 +13,14 @@ public class PresenterWizard {
     final private MainActivity activity;
     private final PersistPrefMain persist;
     private final ViewModelWizard viewModelWizard;
+    private Wizard wizard;
 
     public PresenterWizard(MainActivity activity, FragmentWizard view, ViewModelWizard viewModel) {
         this.view = view;
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
         viewModelWizard = viewModel;
+        wizard = new Wizard(null, persist, null, null, activity);
     }
 
     // For test
@@ -28,20 +30,28 @@ public class PresenterWizard {
         this.activity = activity;
         this.persist = persist;
         viewModelWizard = viewModel;
+        this.wizard = new Wizard(null, persist, null, null, activity);
+    }
+
+    public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist,
+                           ViewModelWizard viewModel, Wizard wizard) {
+        this.view = view;
+        this.activity = activity;
+        this.persist = persist;
+        viewModelWizard = viewModel;
+        this.wizard = wizard;
     }
 
     public void onShowWizard() {
         this.activity.makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
         if (step == WizardStep.S11_FINISHED) {
-            Wizard wizard = new Wizard(null, persist, null, null, activity);
             step = wizard.resetStep();
         }
         viewModelWizard.getLiveStep().setValue(step);
     }
 
     public void nextStep() {
-        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.shiftToNextStep();
         viewModelWizard.setStep(step);
         this.view.setExplanation(step);
@@ -49,7 +59,6 @@ public class PresenterWizard {
     }
 
     public void onStopWizard() {
-        Wizard wizard = new Wizard(null, persist, null, null, activity);
         wizard.setActive(false);
         WizardStep step = wizard.stop();
         activity.makeVisible(false);
@@ -57,14 +66,12 @@ public class PresenterWizard {
     }
 
     public void reset() {
-        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.resetStep();
         viewModelWizard.setStep(step);
         this.view.setExplanation(step);
     }
 
     public void onAppStart() {
-        Wizard wizard = new Wizard(null, persist, null, null, activity);
         WizardStep step = wizard.getStep();
         viewModelWizard.setStep(step);
         if (step != WizardStep.S11_FINISHED) {

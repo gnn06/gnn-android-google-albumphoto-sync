@@ -34,12 +34,12 @@ public class PresenterWizardIntTest {
         activityMock.moveToState(Lifecycle.State.STARTED);
         activityMock.onActivity(activity1 -> {
             ViewModelWizard viewModelWizard = new ViewModelProvider(activity1).get(ViewModelWizard.class);
-            viewModelWizard.setStep(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
-            viewModelWizard.setStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
             FragmentScenario<FragmentWizard> scenario = FragmentScenario.launchInContainer(FragmentWizard.class);
             scenario.moveToState(Lifecycle.State.STARTED);
             scenario.onFragment(viewWizard -> {
                 PresenterWizard presenter = new PresenterWizard(activity1, viewWizard, persist, viewModelWizard, wizard);
+                presenter.nextStep();
+                presenter.nextStep();
                 presenter.nextStep();
                 System.out.println("goi");
             });

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 public class ViewModelWizard extends ViewModel {
 
-    private final MutableLiveData<WizardStep> liveStep = new MutableLiveData<>();
+    private final MutableLiveData<WizardStep> liveStep = new MutableLiveData<>(WizardStep.S00_NOT_STARTED);
 
     private WizardStep previousStep = WizardStep.S00_NOT_STARTED;
 

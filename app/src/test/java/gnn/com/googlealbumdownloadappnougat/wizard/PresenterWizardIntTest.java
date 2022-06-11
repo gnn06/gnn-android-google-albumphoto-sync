@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
@@ -13,36 +15,34 @@ import org.robolectric.RobolectricTestRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.ViewWizard;
 
 @RunWith(RobolectricTestRunner.class)
 public class PresenterWizardIntTest {
 
-    private MainActivity activity;
     private PersistPrefMain persist;
-    private ViewModelWizard viewModel;
     private Wizard wizard;
-
     private PresenterWizard presenterWizard;
 
     @Test
     public void name() {
         Context context = ApplicationProvider.getApplicationContext();
         this.persist = new PersistPrefMain(context);
-        this.viewModel = new ViewModelWizard();
-        this.viewModel.getLiveStep().observeForever(new Observer<WizardStep>() {
-            @Override
-            public void onChanged(WizardStep wizardStep) {
-                assert true;
-            }
-        });
         this.wizard = new Wizard(null, persist, null, null, context);
-        FragmentScenario<FragmentWizard> scenario = FragmentScenario.launchInContainer(FragmentWizard.class);
-        scenario.moveToState(Lifecycle.State.STARTED);
-        scenario.onFragment(viewWizard -> {
-            PresenterWizard presenter = new PresenterWizard(null, viewWizard, persist, viewModel, wizard);
-            presenter.nextStep();
-            System.out.println("goi");
-        });
 
+        ActivityScenario<MainActivity> activityMock = ActivityScenario.launch(MainActivity.class);
+        activityMock.moveToState(Lifecycle.State.STARTED);
+        activityMock.onActivity(activity1 -> {
+            ViewModelWizard viewModelWizard = new ViewModelProvider(activity1).get(ViewModelWizard.class);
+            viewModelWizard.setStep(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+            viewModelWizard.setStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
+            FragmentScenario<FragmentWizard> scenario = FragmentScenario.launchInContainer(FragmentWizard.class);
+            scenario.moveToState(Lifecycle.State.STARTED);
+            scenario.onFragment(viewWizard -> {
+                PresenterWizard presenter = new PresenterWizard(activity1, viewWizard, persist, viewModelWizard, wizard);
+                presenter.nextStep();
+                System.out.println("goi");
+            });
+        });
     }
 }

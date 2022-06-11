@@ -1,26 +1,33 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.hasBackground;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.Espresso.*;
 
-import org.hamcrest.core.Is;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.ViewWizard;
+
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.assertion.ViewAssertions;
+import androidx.test.espresso.matcher.ViewMatchers;
 
 @RunWith(RobolectricTestRunner.class)
 public class PresenterWizardIntTest {
@@ -47,6 +54,8 @@ public class PresenterWizardIntTest {
                 presenter.nextStep();
                 presenter.nextStep();
                 assertThat(viewModelWizard.getLiveStep().getValue(), is(WizardStep.S05_CHOOSE_FOLDER_AND_ASK_PERMISSION));
+                Drawable background = activity1.findViewById(R.id.warning_wallpaper_active).getBackground();
+                assertThat(background, is(R.drawable.border));
             });
         });
     }

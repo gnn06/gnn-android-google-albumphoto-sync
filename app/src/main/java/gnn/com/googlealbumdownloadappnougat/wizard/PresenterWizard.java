@@ -1,5 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import androidx.fragment.app.FragmentActivity;
+
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
@@ -10,12 +12,12 @@ public class PresenterWizard {
     // commandes next.
     final private FragmentWizard view;
     // L'activité gérant le menu et rendant le wizard visible
-    final private MainActivity activity;
+    final private FragmentActivity activity;
     private final PersistPrefMain persist;
     private final ViewModelWizard viewModelWizard;
     private Wizard wizard;
 
-    public PresenterWizard(MainActivity activity, FragmentWizard view, ViewModelWizard viewModel) {
+    public PresenterWizard(FragmentActivity activity, FragmentWizard view, ViewModelWizard viewModel) {
         this.view = view;
         this.activity = activity;
         persist = new PersistPrefMain(this.activity);
@@ -33,6 +35,7 @@ public class PresenterWizard {
         this.wizard = new Wizard(null, persist, null, null, activity);
     }
 
+    // For test
     public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist,
                            ViewModelWizard viewModel, Wizard wizard) {
         this.view = view;
@@ -43,7 +46,7 @@ public class PresenterWizard {
     }
 
     public void onShowWizard() {
-        this.activity.makeVisible(true);
+        ((MainActivity)this.activity).makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
         if (step == WizardStep.S11_FINISHED) {
             step = wizard.resetStep();
@@ -61,7 +64,7 @@ public class PresenterWizard {
     public void onStopWizard() {
         wizard.setActive(false);
         WizardStep step = wizard.stop();
-        activity.makeVisible(false);
+        ((MainActivity)activity).makeVisible(false);
         viewModelWizard.setStep(step);
     }
 
@@ -75,7 +78,7 @@ public class PresenterWizard {
         WizardStep step = wizard.getStep();
         viewModelWizard.setStep(step);
         if (step != WizardStep.S11_FINISHED) {
-            activity.makeVisible(true);
+            ((MainActivity)activity).makeVisible(true);
         }
     }
 }

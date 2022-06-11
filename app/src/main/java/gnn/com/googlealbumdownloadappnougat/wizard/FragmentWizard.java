@@ -34,7 +34,7 @@ public class FragmentWizard extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ViewModelWizard viewModel = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
-        this.presenter = new PresenterWizard((MainActivity) getActivity(), this, viewModel);
+        this.presenter = new PresenterWizard(/*(MainActivity)*/ getActivity(), this, viewModel);
         getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
             presenter.nextStep();
         });

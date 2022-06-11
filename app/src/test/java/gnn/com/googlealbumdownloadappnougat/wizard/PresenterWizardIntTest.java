@@ -1,5 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
 import android.content.Context;
 
 import androidx.fragment.app.testing.FragmentScenario;
@@ -9,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 
+import org.hamcrest.core.Is;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -22,11 +27,11 @@ public class PresenterWizardIntTest {
 
     private PersistPrefMain persist;
     private Wizard wizard;
-    private PresenterWizard presenterWizard;
+    private Context context;
 
     @Test
     public void name() {
-        Context context = ApplicationProvider.getApplicationContext();
+        this.context = ApplicationProvider.getApplicationContext();
         this.persist = new PersistPrefMain(context);
         this.wizard = new Wizard(null, persist, null, null, context);
 
@@ -41,7 +46,7 @@ public class PresenterWizardIntTest {
                 presenter.nextStep();
                 presenter.nextStep();
                 presenter.nextStep();
-                System.out.println("goi");
+                assertThat(viewModelWizard.getLiveStep().getValue(), is(WizardStep.S05_CHOOSE_FOLDER_AND_ASK_PERMISSION));
             });
         });
     }

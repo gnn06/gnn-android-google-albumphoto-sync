@@ -38,8 +38,8 @@ public class PresenterWizardIntTest {
         this.wizard = new Wizard(null, persist, null, null, context);
         FragmentScenario<FragmentWizard> scenario = FragmentScenario.launchInContainer(FragmentWizard.class);
         scenario.moveToState(Lifecycle.State.STARTED);
-        scenario.onFragment(fragment1 -> {
-            PresenterWizard presenter = new PresenterWizard(null, fragment1, persist, viewModel, wizard);
+        scenario.onFragment(viewWizard -> {
+            PresenterWizard presenter = new PresenterWizard(null, viewWizard, persist, viewModel, wizard);
             presenter.nextStep();
             System.out.println("goi");
         });

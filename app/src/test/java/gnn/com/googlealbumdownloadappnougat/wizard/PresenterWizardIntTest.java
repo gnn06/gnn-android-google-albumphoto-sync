@@ -1,21 +1,20 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.matcher.ViewMatchers.hasBackground;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.RippleDrawable;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.Espresso.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +23,6 @@ import org.robolectric.RobolectricTestRunner;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.assertion.ViewAssertions;
-import androidx.test.espresso.matcher.ViewMatchers;
 
 @RunWith(RobolectricTestRunner.class)
 public class PresenterWizardIntTest {
@@ -50,12 +45,15 @@ public class PresenterWizardIntTest {
             scenario.moveToState(Lifecycle.State.STARTED);
             scenario.onFragment(viewWizard -> {
                 PresenterWizard presenter = new PresenterWizard(activity1, viewWizard, persist, viewModelWizard, wizard);
+                // normal = ripple, warning = colorDraw, border = Gradient
+                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof ColorDrawable);
                 presenter.nextStep();
                 presenter.nextStep();
                 presenter.nextStep();
+                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof GradientDrawable);
                 assertThat(viewModelWizard.getLiveStep().getValue(), is(WizardStep.S05_CHOOSE_FOLDER_AND_ASK_PERMISSION));
-                Drawable background = activity1.findViewById(R.id.warning_wallpaper_active).getBackground();
-                assertThat(background, is(R.drawable.border));
+//                presenter.onStopWizard();
+//                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof RippleDrawable);
             });
         });
     }

@@ -35,7 +35,11 @@ public class PresenterWizard {
         this.wizard = new Wizard(null, persist, null, null, activity);
     }
 
-    // For test
+
+    /**
+     * For test
+     * @param view view to use to set explanation
+     */
     public PresenterWizard(MainActivity activity, FragmentWizard view, PersistPrefMain persist,
                            ViewModelWizard viewModel, Wizard wizard) {
         this.view = view;

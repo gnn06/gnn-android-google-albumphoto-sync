@@ -46,7 +46,11 @@ public class FragmentHighlight extends Fragment {
             View view1 = this.getView();
             if (view1 != null) {
                 View view = view1.findViewById(id);
-                view.setBackgroundResource(highlight ? R.drawable.border : 0);
+                if (highlight == false && id == R.id.warning_wallpaper_active) {
+                    view.setBackgroundColor(getResources().getColor(R.color.colorWarning));
+                } else {
+                    view.setBackgroundResource(highlight ? R.drawable.border : 0);
+                }
             }
         }
     }

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
         presenterWizard = new PresenterWizard(this, null, wizardModel);
-//        presenterWizard.onAppStart();
+        presenterWizard.onAppStart();
 
         new Notification(this).createNotificationChannel();
 

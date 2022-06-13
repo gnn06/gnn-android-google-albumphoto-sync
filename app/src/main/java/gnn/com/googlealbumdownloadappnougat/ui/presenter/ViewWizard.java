@@ -46,6 +46,8 @@ public class ViewWizard {
                 case S09_CHOOSE_UPDATE_FREQUENCY:
                 case S10_ACTIVATE_SCHEDULER:
                     return R.id.sectionFrequencies;
+                case S10BIS_SYNC_ONCE:
+                    return R.id.SectionSync;
                 default:
                     return -1;
             }

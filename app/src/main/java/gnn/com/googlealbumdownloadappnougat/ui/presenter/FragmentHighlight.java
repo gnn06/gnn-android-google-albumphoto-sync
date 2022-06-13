@@ -25,8 +25,8 @@ public class FragmentHighlight extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        modelWizard = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
-        modelWizard.getLiveStep().observe(getActivity(), new Observer<WizardStep>() {
+        modelWizard = new ViewModelProvider(requireActivity()).get(ViewModelWizard.class);
+        modelWizard.getLiveStep().observe(getViewLifecycleOwner(), new Observer<WizardStep>() {
             @Override
             public void onChanged(WizardStep step) {
                 ViewWizard viewWizard =
@@ -43,8 +43,11 @@ public class FragmentHighlight extends Fragment {
 
     public void highlightStepWizard(int id, boolean highlight) {
         if (id != -1) {
-            View view = this.getView().findViewById(id);
-            view.setBackgroundResource(highlight ? R.drawable.border : 0);
+            View view1 = this.getView();
+            if (view1 != null) {
+                View view = view1.findViewById(id);
+                view.setBackgroundResource(highlight ? R.drawable.border : 0);
+            }
         }
     }
 

@@ -5,6 +5,7 @@ public enum WizardStep {
     S01_LOGIN_AND_AUTHORISE,
     S03_CHOOSE_ALBUM,
     S05_CHOOSE_FOLDER_AND_ASK_PERMISSION,
+    S05BIS_QUANTITY,
     // éventuellement choisir le nombre de photo à synchroniser)
     // (faire un test de synchro)
     S06_ACTIVATE_LIVEWALLPAPER,

@@ -37,6 +37,8 @@ public class ViewWizard {
                     return R.id.SectionAlbum;
                 case S05_CHOOSE_FOLDER_AND_ASK_PERMISSION:
                     return R.id.SectionFolder;
+                case S05BIS_QUANTITY:
+                    return R.id.sectionDownloadOptions;
                 case S06_ACTIVATE_LIVEWALLPAPER:
                     return R.id.warning_wallpaper_active;
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:

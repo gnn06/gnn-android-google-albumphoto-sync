@@ -5,16 +5,19 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -32,7 +35,6 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
-import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 
@@ -162,16 +164,16 @@ public class MainActivity extends AppCompatActivity implements IView {
     }
 
     public void makeVisible(boolean visible) {
-        View button = findViewById(R.id.button_wizard_next);
-        if (visible && button == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container_wizard, new FragmentWizard(), "FRAG_WIZARD");
-            transaction.commit();
+        Transition transition = new Slide(Gravity.BOTTOM);
+        transition.setDuration(400);
+        transition.addTarget(R.id.fragment_container_wizard);
+        transition.addTarget(R.id.fragment_container_view);
+        ViewGroup parent = findViewById(R.id.mainview);
+        TransitionManager.beginDelayedTransition(parent, transition);
+        if (visible) {
+            findViewById(R.id.fragment_container_wizard).setVisibility(View.VISIBLE);
         } else if (!visible) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag("FRAG_WIZARD");
-            transaction.remove(fragment);
-            transaction.commit();
+            findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
         }
     }
 }

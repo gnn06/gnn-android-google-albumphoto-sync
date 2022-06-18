@@ -81,8 +81,6 @@ public class PresenterWizard {
     public void onAppStart() {
         WizardStep step = wizard.getStep();
         viewModelWizard.setStep(step);
-        if (step != WizardStep.S11_FINISHED) {
-            ((MainActivity)activity).makeVisible(true);
-        }
+        ((MainActivity)activity).makeVisible(step != WizardStep.S11_FINISHED);
     }
 }

@@ -64,7 +64,7 @@ public class PresenterWizardTest {
         // when
         presenter.onAppStart();
         // then
-        verify(activity, never()).makeVisible(anyBoolean());
+        verify(activity).makeVisible(false);
     }
 
     @Test

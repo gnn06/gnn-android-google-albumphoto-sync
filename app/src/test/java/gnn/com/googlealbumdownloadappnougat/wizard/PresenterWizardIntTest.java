@@ -1,6 +1,8 @@
 package gnn.com.googlealbumdownloadappnougat.wizard;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -9,12 +11,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.view.Gravity;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.transition.Slide;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,12 +50,15 @@ public class PresenterWizardIntTest {
             scenario.onFragment(viewWizard -> {
                 PresenterWizard presenter = new PresenterWizard(activity1, viewWizard, persist, viewModelWizard, wizard);
                 // normal = ripple, warning = colorDraw, border = Gradient
-                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof ColorDrawable);
+                assertTrue(activity1.findViewById(R.id.SectionFolder).getBackground() instanceof RippleDrawable);
                 presenter.nextStep();
                 presenter.nextStep();
+                assertThat(activity1.findViewById(R.id.SectionFolder).getBackground(), instanceOf(GradientDrawable.class));
                 presenter.nextStep();
-                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof GradientDrawable);
-                assertThat(viewModelWizard.getLiveStep().getValue(), is(WizardStep.S05_CHOOSE_FOLDER_AND_ASK_PERMISSION));
+                // when assert fails, error is "main loop enqued message"
+                assertThat(activity1.findViewById(R.id.SectionFolder).getBackground(), nullValue());
+//                assertThat(activity1.findViewById(R.id.warning_wallpaper_active).getBackground(), instanceOf(GradientDrawable.class));
+//                assertThat(viewModelWizard.getLiveStep().getValue(), is(WizardStep.S05_CHOOSE_FOLDER_AND_ASK_PERMISSION));
 //                presenter.onStopWizard();
 //                assertTrue(activity1.findViewById(R.id.warning_wallpaper_active).getBackground() instanceof RippleDrawable);
             });

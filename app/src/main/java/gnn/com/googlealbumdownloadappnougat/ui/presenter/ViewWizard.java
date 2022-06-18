@@ -40,7 +40,7 @@ public class ViewWizard {
                 case S05BIS_QUANTITY:
                     return R.id.sectionDownloadOptions;
                 case S06_ACTIVATE_LIVEWALLPAPER:
-                    return R.id.warning_wallpaper_active;
+                    return -1;
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                 case S08_CHOOSE_DOWNLOAD_FREQUENCY:
                 case S09_CHOOSE_UPDATE_FREQUENCY:

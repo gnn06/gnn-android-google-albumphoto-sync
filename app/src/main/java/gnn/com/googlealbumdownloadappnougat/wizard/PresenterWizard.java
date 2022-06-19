@@ -61,8 +61,6 @@ public class PresenterWizard {
     public void nextStep() {
         WizardStep step = wizard.shiftToNextStep();
         viewModelWizard.setStep(step);
-        this.view.setExplanation(step);
-        // TODO faudrait un observer
     }
 
     public void onStopWizard() {
@@ -75,7 +73,6 @@ public class PresenterWizard {
     public void reset() {
         WizardStep step = wizard.resetStep();
         viewModelWizard.setStep(step);
-        this.view.setExplanation(step);
     }
 
     public void onAppStart() {

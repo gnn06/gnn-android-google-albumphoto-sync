@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
@@ -35,18 +34,16 @@ public class FragmentWizard extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ViewModelWizard viewModel = new ViewModelProvider(getActivity()).get(ViewModelWizard.class);
         this.presenter = new PresenterWizard(/*(MainActivity)*/ getActivity(), this, viewModel);
-        getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> {
-            presenter.nextStep();
-        });
-        getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> {
-            presenter.onStopWizard();
-        });
-        getView().findViewById(R.id.button_wizard_reset).setOnClickListener(v -> {
-            presenter.reset();
-        });
+
+        getView().findViewById(R.id.button_wizard_next).setOnClickListener(v -> presenter.nextStep());
+        getView().findViewById(R.id.button_wizard_stop).setOnClickListener(v -> presenter.onStopWizard());
+        getView().findViewById(R.id.button_wizard_reset).setOnClickListener(v -> presenter.reset());
+
+        ViewModelWizard modelWizard = new ViewModelProvider(requireActivity()).get(ViewModelWizard.class);
+        modelWizard.getLiveStep().observe(getViewLifecycleOwner(), this::setExplanation);
     }
 
-    public void setExplanation(WizardStep stepDone) {
+    private void setExplanation(WizardStep stepDone) {
         int index = stepDone.ordinal(); // 0 when step = S00_NOT_STARTED;
         if (stepDone == WizardStep.S11_FINISHED) {
             // if wizard is finished, use before last step
@@ -67,7 +64,6 @@ public class FragmentWizard extends Fragment {
         // called once on first
         super.onResume();
         PersistPrefMain persist = new PersistPrefMain(requireActivity());
-        WizardStep step = persist.restoreWizardStep();
-        setExplanation(step);
+        persist.restoreWizardStep();
     }
 }

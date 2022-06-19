@@ -85,7 +85,6 @@ public class PresenterWizardTest {
         presenter.reset();
         // then
         verify(persist).saveWizardStep(WizardStep.S00_NOT_STARTED);
-        verify(view).setExplanation(WizardStep.S00_NOT_STARTED);
     }
 
     @Test
@@ -121,6 +120,5 @@ public class PresenterWizardTest {
         presenter.nextStep();
         // then
         verify(persist).saveWizardStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
-        verify(view).setExplanation(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
     }
 }

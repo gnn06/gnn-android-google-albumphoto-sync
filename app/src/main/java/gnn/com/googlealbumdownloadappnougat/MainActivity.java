@@ -5,9 +5,15 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +35,8 @@ import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.Notification;
+import gnn.com.googlealbumdownloadappnougat.wizard.PresenterWizard;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 
 public class MainActivity extends AppCompatActivity implements IView {
 
@@ -41,12 +49,14 @@ public class MainActivity extends AppCompatActivity implements IView {
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
     private PresenterMain presenter;
+    private PresenterWizard presenterWizard;
 
     private PermissionHandler permissionHandler;
 
     private AuthManager auth;
     private UserModel userModel;
     private FolderModel folderModel;
+    private ViewModelWizard wizardModel;
     private PresenterHome presenterHome;
     private AppBarConfiguration appBarConfiguration;
 
@@ -63,8 +73,11 @@ public class MainActivity extends AppCompatActivity implements IView {
 
         userModel = new ViewModelProvider(this).get(UserModel.class);
         folderModel = new ViewModelProvider(this).get(FolderModel.class);
+        wizardModel = new ViewModelProvider(this).get(ViewModelWizard.class);
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
+        presenterWizard = new PresenterWizard(this, null, wizardModel);
+        presenterWizard.onAppStart();
 
         new Notification(this).createNotificationChannel();
 
@@ -97,17 +110,20 @@ public class MainActivity extends AppCompatActivity implements IView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.logout) {
+        if (item.getItemId() == R.id.menuLogout) {
             presenter.onSignOut();
             return true;
-        } else if (item.getItemId() == R.id.reset_cache) {
+        } else if (item.getItemId() == R.id.menuReset_cache) {
             presenter.onMenuResetCache();
             return true;
-        } else if (item.getItemId() == R.id.scheduleDetails) {
+        } else if (item.getItemId() == R.id.menuScheduleDetails) {
             presenter.onMenuScheduleDetail();
             return true;
-        } else if (item.getItemId() == R.id.requestGooglePermission) {
+        } else if (item.getItemId() == R.id.menuRequestGooglePermission) {
             presenter.onMenuRequestGooglePermission();
+            return true;
+        } else if (item.getItemId() == R.id.menuStartWizard) {
+            new PresenterWizard(this, null, this.wizardModel).onShowWizard();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,5 +161,19 @@ public class MainActivity extends AppCompatActivity implements IView {
                 .setMessage(message)
                 .setNegativeButton(android.R.string.ok, null)
                 .show();
+    }
+
+    public void makeVisible(boolean visible) {
+        Transition transition = new Slide(Gravity.BOTTOM);
+        transition.setDuration(400);
+        transition.addTarget(R.id.fragment_container_wizard);
+        transition.addTarget(R.id.fragment_container_view);
+        ViewGroup parent = findViewById(R.id.mainview);
+        TransitionManager.beginDelayedTransition(parent, transition);
+        if (visible) {
+            findViewById(R.id.fragment_container_wizard).setVisibility(View.VISIBLE);
+        } else if (!visible) {
+            findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
+        }
     }
 }

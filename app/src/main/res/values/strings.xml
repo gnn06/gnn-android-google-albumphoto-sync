@@ -45,7 +45,7 @@
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
-    <string name="frequencyGroup_title">Fond d\'écran dynamique</string>
+    <string name="frequencyGroup_title">Fréquences</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
@@ -77,6 +77,8 @@
     <string name="pick_frequency">Choisir une fréquence</string>
     <string name="placeholder_frequency">Choisissez une fréquence</string>
     <string name="frequencyGroup_subtitle">Activation et fréquences</string>
+    <string name="text_wizard_step">Assistant : étape %1$d sur %2$d</string>
+    <string name="wizard">Assistant</string>
 
     <string-array name="frequency_wallpaper_label">
         <item>Toutes les 15 minutes</item>
@@ -133,4 +135,17 @@
         <item>720</item>
         <item>2160</item>
     </integer-array>
+    <string-array name="wizard_explanation">
+        <item>Appuyez sur User\n\nCela permet de vous identifier avec votre compte Google et autoriser l\'application à accéder à vos photos.</item>
+        <item>Appuyez sur Album.\n\nCela permet de choisir l\'album Google qui contient les photos que vous souhaitez mettre en fond d\'écran.</item>
+        <item>Appuyez sur Folder.\n\nCela permet choisir le répertoire de votre téléphone dans lequel les photos seront enregistrées en local. L\'application va télécharger vos photos dans ce répertoire. Vous devrez autoriser l\'application à écrire sur votre téléphone.</item>
+        <item>Appuyez sur Option de téléchargement puis sur Quantité.\n\nVous alle pouvoir choisir le nombre maximum de photos à télécharger.</item>
+        <item>S\'il est visible, appuyez sur le bandeau orange.\n\nCela permet de choisir le fond d\'écran animé de l\'application.</item>
+        <item>Appuyez sur Fréquences puis sur Fréquence fond d\'écran.\n\nCela permet de choisir la fréquence à laquelle le fond d\'écran est changé.</item>
+        <item>Appuyez sur Fréquence de téléchargement.\n\nCela permet de choisir la fréquence à laquelle les photos sont téléchargées sur votre téléphone.</item>
+        <item>Appuyez sur Fréquence nouvelle photos.\n\nCela permet de choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google. </item>
+        <item>Appuyez sur le bouton changement automatique.\n\nCela permet d\'activer le changement automatique des fonds d\'écran. </item>
+        <item>Appuyez sur le bouton SYNCHONISER UNE FOIS.\n\nCela permet de lancer une synchronisation. Les prochaines synchronisations seront automatiques.</item>
+        <item>L\'application est maintenant totalement configuré. L\'Assistant est terminé.</item>
+    </string-array>
 </resources>

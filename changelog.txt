@@ -32,3 +32,6 @@ Création temporaire fréquence de téléchargement à 6 et 8 jours pour debuggu
 
 1.5.2 01/05/2022
 correction Déconnexion ne vide pas le nom d'utilisateur connecté
+
+1.6 20/06/2022
+assistant

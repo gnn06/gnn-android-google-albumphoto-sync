@@ -1,9 +1,15 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
@@ -20,11 +26,11 @@ public class PresenterMain implements IPresenterMain {
     private final IView view;
     private final UserModel userModel;
     private final PermissionHandler permissionHandler;
-    private final Context activity;
+    private final Activity activity;
     private final ApplicationContext applicationContext;
     private final PresenterHome presenterHome;
 
-    public PresenterMain(AuthManager auth, IView view, UserModel userModel, PermissionHandler permissionHandler, Context activity, PresenterHome presenterHome) {
+    public PresenterMain(AuthManager auth, IView view, UserModel userModel, PermissionHandler permissionHandler, Activity activity, PresenterHome presenterHome) {
         this.auth = auth;
         this.view = view;
         this.userModel = userModel;

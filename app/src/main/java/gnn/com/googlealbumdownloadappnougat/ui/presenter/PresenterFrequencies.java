@@ -9,6 +9,7 @@ import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.photos.service.Cache;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
@@ -17,7 +18,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private int frequencySync;
     private int frequencyUpdate;
 
-    final private IViewFrequencies view;
     final private Context context;
     private ScheduleTask task;
 
@@ -27,27 +27,28 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     private MainActivity activity;
+    private final FragmentFrequencies fragment;
     private final UserModel userModel;
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
 
-    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity) {
-        this.view = view;
+    public PresenterFrequencies(FragmentFrequencies fragment, Context context, MainActivity activity) {
         this.context = context;
         this.activity = activity;
+        this.fragment = (FragmentFrequencies) fragment;
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
         this.scheduler = new WallpaperScheduler(context);
-        task = new ScheduleTask(activity, context, scheduler, view, userModel);
+        task = new ScheduleTask(activity, context, scheduler, fragment, userModel);
     }
 
     // For test
-    public PresenterFrequencies(IViewFrequencies view, Context context, MainActivity activity,
+    public PresenterFrequencies(IViewFrequencies fragment, Context context, MainActivity activity,
                                 UserModel userModel, PersistPrefMain persist,
                                 WallpaperScheduler scheduler, ScheduleTask scheduleTask) {
-        this.view = view;
         this.context = context;
         this.activity = activity;
+        this.fragment = (FragmentFrequencies) fragment;
         this.userModel = userModel;
         this.persist = persist;
         this.scheduler = scheduler;
@@ -59,7 +60,9 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.persist.restoreFrequencies(this);
 
         boolean scheduled = this.scheduler.isScheduled();
-        view.setSwitchWallpaper(scheduled);
+        fragment.setSwitchWallpaper(scheduled);
+
+//        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()), viewModel).highlight(fragment);
     }
 
     @Override
@@ -82,7 +85,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void setFrequencyWallpaper(int frequency) {
         this.frequencyMinute = frequency;
-        view.setFrequencyWallpaper(frequency);
+        fragment.setFrequencyWallpaper(frequency);
     }
 
     /**
@@ -101,7 +104,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void setFrequencySyncHour(int frequency) {
         this.frequencySync = frequency;
-        view.setFrequencySync(frequency);
+        fragment.setFrequencySync(frequency);
     }
 
     /**
@@ -134,7 +137,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void setFrequencyUpdatePhotos(int frequency) {
         this.frequencyUpdate = frequency;
-        view.setFrequencyUpdate(frequency);
+        fragment.setFrequencyUpdate(frequency);
     }
 
     /**
@@ -153,8 +156,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     public void onSwitchWallpaper(boolean checked) {
         if (checked) {
             if (getFrequencyWallpaper() < 15) {
-                view.setSwitchWallpaper(false);
-                view.alertFrequencyError();
+                fragment.setSwitchWallpaper(false);
+                fragment.alertFrequencyError();
             } else {
                 // TODO manage permission refused and toggle switch off
                 task.schedule(checked, getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
@@ -170,7 +173,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencyWallpaper() {
         if (scheduler.isScheduled()) {
-            view.alertNeedDisableSchedule();
+            fragment.alertNeedDisableSchedule();
             return;
         }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
@@ -181,7 +184,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencySync() {
         if (scheduler.isScheduled()) {
-            view.alertNeedDisableSchedule();
+            fragment.alertNeedDisableSchedule();
             return;
         }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
@@ -192,7 +195,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencyUpdate() {
         if (scheduler.isScheduled()) {
-            view.alertNeedDisableSchedule();
+            fragment.alertNeedDisableSchedule();
             return;
         }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyUpdatePhotos(value),

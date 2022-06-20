@@ -40,7 +40,7 @@ public class PresenterHomeTest {
     private FragmentHome view;
     private UserModel userModel;
     private FolderModel folderModel;
-    private FragmentActivity fragmentHome;
+    private FragmentHome fragmentHome;
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +48,7 @@ public class PresenterHomeTest {
         view = mock(FragmentHome.class);
         userModel = mock(UserModel.class);
         folderModel = mock(FolderModel.class);
-        fragmentHome = mock(FragmentActivity.class);
+        fragmentHome = mock(FragmentHome.class);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PresenterHomeTest {
         PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         presenter.setAlbum(null);
         presenter.onButtonSyncOnce();
-        verify(view, Mockito.atLeastOnce()).alertNoAlbum();
+        verify(fragmentHome, Mockito.atLeastOnce()).alertNoAlbum();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PresenterHomeTest {
     public void onSyncClick_AllGrantedPermission() {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -82,7 +82,7 @@ public class PresenterHomeTest {
         MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -119,7 +119,7 @@ public class PresenterHomeTest {
         IViewHome view = mock(IViewHome.class);
         MainActivity activity = mock(MainActivity.class);
 
-        PresenterHome presenter = spy(new PresenterHome(view, activity, fragmentHome));
+        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
 
         SynchronizerAndroid synchronizer = mock(SynchronizerAndroid.class);
         doReturn(synchronizer).when(presenter).getSync();

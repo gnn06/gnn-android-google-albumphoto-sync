@@ -21,11 +21,12 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 
-public class FragmentFrequencies extends Fragment implements IViewFrequencies {
+public class FragmentFrequencies extends FragmentHighlight implements IViewFrequencies {
 
     private IPresenterFrequencies presenter;
 
     public FragmentFrequencies() {
+        super(R.id.fragmentFrequencies);
     }
 
     @Override

@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -38,7 +37,7 @@ public class PresenterFrequenciesTest {
 
     @Before
     public void setUp() throws Exception {
-        view = spy(IViewFrequencies.class);
+        view = mock(FragmentFrequencies.class);
         activity = null;
         context = null;
         usermodel = null;

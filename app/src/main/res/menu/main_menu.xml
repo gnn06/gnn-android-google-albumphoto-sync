@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/logout"
+    <item android:id="@+id/menuLogout"
         android:title="@string/logout"/>
-    <item android:id="@+id/requestGooglePermission"
+    <item android:id="@+id/menuRequestGooglePermission"
         android:title="@string/requestGooglePermission"/>
-    <item android:id="@+id/reset_cache"
+    <item android:id="@+id/menuReset_cache"
         android:title="@string/reset_cache"/>
-    <item android:id="@+id/scheduleDetails"
+    <item android:id="@+id/menuScheduleDetails"
         android:title="@string/schedule_details"/>
+    <item android:id="@+id/menuStartWizard"
+        android:title="@string/wizard"/>
 </menu>

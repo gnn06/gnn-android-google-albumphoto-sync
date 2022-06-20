@@ -11,7 +11,6 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.File;
@@ -41,6 +40,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
+import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.stat.stat.WallpaperStat;
@@ -52,14 +52,12 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private static final String TAG = "goi";
 
-    private final IViewHome view;
     private final MainActivity activity;
-    private final FragmentActivity fragment;
+    private final FragmentHome fragment;
     private UserModel userModel;
     private FolderModel folderModel;
 
-    public PresenterHome(IViewHome view, MainActivity activity, FragmentActivity fragmentHome) {
-        this.view = view;
+    public PresenterHome(MainActivity activity, FragmentHome fragmentHome) {
         this.activity = activity;
         this.auth = new AuthManager(activity);
         this.fragment = fragmentHome;
@@ -67,9 +65,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         folderModel = new ViewModelProvider(fragmentHome).get(FolderModel.class);
     }
 
-    public PresenterHome(IViewHome view, MainActivity activity, FragmentActivity fragmentHome,
+    public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome,
                          UserModel userModel, FolderModel folderModel) {
-        this.view = view;
         this.activity = activity;
         this.fragment = fragmentHome;
         this.auth = new AuthManager(activity);
@@ -128,15 +125,16 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     @Override
     public void onAppForeground() {
-        view.updateUI_User();
+        fragment.updateUI_User();
         refreshLastTime();
         WallpaperStat stat = new WallpaperStatProvider(getProcessFolder()).get();
-        view.setStat(stat);
+        fragment.setStat(stat);
+
         WallpaperManager wlppMgr = WallpaperManager.getInstance(activity);
         WallpaperInfo wlppInfo = wlppMgr != null ? wlppMgr.getWallpaperInfo() : null;
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
                 (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
-        view.setWarningWallpaperActive(wlppInfo != null && wlppInfo.getPackageName().equals("gnn.com.googlealbumdownloadappnougat"));
+        fragment.setWarningWallpaperActive(new MyWallpaperService().isActive(this.activity));
 
     }
 
@@ -150,22 +148,22 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Date lastUpdateTime = Cache.getLastUpdateTime(getCacheFile());
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
-        view.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
+        fragment.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
     }
 
     @Override
     public void showError(String message) {
-        view.showError(message);
+        fragment.showError(message);
     }
 
     @Override
     public void setProgressBarVisibility(int visible) {
-        view.setProgressBarVisibility(visible);
+        fragment.setProgressBarVisibility(visible);
     }
 
     @Override
     public void setSyncResult(SynchronizerAndroid sync, SyncStep step) {
-        view.updateUI_CallResult(sync, step);
+        fragment.updateUI_CallResult(sync, step);
     }
 
 
@@ -192,15 +190,15 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
             Exec exec = new Exec() {
                 @Override
                 public void exec() {
-                    view.setProgressBarVisibility(ProgressBar.VISIBLE);
+                    fragment.setProgressBarVisibility(ProgressBar.VISIBLE);
                     task.execute();
                 }
             };
-            Require signInReq = new GoogleAuthRequirement(exec, auth, view, userModel);
+            Require signInReq = new GoogleAuthRequirement(exec, auth, fragment, userModel);
             activity.getPermissionHandler().startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
-            view.showChooseAlbumDialog(mAlbums);
+            fragment.showChooseAlbumDialog(mAlbums);
         }
     }
 
@@ -211,15 +209,15 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     @Override
     public void setAlbums(ArrayList<String> albums) {
         this.mAlbums = albums;
-        view.setProgressBarVisibility(ProgressBar.INVISIBLE);
-        view.showChooseAlbumDialog(albums);
+        fragment.setProgressBarVisibility(ProgressBar.INVISIBLE);
+        fragment.showChooseAlbumDialog(albums);
     }
 
     // Use from persistence
     @Override
     public void setAlbum(String album) {
         this.album = album;
-        view.onAlbumChosenResult(album);
+        fragment.onAlbumChosenResult(album);
     }
 
     /**
@@ -231,7 +229,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void onChooseAlbum(String albumName) {
         this.album = albumName;
         getSync().resetCache();
-        view.onAlbumChosenResult(albumName);
+        fragment.onAlbumChosenResult(albumName);
     }
 
 
@@ -273,7 +271,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                 fragment.startActivityForResult(intent, FragmentHome.RC_CHOOSE_FOLDER);
             }
         };
-        WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, view, userModel);
+        WritePermissionRequirement requirement = new WritePermissionRequirement(exec, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(requirement);
     }
 
@@ -293,10 +291,10 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Log.d(TAG, "onSyncClick");
         String album = this.album;
         if (album == null || album.equals("")) {
-            view.alertNoAlbum();
+            fragment.alertNoAlbum();
         } else {
             SyncTask task = new SyncTask(this, getSync(), new PersistPrefMain(activity.getApplicationContext()), activity);
-            Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, view, userModel);
+            Require signInReq = SignInGoogleAPIWriteRequirementBuilder.build(task, auth, fragment, userModel);
             activity.getPermissionHandler().startRequirement(signInReq);
         }
     }
@@ -311,7 +309,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                 chooser.chooseOne();
             }
         };
-        Require require = new WritePermissionRequirement(exec, auth, view, userModel);
+        Require require = new WritePermissionRequirement(exec, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(require);
     }
 
@@ -336,7 +334,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     @Override
     public void onSignIn() {
-        Require require = new SignInRequirement(null, auth, view, userModel);
+        Require require = new SignInRequirement(null, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(require);
     }
 

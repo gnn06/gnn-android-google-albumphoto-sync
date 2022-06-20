@@ -18,7 +18,7 @@ public class GoogleAuthRequirement extends Require {
 
     @Override
     boolean check() {
-        return auth.hasScope();
+        return auth.hasGooglePermission();
     }
 
     @Override

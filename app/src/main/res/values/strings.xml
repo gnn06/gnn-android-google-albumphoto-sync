@@ -145,7 +145,7 @@
         <item>Appuyez sur Fréquence de téléchargement.\n\nCela permet de choisir la fréquence à laquelle les photos sont téléchargées sur votre téléphone.</item>
         <item>Appuyez sur Fréquence nouvelle photos.\n\nCela permet de choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google. </item>
         <item>Appuyez sur le bouton changement automatique.\n\nCela permet d\'activer le changement automatique des fonds d\'écran. </item>
-        <item>Appuyez sur le bouton SYNCHONISER UNE FOIS.\n\nCela permet de lancer une synchronisation. </item>
+        <item>Appuyez sur le bouton SYNCHONISER UNE FOIS.\n\nCela permet de lancer une synchronisation. Les prochaines synchronisations seront automatiques.</item>
         <item>L\'application est maintenant totalement configuré. L\'Assistant est terminé.</item>
     </string-array>
 </resources>

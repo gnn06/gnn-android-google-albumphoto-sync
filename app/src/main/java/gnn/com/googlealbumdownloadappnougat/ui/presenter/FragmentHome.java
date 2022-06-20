@@ -50,7 +50,7 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new PresenterHome(this, (MainActivity) getActivity(), requireActivity());
+        presenter = new PresenterHome((MainActivity) getActivity(), this);
         getView().findViewById(R.id.SectionUser).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onSignIn();

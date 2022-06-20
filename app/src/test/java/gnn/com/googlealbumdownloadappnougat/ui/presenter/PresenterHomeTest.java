@@ -40,7 +40,7 @@ public class PresenterHomeTest {
     private FragmentHome view;
     private UserModel userModel;
     private FolderModel folderModel;
-    private FragmentActivity fragmentHome;
+    private FragmentHome fragmentHome;
 
     @Before
     public void setUp() throws Exception {
@@ -48,7 +48,7 @@ public class PresenterHomeTest {
         view = mock(FragmentHome.class);
         userModel = mock(UserModel.class);
         folderModel = mock(FolderModel.class);
-        fragmentHome = mock(FragmentActivity.class);
+        fragmentHome = mock(FragmentHome.class);
     }
 
     @Test

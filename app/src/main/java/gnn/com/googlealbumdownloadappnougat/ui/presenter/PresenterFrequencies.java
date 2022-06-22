@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -38,7 +39,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.fragment = (FragmentFrequencies) fragment;
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
-        this.scheduler = new WallpaperScheduler(context);
+        this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
         task = new ScheduleTask(activity, context, scheduler, fragment, userModel);
     }
 

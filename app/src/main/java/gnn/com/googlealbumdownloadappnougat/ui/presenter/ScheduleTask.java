@@ -2,6 +2,8 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
+import androidx.fragment.app.FragmentActivity;
+
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -14,7 +16,7 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 class ScheduleTask {
 
-    public ScheduleTask(MainActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
+    public ScheduleTask(FragmentActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
         this.activity = activity;
         this.context = context;
         this.scheduler = scheduler;
@@ -23,7 +25,7 @@ class ScheduleTask {
         this.authManager = new AuthManager(activity);
     }
 
-    private MainActivity activity;
+    private FragmentActivity activity;
     private Context context;
     private WallpaperScheduler scheduler;
     private IViewFrequencies view;
@@ -48,6 +50,9 @@ class ScheduleTask {
         };
         AuthManager auth = authManager;
         Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-        this.activity.getPermissionHandler().startRequirement(require);
+        if (this.activity instanceof MainActivity) {
+             // TODO Move GetPermission from MainActivity To Dependency
+            ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
+        }
     }
 }

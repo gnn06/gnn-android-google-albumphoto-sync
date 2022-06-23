@@ -44,7 +44,7 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterFrequencies( this, getContext(), (MainActivity) getActivity());
+        this.presenter = new PresenterFrequencies( this, getContext(), getActivity());
         ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {

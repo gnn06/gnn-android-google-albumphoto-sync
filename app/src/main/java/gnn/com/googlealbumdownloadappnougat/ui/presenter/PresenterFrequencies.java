@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
@@ -10,7 +11,6 @@ import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
-import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.photos.service.Cache;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
@@ -27,13 +27,13 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         return context;
     }
 
-    private MainActivity activity;
+    private FragmentActivity activity;
     private final FragmentFrequencies fragment;
     private final UserModel userModel;
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
 
-    public PresenterFrequencies(FragmentFrequencies fragment, Context context, MainActivity activity) {
+    public PresenterFrequencies(FragmentFrequencies fragment, Context context, FragmentActivity activity) {
         this.context = context;
         this.activity = activity;
         this.fragment = (FragmentFrequencies) fragment;

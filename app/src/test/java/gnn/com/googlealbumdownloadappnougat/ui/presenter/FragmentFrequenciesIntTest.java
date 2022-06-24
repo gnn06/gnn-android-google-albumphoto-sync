@@ -24,6 +24,15 @@ public class FragmentFrequenciesIntTest {
             }
         };
         ServiceLocator.getInstance().setWallpaperScheduler(schedulerMock);
+
+        ScheduleTask taskMock = new ScheduleTask(null, null, null, null, null) {
+            @Override
+            void schedule(boolean checked, long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
+                System.out.println("gnn");
+            }
+        };
+        ServiceLocator.getInstance().setSyncTask(taskMock);
+
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);
         org.junit.Assert.assertTrue(true);
         // in test, getActivity=FragmentActivity

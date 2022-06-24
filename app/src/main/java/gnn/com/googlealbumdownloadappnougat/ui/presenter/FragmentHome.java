@@ -213,8 +213,10 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
             name = getResources().getString(R.string.login);
         }
 
-        TextView myAwesomeTextView = getView().findViewById(R.id.textUser);
-        myAwesomeTextView.setText(name);
+        if (getView() != null) {
+            TextView myAwesomeTextView = getView().findViewById(R.id.textUser);
+            myAwesomeTextView.setText(name);
+        }
 
         Log.d(TAG, "updateUI_User, account=" + (account == null ? "null" : account.getEmail()));
     }

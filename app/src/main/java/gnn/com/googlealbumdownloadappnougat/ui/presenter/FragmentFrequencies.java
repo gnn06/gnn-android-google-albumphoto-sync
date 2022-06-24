@@ -52,12 +52,6 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
                     ServiceLocator.getInstance().getWallpaperScheduler(),
                      this, new ViewModelProvider(getActivity()).get(UserModel.class)));
         this.presenter = new PresenterFrequencies( this, getContext(), getActivity());
-        ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                presenter.onSwitchWallpaper(checked);
-            }
-        });
         getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();
         });
@@ -68,6 +62,13 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
             presenter.chooseFrequencyUpdate();
         });
         presenter.onAppStart();
+        // set listener AFTER onAppStart to avoid calling listener when setting initial UI state
+        ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                presenter.onSwitchWallpaper(checked);
+            }
+        });
     }
 
     @Override

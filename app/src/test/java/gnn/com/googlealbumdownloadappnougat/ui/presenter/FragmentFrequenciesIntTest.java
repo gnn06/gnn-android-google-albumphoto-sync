@@ -38,8 +38,8 @@ public class FragmentFrequenciesIntTest {
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);
 
-//        verify(taskMock, never()).schedule(anyBoolean(), anyLong(), anyInt(), anyLong());
-        org.junit.Assert.assertTrue(true);
+        verify(taskMock, never()).schedule(anyBoolean(), anyLong(), anyInt(), anyLong());
+        
         // in test, getActivity=FragmentActivity
         // in app, getActivity=Mainactivity
     }

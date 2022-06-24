@@ -26,7 +26,9 @@ public class ServiceLocator {
     }
 
     public void setSyncTask(ScheduleTask syncTask) {
-        this.syncTask = syncTask;
+        if (this.syncTask == null) {
+            this.syncTask = syncTask;
+        }
     }
 
     public ScheduleTask getSyncTask() {

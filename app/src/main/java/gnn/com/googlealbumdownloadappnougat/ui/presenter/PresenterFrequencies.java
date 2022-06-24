@@ -2,13 +2,8 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
-import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
@@ -20,40 +15,34 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private int frequencyUpdate;
 
     final private Context context;
-    private ScheduleTask task;
+
+    private final FragmentFrequencies fragment;
+    private final PersistPrefMain persist;
+    private final WallpaperScheduler scheduler;
+    private final WallpaperSchedulerWithPermission scheduleWithPermission;
+
+    public PresenterFrequencies(FragmentFrequencies fragment, Context context) {
+        this.context = context;
+        this.fragment = (FragmentFrequencies) fragment;
+        this.persist = new PersistPrefMain(context);
+        this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
+        this.scheduleWithPermission = ServiceLocator.getInstance().getSyncTask();
+    }
+
+    // For test
+    public PresenterFrequencies(IViewFrequencies fragment, Context context,
+                                PersistPrefMain persist,
+                                WallpaperScheduler scheduler, WallpaperSchedulerWithPermission scheduleWithPermission) {
+        this.context = context;
+        this.fragment = (FragmentFrequencies) fragment;
+        this.persist = persist;
+        this.scheduler = scheduler;
+        this.scheduleWithPermission = scheduleWithPermission;
+    }
 
     @Override
     public Context getContext() {
         return context;
-    }
-
-    private FragmentActivity activity;
-    private final FragmentFrequencies fragment;
-    private final UserModel userModel;
-    private final PersistPrefMain persist;
-    private final WallpaperScheduler scheduler;
-
-    public PresenterFrequencies(FragmentFrequencies fragment, Context context, FragmentActivity activity) {
-        this.context = context;
-        this.activity = activity;
-        this.fragment = (FragmentFrequencies) fragment;
-        this.userModel = new ViewModelProvider(activity).get(UserModel.class);
-        this.persist = new PersistPrefMain(context);
-        this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
-        task = ServiceLocator.getInstance().getSyncTask();
-    }
-
-    // For test
-    public PresenterFrequencies(IViewFrequencies fragment, Context context, MainActivity activity,
-                                UserModel userModel, PersistPrefMain persist,
-                                WallpaperScheduler scheduler, ScheduleTask scheduleTask) {
-        this.context = context;
-        this.activity = activity;
-        this.fragment = (FragmentFrequencies) fragment;
-        this.userModel = userModel;
-        this.persist = persist;
-        this.scheduler = scheduler;
-        this.task = scheduleTask;
     }
 
     @Override
@@ -161,7 +150,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 fragment.alertFrequencyError();
             } else {
                 // TODO manage permission refused and toggle switch off
-                task.schedule(checked, getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
+                scheduleWithPermission.schedule(getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
             }
         } else {
             scheduler.cancel();

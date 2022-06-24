@@ -1,12 +1,12 @@
 package gnn.com.googlealbumdownloadappnougat;
 
-import gnn.com.googlealbumdownloadappnougat.ui.presenter.ScheduleTask;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.WallpaperSchedulerWithPermission;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class ServiceLocator {
 
     private static ServiceLocator _ServiceLocator;
-    private ScheduleTask syncTask;
+    private WallpaperSchedulerWithPermission syncTask;
 
     public static ServiceLocator getInstance() {
         if (_ServiceLocator == null) {
@@ -25,13 +25,13 @@ public class ServiceLocator {
         this.wallpaperScheduler = wallpaperScheduler;
     }
 
-    public void setSyncTask(ScheduleTask syncTask) {
+    public void setSyncTask(WallpaperSchedulerWithPermission syncTask) {
         if (this.syncTask == null) {
             this.syncTask = syncTask;
         }
     }
 
-    public ScheduleTask getSyncTask() {
+    public WallpaperSchedulerWithPermission getSyncTask() {
         return syncTask;
     }
 }

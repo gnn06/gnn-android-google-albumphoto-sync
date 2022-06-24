@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -21,7 +19,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 
 public class FragmentFrequencies extends FragmentHighlight implements IViewFrequencies {
@@ -48,10 +45,10 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ServiceLocator.getInstance().setSyncTask(
-            new ScheduleTask(getActivity(), getContext(),
+            new WallpaperSchedulerWithPermission(getActivity(), getContext(),
                     ServiceLocator.getInstance().getWallpaperScheduler(),
                      this, new ViewModelProvider(getActivity()).get(UserModel.class)));
-        this.presenter = new PresenterFrequencies( this, getContext(), getActivity());
+        this.presenter = new PresenterFrequencies( this, getContext());
         getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();
         });

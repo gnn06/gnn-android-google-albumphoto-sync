@@ -1,6 +1,5 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -12,7 +11,6 @@ import androidx.fragment.app.testing.FragmentScenario;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
@@ -33,12 +31,12 @@ public class FragmentFrequenciesIntTest {
         when(schedulerMock.isScheduled()).thenReturn(true);
         ServiceLocator.getInstance().setWallpaperScheduler(schedulerMock);
 
-        ScheduleTask taskMock = mock(ScheduleTask.class);
+        WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);
 
-        verify(taskMock, never()).schedule(anyBoolean(), anyLong(), anyInt(), anyLong());
+        verify(taskMock, never()).schedule(anyLong(), anyInt(), anyLong());
         
         // in test, getActivity=FragmentActivity
         // in app, getActivity=Mainactivity

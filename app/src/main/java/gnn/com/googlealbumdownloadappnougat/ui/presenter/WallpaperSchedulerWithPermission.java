@@ -14,9 +14,9 @@ import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
-public class ScheduleTask {
+public class WallpaperSchedulerWithPermission {
 
-    public ScheduleTask(FragmentActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
+    public WallpaperSchedulerWithPermission(FragmentActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
         this.activity = activity;
         this.context = context;
         this.scheduler = scheduler;
@@ -25,14 +25,14 @@ public class ScheduleTask {
         this.authManager = new AuthManager(activity);
     }
 
-    private FragmentActivity activity;
-    private Context context;
-    private WallpaperScheduler scheduler;
-    private IViewFrequencies view;
-    private UserModel userModel;
+    private final FragmentActivity activity;
+    private final Context context;
+    private final WallpaperScheduler scheduler;
+    private final IViewFrequencies view;
+    private final UserModel userModel;
     private final AuthManager authManager;
 
-    void schedule(boolean checked, long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
+    void schedule(long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
         Exec exec = new Exec() {
             @Override
             public void exec() {
@@ -48,8 +48,7 @@ public class ScheduleTask {
 //                view.enableFrequencyUpdatePhotos(checked);
             }
         };
-        AuthManager auth = authManager;
-        Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
+        Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, authManager, view, userModel);
         ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
     }
 }

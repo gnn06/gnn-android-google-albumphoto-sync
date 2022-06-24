@@ -40,7 +40,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.userModel = new ViewModelProvider(activity).get(UserModel.class);
         this.persist = new PersistPrefMain(context);
         this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
-        task = new ScheduleTask(activity, context, scheduler, fragment, userModel);
+        task = ServiceLocator.getInstance().getSyncTask();
     }
 
     // For test

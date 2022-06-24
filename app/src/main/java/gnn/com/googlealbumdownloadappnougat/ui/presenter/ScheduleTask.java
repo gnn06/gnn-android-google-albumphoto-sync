@@ -14,7 +14,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
-class ScheduleTask {
+public class ScheduleTask {
 
     public ScheduleTask(FragmentActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
         this.activity = activity;

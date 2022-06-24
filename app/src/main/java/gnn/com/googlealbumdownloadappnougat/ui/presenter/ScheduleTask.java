@@ -50,9 +50,6 @@ public class ScheduleTask {
         };
         AuthManager auth = authManager;
         Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-        if (this.activity instanceof MainActivity) {
-             // TODO Move GetPermission from MainActivity To Dependency
-            ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
-        }
+        ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
     }
 }

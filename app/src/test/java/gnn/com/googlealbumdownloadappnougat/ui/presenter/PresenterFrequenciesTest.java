@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
@@ -32,7 +31,7 @@ public class PresenterFrequenciesTest {
     private WallpaperScheduler scheduler;
     private AuthManager authManager;
     private ApplicationContext applicationContext;
-    private ScheduleTask scheduleTask;
+    private WallpaperSchedulerWithPermission scheduleWithPermission;
     private SyncData defaultValue;
 
     @Before
@@ -45,7 +44,7 @@ public class PresenterFrequenciesTest {
         this.scheduler = mock(WallpaperScheduler.class);
         this.authManager = mock(AuthManager.class);
         this.applicationContext = mock(ApplicationContext.class);
-        this.scheduleTask = mock(ScheduleTask.class);
+        this.scheduleWithPermission = mock(WallpaperSchedulerWithPermission.class);
         defaultValue = new SyncData();
         defaultValue.setFrequencyWallpaper(60);
         defaultValue.setFrequencySync(168);
@@ -65,8 +64,8 @@ public class PresenterFrequenciesTest {
     @Test
     public void defaultValue_ui_setted() {
         // given
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         // when
         presenter.onAppStart();
@@ -79,21 +78,21 @@ public class PresenterFrequenciesTest {
     @Test
     public void defaultValue_schedule_ok() {
         // given
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         // when
         presenter.onAppStart();
         presenter.onSwitchWallpaper(true);
         // then
-        verify(scheduleTask).schedule(anyBoolean(), eq(60L), eq(168 * 60), eq(720L * 24));
+        verify(scheduleWithPermission).schedule(eq(60L), eq(168 * 60), eq(720L * 24));
     }
 
     @Test
     public void defaultValue_change_ui_ok() {
         // given
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.onAppStart();
         verify(view).setFrequencyWallpaper(60);
@@ -108,8 +107,8 @@ public class PresenterFrequenciesTest {
 
     @Test
     public void valueChange_toggle_OK() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.onAppStart();
         presenter.setFrequencyWallpaper(120);
@@ -118,13 +117,13 @@ public class PresenterFrequenciesTest {
         // when
         presenter.onSwitchWallpaper(true);
         // then
-        verify(scheduleTask).schedule(anyBoolean(), eq(120L), eq(720*60), eq(168L * 24));
+        verify(scheduleWithPermission).schedule(eq(120L), eq(720*60), eq(168L * 24));
     }
 
     @Test
     public void valueChange_persist_OK() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
@@ -137,8 +136,8 @@ public class PresenterFrequenciesTest {
 
     @Test
     public void conversion_with_never() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context, activity, usermodel,
-                persist, scheduler, scheduleTask);
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission);
         presenter.setFrequencySyncHour(-1);
         presenter.setFrequencyUpdatePhotos(-1);
         // when

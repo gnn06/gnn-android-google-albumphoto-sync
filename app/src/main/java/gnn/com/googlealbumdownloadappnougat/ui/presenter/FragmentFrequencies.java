@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,7 +61,7 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
         });
         presenter.onAppStart();
         // set listener AFTER onAppStart to avoid calling listener when setting initial UI state
-        ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((Switch)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 presenter.onSwitchWallpaper(checked);
@@ -76,7 +77,7 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
 
     @Override
     public void setSwitchWallpaper(boolean scheduled) {
-        SwitchCompat button = getView().findViewById(R.id.SwitchWallPaper);
+        Switch button = getView().findViewById(R.id.SwitchWallPaper);
         button.setChecked(scheduled);
     }
 

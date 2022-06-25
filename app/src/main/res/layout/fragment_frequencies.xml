@@ -125,12 +125,13 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             >
-            <androidx.appcompat.widget.SwitchCompat
+            <Switch
                 android:id="@+id/SwitchWallPaper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Changement automatique du fond d'écran "
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
+                android:textAppearance="@style/TextAppearance.AppCompat.Large">
+            </Switch>
 
         </RelativeLayout>
     </LinearLayout>

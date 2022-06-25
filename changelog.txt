@@ -35,3 +35,9 @@ correction Déconnexion ne vide pas le nom d'utilisateur connecté
 
 1.6 20/06/2022
 assistant
+
+1.6.2
+internal : create integration test for fragment with FragmentScenario, mockito, espresso
+internal : use serviceLocator to facilitate integration test
+fix : schedule when going in frequence fragment
+change : ask google autorisation when logging

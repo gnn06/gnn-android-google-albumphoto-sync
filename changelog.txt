@@ -41,3 +41,4 @@ internal : create integration test for fragment with FragmentScenario, mockito, 
 internal : use serviceLocator to facilitate integration test
 fix : schedule when going in frequence fragment
 change : ask google autorisation when logging
+change : better message in preview live wallpaper when there is no images

@@ -130,26 +130,92 @@
                     android:id="@+id/sectionFrequencies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    >
                     <TextView
                         android:id="@+id/titleFrequencies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingTop="16dp"
                         android:text="@string/frequencyGroup_title"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
+                        android:paddingTop="16dp"
+                    android:text="@string/frequencyGroup_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
                     <TextView
                         android:id="@+id/subSectionFrequencies"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        android:paddingBottom="16dp"
+                        android:paddingBottom="6dp"
                         android:text="@string/frequencyGroup_subtitle"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:divider="#AAA"
+                            android:showDividers="middle"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="20dp">
+                            <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fond d'écran"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Toutes les heures"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Téléchargement"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Toutes les semaines"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Nouvelles photos"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Toutes les mois"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </HorizontalScrollView>
                 </LinearLayout>
                 <!-- Buttons (sync, scheduler, wallpaper) -->
                 <androidx.appcompat.widget.LinearLayoutCompat

@@ -26,6 +26,7 @@
                 android:showDividers="middle">
 
                 <LinearLayout
+                    android:id="@+id/SectionFreqeuncyWallpaper"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -39,6 +40,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
+                        android:id="@+id/textFrequencyWallpaper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/placeholder_hour"
@@ -46,6 +48,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/SectionFreqeuncySync"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -59,6 +62,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
+                        android:id="@+id/textFrequencySync"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/placeholder_week"
@@ -66,6 +70,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/SectionFreqeuncyUpdatePhotos"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -79,6 +84,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
+                        android:id="@+id/textFrequencyUpdatePhotos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/placeHolder_month"
@@ -86,110 +92,6 @@
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncyWallpaper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:paddingBottom="8dp"
-            >
-
-            <TextView
-                android:id="@+id/titleFrequenceyWallpaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequencyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/textFrequencyWallpaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency" />
-
-            <TextView
-                android:id="@+id/textExplenationFrequencyWallpaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textFrequencyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceWallpaperExplenation" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncySync"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            >
-
-            <TextView
-                android:id="@+id/titleFrequenceySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequencySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/textFrequencySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency" />
-
-            <TextView
-                android:id="@+id/textExplenationFrequencySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textFrequencySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceSyncExplenation" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncyUpdatePhotos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <TextView
-                android:id="@+id/titleFrequenceyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequencyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/textFrequencyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency"/>
-
-            <TextView
-                android:id="@+id/textExplenationFrequencyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textFrequencyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceUpdatePhotosExplenation" />
-        </RelativeLayout>
-
         <RelativeLayout
             android:id="@+id/SectionActiveWallpaper"
             android:layout_width="wrap_content"

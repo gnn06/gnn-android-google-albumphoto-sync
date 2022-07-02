@@ -62,13 +62,6 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
                 controller.navigate(R.id.action_FragmentHome_to_FragmentDownloadOptions);
             }
         });
-        view.findViewById(R.id.sectionFrequencies).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                NavController controller = Navigation.findNavController(getActivity(), R.id.fragment_container_view);
-                controller.navigate(R.id.action_fragmentHome_to_fragmentFrequencies);
-            }
-        });
-
         getView().findViewById(R.id.SectionAlbum).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onShowAlbumList();

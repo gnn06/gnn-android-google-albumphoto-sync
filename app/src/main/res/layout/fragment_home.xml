@@ -146,31 +146,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <!-- Frequencies -->
-                <LinearLayout
-                    android:id="@+id/sectionFrequencies"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/titleFrequencies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingTop="16dp"
-                        android:text="@string/titileHomeFrequency"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
-                    <TextView
-                        android:id="@+id/subSectionFrequencies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="16dp"
-                        android:text="@string/frequencyGroup_subtitle"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-                </LinearLayout>
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/FrequenceContainer"
                     android:layout_width="match_parent"

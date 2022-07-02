@@ -22,7 +22,8 @@
     <string name="last_sync_time">Last sync time %s.</string>
     <string name="last_wallpaper_time">Last wallpaper time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
-    <string name="synchronize">Synchronize une fois</string>
+    <string name="button_synchronize_once">Synchronize une fois</string>
+    <string name="button_wallpaper_once">Wallpaper une fois</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>
@@ -45,7 +46,13 @@
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
-    <string name="frequencyGroup_title">Fréquences</string>
+    <string name="TitleDownloadSection">Options de téléchargement</string>
+
+
+    <string name="titileHomeFrequency">Fréquences</string>
+    <string name="titleHomeFrequencyWallpaper">Fréquence changement de Fond d\'écran</string>
+    <string name="titleHomeFrequencyDownload">Fréquence de Téléchargement de photos</string>
+    <string name="titleHomeFrequencyUpdate">Fréquence de Détection de nouvelles photos</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
     <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
@@ -55,6 +62,10 @@
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="frequency_need_disable_first">Désactiver d\'abord le schedule</string>
 
+    <string name="placeHolder_month">Toutes les mois</string>
+    <string name="placeholder_hour">Toutes les heures</string>
+    <string name="placeholder_week">Toutes les semaines</string>
+
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
     <string name="lastWallpaperTimeLabel">Dernier fond d\'écran :</string>
@@ -62,6 +73,7 @@
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="requestGooglePermission">demander permission</string>
+
 
     <string name="titleStat">Statistiques</string>
     <string name="noStat">Pas de statistique</string>
@@ -81,7 +93,6 @@
     <string name="wizard">Assistant</string>
     <string name="no_photo">Aucune photo à afficher.</string>
     <string name="resolve_no_photo">Lancer l\'application et executer une synchronisation.</string>
-
     <string-array name="frequency_wallpaper_label">
         <item>Toutes les 15 minutes</item>
         <item>Toutes les 30 minutes</item>

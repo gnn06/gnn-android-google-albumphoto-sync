@@ -171,6 +171,11 @@
                         android:text="@string/frequencyGroup_subtitle"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </LinearLayout>
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/FrequenceContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentFrequencies"/>
 
                 <!-- Buttons (sync, scheduler, wallpaper) -->
                 <androidx.appcompat.widget.LinearLayoutCompat

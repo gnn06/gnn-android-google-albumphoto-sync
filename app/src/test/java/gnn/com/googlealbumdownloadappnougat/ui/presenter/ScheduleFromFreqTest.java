@@ -4,15 +4,22 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class ScheduleFromFreqTest {
 
-    private WallpaperScheduler wlppSchedulerMock;
+    private WallpaperSchedulerWithPermission wlppSchedulerMock;
+
+    @Before
+    public void setUp() throws Exception {
+        wlppSchedulerMock = mock(WallpaperSchedulerWithPermission.class);
+    }
 
     @Test
     public void schedule() {
@@ -23,8 +30,7 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.setFrequencyWallpaper(15);
 
         // then
-        verify(wlppSchedulerMock).schedule(anyString(), anyLong(), anyInt(), anyString(), anyInt(),
-                anyString(), anyLong(), any());
+        verify(wlppSchedulerMock).schedule(15, -1, -1);
     }
 
     @Test

@@ -70,6 +70,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     /**
+     * called by Dialog
      * @param frequency in minute >= 15 minutes
      */
     @Override

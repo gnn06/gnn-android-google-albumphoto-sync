@@ -173,7 +173,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Fond d'écran"
+                                    android:text="Changement de Fond d'écran"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView
@@ -193,7 +193,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Téléchargement"
+                                    android:text="Téléchargement de photos"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView
@@ -213,7 +213,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Nouvelles photos"
+                                    android:text="Détection de nouvelles photos"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView

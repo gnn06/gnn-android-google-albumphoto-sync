@@ -22,7 +22,9 @@ public class ServiceLocator {
     }
 
     public void setWallpaperScheduler(WallpaperScheduler wallpaperScheduler) {
-        this.wallpaperScheduler = wallpaperScheduler;
+        if (this.wallpaperScheduler == null) {
+            this.wallpaperScheduler = wallpaperScheduler;
+        }
     }
 
     public void setSyncTask(WallpaperSchedulerWithPermission syncTask) {

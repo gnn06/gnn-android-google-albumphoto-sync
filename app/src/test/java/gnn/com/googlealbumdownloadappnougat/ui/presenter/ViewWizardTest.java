@@ -33,7 +33,7 @@ public class ViewWizardTest {
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, new FragmentHome());
         // then
-        assertThat(id, is(R.id.sectionFrequencies));
+        assertThat(id, is(R.id.FrequenceContainer));
     }
 
     @Test

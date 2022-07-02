@@ -142,13 +142,7 @@
                         android:paddingRight="16dp"
                         android:text="@string/frequencyGroup_title"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" /><![CDATA[
-                    android:paddingTop="16dp"
-                    android:text="@string/frequencyGroup_title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
-
-                    ]]>
+                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"

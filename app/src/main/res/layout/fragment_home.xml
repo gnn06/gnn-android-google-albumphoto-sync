@@ -130,19 +130,9 @@
                     android:id="@+id/sectionFrequencies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="0dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/titleFrequencies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:text="@string/frequencyGroup_title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
+
 
                     <HorizontalScrollView
                         android:layout_width="match_parent"
@@ -153,21 +143,21 @@
                             android:layout_height="wrap_content"
                             android:divider="#AAA"
                             android:orientation="horizontal"
-                            android:paddingTop="8dp"
+                            android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:showDividers="middle">
 
                             <LinearLayout
                                 android:layout_width="180dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Changement de Fond d'écran"
+                                    android:text="Fréquence changement de Fond d'écran"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView
@@ -180,14 +170,14 @@
                             <LinearLayout
                                 android:layout_width="180dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Téléchargement de photos"
+                                    android:text="Fréquence de Téléchargement de photos"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView
@@ -200,14 +190,14 @@
                             <LinearLayout
                                 android:layout_width="180dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="24dp"
-                                android:layout_marginRight="24dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Détection de nouvelles photos"
+                                    android:text="Fréquence de Détection de nouvelles photos"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                                 <TextView

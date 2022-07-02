@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Progress Bar -->
             <RelativeLayout
                 android:id="@+id/pb_layout"
                 android:layout_width="match_parent"
@@ -46,9 +47,8 @@
                     android:minHeight="128dp"
                     android:visibility="visible" />
             </RelativeLayout>
-            <!-- Progress Bar -->
+            <!-- Main View -->
             <LinearLayout
-                android:id="@+id/sectionFrequencies"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="#AAA"
@@ -146,80 +146,32 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <!-- Frequencies -->
-                <HorizontalScrollView
+                <LinearLayout
+                    android:id="@+id/sectionFrequencies"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/titleFrequencies"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:divider="#AAA"
-                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:paddingTop="16dp"
+                        android:text="@string/titileHomeFrequency"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
+                    <TextView
+                        android:id="@+id/subSectionFrequencies"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         android:paddingBottom="16dp"
-                        android:showDividers="middle">
+                        android:text="@string/frequencyGroup_subtitle"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/titleHomeFrequencyWallpaper"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/placeholder_hour"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/titleHomeFrequencyDownload"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/placeholder_week"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginRight="16dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/titleHomeFrequencyUpdate"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/placeHolder_month"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </HorizontalScrollView>
                 <!-- Buttons (sync, scheduler, wallpaper) -->
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/SectionSync"

@@ -20,16 +20,20 @@ public class ScheduleFromFreqTest {
     }
 
     @Test
-    public void schedule() {
+    public void verif_all_frequencies() {
         // given scheduler not scheduled
         ScheduleFromFreq schedulerFromFreq = new ScheduleFromFreq(presenter, wlppSchedulerMock);
         when(presenter.getFrequencyWallpaper()).thenReturn(15);
+        when(presenter.getFrequencySyncHour()).thenReturn(-12);
+        when(presenter.getFrequencySyncMinute()).thenReturn(30);
+        when(presenter.getFrequencyUpdatePhotos()).thenReturn(-12);
+        when(presenter.getFrequencyUpdatePhotosHour()).thenReturn(60);
 
         // when set one freq
         schedulerFromFreq.scheduleOrCancel();
 
         // then
-        verify(wlppSchedulerMock).schedule(15, -1, -1);
+        verify(wlppSchedulerMock).schedule(15, 30, 60);
     }
 
     @Test

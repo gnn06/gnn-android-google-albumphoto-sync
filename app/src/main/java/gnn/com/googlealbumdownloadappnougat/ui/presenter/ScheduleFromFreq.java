@@ -11,9 +11,11 @@ public class ScheduleFromFreq {
     }
 
     public void scheduleOrCancel() {
-        int frequency = presenter.getFrequencyWallpaper();
-        if (frequency > 0) {
-            wlppScheduler.schedule(frequency, -1, -1);
+        if (presenter.getFrequencyWallpaper() > 0) {
+            wlppScheduler.schedule(
+                    presenter.getFrequencyWallpaper(),
+                    presenter.getFrequencySyncMinute(),
+                    presenter.getFrequencyUpdatePhotosHour());
         }
     }
 }

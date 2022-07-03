@@ -15,7 +15,9 @@ public class ScheduleFromFreq {
     }
 
     public void scheduleOrCancel() {
-        if (presenter.getFrequencyWallpaper() > 0) {
+        if (presenter.getFrequencyWallpaper() > 0
+        || presenter.getFrequencySyncMinute() > 0
+        || presenter.getFrequencyUpdatePhotosHour() > 0) {
             wlppScheduler.schedule(
                     presenter.getFrequencyWallpaper(),
                     presenter.getFrequencySyncMinute(),

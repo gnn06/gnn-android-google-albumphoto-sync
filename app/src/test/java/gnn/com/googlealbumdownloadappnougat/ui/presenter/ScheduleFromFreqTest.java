@@ -42,6 +42,54 @@ public class ScheduleFromFreqTest {
     }
 
     @Test
+    public void verif_any_frequencies_wallpaper() {
+        // given scheduler not scheduled
+        when(presenter.getFrequencyWallpaper()).thenReturn(15);
+        when(presenter.getFrequencySyncHour()).thenReturn(-12);
+        when(presenter.getFrequencySyncMinute()).thenReturn(0);
+        when(presenter.getFrequencyUpdatePhotos()).thenReturn(-12);
+        when(presenter.getFrequencyUpdatePhotosHour()).thenReturn(0);
+
+        // when set one freq
+        schedulerFromFreq.scheduleOrCancel();
+
+        // then
+        verify(wlppSchedulerMock).schedule(15, 0, 0);
+    }
+
+    @Test
+    public void verif_any_frequencies_sync() {
+        // given scheduler not scheduled
+        when(presenter.getFrequencyWallpaper()).thenReturn(0);
+        when(presenter.getFrequencySyncHour()).thenReturn(-12);
+        when(presenter.getFrequencySyncMinute()).thenReturn(15);
+        when(presenter.getFrequencyUpdatePhotos()).thenReturn(-12);
+        when(presenter.getFrequencyUpdatePhotosHour()).thenReturn(0);
+
+        // when set one freq
+        schedulerFromFreq.scheduleOrCancel();
+
+        // then
+        verify(wlppSchedulerMock).schedule(0, 15, 0);
+    }
+
+    @Test
+    public void verif_any_frequencies_update() {
+        // given scheduler not scheduled
+        when(presenter.getFrequencyWallpaper()).thenReturn(0);
+        when(presenter.getFrequencySyncHour()).thenReturn(-12);
+        when(presenter.getFrequencySyncMinute()).thenReturn(0);
+        when(presenter.getFrequencyUpdatePhotos()).thenReturn(-12);
+        when(presenter.getFrequencyUpdatePhotosHour()).thenReturn(15);
+
+        // when set one freq
+        schedulerFromFreq.scheduleOrCancel();
+
+        // then
+        verify(wlppSchedulerMock).schedule(0, 0, 15);
+    }
+
+    @Test
     public void cancel() {
         // given scheduler not scheduled
         when(presenter.getFrequencyWallpaper()).thenReturn(0);

@@ -60,13 +60,6 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
             presenter.chooseFrequencyUpdate();
         });
         presenter.onAppStart();
-//        // set listener AFTER onAppStart to avoid calling listener when setting initial UI state
-//        ((Switch)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-//                presenter.onSwitchWallpaper(checked);
-//            }
-//        });
     }
 
     @Override
@@ -75,44 +68,20 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
         presenter.onAppStop();
     }
 
-//    @Override
-//    public void setSwitchWallpaper(boolean scheduled) {
-//        Switch button = getView().findViewById(R.id.SwitchWallPaper);
-//        button.setChecked(scheduled);
-//    }
-
     @Override
     public void setFrequencyWallpaper(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label, R.id.textFrequencyWallpaper);
     }
-
-//    @Override
-//    public void enableFrequencyWallpaper(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencyWallpaper);
-//        text.setEnabled(!switchChecked);
-//    }
 
     @Override
     public void setFrequencySync(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_sync_value, R.array.frequency_sync_label, R.id.textFrequencySync);
     }
 
-//    @Override
-//    public void enableFrequencySync(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencySync);
-//        text.setEnabled(!switchChecked);
-//    }
-
     @Override
     public void setFrequencyUpdate(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_update_value, R.array.frequency_update_label, R.id.textFrequencyUpdatePhotos);
     }
-
-//    @Override
-//    public void enableFrequencyUpdatePhotos(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencyUpdatePhotos);
-//        text.setEnabled(!switchChecked);
-//    }
 
     @Override
     public void alertFrequencyError() {

@@ -51,11 +51,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void onAppStart() {
         this.persist.restoreFrequencies(this);
-
-//        boolean scheduled = this.scheduler.isScheduled();
-//        fragment.setSwitchWallpaper(scheduled);
-
-//        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()), viewModel).highlight(fragment);
     }
 
     @Override
@@ -146,24 +141,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             return Cache.DELAY_NEVER_EXPIRE;
     }
 
-//    @Override
-//    public void onSwitchWallpaper(boolean checked) {
-//        if (checked) {
-//            if (getFrequencyWallpaper() < 15) {
-//                fragment.setSwitchWallpaper(false);
-//                fragment.alertFrequencyError();
-//            } else {
-//                // TODO manage permission refused and toggle switch off
-//                scheduleWithPermission.schedule(getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
-//            }
-//        } else {
-//            scheduler.cancel();
-////            view.enableFrequencyWallpaper(checked);
-////            view.enableFrequencySync(checked);
-////            view.enableFrequencyUpdatePhotos(checked);
-//        }
-//    }
-
     @Override
     public void chooseFrequencyWallpaper() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
@@ -193,6 +170,4 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }
-
-
 }

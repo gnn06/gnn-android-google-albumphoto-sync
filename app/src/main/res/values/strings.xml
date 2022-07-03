@@ -94,6 +94,7 @@
     <string name="no_photo">Aucune photo à afficher.</string>
     <string name="resolve_no_photo">Lancer l\'application et executer une synchronisation.</string>
     <string-array name="frequency_wallpaper_label">
+        <item>Jamais</item>
         <item>Toutes les 15 minutes</item>
         <item>Toutes les 30 minutes</item>
         <item>Toutes les heures</item>
@@ -101,6 +102,7 @@
         <item>Tous les jours</item>
     </string-array>
     <integer-array name="frequency_wallpaper_value">
+        <item>-1</item>
         <item>15</item>
         <item>30</item>
         <item>60</item>

@@ -20,6 +20,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private final PersistPrefMain persist;
     private final WallpaperScheduler scheduler;
     private final WallpaperSchedulerWithPermission scheduleWithPermission;
+    private final ScheduleFromFreq schedulerFromFreq;
 
     public PresenterFrequencies(FragmentFrequencies fragment, Context context) {
         this.context = context;
@@ -27,17 +28,19 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.persist = new PersistPrefMain(context);
         this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
         this.scheduleWithPermission = ServiceLocator.getInstance().getSyncTask();
+        this.schedulerFromFreq = new ScheduleFromFreq(this, this.scheduleWithPermission, this.scheduler);
     }
 
     // For test
     public PresenterFrequencies(IViewFrequencies fragment, Context context,
                                 PersistPrefMain persist,
-                                WallpaperScheduler scheduler, WallpaperSchedulerWithPermission scheduleWithPermission) {
+                                WallpaperScheduler scheduler, WallpaperSchedulerWithPermission scheduleWithPermission, ScheduleFromFreq schedulerFromFreq) {
         this.context = context;
         this.fragment = (FragmentFrequencies) fragment;
         this.persist = persist;
         this.scheduler = scheduler;
         this.scheduleWithPermission = scheduleWithPermission;
+        this.schedulerFromFreq = schedulerFromFreq;
     }
 
     @Override
@@ -143,23 +146,23 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             return Cache.DELAY_NEVER_EXPIRE;
     }
 
-    @Override
-    public void onSwitchWallpaper(boolean checked) {
-        if (checked) {
-            if (getFrequencyWallpaper() < 15) {
-                fragment.setSwitchWallpaper(false);
-                fragment.alertFrequencyError();
-            } else {
-                // TODO manage permission refused and toggle switch off
-                scheduleWithPermission.schedule(getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
-            }
-        } else {
-            scheduler.cancel();
-//            view.enableFrequencyWallpaper(checked);
-//            view.enableFrequencySync(checked);
-//            view.enableFrequencyUpdatePhotos(checked);
-        }
-    }
+//    @Override
+//    public void onSwitchWallpaper(boolean checked) {
+//        if (checked) {
+//            if (getFrequencyWallpaper() < 15) {
+//                fragment.setSwitchWallpaper(false);
+//                fragment.alertFrequencyError();
+//            } else {
+//                // TODO manage permission refused and toggle switch off
+//                scheduleWithPermission.schedule(getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
+//            }
+//        } else {
+//            scheduler.cancel();
+////            view.enableFrequencyWallpaper(checked);
+////            view.enableFrequencySync(checked);
+////            view.enableFrequencyUpdatePhotos(checked);
+//        }
+//    }
 
     @Override
     public void chooseFrequencyWallpaper() {
@@ -167,8 +170,11 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             fragment.alertNeedDisableSchedule();
             return;
         }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
-                R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencyWallpaper(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
+            R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
     }
 
@@ -178,8 +184,11 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             fragment.alertNeedDisableSchedule();
             return;
         }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
-                R.array.frequency_sync_value, R.array.frequency_sync_label);
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencySyncHour(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
+            R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }
 
@@ -189,7 +198,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
             fragment.alertNeedDisableSchedule();
             return;
         }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyUpdatePhotos(value),
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencyUpdatePhotos(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }

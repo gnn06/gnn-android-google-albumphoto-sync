@@ -92,23 +92,5 @@
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>
-        <RelativeLayout
-            android:id="@+id/SectionActiveWallpaper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            >
-            <Switch
-                android:id="@+id/SwitchWallPaper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Changement automatique du fond d'écran "
-                android:textAppearance="@style/TextAppearance.AppCompat.Large">
-            </Switch>
-
-        </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

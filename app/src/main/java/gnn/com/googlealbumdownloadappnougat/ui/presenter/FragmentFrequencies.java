@@ -75,11 +75,11 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
         presenter.onAppStop();
     }
 
-    @Override
-    public void setSwitchWallpaper(boolean scheduled) {
-        Switch button = getView().findViewById(R.id.SwitchWallPaper);
-        button.setChecked(scheduled);
-    }
+//    @Override
+//    public void setSwitchWallpaper(boolean scheduled) {
+//        Switch button = getView().findViewById(R.id.SwitchWallPaper);
+//        button.setChecked(scheduled);
+//    }
 
     @Override
     public void setFrequencyWallpaper(int frequency) {

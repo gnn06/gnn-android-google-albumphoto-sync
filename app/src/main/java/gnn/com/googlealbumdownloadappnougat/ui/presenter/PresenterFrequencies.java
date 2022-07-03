@@ -52,8 +52,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     public void onAppStart() {
         this.persist.restoreFrequencies(this);
 
-        boolean scheduled = this.scheduler.isScheduled();
-        fragment.setSwitchWallpaper(scheduled);
+//        boolean scheduled = this.scheduler.isScheduled();
+//        fragment.setSwitchWallpaper(scheduled);
 
 //        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()), viewModel).highlight(fragment);
     }
@@ -166,10 +166,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencyWallpaper() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
                     setFrequencyWallpaper(value);
                     schedulerFromFreq.scheduleOrCancel();
@@ -180,10 +176,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencySync() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
                     setFrequencySyncHour(value);
                     schedulerFromFreq.scheduleOrCancel();
@@ -194,10 +186,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void chooseFrequencyUpdate() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
                     setFrequencyUpdatePhotos(value);
                     schedulerFromFreq.scheduleOrCancel();

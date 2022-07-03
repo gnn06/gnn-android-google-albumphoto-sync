@@ -59,8 +59,6 @@ public class ViewWizard {
                     return R.id.SectionFreqeuncySync;
                 case S09_CHOOSE_UPDATE_FREQUENCY:
                     return R.id.SectionFreqeuncyUpdatePhotos;
-                case S10_ACTIVATE_SCHEDULER:
-                    return R.id.SectionActiveWallpaper;
                 default:
                     return -1;
             }

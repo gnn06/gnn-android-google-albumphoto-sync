@@ -31,6 +31,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterMain;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         Logger.getLogger().fine("onCreate");
 
         ServiceLocator.getInstance().setWallpaperScheduler(new WallpaperScheduler(getApplicationContext()));
+        ServiceLocator.getInstance().setPersistMain(new PersistPrefMain(getApplicationContext()));
 
         permissionHandler = new PermissionHandler();
         auth = new AuthManager(this);

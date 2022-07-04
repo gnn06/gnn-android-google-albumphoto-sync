@@ -89,6 +89,7 @@ public class PresenterFrequenciesTest {
         presenter.setFrequencyUpdatePhotos(168);
         // then
         verify(view).setFrequencyWallpaper(120);
+        verify(view).setFrequencySync(720);
         verify(view).setFrequencySync(168);
     }
 

@@ -32,7 +32,7 @@ public class FragmentFrequenciesIntTest {
 //    public MockitoRule rule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
     @Test
-    public void test() {
+    public void no_schedule_onAppStart() {
         // Check Fragment with Presenter
         // mock schedule
 

@@ -36,4 +36,9 @@ public class ServiceLocator {
     public WallpaperSchedulerWithPermission getSyncTask() {
         return syncTask;
     }
+
+    public void resetForTest() {
+        this.wallpaperScheduler = null;
+        this.syncTask = null;
+    }
 }

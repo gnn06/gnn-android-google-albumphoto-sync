@@ -51,4 +51,8 @@ public class WallpaperSchedulerWithPermission {
         Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, authManager, view, userModel);
         ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
     }
+
+    void cancel() {
+        this.scheduler.cancel();
+    }
 }

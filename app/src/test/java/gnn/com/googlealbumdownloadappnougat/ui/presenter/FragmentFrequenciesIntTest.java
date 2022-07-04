@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -7,6 +8,10 @@ import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -16,9 +21,9 @@ import static org.mockito.Mockito.when;
 
 import androidx.fragment.app.testing.FragmentScenario;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import gnn.com.googlealbumdownloadappnougat.R;
@@ -30,6 +35,11 @@ public class FragmentFrequenciesIntTest {
 
 //    @Rule
 //    public MockitoRule rule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+
+    @After
+    public void tearDown() throws Exception {
+        ServiceLocator.getInstance().resetForTest();
+    }
 
     @Test
     public void no_schedule_onAppStart() {
@@ -69,5 +79,21 @@ public class FragmentFrequenciesIntTest {
         onView(withText(R.string.pick_frequency)).inRoot(isDialog()).check(matches(isDisplayed()));
 
         System.out.println("done");
+    }
+
+    @Test
+    public void change_freq_schedule() {
+        WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
+        ServiceLocator.getInstance().setSyncTask(taskMock);
+
+        FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);
+
+        onView(withId(R.id.SectionFreqeuncyWallpaper)).perform(click());
+
+        onData(anything())
+                .inRoot(isDialog())
+                .atPosition(1).perform(click());
+
+        verify(taskMock).schedule(anyLong(), anyInt(), anyLong());
     }
 }

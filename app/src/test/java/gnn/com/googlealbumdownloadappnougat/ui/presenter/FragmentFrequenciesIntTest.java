@@ -53,6 +53,12 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
+        PersistPrefMain persistMock = mock(PersistPrefMain.class);
+        when(persistMock.getFrequencyWallpaper()).thenReturn(15);
+        when(persistMock.getFrequencyDownload()).thenReturn(-1);
+        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        ServiceLocator.getInstance().setPersistMain(persistMock);
+
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);
 
         verify(taskMock, never()).schedule(anyLong(), anyInt(), anyLong());
@@ -70,6 +76,12 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
+        PersistPrefMain persistMock = mock(PersistPrefMain.class);
+        when(persistMock.getFrequencyWallpaper()).thenReturn(15);
+        when(persistMock.getFrequencyDownload()).thenReturn(-1);
+        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        ServiceLocator.getInstance().setPersistMain(persistMock);
+
         // Need switch and not switchCompat to avoid nullpointer
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);
 
@@ -86,6 +98,12 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
+        PersistPrefMain persistMock = mock(PersistPrefMain.class);
+        when(persistMock.getFrequencyWallpaper()).thenReturn(-1);
+        when(persistMock.getFrequencyDownload()).thenReturn(-1);
+        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        ServiceLocator.getInstance().setPersistMain(persistMock);
+
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);
 
         onView(withId(R.id.SectionFreqeuncyWallpaper)).perform(click());
@@ -96,4 +114,27 @@ public class FragmentFrequenciesIntTest {
 
         verify(taskMock).schedule(anyLong(), anyInt(), anyLong());
     }
+
+    @Test
+    public void change_freq_cancel() {
+        WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
+        ServiceLocator.getInstance().setSyncTask(taskMock);
+
+        PersistPrefMain persistMock = mock(PersistPrefMain.class);
+        when(persistMock.getFrequencyWallpaper()).thenReturn(15);
+        when(persistMock.getFrequencyDownload()).thenReturn(-1);
+        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        ServiceLocator.getInstance().setPersistMain(persistMock);
+
+        FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);
+
+        onView(withId(R.id.SectionFreqeuncyWallpaper)).perform(click());
+
+        onData(anything())
+                .inRoot(isDialog())
+                .atPosition(0).perform(click());
+
+        verify(taskMock).cancel();
+    }
+
 }

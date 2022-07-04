@@ -6,12 +6,10 @@ public class ScheduleFromFreq {
 
     private final WallpaperSchedulerWithPermission wlppScheduler;
     private final PresenterFrequencies presenter;
-    private final WallpaperScheduler scheduler;
 
-    public ScheduleFromFreq(PresenterFrequencies presenter, WallpaperSchedulerWithPermission wlppSchedulerMock, WallpaperScheduler scheduler) {
+    public ScheduleFromFreq(PresenterFrequencies presenter, WallpaperSchedulerWithPermission wlppSchedulerMock) {
         this.presenter = presenter;
         this.wlppScheduler = wlppSchedulerMock;
-        this.scheduler = scheduler;
     }
 
     public void scheduleOrCancel() {

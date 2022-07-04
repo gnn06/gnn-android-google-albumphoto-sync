@@ -13,16 +13,14 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 public class ScheduleFromFreqTest {
 
     private WallpaperSchedulerWithPermission wlppSchedulerMock;
-    private WallpaperScheduler schedulerMock;
     private PresenterFrequencies presenter;
     private ScheduleFromFreq schedulerFromFreq;
 
     @Before
     public void setUp() throws Exception {
         wlppSchedulerMock = mock(WallpaperSchedulerWithPermission.class);
-        schedulerMock = mock(WallpaperScheduler.class);
         presenter = mock(PresenterFrequencies.class);
-        schedulerFromFreq = new ScheduleFromFreq(presenter, wlppSchedulerMock, schedulerMock);
+        schedulerFromFreq = new ScheduleFromFreq(presenter, wlppSchedulerMock);
     }
 
     @Test
@@ -107,7 +105,7 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.scheduleOrCancel();
 
         // then
-        verify(schedulerMock).cancel();
+        verify(wlppSchedulerMock).cancel();
     }
 
 }

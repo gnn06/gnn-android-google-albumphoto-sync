@@ -28,7 +28,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         this.persist = ServiceLocator.getInstance().getPersistMain();
         this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
         this.scheduleWithPermission = ServiceLocator.getInstance().getSyncTask();
-        this.schedulerFromFreq = new ScheduleFromFreq(this, this.scheduleWithPermission, this.scheduler);
+        this.schedulerFromFreq = new ScheduleFromFreq(this, this.scheduleWithPermission);
     }
 
     // For test

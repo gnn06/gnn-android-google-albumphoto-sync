@@ -23,7 +23,7 @@ public class ScheduleFromFreq {
                     presenter.getFrequencySyncMinute(),
                     presenter.getFrequencyUpdatePhotosHour());
         } else {
-            scheduler.cancel();
+            wlppScheduler.cancel();
         }
     }
 }

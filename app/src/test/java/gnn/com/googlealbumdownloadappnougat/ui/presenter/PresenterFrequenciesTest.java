@@ -76,19 +76,6 @@ public class PresenterFrequenciesTest {
     }
 
     @Test
-    public void defaultValue_schedule_ok() {
-        // given
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
-        doCallRealMethod().when(persist).restoreFrequencies(presenter);
-        // when
-        presenter.onAppStart();
-        presenter.onSwitchWallpaper(true);
-        // then
-        verify(scheduleWithPermission).schedule(eq(60L), eq(168 * 60), eq(720L * 24));
-    }
-
-    @Test
     public void defaultValue_change_ui_ok() {
         // given
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
@@ -103,21 +90,6 @@ public class PresenterFrequenciesTest {
         // then
         verify(view).setFrequencyWallpaper(120);
         verify(view).setFrequencySync(168);
-    }
-
-    @Test
-    public void valueChange_toggle_OK() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
-        doCallRealMethod().when(persist).restoreFrequencies(presenter);
-        presenter.onAppStart();
-        presenter.setFrequencyWallpaper(120);
-        presenter.setFrequencySyncHour(720);
-        presenter.setFrequencyUpdatePhotos(168);
-        // when
-        presenter.onSwitchWallpaper(true);
-        // then
-        verify(scheduleWithPermission).schedule(eq(120L), eq(720*60), eq(168L * 24));
     }
 
     @Test

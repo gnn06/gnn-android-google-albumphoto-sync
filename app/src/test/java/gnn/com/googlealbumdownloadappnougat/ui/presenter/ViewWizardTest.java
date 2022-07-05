@@ -42,10 +42,6 @@ public class ViewWizardTest {
         id = viewWizard.getViewFromStep(WizardStep.S09_CHOOSE_UPDATE_FREQUENCY, new FragmentHome());
         // then
         assertThat(id, is(-1));
-        // when
-        id = viewWizard.getViewFromStep(WizardStep.S10_ACTIVATE_SCHEDULER, new FragmentHome());
-        // then
-        assertThat(id, is(-1));
     }
 
     @Test
@@ -56,10 +52,6 @@ public class ViewWizardTest {
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, null);
         // then
         assertThat(id, is(R.id.SectionFreqeuncyWallpaper));
-        // when
-        id = viewWizard.getViewFromStep(WizardStep.S10_ACTIVATE_SCHEDULER, null);
-        // then
-        assertThat(id, is(-1));
     }
 
     @Test

@@ -44,7 +44,6 @@ public class ViewWizard {
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                 case S08_CHOOSE_DOWNLOAD_FREQUENCY:
                 case S09_CHOOSE_UPDATE_FREQUENCY:
-                case S10_ACTIVATE_SCHEDULER:
                     return -1;
                 case S10BIS_SYNC_ONCE:
                     return R.id.SectionSync;

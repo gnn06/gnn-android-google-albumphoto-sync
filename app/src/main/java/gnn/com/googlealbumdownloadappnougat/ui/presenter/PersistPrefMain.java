@@ -185,7 +185,11 @@ public class PersistPrefMain {
     public WizardStep restoreWizardStep() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         if (preferences != null) {
-            return WizardStep.valueOf(preferences.getString(PREF_WIZARD_STEP, DEF_WIZARD_STEP.name()));
+            try {
+                return WizardStep.valueOf(preferences.getString(PREF_WIZARD_STEP, DEF_WIZARD_STEP.name()));
+            } catch (IllegalArgumentException e) {
+                return WizardStep.S00_NOT_STARTED;
+            }
         }
         return DEF_WIZARD_STEP;
     }

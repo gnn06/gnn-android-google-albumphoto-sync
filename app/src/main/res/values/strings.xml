@@ -155,11 +155,11 @@
         <item>Appuyez sur Album.\n\nCela permet de choisir l\'album Google qui contient les photos que vous souhaitez mettre en fond d\'écran.</item>
         <item>Appuyez sur Folder.\n\nCela permet choisir le répertoire de votre téléphone dans lequel les photos seront enregistrées en local. L\'application va télécharger vos photos dans ce répertoire. Vous devrez autoriser l\'application à écrire sur votre téléphone.</item>
         <item>Appuyez sur Option de téléchargement puis sur Quantité.\n\nVous alle pouvoir choisir le nombre maximum de photos à télécharger.</item>
-        <item>S\'il est visible, appuyez sur le bandeau orange.\n\nCela permet de choisir le fond d\'écran animé de l\'application.</item>
         <item>Appuyez sur Fréquences puis sur Fréquence fond d\'écran.\n\nCela permet de choisir la fréquence à laquelle le fond d\'écran est changé.</item>
         <item>Appuyez sur Fréquence de téléchargement.\n\nCela permet de choisir la fréquence à laquelle les photos sont téléchargées sur votre téléphone.</item>
         <item>Appuyez sur Fréquence nouvelle photos.\n\nCela permet de choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google. </item>
         <item>Appuyez sur le bouton SYNCHONISER UNE FOIS.\n\nCela permet de lancer une synchronisation. Les prochaines synchronisations seront automatiques.</item>
+        <item>S\'il est visible, appuyez sur le bandeau orange.\n\nCela permet de choisir le fond d\'écran animé de l\'application.</item>
         <item>L\'application est maintenant totalement configuré. L\'Assistant est terminé.</item>
     </string-array>
 </resources>

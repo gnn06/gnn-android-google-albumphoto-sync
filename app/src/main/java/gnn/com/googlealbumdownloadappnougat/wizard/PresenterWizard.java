@@ -52,7 +52,7 @@ public class PresenterWizard {
     public void onShowWizard() {
         ((MainActivity)this.activity).makeVisible(true);
         WizardStep step = persist.restoreWizardStep();
-        if (step == WizardStep.S11_FINISHED) {
+        if (step == WizardStep.S20_FINISHED) {
             step = wizard.resetStep();
         }
         viewModelWizard.getLiveStep().setValue(step);
@@ -78,6 +78,6 @@ public class PresenterWizard {
     public void onAppStart() {
         WizardStep step = wizard.getStep();
         viewModelWizard.setStep(step);
-        ((MainActivity)activity).makeVisible(step != WizardStep.S11_FINISHED);
+        ((MainActivity)activity).makeVisible(step != WizardStep.S20_FINISHED);
     }
 }

@@ -39,13 +39,13 @@ public class ViewWizard {
                     return R.id.SectionFolder;
                 case S05BIS_QUANTITY:
                     return R.id.sectionDownloadOptions;
-                case S06_ACTIVATE_LIVEWALLPAPER:
+                case S11_ACTIVATE_LIVEWALLPAPER:
                     return -1;
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                 case S08_CHOOSE_DOWNLOAD_FREQUENCY:
                 case S09_CHOOSE_UPDATE_FREQUENCY:
                     return -1;
-                case S10BIS_SYNC_ONCE:
+                case S10_SYNC_ONCE:
                     return R.id.SectionSync;
                 default:
                     return -1;

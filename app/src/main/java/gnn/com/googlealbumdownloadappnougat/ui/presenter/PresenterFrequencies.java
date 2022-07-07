@@ -7,6 +7,7 @@ import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
@@ -103,8 +104,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public int getFrequencySyncMinute() {
         if (getFrequencySyncHour() == -1)
-            return Integer.MAX_VALUE;
-        if (getFrequencySyncHour() < Integer.MAX_VALUE)
+            return SynchronizerDelayed.DELAY_NEVER_SYNC;
+        else if (getFrequencySyncHour() == 0) {
+            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
+        } else if (getFrequencySyncHour() < Integer.MAX_VALUE)
             return getFrequencySyncHour() * 60;
         else
             return Integer.MAX_VALUE;
@@ -134,11 +137,13 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     public int getFrequencyUpdatePhotosHour() {
         if (getFrequencyUpdatePhotos() == -1)
-            return Integer.MAX_VALUE;
-        if (getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE)
+            return Cache.DELAY_NEVER_EXPIRE;
+        else if (getFrequencyUpdatePhotos() == 0) {
+            return Cache.DELAY_ALWAYS_EXPIRE;
+        } else if (getFrequencyUpdatePhotos() < Integer.MAX_VALUE)
             return getFrequencyUpdatePhotos() * 24;
         else
-            return Cache.DELAY_NEVER_EXPIRE;
+            return Integer.MAX_VALUE;
     }
 
     @Override

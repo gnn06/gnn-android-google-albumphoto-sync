@@ -20,6 +20,8 @@ import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
+import gnn.com.photos.service.Cache;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequenciesTest {
 
@@ -117,7 +119,50 @@ public class PresenterFrequenciesTest {
         int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
         int resultSync = presenter.getFrequencySyncMinute();
         // then
+        assertThat(resultUpdate, is(SynchronizerDelayed.DELAY_NEVER_SYNC));
+        assertThat(resultSync, is(Cache.DELAY_NEVER_EXPIRE));
+    }
+
+    @Test
+    public void conversion_with_always() {
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission, null);
+        presenter.setFrequencySyncHour(0);
+        presenter.setFrequencyUpdatePhotos(0);
+        // when
+        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
+        int resultSync = presenter.getFrequencySyncMinute();
+        // then
+        assertThat(resultUpdate, is(SynchronizerDelayed.DELAY_ALWAYS_SYNC));
+        assertThat(resultSync, is(Cache.DELAY_ALWAYS_EXPIRE));
+    }
+
+    @Test
+    public void conversion_with_max() {
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission, null);
+        presenter.setFrequencySyncHour(Integer.MAX_VALUE);
+        presenter.setFrequencyUpdatePhotos(Integer.MAX_VALUE);
+        // when
+        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
+        int resultSync = presenter.getFrequencySyncMinute();
+        // then
         assertThat(resultUpdate, is(Integer.MAX_VALUE));
         assertThat(resultSync, is(Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void conversion_with_normal() {
+        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
+                persist, scheduler, scheduleWithPermission, null);
+        presenter.setFrequencyWallpaper(120);
+        presenter.setFrequencySyncHour(720);
+        presenter.setFrequencyUpdatePhotos(168);
+        // when
+        int resultSync = presenter.getFrequencySyncMinute();
+        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
+        // then
+        assertThat(resultSync, is(720* 60));
+        assertThat(resultUpdate, is(168 * 24));
     }
 }

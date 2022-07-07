@@ -2,18 +2,16 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
-import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizard {
 
+    public static final int NO_HIGHLIGHT = -1;
     private final Wizard wizard;
     private final ViewModelWizard viewModel;
 
@@ -40,15 +38,15 @@ public class ViewWizard {
                 case S05BIS_QUANTITY:
                     return R.id.sectionDownloadOptions;
                 case S11_ACTIVATE_LIVEWALLPAPER:
-                    return -1;
+                    return NO_HIGHLIGHT;
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                 case S08_CHOOSE_DOWNLOAD_FREQUENCY:
                 case S09_CHOOSE_UPDATE_FREQUENCY:
-                    return -1;
+                    return NO_HIGHLIGHT;
                 case S10_SYNC_ONCE:
                     return R.id.SectionSync;
                 default:
-                    return -1;
+                    return NO_HIGHLIGHT;
             }
         } else {
             // FragmentFrequency
@@ -60,7 +58,7 @@ public class ViewWizard {
                 case S09_CHOOSE_UPDATE_FREQUENCY:
                     return R.id.SectionFreqeuncyUpdatePhotos;
                 default:
-                    return -1;
+                    return NO_HIGHLIGHT;
             }
         }
     }

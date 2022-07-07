@@ -33,6 +33,7 @@ public class SyncScheduler {
     }
 
     public void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
+        // TODO get CacheMaxAge from persistance
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())

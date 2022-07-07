@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
+import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
@@ -103,7 +104,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public int getFrequencySyncMinute() {
-        if (getFrequencySyncHour() == -1)
+        if (getFrequencySyncHour() == Frequency.NEVER)
             return SynchronizerDelayed.DELAY_NEVER_SYNC;
         else if (getFrequencySyncHour() == 0) {
             return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
@@ -136,7 +137,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      * @return fréquence en minute
      */
     public int getFrequencyUpdatePhotosHour() {
-        if (getFrequencyUpdatePhotos() == -1)
+        if (getFrequencyUpdatePhotos() == Frequency.NEVER)
             return Cache.DELAY_NEVER_EXPIRE;
         else if (getFrequencyUpdatePhotos() == 0) {
             return Cache.DELAY_ALWAYS_EXPIRE;

@@ -11,7 +11,9 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.photos.service.Cache;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 /**
  * choose a photo with ChooserSetterWAllpaper and make Synchronization last sync was expired
@@ -38,10 +40,10 @@ public class WallPaperWorker extends Worker {
                 String destinationPath = getInputData().getString("folderPath");
                 File destinationFolder = getDestinationFolder(destinationPath);
 
-                int delayMinute = getInputData().getInt("syncMaxAge", 0);
+                int delayMinute = getInputData().getInt("syncMaxAge", SynchronizerDelayed.DELAY_ALWAYS_SYNC);
 
                 File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-                long cacheMaxAgeHour = getInputData().getLong("cacheMaxAge", -1);
+                long cacheMaxAgeHour = getInputData().getLong("cacheMaxAge", Cache.DELAY_ALWAYS_EXPIRE);
                 File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
                 logger.finest("WallpaperWorker parameters " + destinationPath + ", delay=" + delayMinute);

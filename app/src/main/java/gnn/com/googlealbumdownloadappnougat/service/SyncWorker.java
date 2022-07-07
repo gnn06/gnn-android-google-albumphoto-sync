@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -27,7 +28,7 @@ public class SyncWorker extends Worker {
     @Override
     public Result doWork() {
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-        long cacheMaxAge = getInputData().getLong("cacheMaxAge", -1);
+        long cacheMaxAge = getInputData().getLong("cacheMaxAge", Cache.DELAY_ALWAYS_EXPIRE);
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
         Context activity = getApplicationContext();

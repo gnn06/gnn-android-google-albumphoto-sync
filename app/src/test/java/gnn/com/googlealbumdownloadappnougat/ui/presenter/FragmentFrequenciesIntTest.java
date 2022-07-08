@@ -8,10 +8,8 @@ import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.Matchers.hasEntry;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
@@ -19,7 +17,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
 import org.junit.Test;
@@ -120,11 +122,13 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
-        PersistPrefMain persistMock = mock(PersistPrefMain.class);
-        when(persistMock.getFrequencyWallpaper()).thenReturn(15);
-        when(persistMock.getFrequencyDownload()).thenReturn(-1);
-        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
-        ServiceLocator.getInstance().setPersistMain(persistMock);
+        SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putInt("frequency_wallpaper", 15).apply();
+        sharedPreferences.edit().putInt("frequency_sync", -1).apply();
+        sharedPreferences.edit().putInt("frequency_update_photos", -1).apply();
+
+        PersistPrefMain persist = new PersistPrefMain(ApplicationProvider.getApplicationContext());
+        ServiceLocator.getInstance().setPersistMain(persist);
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);
 

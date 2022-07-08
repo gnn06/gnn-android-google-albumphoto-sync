@@ -7,7 +7,7 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 public class ServiceLocator {
 
     private static ServiceLocator _ServiceLocator;
-    private WallpaperSchedulerWithPermission syncTask;
+    private WallpaperSchedulerWithPermission wallpaperSchedulerWithPermission;
     private WallpaperScheduler wallpaperScheduler;
     private PersistPrefMain persistMain;
 
@@ -28,13 +28,13 @@ public class ServiceLocator {
         }
     }
 
-    public WallpaperSchedulerWithPermission getSyncTask() {
-        return syncTask;
+    public WallpaperSchedulerWithPermission getWallpaperSchedulerWithPermission() {
+        return wallpaperSchedulerWithPermission;
     }
 
-    public void setSyncTask(WallpaperSchedulerWithPermission syncTask) {
-        if (this.syncTask == null) {
-            this.syncTask = syncTask;
+    public void setWallpaperSchedulerWithPermission(WallpaperSchedulerWithPermission wallpaperSchedulerWithPermission) {
+        if (this.wallpaperSchedulerWithPermission == null) {
+            this.wallpaperSchedulerWithPermission = wallpaperSchedulerWithPermission;
         }
     }
 
@@ -50,7 +50,7 @@ public class ServiceLocator {
 
     public void resetForTest() {
         this.wallpaperScheduler = null;
-        this.syncTask = null;
+        this.wallpaperSchedulerWithPermission = null;
         this.persistMain = null;
     }
 }

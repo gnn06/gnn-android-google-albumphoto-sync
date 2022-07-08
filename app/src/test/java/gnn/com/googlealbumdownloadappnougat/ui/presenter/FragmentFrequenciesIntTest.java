@@ -53,7 +53,7 @@ public class FragmentFrequenciesIntTest {
         ServiceLocator.getInstance().setWallpaperScheduler(schedulerMock);
 
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
-        ServiceLocator.getInstance().setSyncTask(taskMock);
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
 
         PersistPrefMain persistMock = mock(PersistPrefMain.class);
         when(persistMock.getFrequencyWallpaper()).thenReturn(15);
@@ -76,7 +76,7 @@ public class FragmentFrequenciesIntTest {
         ServiceLocator.getInstance().setWallpaperScheduler(schedulerMock);
 
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
-        ServiceLocator.getInstance().setSyncTask(taskMock);
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
 
         PersistPrefMain persistMock = new PersistPrefMain(ApplicationProvider.getApplicationContext());
         SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
@@ -99,7 +99,7 @@ public class FragmentFrequenciesIntTest {
     @Test
     public void change_freq_schedule() {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
-        ServiceLocator.getInstance().setSyncTask(taskMock);
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
 
         PersistPrefMain persistMock = new PersistPrefMain(ApplicationProvider.getApplicationContext());
         SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
@@ -123,7 +123,7 @@ public class FragmentFrequenciesIntTest {
     @Test
     public void change_freq_cancel() {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
-        ServiceLocator.getInstance().setSyncTask(taskMock);
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
 
         SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         sharedPreferences.edit().putInt("frequency_wallpaper", 15).apply();

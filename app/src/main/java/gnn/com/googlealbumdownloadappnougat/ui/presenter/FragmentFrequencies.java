@@ -6,13 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -45,7 +42,7 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ServiceLocator.getInstance().setSyncTask(
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(
             new WallpaperSchedulerWithPermission(getActivity(), getContext(),
                     ServiceLocator.getInstance().getWallpaperScheduler(),
                      this, new ViewModelProvider(getActivity()).get(UserModel.class)));

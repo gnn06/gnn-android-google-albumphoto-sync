@@ -78,10 +78,11 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
-        PersistPrefMain persistMock = mock(PersistPrefMain.class);
-        when(persistMock.getFrequencyWallpaper()).thenReturn(15);
-        when(persistMock.getFrequencyDownload()).thenReturn(-1);
-        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        PersistPrefMain persistMock = new PersistPrefMain(ApplicationProvider.getApplicationContext());
+        SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putInt("frequency_wallpaper", 15).apply();
+        sharedPreferences.edit().putInt("frequency_sync", -1).apply();
+        sharedPreferences.edit().putInt("frequency_update_photos", -1).apply();
         ServiceLocator.getInstance().setPersistMain(persistMock);
 
         // Need switch and not switchCompat to avoid nullpointer
@@ -100,10 +101,12 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setSyncTask(taskMock);
 
-        PersistPrefMain persistMock = mock(PersistPrefMain.class);
-        when(persistMock.getFrequencyWallpaper()).thenReturn(-1);
-        when(persistMock.getFrequencyDownload()).thenReturn(-1);
-        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        PersistPrefMain persistMock = new PersistPrefMain(ApplicationProvider.getApplicationContext());
+        SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putInt("frequency_wallpaper", -1).apply();
+        sharedPreferences.edit().putInt("frequency_sync", -1).apply();
+        sharedPreferences.edit().putInt("frequency_update_photos", -1).apply();
+
         ServiceLocator.getInstance().setPersistMain(persistMock);
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launchInContainer(FragmentFrequencies.class);

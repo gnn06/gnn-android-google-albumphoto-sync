@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class ScheduleFromFreq {
@@ -13,9 +14,9 @@ public class ScheduleFromFreq {
     }
 
     public void scheduleOrCancel() {
-        if (presenter.getFrequencyWallpaper() > 0
-        || presenter.getFrequencySyncHour() > 0
-        || presenter.getFrequencyUpdatePhotos() > 0) {
+        if (presenter.getFrequencyWallpaper() != Frequency.NEVER
+        || presenter.getFrequencySyncHour() != Frequency.NEVER
+        || presenter.getFrequencyUpdatePhotos() != Frequency.NEVER) {
             wlppScheduler.schedule(
                     presenter.getFrequencyWallpaper(),
                     presenter.getFrequencySyncMinute(),

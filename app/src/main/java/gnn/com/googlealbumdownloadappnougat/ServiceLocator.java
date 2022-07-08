@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.WallpaperSchedulerWithPermission;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
@@ -9,6 +10,7 @@ public class ServiceLocator {
     private static ServiceLocator _ServiceLocator;
     private WallpaperSchedulerWithPermission wallpaperSchedulerWithPermission;
     private WallpaperScheduler wallpaperScheduler;
+    private SyncScheduler syncScheduler;
     private PersistPrefMain persistMain;
 
     public static ServiceLocator getInstance() {
@@ -52,5 +54,13 @@ public class ServiceLocator {
         this.wallpaperScheduler = null;
         this.wallpaperSchedulerWithPermission = null;
         this.persistMain = null;
+    }
+
+    public SyncScheduler getSyncScheduler() {
+        return syncScheduler;
+    }
+
+    public void setSyncScheduler(SyncScheduler syncScheduler) {
+        this.syncScheduler = syncScheduler;
     }
 }

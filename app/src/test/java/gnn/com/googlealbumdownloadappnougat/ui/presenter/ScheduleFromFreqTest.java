@@ -8,20 +8,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.Frequency;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class ScheduleFromFreqTest {
 
     private WallpaperSchedulerWithPermission wlppSchedulerMock;
+    private SyncScheduler syncSchedulerMock;
     private PresenterFrequencies presenter;
     private ScheduleFromFreq schedulerFromFreq;
 
     @Before
     public void setUp() throws Exception {
         wlppSchedulerMock = mock(WallpaperSchedulerWithPermission.class);
+        syncSchedulerMock = mock(SyncScheduler.class);
         presenter = mock(PresenterFrequencies.class);
-        schedulerFromFreq = new ScheduleFromFreq(presenter, wlppSchedulerMock);
+        schedulerFromFreq = new ScheduleFromFreq(presenter, wlppSchedulerMock, syncSchedulerMock);
     }
 
     @Test

@@ -6,7 +6,6 @@ import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.sync.SynchronizerDelayed;
 
@@ -20,28 +19,23 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     private final FragmentFrequencies fragment;
     private final PersistPrefMain persist;
-    private final WallpaperScheduler scheduler;
-    private final WallpaperSchedulerWithPermission scheduleWithPermission;
     private final ScheduleFromFreq schedulerFromFreq;
 
     public PresenterFrequencies(FragmentFrequencies fragment, Context context) {
         this.context = context;
-        this.fragment = (FragmentFrequencies) fragment;
+        this.fragment = fragment;
         this.persist = ServiceLocator.getInstance().getPersistMain();
-        this.scheduler = ServiceLocator.getInstance().getWallpaperScheduler();
-        this.scheduleWithPermission = ServiceLocator.getInstance().getSyncTask();
-        this.schedulerFromFreq = new ScheduleFromFreq(this, this.scheduleWithPermission);
+        WallpaperSchedulerWithPermission scheduleWithPermission = ServiceLocator.getInstance().getSyncTask();
+        this.schedulerFromFreq = new ScheduleFromFreq(this, scheduleWithPermission);
     }
 
     // For test
     public PresenterFrequencies(IViewFrequencies fragment, Context context,
                                 PersistPrefMain persist,
-                                WallpaperScheduler scheduler, WallpaperSchedulerWithPermission scheduleWithPermission, ScheduleFromFreq schedulerFromFreq) {
+                                ScheduleFromFreq schedulerFromFreq) {
         this.context = context;
         this.fragment = (FragmentFrequencies) fragment;
         this.persist = persist;
-        this.scheduler = scheduler;
-        this.scheduleWithPermission = scheduleWithPermission;
         this.schedulerFromFreq = schedulerFromFreq;
     }
 

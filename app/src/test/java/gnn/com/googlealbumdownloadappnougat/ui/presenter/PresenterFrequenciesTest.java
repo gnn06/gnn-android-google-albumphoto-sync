@@ -67,7 +67,7 @@ public class PresenterFrequenciesTest {
     public void defaultValue_ui_setted() {
         // given
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         // when
         presenter.onAppStart();
@@ -81,7 +81,7 @@ public class PresenterFrequenciesTest {
     public void defaultValue_change_ui_ok() {
         // given
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.onAppStart();
         verify(view).setFrequencyWallpaper(60);
@@ -98,7 +98,7 @@ public class PresenterFrequenciesTest {
     @Test
     public void valueChange_persist_OK() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
@@ -112,7 +112,7 @@ public class PresenterFrequenciesTest {
     @Test
     public void conversion_with_never() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         presenter.setFrequencySyncHour(-1);
         presenter.setFrequencyUpdatePhotos(-1);
         // when
@@ -126,7 +126,7 @@ public class PresenterFrequenciesTest {
     @Test
     public void conversion_with_always() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         presenter.setFrequencySyncHour(0);
         presenter.setFrequencyUpdatePhotos(0);
         // when
@@ -140,7 +140,7 @@ public class PresenterFrequenciesTest {
     @Test
     public void conversion_with_max() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         presenter.setFrequencySyncHour(Integer.MAX_VALUE);
         presenter.setFrequencyUpdatePhotos(Integer.MAX_VALUE);
         // when
@@ -154,7 +154,7 @@ public class PresenterFrequenciesTest {
     @Test
     public void conversion_with_normal() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, scheduler, scheduleWithPermission, null);
+                persist, null);
         presenter.setFrequencyWallpaper(120);
         presenter.setFrequencySyncHour(720);
         presenter.setFrequencyUpdatePhotos(168);

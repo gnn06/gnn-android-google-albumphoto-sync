@@ -1,16 +1,13 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import gnn.com.googlealbumdownloadappnougat.Frequency;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.sync.SynchronizerDelayed;
 

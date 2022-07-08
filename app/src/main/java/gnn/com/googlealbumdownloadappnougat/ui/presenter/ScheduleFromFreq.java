@@ -1,6 +1,7 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import gnn.com.googlealbumdownloadappnougat.Frequency;
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class ScheduleFromFreq {
@@ -8,6 +9,12 @@ public class ScheduleFromFreq {
     private final WallpaperSchedulerWithPermission wlppScheduler;
     private final PresenterFrequencies presenter;
 
+    public ScheduleFromFreq(PresenterFrequencies presenter) {
+        this.presenter = presenter;
+        this.wlppScheduler = ServiceLocator.getInstance().getSyncTask();
+    }
+
+    // For Test
     public ScheduleFromFreq(PresenterFrequencies presenter, WallpaperSchedulerWithPermission wlppSchedulerMock) {
         this.presenter = presenter;
         this.wlppScheduler = wlppSchedulerMock;

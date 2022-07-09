@@ -17,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
@@ -32,7 +34,7 @@ public class SyncScheduler {
         this.context = context;
     }
 
-    public void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
+    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
         // TODO get CacheMaxAge from persistance
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
@@ -52,7 +54,13 @@ public class SyncScheduler {
     }
 
     public void schedule(int intervalHour) {
-
+        PersistPrefMain persist = ServiceLocator.getInstance().getPersistMain();
+        String album = persist.getAlbum();
+        String folder = persist.getPhotoPath();
+        String rename = persist.getRename();
+        int quantity = persist.getQuantity();
+        ApplicationContext appContext = ApplicationContext.getInstance(context);
+        schedule(album, folder, rename, quantity, intervalHour, appContext);
     }
 
     public void cancel() {

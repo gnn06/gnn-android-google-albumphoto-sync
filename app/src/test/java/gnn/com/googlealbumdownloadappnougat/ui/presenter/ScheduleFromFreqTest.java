@@ -47,6 +47,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, 30 * 60, 60 * 24);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -64,6 +65,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_NEVER_SYNC, Cache.DELAY_NEVER_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -81,6 +83,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, 30 * 60, Cache.DELAY_NEVER_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -98,6 +101,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, 30 * 60, Cache.DELAY_ALWAYS_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -115,6 +119,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_NEVER_SYNC, 30*24);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -132,6 +137,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_NEVER_SYNC, Cache.DELAY_ALWAYS_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -149,6 +155,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_ALWAYS_SYNC, 30*24);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -166,6 +173,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_ALWAYS_SYNC, Cache.DELAY_NEVER_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -183,6 +191,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(15, SynchronizerDelayed.DELAY_ALWAYS_SYNC, Cache.DELAY_ALWAYS_EXPIRE);
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -199,6 +208,7 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.scheduleOrCancel();
 
         // then
+        verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).schedule(15);
     }
 
@@ -216,6 +226,7 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.scheduleOrCancel();
 
         // then
+        verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).schedule(15);
     }
 
@@ -233,6 +244,7 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.scheduleOrCancel();
 
         // then
+        verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).schedule(15);
     }
 
@@ -252,6 +264,8 @@ public class ScheduleFromFreqTest {
         // then
         verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, 15*24);
         verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(wlppSchedulerMock).cancel();
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -265,7 +279,10 @@ public class ScheduleFromFreqTest {
         schedulerFromFreq.scheduleOrCancel();
 
         // then
+        verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, 15*24);
+        verify(syncSchedulerMock, never()).schedule(anyInt());
         verify(wlppSchedulerMock).cancel();
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -284,6 +301,8 @@ public class ScheduleFromFreqTest {
         // then
         verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, Cache.DELAY_ALWAYS_EXPIRE);
         verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(wlppSchedulerMock).cancel();
+        verify(syncSchedulerMock).cancel();
     }
 
     @Test
@@ -302,6 +321,8 @@ public class ScheduleFromFreqTest {
         // then
         verify(wlppSchedulerMock).schedule(0, 15*60, Cache.DELAY_NEVER_EXPIRE);
         verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(wlppSchedulerMock,never()).cancel();
+        verify(syncSchedulerMock).cancel();
     }
 
 }

@@ -51,6 +51,10 @@ public class SyncScheduler {
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
+    public void schedule(int intervalHour) {
+
+    }
+
     public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
             .cancelUniqueWork(WORK_NAME);

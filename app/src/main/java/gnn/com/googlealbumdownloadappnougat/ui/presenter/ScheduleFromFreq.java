@@ -24,13 +24,13 @@ public class ScheduleFromFreq {
     }
 
     public void scheduleOrCancel() {
-        if (presenter.getFrequencyWallpaper() != Frequency.NEVER
-        || presenter.getFrequencySyncHour() != Frequency.NEVER
-        || presenter.getFrequencyUpdatePhotos() != Frequency.NEVER) {
+        if (presenter.getFrequencyWallpaper() != Frequency.NEVER) {
             wlppScheduler.schedule(
                     presenter.getFrequencyWallpaper(),
                     presenter.getFrequencySyncMinute(),
                     presenter.getFrequencyUpdatePhotosHour());
+        } else if (presenter.getFrequencySyncHour() != Frequency.NEVER) {
+            syncScheduler.schedule(presenter.getFrequencySyncHour());
         } else {
             wlppScheduler.cancel();
         }

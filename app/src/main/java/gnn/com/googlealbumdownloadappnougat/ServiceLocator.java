@@ -55,7 +55,7 @@ public class ServiceLocator {
     }
 
     public void setSyncScheduler(SyncScheduler syncScheduler) {
-        if (this.syncScheduler != null) {
+        if (this.syncScheduler == null) {
             this.syncScheduler = syncScheduler;
         }
     }

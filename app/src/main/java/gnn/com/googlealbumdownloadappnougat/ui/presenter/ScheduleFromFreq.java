@@ -33,6 +33,7 @@ public class ScheduleFromFreq {
             syncScheduler.schedule(presenter.getFrequencySyncHour());
         } else {
             wlppScheduler.cancel();
+            syncScheduler.cancel();
         }
     }
 }

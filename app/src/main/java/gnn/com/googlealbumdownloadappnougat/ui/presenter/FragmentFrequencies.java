@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import org.apache.commons.lang3.ArrayUtils;
 
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.R;
@@ -42,10 +43,15 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(
             new WallpaperSchedulerWithPermission(getActivity(), getContext(),
                     ServiceLocator.getInstance().getWallpaperScheduler(),
                      this, new ViewModelProvider(getActivity()).get(UserModel.class)));
+
+        ServiceLocator.getInstance().setSyncScheduler(
+                new SyncScheduler(getContext())
+        );
         this.presenter = new PresenterFrequencies( this, getContext());
         getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();

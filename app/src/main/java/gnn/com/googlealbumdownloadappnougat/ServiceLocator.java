@@ -50,17 +50,19 @@ public class ServiceLocator {
         }
     }
 
-    public void resetForTest() {
-        this.wallpaperScheduler = null;
-        this.wallpaperSchedulerWithPermission = null;
-        this.persistMain = null;
-    }
-
     public SyncScheduler getSyncScheduler() {
         return syncScheduler;
     }
 
     public void setSyncScheduler(SyncScheduler syncScheduler) {
-        this.syncScheduler = syncScheduler;
+        if (this.syncScheduler != null) {
+            this.syncScheduler = syncScheduler;
+        }
+    }
+
+    public void resetForTest() {
+        this.wallpaperScheduler = null;
+        this.wallpaperSchedulerWithPermission = null;
+        this.persistMain = null;
     }
 }

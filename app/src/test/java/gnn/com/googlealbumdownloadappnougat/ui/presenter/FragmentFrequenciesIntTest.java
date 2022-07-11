@@ -30,6 +30,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 @RunWith(RobolectricTestRunner.class)
@@ -101,6 +102,9 @@ public class FragmentFrequenciesIntTest {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
 
+        SyncScheduler syncMock = mock(SyncScheduler.class);
+        ServiceLocator.getInstance().setSyncScheduler(syncMock);
+
         PersistPrefMain persistMock = new PersistPrefMain(ApplicationProvider.getApplicationContext());
         SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         sharedPreferences.edit().putInt("frequency_wallpaper", -1).apply();
@@ -124,6 +128,9 @@ public class FragmentFrequenciesIntTest {
     public void change_freq_cancel() {
         WallpaperSchedulerWithPermission taskMock = mock(WallpaperSchedulerWithPermission.class);
         ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(taskMock);
+
+        SyncScheduler syncMock = mock(SyncScheduler.class);
+        ServiceLocator.getInstance().setSyncScheduler(syncMock);
 
         SharedPreferences sharedPreferences = ApplicationProvider.getApplicationContext().getSharedPreferences(ApplicationProvider.getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         sharedPreferences.edit().putInt("frequency_wallpaper", 15).apply();

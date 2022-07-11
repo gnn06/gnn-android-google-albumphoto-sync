@@ -60,9 +60,11 @@ public class ServiceLocator {
         }
     }
 
+    // For test
     public void resetForTest() {
         this.wallpaperScheduler = null;
         this.wallpaperSchedulerWithPermission = null;
         this.persistMain = null;
+        this.syncScheduler = null;
     }
 }

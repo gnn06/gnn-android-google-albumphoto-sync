@@ -34,12 +34,12 @@ public class SyncScheduler {
         this.context = context;
     }
 
-    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
+    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, int intervalUpdateHour, ApplicationContext appContext) {
         // TODO get CacheMaxAge from persistance
         Data data = new Data.Builder()
                 .putString("cacheAbsolutePath", appContext.getCachePath())
                 .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", -1)
+                .putLong("cacheMaxAge", intervalUpdateHour)
                 .putString("album", album)
                 .putString("folderPath", destinationFolder)
                 .putString("rename", rename)
@@ -53,14 +53,14 @@ public class SyncScheduler {
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
-    public void schedule(int intervalHour) {
+    public void schedule(int intervalHour, int intervalUpdateHour) {
         PersistPrefMain persist = ServiceLocator.getInstance().getPersistMain();
         String album = persist.getAlbum();
         String folder = persist.getPhotoPath();
         String rename = persist.getRename();
         int quantity = persist.getQuantity();
         ApplicationContext appContext = ApplicationContext.getInstance(context);
-        schedule(album, folder, rename, quantity, intervalHour, appContext);
+        schedule(album, folder, rename, quantity, intervalHour, intervalUpdateHour , appContext);
     }
 
     public void cancel() {

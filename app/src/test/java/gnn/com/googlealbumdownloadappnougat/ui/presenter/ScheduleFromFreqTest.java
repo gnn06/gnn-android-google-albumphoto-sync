@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -209,7 +208,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).cancel();
-        verify(syncSchedulerMock).schedule(15);
+        verify(syncSchedulerMock).schedule(15, 30*24);
     }
 
     @Test
@@ -227,7 +226,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).cancel();
-        verify(syncSchedulerMock).schedule(15);
+        verify(syncSchedulerMock).schedule(15, Cache.DELAY_NEVER_EXPIRE);
     }
 
     @Test
@@ -245,7 +244,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).cancel();
-        verify(syncSchedulerMock).schedule(15);
+        verify(syncSchedulerMock).schedule(15, Cache.DELAY_ALWAYS_EXPIRE);
     }
 
     @Test
@@ -263,7 +262,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, 15*24);
-        verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(syncSchedulerMock, never()).schedule(anyInt(), anyInt());
         verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).cancel();
     }
@@ -280,7 +279,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, 15*24);
-        verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(syncSchedulerMock, never()).schedule(anyInt(), anyInt());
         verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).cancel();
     }
@@ -300,7 +299,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock, never()).schedule(-1, SynchronizerDelayed.DELAY_NEVER_SYNC, Cache.DELAY_ALWAYS_EXPIRE);
-        verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(syncSchedulerMock, never()).schedule(anyInt(), anyInt());
         verify(wlppSchedulerMock).cancel();
         verify(syncSchedulerMock).cancel();
     }
@@ -320,7 +319,7 @@ public class ScheduleFromFreqTest {
 
         // then
         verify(wlppSchedulerMock).schedule(0, 15*60, Cache.DELAY_NEVER_EXPIRE);
-        verify(syncSchedulerMock, never()).schedule(anyInt());
+        verify(syncSchedulerMock, never()).schedule(anyInt(), anyInt());
         verify(wlppSchedulerMock,never()).cancel();
         verify(syncSchedulerMock).cancel();
     }

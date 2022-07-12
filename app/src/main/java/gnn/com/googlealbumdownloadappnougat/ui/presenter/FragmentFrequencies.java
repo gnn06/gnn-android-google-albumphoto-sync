@@ -56,11 +56,20 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
         getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();
         });
+        getView().findViewById(R.id.ExplanationWallpaper).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyWallpaper, R.string.frequenceWallpaperExplanation);
+        });
         getView().findViewById(R.id.SectionFreqeuncySync).setOnClickListener(v -> {
             presenter.chooseFrequencySync();
         });
+        getView().findViewById(R.id.ExplanationSync).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyDownload, R.string.frequenceSyncExplanation);
+        });
         getView().findViewById(R.id.SectionFreqeuncyUpdatePhotos).setOnClickListener(v -> {
             presenter.chooseFrequencyUpdate();
+        });
+        getView().findViewById(R.id.ExplanationUpdate).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyUpdate, R.string.frequenceUpdatePhotosExplenation);
         });
         presenter.onAppStart();
     }

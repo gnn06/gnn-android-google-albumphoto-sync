@@ -33,4 +33,6 @@ public interface IPresenterFrequencies {
     void chooseFrequencyUpdate();
 
     void onAppStop();
+
+    void explanation(int titleHomeFrequencyWallpaper, int frequenceWallpaperExplenation);
 }

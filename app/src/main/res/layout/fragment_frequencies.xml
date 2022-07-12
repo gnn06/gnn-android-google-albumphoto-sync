@@ -26,7 +26,6 @@
                 android:showDividers="middle">
 
                 <LinearLayout
-                    android:id="@+id/SectionFreqeuncyWallpaper"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -34,6 +33,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/SectionFreqeuncyWallpaper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/titleHomeFrequencyWallpaper"
@@ -45,10 +45,17 @@
                         android:layout_height="wrap_content"
                         android:text="@string/placeholder_hour"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationWallpaper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/SectionFreqeuncySync"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -56,6 +63,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/SectionFreqeuncySync"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/titleHomeFrequencyDownload"
@@ -67,10 +75,18 @@
                         android:layout_height="wrap_content"
                         android:text="@string/placeholder_week"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationSync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/SectionFreqeuncyUpdatePhotos"
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
@@ -78,6 +94,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/SectionFreqeuncyUpdatePhotos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/titleHomeFrequencyUpdate"
@@ -89,6 +106,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/placeHolder_month"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
                 </LinearLayout>
             </LinearLayout>
         </HorizontalScrollView>

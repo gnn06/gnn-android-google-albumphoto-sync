@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
 import gnn.com.googlealbumdownloadappnougat.Frequency;
@@ -168,5 +169,14 @@ public class PresenterFrequencies implements IPresenterFrequencies {
                 },
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
+    }
+
+    @Override
+    public void explanation(int idText_Title, int idText_Message) {
+        new AlertDialog.Builder(fragment.getActivity())
+                .setTitle(getContext().getResources().getString(R.string.title_frequency_explanation))
+                .setMessage(getContext().getResources().getString(idText_Message))
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
     }
 }

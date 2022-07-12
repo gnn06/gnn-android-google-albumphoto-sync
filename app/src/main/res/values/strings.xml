@@ -55,12 +55,13 @@
     <string name="titleHomeFrequencyUpdate">Fréquence de Détection de nouvelles photos</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
-    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
-    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées.</string>
-    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo.</string>
+    <string name="frequenceWallpaperExplanation">Fréquence à laquelle le fond d\'écran est changé. La photo est choisie parmis celles qui ont précédement été téléchargées sur le téléphone.</string>
+    <string name="frequenceSyncExplanation">Fréquence à laquelle les images sont téléchargées sur le téléphone. Les photos sont choisies parmis celle de l\'album. </string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence à laquelle de nouvelle photos sont recherchées. Entre deux recherches de nouvelle photo, l\'application choisie des photos à téléchargées parmis celles qui étaient disponibles lors de la précédente rechcerche.</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="frequency_need_disable_first">Désactiver d\'abord le schedule</string>
+    <string name="title_frequency_explanation">Aide sur les fréquences</string>
 
     <string name="placeHolder_month">Toutes les mois</string>
     <string name="placeholder_hour">Toutes les heures</string>
@@ -93,6 +94,7 @@
     <string name="wizard">Assistant</string>
     <string name="no_photo">Aucune photo à afficher.</string>
     <string name="resolve_no_photo">Lancer l\'application et executer une synchronisation.</string>
+    <string name="explanation">Explication</string>
     <string-array name="frequency_wallpaper_label">
         <item>Jamais</item>
         <item>Toutes les 15 minutes</item>

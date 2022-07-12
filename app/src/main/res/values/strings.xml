@@ -118,9 +118,7 @@
         <item>Tous les heures</item>
         <item>Toutes les 12 heures</item>
         <item>Tous les jours</item>
-        <item>Tous les 6 jours</item>
         <item>Toutes les semaines</item>
-        <item>Toutes les 8 jours</item>
         <item>Toutes les mois</item>
     </string-array>
     <integer-array name="frequency_sync_value">
@@ -129,9 +127,7 @@
         <item>1</item>
         <item>12</item>
         <item>24</item>
-        <item>144</item>
         <item>168</item>
-        <item>192</item>
         <item>720</item>
     </integer-array>
 

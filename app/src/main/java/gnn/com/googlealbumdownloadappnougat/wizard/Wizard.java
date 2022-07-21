@@ -94,7 +94,7 @@ public class Wizard {
     }
 
     public WizardStep stop() {
-        WizardStep step = WizardStep.S11_FINISHED;
+        WizardStep step = WizardStep.S20_FINISHED;
         setStep(step);
         return step;
     }

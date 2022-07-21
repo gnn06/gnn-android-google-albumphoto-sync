@@ -22,7 +22,7 @@ public interface IPresenterFrequencies {
 
     void setFrequencyUpdatePhotos(int frequency);
 
-    void onSwitchWallpaper(boolean checked);
+//    void onSwitchWallpaper(boolean checked);
 
     int getFrequencySyncMinute();
 
@@ -33,4 +33,6 @@ public interface IPresenterFrequencies {
     void chooseFrequencyUpdate();
 
     void onAppStop();
+
+    void explanation(int titleHomeFrequencyWallpaper, int frequenceWallpaperExplenation);
 }

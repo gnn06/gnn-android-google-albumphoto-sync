@@ -10,7 +10,9 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Environment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
@@ -97,6 +100,21 @@ public class WallpaperSetter {
                 double relation = Math.sqrt(canvas.getWidth() * canvas.getHeight()) / 20;
                 paint.setTextSize((float) (relation));
                 canvas.drawText("Pas de photo", point.x/2, point.y/2, paint);
+
+                LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.livewallpaper_preview, null);
+                System.out.println("start"+view.getMeasuredWidth()+","+view.getWidth());
+                view.measure(view.getMeasuredWidth(), view.getMeasuredHeight());
+                System.out.println("measure"+view.getMeasuredWidth()+","+view.getWidth());
+                view.layout(0,0,view.getMeasuredWidth(),view.getMeasuredHeight());
+                System.out.println("layout"+view.getMeasuredWidth()+","+view.getWidth());
+                canvas.save();
+                canvas.translate((point.x - view.getWidth())/2, (point.y - view.getHeight())/2);
+                view.draw(canvas);
+                canvas.restore();
+                // start   = 0,0
+                // measure = 834, 0
+                // layout  = 834, 834
             }
             holder.unlockCanvasAndPost(canvas);
         }

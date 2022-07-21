@@ -27,6 +27,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
@@ -334,7 +335,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     @Override
     public void onSignIn() {
-        Require require = new SignInRequirement(null, auth, fragment, userModel);
+        Require require = SignInGoogleAPIRequirementBuilder.build(null, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(require);
     }
 

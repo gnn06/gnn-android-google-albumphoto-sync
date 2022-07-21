@@ -2,18 +2,16 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
-import gnn.com.googlealbumdownloadappnougat.wizard.FragmentWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class ViewWizard {
 
+    public static final int NO_HIGHLIGHT = -1;
     private final Wizard wizard;
     private final ViewModelWizard viewModel;
 
@@ -39,19 +37,19 @@ public class ViewWizard {
                     return R.id.SectionFolder;
                 case S05BIS_QUANTITY:
                     return R.id.sectionDownloadOptions;
-                case S06_ACTIVATE_LIVEWALLPAPER:
-                    return -1;
+                case S11_ACTIVATE_LIVEWALLPAPER:
+                    return NO_HIGHLIGHT;
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                 case S08_CHOOSE_DOWNLOAD_FREQUENCY:
                 case S09_CHOOSE_UPDATE_FREQUENCY:
-                case S10_ACTIVATE_SCHEDULER:
-                    return R.id.sectionFrequencies;
-                case S10BIS_SYNC_ONCE:
+                    return NO_HIGHLIGHT;
+                case S10_SYNC_ONCE:
                     return R.id.SectionSync;
                 default:
-                    return -1;
+                    return NO_HIGHLIGHT;
             }
         } else {
+            // FragmentFrequency
             switch (step) {
                 case S07_CHOOSE_WALLPAPER_FREQUENCY:
                     return R.id.SectionFreqeuncyWallpaper;
@@ -59,10 +57,8 @@ public class ViewWizard {
                     return R.id.SectionFreqeuncySync;
                 case S09_CHOOSE_UPDATE_FREQUENCY:
                     return R.id.SectionFreqeuncyUpdatePhotos;
-                case S10_ACTIVATE_SCHEDULER:
-                    return R.id.SectionActiveWallpaper;
                 default:
-                    return -1;
+                    return NO_HIGHLIGHT;
             }
         }
     }

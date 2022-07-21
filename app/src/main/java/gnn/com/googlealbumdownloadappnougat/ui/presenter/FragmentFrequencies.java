@@ -1,24 +1,23 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
+import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 
 public class FragmentFrequencies extends FragmentHighlight implements IViewFrequencies {
@@ -44,21 +43,33 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.presenter = new PresenterFrequencies( this, getContext(), (MainActivity) getActivity());
-        ((SwitchCompat)getView().findViewById(R.id.SwitchWallPaper)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                presenter.onSwitchWallpaper(checked);
-            }
-        });
+
+        ServiceLocator.getInstance().setWallpaperSchedulerWithPermission(
+            new WallpaperSchedulerWithPermission(getActivity(), getContext(),
+                    ServiceLocator.getInstance().getWallpaperScheduler(),
+                     this, new ViewModelProvider(getActivity()).get(UserModel.class)));
+
+        ServiceLocator.getInstance().setSyncScheduler(
+                new SyncScheduler(getContext())
+        );
+        this.presenter = new PresenterFrequencies( this, getContext());
         getView().findViewById(R.id.SectionFreqeuncyWallpaper).setOnClickListener(v -> {
             presenter.chooseFrequencyWallpaper();
+        });
+        getView().findViewById(R.id.ExplanationWallpaper).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyWallpaper, R.string.frequenceWallpaperExplanation);
         });
         getView().findViewById(R.id.SectionFreqeuncySync).setOnClickListener(v -> {
             presenter.chooseFrequencySync();
         });
+        getView().findViewById(R.id.ExplanationSync).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyDownload, R.string.frequenceSyncExplanation);
+        });
         getView().findViewById(R.id.SectionFreqeuncyUpdatePhotos).setOnClickListener(v -> {
             presenter.chooseFrequencyUpdate();
+        });
+        getView().findViewById(R.id.ExplanationUpdate).setOnClickListener(v -> {
+            presenter.explanation(R.string.titleHomeFrequencyUpdate, R.string.frequenceUpdatePhotosExplenation);
         });
         presenter.onAppStart();
     }
@@ -70,43 +81,19 @@ public class FragmentFrequencies extends FragmentHighlight implements IViewFrequ
     }
 
     @Override
-    public void setSwitchWallpaper(boolean scheduled) {
-        SwitchCompat button = getView().findViewById(R.id.SwitchWallPaper);
-        button.setChecked(scheduled);
-    }
-
-    @Override
     public void setFrequencyWallpaper(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label, R.id.textFrequencyWallpaper);
     }
-
-//    @Override
-//    public void enableFrequencyWallpaper(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencyWallpaper);
-//        text.setEnabled(!switchChecked);
-//    }
 
     @Override
     public void setFrequencySync(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_sync_value, R.array.frequency_sync_label, R.id.textFrequencySync);
     }
 
-//    @Override
-//    public void enableFrequencySync(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencySync);
-//        text.setEnabled(!switchChecked);
-//    }
-
     @Override
     public void setFrequencyUpdate(int frequency) {
         setTextFromFrequency(frequency, R.array.frequency_update_value, R.array.frequency_update_label, R.id.textFrequencyUpdatePhotos);
     }
-
-//    @Override
-//    public void enableFrequencyUpdatePhotos(boolean switchChecked) {
-//        View text = getView().findViewById(R.id.textFrequencyUpdatePhotos);
-//        text.setEnabled(!switchChecked);
-//    }
 
     @Override
     public void alertFrequencyError() {

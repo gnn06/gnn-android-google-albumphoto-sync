@@ -27,13 +27,21 @@ public class ViewWizardTest {
     }
 
     @Test
-    public void getId_fragment_home() {
+    public void getId_frequency_fragmentHome() {
         // given
         ViewWizard viewWizard = new ViewWizard( null, viewModel);
         // when
         int id = viewWizard.getViewFromStep(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY, new FragmentHome());
         // then
-        assertThat(id, is(R.id.sectionFrequencies));
+        assertThat(id, is(-1));
+        // when
+        id = viewWizard.getViewFromStep(WizardStep.S08_CHOOSE_DOWNLOAD_FREQUENCY, new FragmentHome());
+        // then
+        assertThat(id, is(-1));
+        // when
+        id = viewWizard.getViewFromStep(WizardStep.S09_CHOOSE_UPDATE_FREQUENCY, new FragmentHome());
+        // then
+        assertThat(id, is(-1));
     }
 
     @Test
@@ -51,7 +59,7 @@ public class ViewWizardTest {
         // given
         FragmentHighlight fragment = mock(FragmentHighlight.class);
         when(wizard.getNextStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
-        when(wizard.getNextStep(any())).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+        when(wizard.getNextStep(any())).thenReturn(WizardStep.S11_ACTIVATE_LIVEWALLPAPER);
         // Unit under test
         ViewWizard viewWizard = new ViewWizard(wizard, viewModel);
         // when

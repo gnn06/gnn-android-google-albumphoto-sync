@@ -28,6 +28,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!-- Progress Bar -->
+            <RelativeLayout
+                android:id="@+id/pb_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#37FFFFFF"
+                android:visibility="invisible">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_centerInParent="true"
+                    android:minWidth="128dp"
+                    android:minHeight="128dp"
+                    android:visibility="visible" />
+            </RelativeLayout>
+            <!-- Main View -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -119,38 +139,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
                     android:paddingTop="16dp"
+                    android:paddingRight="16dp"
                     android:paddingBottom="16dp"
-                    android:text="Options de téléchargement"
+                    android:text="@string/TitleDownloadSection"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <!-- Frequencies -->
-                <LinearLayout
-                    android:id="@+id/sectionFrequencies"
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/FrequenceContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/titleFrequencies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingTop="16dp"
-                        android:text="@string/frequencyGroup_title"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        app:layout_constraintTop_toBottomOf="@+id/sectionDownloadOptions" />
-                    <TextView
-                        android:id="@+id/subSectionFrequencies"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="16dp"
-                        android:text="@string/frequencyGroup_subtitle"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-                </LinearLayout>
+                    android:name="gnn.com.googlealbumdownloadappnougat.ui.presenter.FragmentFrequencies"/>
+
                 <!-- Buttons (sync, scheduler, wallpaper) -->
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/SectionSync"
@@ -166,13 +167,13 @@
                         android:id="@+id/ChooseOneButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/synchronize" />
+                        android:text="@string/button_synchronize_once" />
 
                     <Button
                         android:id="@+id/ButtonWallpaper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wallpaper une fois" />
+                        android:text="@string/button_wallpaper_once" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <!-- Last times -->
@@ -298,25 +299,6 @@
                         android:text="@string/noStat" />
                 </RelativeLayout>
             </LinearLayout>
-            <!-- Progress Bar -->
-            <RelativeLayout
-                android:id="@+id/pb_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#37FFFFFF"
-                android:visibility="invisible">
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    style="@style/Widget.AppCompat.ProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_centerInParent="true"
-                    android:minWidth="128dp"
-                    android:minHeight="128dp"
-                    android:visibility="visible" />
-            </RelativeLayout>
         </FrameLayout>
     </ScrollView>
 </LinearLayout>

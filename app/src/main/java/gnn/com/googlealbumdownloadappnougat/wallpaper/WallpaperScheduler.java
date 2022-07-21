@@ -54,6 +54,7 @@ public class WallpaperScheduler {
                 .build();
         WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(WORK_NAME_WALLPAPER, ExistingPeriodicWorkPolicy.KEEP, work);
+        Log.i(TAG,"work enqueued");
     }
 
     public void cancel() {

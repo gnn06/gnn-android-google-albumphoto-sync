@@ -60,7 +60,7 @@ public class PresenterWizardTest {
     public void wizardAlreadyShown_AppStart_wizardNotShown() {
         // when aap starts, and state finish, then no wizard shown
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S11_FINISHED);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S20_FINISHED);
         // when
         presenter.onAppStart();
         // then
@@ -71,11 +71,11 @@ public class PresenterWizardTest {
     public void wizardStopped_stopFinish() {
         // when call stop, persist finish state
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
         // when
         presenter.onStopWizard();
         // then
-        verify(persist).saveWizardStep(WizardStep.S11_FINISHED);
+        verify(persist).saveWizardStep(WizardStep.S20_FINISHED);
         verify(activity).makeVisible(false);
     }
 
@@ -91,7 +91,7 @@ public class PresenterWizardTest {
     public void wizardMenu_wizardShown_explanationAsStep() {
         // when show wizard,
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S07_CHOOSE_WALLPAPER_FREQUENCY);
         when(viewModel.getLiveStep()).thenReturn(liveData);
 
         // when
@@ -104,7 +104,7 @@ public class PresenterWizardTest {
     public void wizardMenu_finishStep_wizardShown_explanationAsStep() {
         // when show wizard, and ste=FINISH, when restart wizard
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S11_FINISHED);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S20_FINISHED);
         // when
         presenter.onShowWizard();
         // then
@@ -115,7 +115,7 @@ public class PresenterWizardTest {
     public void next() {
         // when next called, increment step
         // given
-        when(persist.restoreWizardStep()).thenReturn(WizardStep.S06_ACTIVATE_LIVEWALLPAPER);
+        when(persist.restoreWizardStep()).thenReturn(WizardStep.S05BIS_QUANTITY);
         // when
         presenter.nextStep();
         // then

@@ -12,126 +12,110 @@
         android:divider="#AAA"
         android:showDividers="middle">
 
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncyWallpaper"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:paddingBottom="8dp"
-            >
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/titleFrequenceyWallpaper"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/frequencyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                android:divider="#AAA"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:showDividers="middle">
 
-            <TextView
-                android:id="@+id/textFrequencyWallpaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency" />
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textExplenationFrequencyWallpaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textFrequencyWallpaper"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceWallpaperExplenation" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/SectionFreqeuncyWallpaper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/titleHomeFrequencyWallpaper"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncySync"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            >
+                    <TextView
+                        android:id="@+id/textFrequencyWallpaper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_hour"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationWallpaper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/titleFrequenceySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequencySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textFrequencySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency" />
+                    <TextView
+                        android:id="@+id/SectionFreqeuncySync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/titleHomeFrequencyDownload"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <TextView
-                android:id="@+id/textExplenationFrequencySync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textFrequencySync"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceSyncExplenation" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textFrequencySync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeholder_week"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationSync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
 
-        <RelativeLayout
-            android:id="@+id/SectionFreqeuncyUpdatePhotos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/titleFrequenceyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/frequencyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textFrequencyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleFrequenceyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="@string/placeholder_frequency"/>
+                    <TextView
+                        android:id="@+id/SectionFreqeuncyUpdatePhotos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/titleHomeFrequencyUpdate"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <TextView
-                android:id="@+id/textExplenationFrequencyUpdatePhotos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textFrequencyUpdatePhotos"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:text="@string/frequenceUpdatePhotosExplenation" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/SectionActiveWallpaper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            >
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/SwitchWallPaper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Changement automatique du fond d'écran "
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"></androidx.appcompat.widget.SwitchCompat>
-
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textFrequencyUpdatePhotos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/placeHolder_month"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    <TextView
+                        android:id="@+id/ExplanationUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/explanation"
+                        android:paddingTop="5dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
     </LinearLayout>
 </FrameLayout>

@@ -102,7 +102,7 @@ public class WizardTest {
     @Test
     public void getNext_last() {
         Wizard wizard = new Wizard(null, null, null, null, null);
-        WizardStep result = wizard.getNextStep(WizardStep.S11_FINISHED);
-        assertThat(result, Is.is(WizardStep.S11_FINISHED));
+        WizardStep result = wizard.getNextStep(WizardStep.S20_FINISHED);
+        assertThat(result, Is.is(WizardStep.S20_FINISHED));
     }
 }

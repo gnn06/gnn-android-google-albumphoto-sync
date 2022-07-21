@@ -2,6 +2,8 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.content.Context;
 
+import androidx.fragment.app.FragmentActivity;
+
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
@@ -12,9 +14,9 @@ import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
-class ScheduleTask {
+public class WallpaperSchedulerWithPermission {
 
-    public ScheduleTask(MainActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
+    public WallpaperSchedulerWithPermission(FragmentActivity activity, Context context, WallpaperScheduler scheduler, IViewFrequencies view, UserModel userModel) {
         this.activity = activity;
         this.context = context;
         this.scheduler = scheduler;
@@ -23,14 +25,14 @@ class ScheduleTask {
         this.authManager = new AuthManager(activity);
     }
 
-    private MainActivity activity;
-    private Context context;
-    private WallpaperScheduler scheduler;
-    private IViewFrequencies view;
-    private UserModel userModel;
+    private final FragmentActivity activity;
+    private final Context context;
+    private final WallpaperScheduler scheduler;
+    private final IViewFrequencies view;
+    private final UserModel userModel;
     private final AuthManager authManager;
 
-    void schedule(boolean checked, long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
+    void schedule(long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
         Exec exec = new Exec() {
             @Override
             public void exec() {
@@ -46,8 +48,11 @@ class ScheduleTask {
 //                view.enableFrequencyUpdatePhotos(checked);
             }
         };
-        AuthManager auth = authManager;
-        Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, auth, view, userModel);
-        this.activity.getPermissionHandler().startRequirement(require);
+        Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, authManager, view, userModel);
+        ((MainActivity)(this.activity)).getPermissionHandler().startRequirement(require);
+    }
+
+    void cancel() {
+        this.scheduler.cancel();
     }
 }

@@ -42,7 +42,7 @@ public class FragmentHighlight extends Fragment {
     }
 
     public void highlightStepWizard(int id, boolean highlight) {
-        if (id != -1) {
+        if (id != ViewWizard.NO_HIGHLIGHT) {
             View view1 = this.getView();
             if (view1 != null) {
                 View view = view1.findViewById(id);

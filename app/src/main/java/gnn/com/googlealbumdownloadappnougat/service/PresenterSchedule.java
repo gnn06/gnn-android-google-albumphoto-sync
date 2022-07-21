@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import androidx.work.WorkInfo;
 
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class PresenterSchedule implements IPresenterSchedule {
@@ -19,7 +20,7 @@ public class PresenterSchedule implements IPresenterSchedule {
     public void onInit() {
         WorkInfo info = new SyncScheduler(this.activity).getState();
         view.setStateSync(info);
-        WorkInfo stateWallpaper = new WallpaperScheduler(this.activity).getState();
+        WorkInfo stateWallpaper = ServiceLocator.getInstance().getWallpaperScheduler().getState();
         view.setStateWallpaper(stateWallpaper);
     }
 
@@ -31,7 +32,7 @@ public class PresenterSchedule implements IPresenterSchedule {
 
     @Override
     public void onCancelWallpaper() {
-        WallpaperScheduler sched = new WallpaperScheduler(activity);
+        WallpaperScheduler sched = ServiceLocator.getInstance().getWallpaperScheduler();
         sched.cancel();
     }
 }

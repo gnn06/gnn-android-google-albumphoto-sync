@@ -45,7 +45,7 @@ public class FragmentWizard extends Fragment {
 
     private void setExplanation(WizardStep stepDone) {
         int index = stepDone.ordinal(); // 0 when step = S00_NOT_STARTED;
-        if (stepDone == WizardStep.S11_FINISHED) {
+        if (stepDone == WizardStep.S20_FINISHED) {
             // if wizard is finished, use before last step
             index = WizardStep.values().length - 2;
         }

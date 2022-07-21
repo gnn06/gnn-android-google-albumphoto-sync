@@ -22,7 +22,8 @@
     <string name="last_sync_time">Last sync time %s.</string>
     <string name="last_wallpaper_time">Last wallpaper time %s.</string>
     <string name="no_previous_sync">No previous sync.</string>
-    <string name="synchronize">Synchronize une fois</string>
+    <string name="button_synchronize_once">Synchronize une fois</string>
+    <string name="button_wallpaper_once">Wallpaper une fois</string>
 
     <string name="titleResult">Sync results</string>
     <string name="result">No result</string>
@@ -45,15 +46,26 @@
     <string name="scheduleSync">Schedule Sync</string>
     <string name="scheduleWallpaper">Schedule Wallpaper</string>
 
-    <string name="frequencyGroup_title">Fréquences</string>
+    <string name="TitleDownloadSection">Options de téléchargement</string>
+
+
+    <string name="titileHomeFrequency">Fréquences</string>
+    <string name="titleHomeFrequencyWallpaper">Fréquence changement de Fond d\'écran</string>
+    <string name="titleHomeFrequencyDownload">Fréquence de Téléchargement de photos</string>
+    <string name="titleHomeFrequencyUpdate">Fréquence de Détection de nouvelles photos</string>
     <string name="frequencyWallpaper">Fréquence fond d\'écran</string>
     <string name="frequencySync">Fréquence de téléchargement</string>
-    <string name="frequenceWallpaperExplenation">Fréquence à laquelle le fond d\'écran est changé.</string>
-    <string name="frequenceSyncExplenation">Fréquence à laquelle les images sont téléchargées.</string>
-    <string name="frequenceUpdatePhotosExplenation">Fréquence de recherche de nouvelle photo.</string>
+    <string name="frequenceWallpaperExplanation">Fréquence à laquelle le fond d\'écran est changé. La photo est choisie parmis celles qui ont précédement été téléchargées sur le téléphone.</string>
+    <string name="frequenceSyncExplanation">Fréquence à laquelle les images sont téléchargées sur le téléphone. Les photos sont choisies parmis celle de l\'album. </string>
+    <string name="frequenceUpdatePhotosExplenation">Fréquence à laquelle de nouvelle photos sont recherchées. Entre deux recherches de nouvelle photo, l\'application choisie des photos à téléchargées parmis celles qui étaient disponibles lors de la précédente rechcerche.</string>
     <string name="frequencyUpdatePhotos">Fréquence nouvelles photos</string>
     <string name="frequency_too_low">Fréquence min de 15 minutes</string>
     <string name="frequency_need_disable_first">Désactiver d\'abord le schedule</string>
+    <string name="title_frequency_explanation">Aide sur les fréquences</string>
+
+    <string name="placeHolder_month">Toutes les mois</string>
+    <string name="placeholder_hour">Toutes les heures</string>
+    <string name="placeholder_week">Toutes les semaines</string>
 
     <string name="lastTimesTitle">Dernières synchro</string>
     <string name="lastSyncLabel">Dernière synchronisation : </string>
@@ -62,6 +74,7 @@
     <string name="channel_name">name</string>
     <string name="channel_description">description</string>
     <string name="requestGooglePermission">demander permission</string>
+
 
     <string name="titleStat">Statistiques</string>
     <string name="noStat">Pas de statistique</string>
@@ -79,8 +92,11 @@
     <string name="frequencyGroup_subtitle">Activation et fréquences</string>
     <string name="text_wizard_step">Assistant : étape %1$d sur %2$d</string>
     <string name="wizard">Assistant</string>
-
+    <string name="no_photo">Aucune photo à afficher.</string>
+    <string name="resolve_no_photo">Lancer l\'application et executer une synchronisation.</string>
+    <string name="explanation">Explication</string>
     <string-array name="frequency_wallpaper_label">
+        <item>Jamais</item>
         <item>Toutes les 15 minutes</item>
         <item>Toutes les 30 minutes</item>
         <item>Toutes les heures</item>
@@ -88,6 +104,7 @@
         <item>Tous les jours</item>
     </string-array>
     <integer-array name="frequency_wallpaper_value">
+        <item>-1</item>
         <item>15</item>
         <item>30</item>
         <item>60</item>
@@ -101,9 +118,7 @@
         <item>Tous les heures</item>
         <item>Toutes les 12 heures</item>
         <item>Tous les jours</item>
-        <item>Tous les 6 jours</item>
         <item>Toutes les semaines</item>
-        <item>Toutes les 8 jours</item>
         <item>Toutes les mois</item>
     </string-array>
     <integer-array name="frequency_sync_value">
@@ -112,9 +127,7 @@
         <item>1</item>
         <item>12</item>
         <item>24</item>
-        <item>144</item>
         <item>168</item>
-        <item>192</item>
         <item>720</item>
     </integer-array>
 
@@ -140,12 +153,11 @@
         <item>Appuyez sur Album.\n\nCela permet de choisir l\'album Google qui contient les photos que vous souhaitez mettre en fond d\'écran.</item>
         <item>Appuyez sur Folder.\n\nCela permet choisir le répertoire de votre téléphone dans lequel les photos seront enregistrées en local. L\'application va télécharger vos photos dans ce répertoire. Vous devrez autoriser l\'application à écrire sur votre téléphone.</item>
         <item>Appuyez sur Option de téléchargement puis sur Quantité.\n\nVous alle pouvoir choisir le nombre maximum de photos à télécharger.</item>
-        <item>S\'il est visible, appuyez sur le bandeau orange.\n\nCela permet de choisir le fond d\'écran animé de l\'application.</item>
         <item>Appuyez sur Fréquences puis sur Fréquence fond d\'écran.\n\nCela permet de choisir la fréquence à laquelle le fond d\'écran est changé.</item>
         <item>Appuyez sur Fréquence de téléchargement.\n\nCela permet de choisir la fréquence à laquelle les photos sont téléchargées sur votre téléphone.</item>
         <item>Appuyez sur Fréquence nouvelle photos.\n\nCela permet de choisir la fréquence à laquelle l\'application va rechercher si des nouvelles photos ont été rajoutées à votre album Google. </item>
-        <item>Appuyez sur le bouton changement automatique.\n\nCela permet d\'activer le changement automatique des fonds d\'écran. </item>
         <item>Appuyez sur le bouton SYNCHONISER UNE FOIS.\n\nCela permet de lancer une synchronisation. Les prochaines synchronisations seront automatiques.</item>
+        <item>S\'il est visible, appuyez sur le bandeau orange.\n\nCela permet de choisir le fond d\'écran animé de l\'application.</item>
         <item>L\'application est maintenant totalement configuré. L\'Assistant est terminé.</item>
     </string-array>
 </resources>

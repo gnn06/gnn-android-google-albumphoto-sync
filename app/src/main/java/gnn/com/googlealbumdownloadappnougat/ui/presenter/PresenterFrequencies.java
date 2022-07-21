@@ -1,16 +1,14 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
-import androidx.lifecycle.ViewModelProvider;
-
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
+import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.R;
-import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
+import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
-import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.photos.service.Cache;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
@@ -19,50 +17,36 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     private int frequencyUpdate;
 
     final private Context context;
-    private ScheduleTask task;
+
+    private final FragmentFrequencies fragment;
+    private final PersistPrefMain persist;
+    private final ScheduleFromFreq schedulerFromFreq;
+
+    public PresenterFrequencies(FragmentFrequencies fragment, Context context) {
+        this.context = context;
+        this.fragment = fragment;
+        this.persist = ServiceLocator.getInstance().getPersistMain();
+        this.schedulerFromFreq = new ScheduleFromFreq(this);
+    }
+
+    // For test
+    public PresenterFrequencies(IViewFrequencies fragment, Context context,
+                                PersistPrefMain persist,
+                                ScheduleFromFreq schedulerFromFreq) {
+        this.context = context;
+        this.fragment = (FragmentFrequencies) fragment;
+        this.persist = persist;
+        this.schedulerFromFreq = schedulerFromFreq;
+    }
 
     @Override
     public Context getContext() {
         return context;
     }
 
-    private MainActivity activity;
-    private final FragmentFrequencies fragment;
-    private final UserModel userModel;
-    private final PersistPrefMain persist;
-    private final WallpaperScheduler scheduler;
-
-    public PresenterFrequencies(FragmentFrequencies fragment, Context context, MainActivity activity) {
-        this.context = context;
-        this.activity = activity;
-        this.fragment = (FragmentFrequencies) fragment;
-        this.userModel = new ViewModelProvider(activity).get(UserModel.class);
-        this.persist = new PersistPrefMain(context);
-        this.scheduler = new WallpaperScheduler(context);
-        task = new ScheduleTask(activity, context, scheduler, fragment, userModel);
-    }
-
-    // For test
-    public PresenterFrequencies(IViewFrequencies fragment, Context context, MainActivity activity,
-                                UserModel userModel, PersistPrefMain persist,
-                                WallpaperScheduler scheduler, ScheduleTask scheduleTask) {
-        this.context = context;
-        this.activity = activity;
-        this.fragment = (FragmentFrequencies) fragment;
-        this.userModel = userModel;
-        this.persist = persist;
-        this.scheduler = scheduler;
-        this.task = scheduleTask;
-    }
-
     @Override
     public void onAppStart() {
         this.persist.restoreFrequencies(this);
-
-        boolean scheduled = this.scheduler.isScheduled();
-        fragment.setSwitchWallpaper(scheduled);
-
-//        new ViewWizard(new Wizard(null, new PersistPrefMain(getContext()), null, null, getContext()), viewModel).highlight(fragment);
     }
 
     @Override
@@ -80,6 +64,7 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     }
 
     /**
+     * called by Dialog
      * @param frequency in minute >= 15 minutes
      */
     @Override
@@ -113,9 +98,11 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      */
     @Override
     public int getFrequencySyncMinute() {
-        if (getFrequencySyncHour() == -1)
-            return Integer.MAX_VALUE;
-        if (getFrequencySyncHour() < Integer.MAX_VALUE)
+        if (getFrequencySyncHour() == Frequency.NEVER)
+            return SynchronizerDelayed.DELAY_NEVER_SYNC;
+        else if (getFrequencySyncHour() == 0) {
+            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
+        } else if (getFrequencySyncHour() < Integer.MAX_VALUE)
             return getFrequencySyncHour() * 60;
         else
             return Integer.MAX_VALUE;
@@ -144,64 +131,52 @@ public class PresenterFrequencies implements IPresenterFrequencies {
      * @return fréquence en minute
      */
     public int getFrequencyUpdatePhotosHour() {
-        if (getFrequencyUpdatePhotos() == -1)
-            return Integer.MAX_VALUE;
-        if (getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE)
+        if (getFrequencyUpdatePhotos() == Frequency.NEVER)
+            return Cache.DELAY_NEVER_EXPIRE;
+        else if (getFrequencyUpdatePhotos() == 0) {
+            return Cache.DELAY_ALWAYS_EXPIRE;
+        } else if (getFrequencyUpdatePhotos() < Integer.MAX_VALUE)
             return getFrequencyUpdatePhotos() * 24;
         else
-            return Cache.DELAY_NEVER_EXPIRE;
-    }
-
-    @Override
-    public void onSwitchWallpaper(boolean checked) {
-        if (checked) {
-            if (getFrequencyWallpaper() < 15) {
-                fragment.setSwitchWallpaper(false);
-                fragment.alertFrequencyError();
-            } else {
-                // TODO manage permission refused and toggle switch off
-                task.schedule(checked, getFrequencyWallpaper(), getFrequencySyncMinute(), getFrequencyUpdatePhotosHour());
-            }
-        } else {
-            scheduler.cancel();
-//            view.enableFrequencyWallpaper(checked);
-//            view.enableFrequencySync(checked);
-//            view.enableFrequencyUpdatePhotos(checked);
-        }
+            return Integer.MAX_VALUE;
     }
 
     @Override
     public void chooseFrequencyWallpaper() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyWallpaper(value),
-                R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencyWallpaper(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
+            R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
     }
 
     @Override
     public void chooseFrequencySync() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencySyncHour(value),
-                R.array.frequency_sync_value, R.array.frequency_sync_label);
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencySyncHour(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
+            R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }
 
     @Override
     public void chooseFrequencyUpdate() {
-        if (scheduler.isScheduled()) {
-            fragment.alertNeedDisableSchedule();
-            return;
-        }
-        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> setFrequencyUpdatePhotos(value),
+        DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
+                    setFrequencyUpdatePhotos(value);
+                    schedulerFromFreq.scheduleOrCancel();
+                },
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }
 
-
+    @Override
+    public void explanation(int idText_Title, int idText_Message) {
+        new AlertDialog.Builder(fragment.getActivity())
+                .setTitle(getContext().getResources().getString(R.string.title_frequency_explanation))
+                .setMessage(getContext().getResources().getString(idText_Message))
+                .setNegativeButton(android.R.string.ok, null)
+                .show();
+    }
 }

@@ -42,3 +42,7 @@ internal : use serviceLocator to facilitate integration test
 fix : schedule when going in frequence fragment
 change : ask google autorisation when logging
 change : better message in preview live wallpaper when there is no images
+
+1.6.3
+changement de UI pour la gestion des fréquences.
+

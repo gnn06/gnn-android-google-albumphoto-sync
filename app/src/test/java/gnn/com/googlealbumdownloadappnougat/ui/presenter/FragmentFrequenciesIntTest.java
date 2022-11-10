@@ -59,7 +59,7 @@ public class FragmentFrequenciesIntTest {
         PersistPrefMain persistMock = mock(PersistPrefMain.class);
         when(persistMock.getFrequencyWallpaper()).thenReturn(15);
         when(persistMock.getFrequencyDownload()).thenReturn(-1);
-        when(persistMock.getFrequencyUpdatePhotosHour()).thenReturn(-1);
+        when(persistMock.getFrequencyUpdatePhotos()).thenReturn(-1);
         ServiceLocator.getInstance().setPersistMain(persistMock);
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);

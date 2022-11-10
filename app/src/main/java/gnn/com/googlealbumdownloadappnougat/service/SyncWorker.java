@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
@@ -27,12 +28,15 @@ public class SyncWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+
+        PersistPrefMain persistPrefMain = new PersistPrefMain(getApplicationContext());
+
         File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-        long cacheMaxAge = getInputData().getLong("cacheMaxAge", Cache.DELAY_ALWAYS_EXPIRE);
+        long cacheMaxAgeHour = persistPrefMain.getFrequencyUpdatePhotos();
         File processFolder = new File(getInputData().getString("processAbsolutePath"));
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
+        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAgeHour, processFolder);
 
         String albumName = getInputData().getString("album");
         String destinationFolder = getInputData().getString("folderPath");

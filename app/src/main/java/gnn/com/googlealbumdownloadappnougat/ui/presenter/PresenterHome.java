@@ -87,7 +87,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public SynchronizerAndroid getSync() {
         if (this.sync == null) {
             PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotosHour(), getProcessFolder());
+            this.sync = new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
         }
         return sync;
     }
@@ -186,7 +186,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void onShowAlbumList() {
         if (mAlbums == null) {
             PersistPrefMain persist = new PersistPrefMain(this.activity);
-            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), persist.getFrequencyUpdatePhotosHour());
+            PhotosRemoteService prs = new PhotosRemoteServiceAndroid(activity, getCacheFile(), persist.getFrequencyUpdatePhotos());
             final GetAlbumsTask task = new GetAlbumsTask(this, prs, activity);
             Exec exec = new Exec() {
                 @Override

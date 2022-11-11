@@ -76,7 +76,7 @@ public class PresenterMain implements IPresenterMain {
 
     public SynchronizerAndroid getSync() {
         PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-        return new SynchronizerAndroid(activity, applicationContext.getCacheFile(), persistPref.getFrequencyUpdatePhotosHour(), applicationContext.getProcessFolder());
+        return new SynchronizerAndroid(activity, applicationContext.getCacheFile(), persistPref.getFrequencyUpdatePhotos(), applicationContext.getProcessFolder());
     }
 
 }

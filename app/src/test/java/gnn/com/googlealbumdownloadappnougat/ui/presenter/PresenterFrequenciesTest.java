@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,6 +31,7 @@ public class PresenterFrequenciesTest {
     private Context context;
     private UserModel usermodel;
     private PersistPrefMain persist;
+    private ScheduleFromFreq scheduleFromFreq;
     private WallpaperScheduler scheduler;
     private AuthManager authManager;
     private ApplicationContext applicationContext;
@@ -47,6 +49,7 @@ public class PresenterFrequenciesTest {
         this.authManager = mock(AuthManager.class);
         this.applicationContext = mock(ApplicationContext.class);
         this.scheduleWithPermission = mock(WallpaperSchedulerWithPermission.class);
+        this.scheduleFromFreq = mock(ScheduleFromFreq.class);
         defaultValue = new SyncData();
         defaultValue.setFrequencyWallpaper(60);
         defaultValue.setFrequencySync(168);
@@ -81,14 +84,14 @@ public class PresenterFrequenciesTest {
     public void defaultValue_change_ui_ok() {
         // given
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
+                persist, scheduleFromFreq);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
         presenter.onAppStart();
         verify(view).setFrequencyWallpaper(60);
         // when
-        presenter.setFrequencyWallpaper(120);
-        presenter.setFrequencySyncHour(720);
-        presenter.setFrequencyUpdatePhotos(168);
+        presenter.setFrequencyWallpaperWithSchedule(120);
+        presenter.setFrequencySyncWithSchedule(720);
+        presenter.setFrequencyUpdateWithSchedule(168);
         // then
         verify(view).setFrequencyWallpaper(120);
         verify(view).setFrequencySync(720);
@@ -98,15 +101,16 @@ public class PresenterFrequenciesTest {
     @Test
     public void valueChange_persist_OK() {
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
+                persist, scheduleFromFreq);
         doCallRealMethod().when(persist).restoreFrequencies(presenter);
-        presenter.setFrequencyWallpaper(120);
-        presenter.setFrequencySyncHour(720);
-        presenter.setFrequencyUpdatePhotos(168);
+
+        presenter.setFrequencyWallpaperWithSchedule(120);
+        presenter.setFrequencySyncWithSchedule(720);
+        presenter.setFrequencyUpdateWithSchedule(168);
         // when
         presenter.onAppStop();
         // then
-        verify(persist).saveFrequencies(eq(120), eq(720), eq(168));
+        verify(persist, times(2)).saveFrequencies(eq(120), eq(720), eq(168));
     }
 
     @Test

@@ -51,6 +51,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStop() {
+        persistFrequencies();
+    }
+
+    private void persistFrequencies() {
         this.persist.saveFrequencies(getFrequencyWallpaper(), getFrequencySyncHour(), getFrequencyUpdatePhotos());
     }
 
@@ -127,6 +131,24 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         fragment.setFrequencyUpdate(frequency);
     }
 
+    void setFrequencyWallpaperWithSchedule(int value) {
+        setFrequencyWallpaper(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
+    }
+
+    void setFrequencySyncWithSchedule(int value) {
+        setFrequencySyncHour(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
+    }
+
+    void setFrequencyUpdateWithSchedule(int value) {
+        setFrequencyUpdatePhotos(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
+    }
+
     /**
      * @return fréquence en minute
      */
@@ -144,9 +166,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencyWallpaper() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencyWallpaper(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencyWallpaperWithSchedule(value);
+        },
             R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
     }
@@ -154,9 +175,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencySync() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencySyncHour(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencySyncWithSchedule(value);
+        },
             R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }
@@ -164,9 +184,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencyUpdate() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencyUpdatePhotos(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencyUpdateWithSchedule(value);
+        },
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }

@@ -3,12 +3,9 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.photos.service.Cache;
-import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
@@ -98,22 +95,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     /**
      *
-     * int frequencySync fréquence de téléchargement en minute
-     */
-    @Override
-    public int getFrequencySyncMinute() {
-        if (getFrequencySyncHour() == Frequency.NEVER)
-            return SynchronizerDelayed.DELAY_NEVER_SYNC;
-        else if (getFrequencySyncHour() == 0) {
-            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
-        } else if (getFrequencySyncHour() < Integer.MAX_VALUE)
-            return getFrequencySyncHour() * 60;
-        else
-            return Integer.MAX_VALUE;
-    }
-
-    /**
-     *
      * @return frequence de recupération des nouvelles phtos in days
      */
     @Override
@@ -147,20 +128,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         setFrequencyUpdatePhotos(value);
         persistFrequencies();
         schedulerFromFreq.scheduleOrCancel();
-    }
-
-    /**
-     * @return fréquence en minute
-     */
-    public int getFrequencyUpdatePhotosHour() {
-        if (getFrequencyUpdatePhotos() == Frequency.NEVER)
-            return Cache.DELAY_NEVER_EXPIRE;
-        else if (getFrequencyUpdatePhotos() == 0) {
-            return Cache.DELAY_ALWAYS_EXPIRE;
-        } else if (getFrequencyUpdatePhotos() < Integer.MAX_VALUE)
-            return getFrequencyUpdatePhotos() * 24;
-        else
-            return Integer.MAX_VALUE;
     }
 
     @Override

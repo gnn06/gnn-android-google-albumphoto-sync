@@ -32,22 +32,19 @@ public class WallpaperScheduler {
      * maxAge in minutes
      */
     public void schedule(String destinationFolder, long wallpaperMaxAgeMinute,
-                         int syncMaxAgeMinute,
-                         String album, int quantity, String rename, long cacheMaxAgeHour,
+                         String album, int quantity, String rename,
                          ApplicationContext appContext) {
         Logger logger = Logger.getLogger();
         logger.fine("schedule");
         // TODO envoi des argmunent trop laborieux
         Data data = new Data.Builder()
-                .putString("cacheAbsolutePath", appContext.getCachePath())
-                .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", cacheMaxAgeHour)
-                .putString("folderPath", destinationFolder)
-                .putInt("syncMaxAge", syncMaxAgeMinute)
-                .putString("album", album)
-                .putString("folderPath", destinationFolder)
-                .putInt("quantity", quantity)
-                .putString("rename", rename)
+                .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
+                .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putString(WallPaperWorker.PARAM_ALBUM, album)
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
+                .putString(WallPaperWorker.PARAM_RENAME, rename)
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAgeMinute, TimeUnit.MINUTES)
                 .setInputData(data)

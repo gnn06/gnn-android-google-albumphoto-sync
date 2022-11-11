@@ -64,7 +64,7 @@ public class FragmentFrequenciesIntTest {
 
         FragmentScenario<FragmentFrequencies> scenario = FragmentScenario.launch(FragmentFrequencies.class);
 
-        verify(taskMock, never()).schedule(anyLong(), anyInt(), anyLong());
+        verify(taskMock, never()).schedule(anyLong());
         
         // in test, getActivity=FragmentActivity
         // in app, getActivity=Mainactivity
@@ -121,7 +121,7 @@ public class FragmentFrequenciesIntTest {
                 .inRoot(isDialog())
                 .atPosition(1).perform(click());
 
-        verify(taskMock).schedule(anyLong(), anyInt(), anyLong());
+        verify(taskMock).schedule(anyLong());
     }
 
     @Test

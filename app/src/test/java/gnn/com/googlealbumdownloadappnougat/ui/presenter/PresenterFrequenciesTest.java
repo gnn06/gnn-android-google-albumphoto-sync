@@ -57,16 +57,7 @@ public class PresenterFrequenciesTest {
         when(persist.getData()).thenReturn(defaultValue);
     }
 
-    @Test
-    public void getFrequencyUpdatePhotosHour() {
-        PresenterFrequencies presenter = mock(PresenterFrequencies.class);
-        when(presenter.getFrequencyUpdatePhotos()).thenReturn(10);
-        when(presenter.getFrequencyUpdatePhotosHour()).thenCallRealMethod();
-        int result = presenter.getFrequencyUpdatePhotosHour();
-        assertThat(result, is(10 * 24));
-    }
-
-    @Test
+        @Test
     public void defaultValue_ui_setted() {
         // given
         PresenterFrequencies presenter = new PresenterFrequencies(view, context,
@@ -111,62 +102,5 @@ public class PresenterFrequenciesTest {
         presenter.onAppStop();
         // then
         verify(persist, times(2)).saveFrequencies(eq(120), eq(720), eq(168));
-    }
-
-    @Test
-    public void conversion_with_never() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
-        presenter.setFrequencySyncHour(-1);
-        presenter.setFrequencyUpdatePhotos(-1);
-        // when
-        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
-        int resultSync = presenter.getFrequencySyncMinute();
-        // then
-        assertThat(resultUpdate, is(SynchronizerDelayed.DELAY_NEVER_SYNC));
-        assertThat(resultSync, is(Cache.DELAY_NEVER_EXPIRE));
-    }
-
-    @Test
-    public void conversion_with_always() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
-        presenter.setFrequencySyncHour(0);
-        presenter.setFrequencyUpdatePhotos(0);
-        // when
-        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
-        int resultSync = presenter.getFrequencySyncMinute();
-        // then
-        assertThat(resultUpdate, is(SynchronizerDelayed.DELAY_ALWAYS_SYNC));
-        assertThat(resultSync, is(Cache.DELAY_ALWAYS_EXPIRE));
-    }
-
-    @Test
-    public void conversion_with_max() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
-        presenter.setFrequencySyncHour(Integer.MAX_VALUE);
-        presenter.setFrequencyUpdatePhotos(Integer.MAX_VALUE);
-        // when
-        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
-        int resultSync = presenter.getFrequencySyncMinute();
-        // then
-        assertThat(resultUpdate, is(Integer.MAX_VALUE));
-        assertThat(resultSync, is(Integer.MAX_VALUE));
-    }
-
-    @Test
-    public void conversion_with_normal() {
-        PresenterFrequencies presenter = new PresenterFrequencies(view, context,
-                persist, null);
-        presenter.setFrequencyWallpaper(120);
-        presenter.setFrequencySyncHour(720);
-        presenter.setFrequencyUpdatePhotos(168);
-        // when
-        int resultSync = presenter.getFrequencySyncMinute();
-        int resultUpdate = presenter.getFrequencyUpdatePhotosHour();
-        // then
-        assertThat(resultSync, is(720* 60));
-        assertThat(resultUpdate, is(168 * 24));
     }
 }

@@ -12,7 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
@@ -31,17 +34,19 @@ public class SyncWorker extends Worker {
 
         PersistPrefMain persistPrefMain = new PersistPrefMain(getApplicationContext());
 
-        File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-        long cacheMaxAgeHour = persistPrefMain.getFrequencyUpdatePhotos();
-        File processFolder = new File(getInputData().getString("processAbsolutePath"));
+        File cacheFile = new File(getInputData().getString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH));
+        int frequencyUpdateHour = persistPrefMain.getFrequencyUpdatePhotos();
+        File processFolder = new File(getInputData().getString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH));
+
+        int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAgeHour, processFolder);
+        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, delayUpdateHour, processFolder);
 
-        String albumName = getInputData().getString("album");
-        String destinationFolder = getInputData().getString("folderPath");
-        String rename = getInputData().getString("rename");
-        int quantity = getInputData().getInt("quantity", -1);
+        String albumName = getInputData().getString(WallPaperWorker.PARAM_ALBUM);
+        String destinationFolder = getInputData().getString(WallPaperWorker.PARAM_FOLDER_PATH);
+        String rename = getInputData().getString(WallPaperWorker.PARAM_RENAME);
+        int quantity = getInputData().getInt(WallPaperWorker.PARAM_QUANTITY, -1);
 
         // Doc Periodic work is never successed, always enqueued
 

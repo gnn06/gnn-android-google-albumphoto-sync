@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
 
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
@@ -34,16 +35,14 @@ public class SyncScheduler {
         this.context = context;
     }
 
-    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, int intervalUpdateHour, ApplicationContext appContext) {
-        // TODO get CacheMaxAge from persistance
+    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
         Data data = new Data.Builder()
-                .putString("cacheAbsolutePath", appContext.getCachePath())
-                .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", intervalUpdateHour)
-                .putString("album", album)
-                .putString("folderPath", destinationFolder)
-                .putString("rename", rename)
-                .putInt("quantity", quantity)
+                .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
+                .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
+                .putString(WallPaperWorker.PARAM_ALBUM, album)
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putString(WallPaperWorker.PARAM_RENAME, rename)
+                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
 
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
@@ -53,14 +52,14 @@ public class SyncScheduler {
             .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
-    public void schedule(int intervalHour, int intervalUpdateHour) {
+    public void schedule(int intervalHour) {
         PersistPrefMain persist = ServiceLocator.getInstance().getPersistMain();
         String album = persist.getAlbum();
         String folder = persist.getPhotoPath();
         String rename = persist.getRename();
         int quantity = persist.getQuantity();
         ApplicationContext appContext = ApplicationContext.getInstance(context);
-        schedule(album, folder, rename, quantity, intervalHour, intervalUpdateHour , appContext);
+        schedule(album, folder, rename, quantity, intervalHour, appContext);
     }
 
     public void cancel() {

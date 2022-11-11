@@ -32,7 +32,7 @@ public class WallpaperSchedulerWithPermission {
     private final UserModel userModel;
     private final AuthManager authManager;
 
-    void schedule(long frequencyWallpaperMinute, int frequencySyncMinute, long frequencyUpdatePhotosHour) {
+    void schedule(long frequencyWallpaperMinute) {
         Exec exec = new Exec() {
             @Override
             public void exec() {
@@ -41,8 +41,8 @@ public class WallpaperSchedulerWithPermission {
                 scheduler.schedule(
                         preferences.getPhotoPath(),
                         frequencyWallpaperMinute,
-                        frequencySyncMinute, preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
-                        frequencyUpdatePhotosHour, appContext);
+                        preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
+                        appContext);
 //                view.enableFrequencyWallpaper(checked);
 //                view.enableFrequencySync(checked);
 //                view.enableFrequencyUpdatePhotos(checked);

@@ -7,11 +7,15 @@ import static org.mockito.Mockito.when;
 
 import android.app.Service;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.work.Configuration;
+import androidx.work.testing.SynchronousExecutor;
+import androidx.work.testing.WorkManagerTestInitHelper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +34,14 @@ public class MainActivityTest {
     public void viwModelWizard_initialized() {
         // Given
         Context context = ApplicationProvider.getApplicationContext();
+        // Configure Worker because Presenter.onAppStart use WorkManager
+        final Configuration config = new Configuration.Builder()
+                .setMinimumLoggingLevel(Log.DEBUG)
+                .setExecutor(new SynchronousExecutor())
+                .build();
+        WorkManagerTestInitHelper.initializeTestWorkManager(
+                context, config);
+
         new PersistPrefMain(context).saveWizardStep(WizardStep.S03_CHOOSE_ALBUM);
         WallpaperScheduler schedulerMock = mock(WallpaperScheduler.class);
         when(schedulerMock.isScheduled()).thenReturn(false);

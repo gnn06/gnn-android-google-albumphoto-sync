@@ -30,7 +30,7 @@ public abstract class PhotoProvider {
         return albumNames;
     }
 
-    ArrayList<Photo> getPhotosFromAlbum(String albumName, Synchronizer synchronizer) throws RemoteException {
+    ArrayList<Photo> getPhotosFromAlbum(String albumName, SyncProgressObserver synchronizer) throws RemoteException {
         InternalPhotosLibraryClient.ListAlbumsPagedResponse response = getClient().listAlbums();
         for (Album album : response.iterateAll()) {
             String title = album.getTitle();

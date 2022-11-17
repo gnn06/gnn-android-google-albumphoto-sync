@@ -44,7 +44,7 @@ public abstract class PhotosRemoteService {
     /**
      * Refresh baseUrl and download photo
      */
-    public void download(ArrayList<Photo> list, File folder, String rename, Synchronizer sync) throws IOException, RemoteException {
+    public void download(ArrayList<Photo> list, File folder, String rename, SyncProgressObserver sync) throws IOException, RemoteException {
         // baseUrl is valid during 60 minutes, refresh them before download
         list = refreshBaseUrl(list);
         new DownloadManager().download(list, folder, rename, sync);

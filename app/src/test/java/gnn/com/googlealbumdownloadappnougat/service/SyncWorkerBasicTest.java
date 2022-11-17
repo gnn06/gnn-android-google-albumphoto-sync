@@ -27,6 +27,7 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
 import gnn.com.photos.service.RemoteException;
 
 @RunWith(PowerMockRunner.class)
@@ -49,7 +50,7 @@ public class SyncWorkerBasicTest {
     private SyncWorker UT_myWorker;
     private File destinationFolder;
     private Data data;
-    private SynchronizerAndroid synchronizerMock;
+    private SynchronizerWorker synchronizerMock;
 
 
     @Before
@@ -71,12 +72,12 @@ public class SyncWorkerBasicTest {
         // use powerMockito to mock private getFilename method
         // and use doReturn to avoid null pointer exception caused by when-thenReturn
         PowerMockito.doReturn(destinationFolder).when(UT_myWorker, "getDestinationFolder", anyString());
-        synchronizerMock = mock(SynchronizerAndroid.class);
+        synchronizerMock = mock(SynchronizerWorker.class);
     }
 
     @Test
     public void test_success() throws Exception {
-        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
+        PowerMockito.whenNew(SynchronizerWorker.class).withAnyArguments().thenReturn(synchronizerMock);
 
         Context mockContext = mock(Context.class);
         when(mockContext.getFilesDir()).thenReturn(tmpFolder.newFolder());
@@ -91,7 +92,7 @@ public class SyncWorkerBasicTest {
     @Test
     public void test_exception() throws Exception {
         doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom("album", destinationFolder, null, -1);
-        PowerMockito.whenNew(SynchronizerAndroid.class).withAnyArguments().thenReturn(synchronizerMock);
+        PowerMockito.whenNew(SynchronizerWorker.class).withAnyArguments().thenReturn(synchronizerMock);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();

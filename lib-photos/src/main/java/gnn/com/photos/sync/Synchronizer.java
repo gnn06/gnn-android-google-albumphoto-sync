@@ -10,8 +10,9 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.service.SyncProgressObserver;
 
-public abstract class Synchronizer implements SyncData {
+public abstract class Synchronizer implements SyncData, SyncProgressObserver {
 
     protected final File cacheFile;
     // 0 = update photo each time
@@ -43,12 +44,15 @@ public abstract class Synchronizer implements SyncData {
         return this.localService;
     }
 
-    // TODO maybe move field into SyncData
-    private int currentDownload;
-    private int currentDelete;
-    private ArrayList<Photo> toDownload;
-    private ArrayList<Photo> toDelete;
-    private int albumSize = 0;
+    public Temp getSyncData() {
+        return syncData;
+    }
+
+    public void setSyncData(Temp syncData) {
+        this.syncData = syncData;
+    }
+
+    private Temp syncData = new Temp();
 
     /**
      * Main method.
@@ -79,47 +83,57 @@ public abstract class Synchronizer implements SyncData {
     }
 
     public int getCurrentDownload() {
-        return this.currentDownload;
+        return this.syncData.getCurrentDownload();
     }
 
     public int getCurrentDelete() {
-        return this.currentDelete;
+        return this.syncData.getCurrentDelete();
     }
 
     public void incCurrentDownload() {
-        this.currentDownload += 1;
+        this.syncData.incCurrentDownload();
     }
 
     public void incCurrentDelete() {
-        this.currentDelete += 1;
+        this.syncData.incCurrentDelete();
     }
 
     public void incAlbumSize()  {
-        this.albumSize += 1;
+        this.syncData.incAlbumSize();
+    }
+
+    @Override
+    public void begin() {
+
+    }
+
+    @Override
+    public void end() {
+
     }
 
     public void setToDownload(ArrayList<Photo> toDownload) {
-        this.toDownload = toDownload;
+        this.syncData.setToDownload(toDownload);
     }
 
     ArrayList<Photo> getToDownload() {
-        return toDownload;
+        return this.syncData.getToDownload();
     }
 
     public void setToDelete(ArrayList<Photo> toDelete) {
-        this.toDelete = toDelete;
+        this.syncData.setToDelete(toDelete);
     }
 
     ArrayList<Photo> getToDelete() {
-        return toDelete;
+        return this.syncData.getToDelete();
     }
 
     public int getAlbumSize() {
-        return this.albumSize;
+        return this.syncData.getAlbumSize();
     }
 
     public void setAlbumSize(int size) {
-        this.albumSize = size;
+        this.syncData.setAlbumSize(size);
     }
 
     public void resetCache() {
@@ -129,17 +143,13 @@ public abstract class Synchronizer implements SyncData {
     }
 
     void resetCurrent() {
-        this.currentDownload = 0;
-        this.currentDelete= 0;
-        this.toDownload = new ArrayList<>();
-        this.toDelete = new ArrayList<>();
-        this.albumSize = 0;
+        this.syncData = new Temp();
     }
 
     void storeSyncTime() throws IOException {
         Logger logger = Logger.getLogger("worker");
         logger.finest("write " + (processFolder != null ? processFolder.getAbsolutePath() : "null")) ;
-        new PersistSyncTime(processFolder).storeTime();
+        new PersistSyncTime(processFolder).storeTimeWithResult(this.syncData);
     }
 
     /**

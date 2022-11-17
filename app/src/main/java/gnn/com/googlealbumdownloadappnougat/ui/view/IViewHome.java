@@ -6,6 +6,7 @@ import java.util.Date;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.photos.stat.stat.WallpaperStat;
+import gnn.com.photos.sync.Temp;
 
 public interface IViewHome extends IView {
 
@@ -19,7 +20,7 @@ public interface IViewHome extends IView {
 
     void updateUI_User();
 
-    void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step);
+    void updateUI_CallResult(Temp synchronizer, SyncStep step);
 
     void updateUI_lastSyncTime(Date lastUpdateTime, Date lastSyncTime, Date lastWallpaperTime);
 

@@ -1,5 +1,13 @@
 package gnn.com.photos.sync;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,8 +51,8 @@ public class SyncMethodTest {
 
         localPhotos.add(new Photo("url2", "id2"));
 
-        prs = Mockito.mock(PhotosRemoteService.class);
-        pls = Mockito.mock(PhotosLocalService.class);
+        prs = mock(PhotosRemoteService.class);
+        pls = mock(PhotosLocalService.class);
 
 
         synchronizer = new Synchronizer(null, 0, null) {
@@ -57,10 +65,10 @@ public class SyncMethodTest {
             public void incAlbumSize() {}
         };
 
-        folder = Mockito.mock(File.class);
+        folder = mock(File.class);
 
-        Mockito.when(prs.getPhotos("album", synchronizer)).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos("album", synchronizer)).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
     }
 
@@ -68,24 +76,40 @@ public class SyncMethodTest {
     public void sync_all() throws IOException, RemoteException {
         SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
         // given remote photos that don't be local and local photo was dont't be remote
-        Mockito.when(prs.getPhotos(Mockito.anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
         syncMethod.sync("album", folder, null, -1);
 
         // then, check download all
-        Mockito.verify(prs).download(remotePhotos, folder, null, synchronizer);
+        verify(prs).download(remotePhotos, folder, null, synchronizer);
 
         // and check delete all
-        Mockito.verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(localPhotos, folder, synchronizer);
+    }
+
+    @Test
+    public void sync_observer() throws IOException, RemoteException {
+        Synchronizer synchronizer = mock(Synchronizer.class);
+        SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
+        // given remote photos that don't be local and local photo was dont't be remote
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+
+        // when calling sync
+        syncMethod.sync("album", folder, null, -1);
+
+        // then, check download all
+        verify(synchronizer).begin();
+        verify(synchronizer).end();
     }
 
     @Test
     public void sync_chooseOne() throws IOException, RemoteException {
         // given remote photos that don't be local and local photo that don't be remote
-        Mockito.when(prs.getPhotos(Mockito.anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
@@ -94,11 +118,11 @@ public class SyncMethodTest {
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
-        Mockito.verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
         Assert.assertEquals(1, captor.getValue().size());
 
         // and check delete all
-        Mockito.verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(localPhotos, folder, synchronizer);
     }
 
     @Test
@@ -106,7 +130,7 @@ public class SyncMethodTest {
         //given
         SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
-        Mockito.doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
 
         // when
         try {
@@ -114,14 +138,14 @@ public class SyncMethodTest {
         } catch (IOException ignored) {}
 
         // then assert that delete was not called
-        Mockito.verify(pls, Mockito.never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any(Synchronizer.class));
+        verify(pls, never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any(Synchronizer.class));
     }
 
     @Test
     public void test_write_last_sync_time() throws IOException, RemoteException {
-        SyncMethod syncFull = new SyncMethod(Mockito.mock(Synchronizer.class), Mockito.mock(PhotosRemoteService.class), Mockito.mock(PhotosLocalService.class));
-        SyncMethod syncMethod = Mockito.spy(syncFull);
-        syncMethod.sync("album", Mockito.mock(File.class), null, 0);
+        SyncMethod syncFull = new SyncMethod(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
+        SyncMethod syncMethod = spy(syncFull);
+        syncMethod.sync("album", mock(File.class), null, 0);
     }
 
     @Test

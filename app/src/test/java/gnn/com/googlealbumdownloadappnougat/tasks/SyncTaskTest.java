@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
@@ -32,7 +33,7 @@ public class SyncTaskTest {
     @Test
     public void doInBackground_Error() throws IOException, RemoteException {
         IPresenterHome presenter = Mockito.mock(PresenterHome.class);
-        SynchronizerAndroid sync = Mockito.mock(SynchronizerAndroid.class);
+        SynchronizerTask sync = Mockito.mock(SynchronizerTask.class);
         PersistPrefMain preferences = mock(PersistPrefMain.class);
         File file = Mockito.mock(File.class);
 

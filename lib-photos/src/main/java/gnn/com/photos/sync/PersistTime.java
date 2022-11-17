@@ -11,8 +11,8 @@ import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 abstract public class PersistTime {
 
-    private final File processFolder;
-    private final String filename;
+    protected final File processFolder;
+    protected final String filename;
 
     public PersistTime(@Nonnull File processFolder, String filename) {
         this.processFolder = processFolder;

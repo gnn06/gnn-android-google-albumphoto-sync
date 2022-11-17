@@ -11,11 +11,15 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -29,10 +33,11 @@ import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
-import gnn.com.googlealbumdownloadappnougat.auth.SignInRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
 import gnn.com.googlealbumdownloadappnougat.settings.PersistPrefSettings;
 import gnn.com.googlealbumdownloadappnougat.tasks.GetAlbumsTask;
@@ -41,13 +46,14 @@ import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
-import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.PersistWallpaperTime;
+import gnn.com.photos.sync.Temp;
 
 public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
@@ -82,12 +88,13 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         this.auth = auth;
     }
 
-    private SynchronizerAndroid sync;
+    private SynchronizerTask sync;
 
-    public SynchronizerAndroid getSync() {
+    // TODO replace with injection
+    public SynchronizerTask getSync() {
         if (this.sync == null) {
             PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-            this.sync = new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
+            this.sync = new SynchronizerTask(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
         }
         return sync;
     }
@@ -122,6 +129,9 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         }
         new PersistPrefMain(activity).restore(this);
         new PersistPrefSettings(activity).restore(this);
+
+        new WallpaperScheduler(activity).registerWorkerObserver(this, fragment);
+        new SyncScheduler(activity).registerWorkerObserver(this, fragment);
     }
 
     @Override
@@ -163,8 +173,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     }
 
     @Override
-    public void setSyncResult(SynchronizerAndroid sync, SyncStep step) {
-        fragment.updateUI_CallResult(sync, step);
+    public void setSyncResult(Temp syncData, SyncStep step) {
+        fragment.updateUI_CallResult(syncData, step);
     }
 
 
@@ -339,5 +349,9 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         activity.getPermissionHandler().startRequirement(require);
     }
 
+    public void onWorkerExecuted() {
+        Log.d("GNNAPP", "PresenterHome.onWorkerExecuted");
+        refreshLastTime();
+    }
 }
 

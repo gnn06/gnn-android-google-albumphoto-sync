@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.sync.Synchronizer;
+import gnn.com.photos.sync.Temp;
 
 public class UITextHelper {
 
@@ -29,7 +30,7 @@ public class UITextHelper {
         return result;
     }
 
-    public String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {
+    public String getResultString(Temp syncData, SyncStep step, MainActivity mainActivity) {
         String result = "";
         switch (step) {
             case STARTING:
@@ -37,30 +38,40 @@ public class UITextHelper {
                 break;
             case IN_PRORGESS:
                 result += activity.getResources().getString(R.string.sync_in_progress) + "\n";
-                result += getDetailResultText(synchronizer, false);
+                result += getDetailResultText(syncData, false);
                 break;
             case FINISHED:
                 result += activity.getResources().getString(R.string.sync_finished) + "\n";
-                result += getDetailResultText(synchronizer, true);
+                result += getDetailResultText(syncData, true);
                 break;
         }
         return result;
     }
 
-    String getDetailResultText(Synchronizer synchronizer, boolean finished) {
+    String getDetailResultText(Temp syncData, boolean finished) {
         String result = "";
-        result += "album size = " + synchronizer.getAlbumSize() + "\n";
+        int totalToDelete = syncData.getDeleteCount();
+        int totalToDownload = syncData.getDownloadCount();
+        if (totalToDelete == 0) {
+            totalToDelete = syncData.getToDelete().size();
+        }
+        if (totalToDownload == 0) {
+            totalToDownload = syncData.getToDownload().size();
+        }
+        if (totalToDelete == 0 && totalToDownload == 0)
+            return result;
+        result += "album size = " + syncData.getAlbumSize() + "\n";
         result += "downloaded = ";
         if (!finished) {
-            result += synchronizer.getCurrentDownload() + " / ";
+            result += syncData.getCurrentDownload() + " / ";
         }
-        result += synchronizer.getTotalDownload();
+        result += totalToDownload;
         result += "\n";
         result += "deleted = ";
         if (!finished) {
-            result += synchronizer.getCurrentDelete() + " / ";
+            result += syncData.getCurrentDelete() + " / ";
         }
-        result += synchronizer.getTotalDelete();
+        result += totalToDelete;
         return result;
     }
 

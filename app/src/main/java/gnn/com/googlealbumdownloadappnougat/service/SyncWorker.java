@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
@@ -41,7 +42,7 @@ public class SyncWorker extends Worker {
         int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, delayUpdateHour, processFolder);
+        Synchronizer synchronizer = new SynchronizerWorker(activity, cacheFile, delayUpdateHour, processFolder, this);
 
         String albumName = getInputData().getString(WallPaperWorker.PARAM_ALBUM);
         String destinationFolder = getInputData().getString(WallPaperWorker.PARAM_FOLDER_PATH);
@@ -54,6 +55,8 @@ public class SyncWorker extends Worker {
             synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty
+            Log.d("GNNAPP","SyncWork finished");
+            // With a Periodic work, output is always null as (said in android doc) output is only available in FINISHED state
             return Result.success();
         } catch (IOException | RemoteException e) {
             Log.e(TAG, e.toString());

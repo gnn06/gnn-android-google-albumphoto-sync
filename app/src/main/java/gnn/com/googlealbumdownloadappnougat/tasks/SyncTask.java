@@ -6,17 +6,17 @@ import android.util.Log;
 import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
 
     // given from Presenter
-    protected SynchronizerAndroid sync;
+    protected SynchronizerTask sync;
     final private PersistPrefMain persist;
 
-    public SyncTask(IPresenterHome presenter, SynchronizerAndroid sync, PersistPrefMain persist, Context context) {
+    public SyncTask(IPresenterHome presenter, SynchronizerTask sync, PersistPrefMain persist, Context context) {
         super(presenter, context);
         this.sync = sync;
         sync.setSyncTask(this);
@@ -51,20 +51,20 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        presenter.setSyncResult(sync, SyncStep.STARTING);
+        presenter.setSyncResult(sync.getSyncData(), SyncStep.STARTING);
     }
 
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
-        presenter.setSyncResult(sync, SyncStep.IN_PRORGESS);
+        presenter.setSyncResult(sync.getSyncData(), SyncStep.IN_PRORGESS);
     }
 
     @Override
     protected void onPostExecute(Void voids) {
         super.onPostExecute(voids);
         if (isSuccessful()) {
-            presenter.setSyncResult(sync, SyncStep.FINISHED);
+            presenter.setSyncResult(sync.getSyncData(), SyncStep.FINISHED);
         }
     }
 }

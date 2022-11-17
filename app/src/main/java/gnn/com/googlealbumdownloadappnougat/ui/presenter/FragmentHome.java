@@ -36,6 +36,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.stat.stat.WallpaperStat;
+import gnn.com.photos.sync.Temp;
 
 public class FragmentHome extends FragmentHighlight implements IViewHome {
 
@@ -215,8 +216,8 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
     }
 
     @Override
-    public void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step) {
-        String result = new UITextHelper((MainActivity) getActivity()).getResultString(synchronizer, step, (MainActivity) getActivity());
+    public void updateUI_CallResult(Temp syncData, SyncStep step) {
+        String result = new UITextHelper((MainActivity) getActivity()).getResultString(syncData, step, (MainActivity) getActivity());
         TextView textView = getView().findViewById(R.id.result);
         textView.setText(result);
     }

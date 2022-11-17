@@ -19,9 +19,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.Photo;
 import gnn.com.photos.stat.stat.WallpaperStat;
+import gnn.com.photos.sync.Temp;
 
 public class UITextHelperTest {
 
@@ -33,9 +35,22 @@ public class UITextHelperTest {
     }
 
     @Test
+    public void getResultText_void() {
+        // Given
+        UITextHelper UITextHelper = new UITextHelper(activityMock);
+        SynchronizerTask synchronizer = new SynchronizerTask(activityMock, null, 0, null);
+        Temp syncData = new Temp();
+        // When
+        String resultText = UITextHelper.getDetailResultText(syncData, true);
+        System.out.println(resultText);
+
+        assertThat(resultText, is(""));
+    }
+
+    @Test
     public void getResultText_inProgress() {
         UITextHelper UITextHelper = new UITextHelper(activityMock);
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activityMock, null, 24 * 60 * 60 * 1000, null);
+        SynchronizerTask synchronizer = new SynchronizerTask(activityMock, null, 24 * 60 * 60 * 1000, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze", "12"));
         toDownloadList.add(new Photo("ZER", "13"));
@@ -51,7 +66,7 @@ public class UITextHelperTest {
         synchronizer.incAlbumSize();
         synchronizer.incAlbumSize();
 
-        String resultText = UITextHelper.getDetailResultText(synchronizer, false);
+        String resultText = UITextHelper.getDetailResultText(synchronizer.getSyncData(), false);
 
         assertEquals("album size = 2\ndownloaded = 2 / 3\ndeleted = 1 / 1", resultText);
     }
@@ -59,14 +74,13 @@ public class UITextHelperTest {
     @Test
     public void getResultText_finish() {
         UITextHelper UITextHelper = new UITextHelper(activityMock);
-        SynchronizerAndroid synchronizer = new SynchronizerAndroid(activityMock, null, 24 * 60 * 60 * 1000, null);
+        Temp synchronizer = new Temp();
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze", "12"));
         toDownloadList.add(new Photo("ZER", "13"));
         toDownloadList.add(new Photo("sqd", "34"));
         ArrayList<Photo> toDeleteList = new ArrayList<>();
         toDeleteList.add(new Photo("aze", "23"));
-        synchronizer.setSyncTask(mock(SyncTask.class));
         synchronizer.setToDownload(toDownloadList);
         synchronizer.setToDelete(toDeleteList);
         synchronizer.incCurrentDownload();
@@ -78,6 +92,16 @@ public class UITextHelperTest {
         String resultText = UITextHelper.getDetailResultText(synchronizer, true);
 
         assertEquals("album size = 2\ndownloaded = 3\ndeleted = 1", resultText);
+    }
+
+    @Test
+    public void getResultText_number_versus_list() {
+        UITextHelper UITextHelper = new UITextHelper(activityMock);
+        Temp synchronizer = new Temp(208, 4, 4, new ArrayList<>(), new ArrayList<>(), 0, 0);
+
+        String resultText = UITextHelper.getDetailResultText(synchronizer, true);
+
+        assertEquals("album size = 208\ndownloaded = 4\ndeleted = 4", resultText);
     }
 
     @Test

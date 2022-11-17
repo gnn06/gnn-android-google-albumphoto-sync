@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import gnn.com.photos.Photo;
 
 /**
- * Given a SyncData, choose photo from remote list, and set list to download and list to delete
+ * Given a remote photo list and  a local photo list, determine wich to download and to delete and put them into given SyncData
  */
 
 class SyncPhotoDispatcher {

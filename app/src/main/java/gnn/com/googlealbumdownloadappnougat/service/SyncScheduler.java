@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
@@ -24,15 +25,17 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
  */
-public class SyncScheduler {
+public class SyncScheduler extends AppScheduler {
 
     private static final String TAG = "Scheduler";
-    static final String WORK_NAME = "mywork";
-
-    private final Context context;
 
     public SyncScheduler(Context context) {
-        this.context = context;
+        super(context);
+    }
+
+    @Override
+    public String getWorkName() {
+        return "GNN-WORK-SYNC";
     }
 
     void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
@@ -47,9 +50,10 @@ public class SyncScheduler {
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
                 .setInputData(data)
+                .addTag("gnn")
                 .build();
         WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
+            .enqueueUniquePeriodicWork(getWorkName(), ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
     public void schedule(int intervalHour) {
@@ -64,13 +68,13 @@ public class SyncScheduler {
 
     public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
-            .cancelUniqueWork(WORK_NAME);
+            .cancelUniqueWork(getWorkName());
         Log.i(TAG, "work canceled");
     }
 
     WorkInfo getState() {
         ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
-                .getWorkInfosForUniqueWork(WORK_NAME);
+                .getWorkInfosForUniqueWork(getWorkName());
         try {
             if (futureInfo.get().size() >= 1) {
                 WorkInfo info = futureInfo.get().get(0);

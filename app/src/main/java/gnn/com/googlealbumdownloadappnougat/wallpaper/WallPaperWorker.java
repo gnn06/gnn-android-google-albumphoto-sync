@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.wallpaper;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -76,6 +77,7 @@ public class WallPaperWorker extends Worker {
 
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(destinationFolder, processFolder);
                 chooser.chooseOne();
+                Log.d("GNNAPP","wallpaper work finished");
                 return Result.success();
             } catch (Exception e) {
                 logger.severe(e.getMessage());

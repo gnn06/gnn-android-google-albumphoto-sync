@@ -1,5 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.tasks;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -30,7 +31,7 @@ public class PhotosAsyncTaskTest {
         task.onPostExecute(null);
 
         verify(presenter).showError("message");
-        verify(presenter, never()).setSyncResult(sync, SyncStep.FINISHED);
+        verify(presenter, never()).setSyncResult(any(), any());
     }
 
 }

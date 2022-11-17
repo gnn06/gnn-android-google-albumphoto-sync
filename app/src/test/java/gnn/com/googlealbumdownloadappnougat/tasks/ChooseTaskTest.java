@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
@@ -38,7 +39,7 @@ public class ChooseTaskTest {
 
     @Test
     public void syncAll() throws IOException, RemoteException {
-        SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
+        SynchronizerTask synchroniser = mock(SynchronizerTask.class);
         IPresenterHome presenter = mock(PresenterHome.class);
         SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
         // given
@@ -53,7 +54,7 @@ public class ChooseTaskTest {
 
     @Test
     public void syncRandom() throws IOException, RemoteException {
-        SynchronizerAndroid synchroniser = mock(SynchronizerAndroid.class);
+        SynchronizerTask synchroniser = mock(SynchronizerTask.class);
         IPresenterHome presenter = mock(PresenterHome.class);
         SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
         // given

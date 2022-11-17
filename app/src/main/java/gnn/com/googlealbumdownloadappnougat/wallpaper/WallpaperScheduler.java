@@ -14,18 +14,21 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
-public class WallpaperScheduler {
+public class WallpaperScheduler extends AppScheduler {
 
-    private static final String WORK_NAME_WALLPAPER = "GNN-WORK_WALLPAPER";
-    private static final String TAG = "SchedulerWapper";
-
-    final private Context context;
+    private static final String TAG = "GNNAPP";
 
     public WallpaperScheduler(Context context) {
-        this.context = context;
+        super(context);
+    }
+
+    @Override
+    public String getWorkName() {
+        return "GNN-WORK-WALLPAPER";
     }
 
     /**
@@ -48,15 +51,16 @@ public class WallpaperScheduler {
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAgeMinute, TimeUnit.MINUTES)
                 .setInputData(data)
+                .addTag("gnn")
                 .build();
         WorkManager.getInstance(context)
-                .enqueueUniquePeriodicWork(WORK_NAME_WALLPAPER, ExistingPeriodicWorkPolicy.KEEP, work);
+                .enqueueUniquePeriodicWork(getWorkName(), ExistingPeriodicWorkPolicy.KEEP, work);
         Log.i(TAG,"work enqueued");
     }
 
     public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
-                .cancelUniqueWork(WORK_NAME_WALLPAPER);
+                .cancelUniqueWork(getWorkName());
         Log.i(TAG, "work canceled");
     }
 
@@ -72,7 +76,7 @@ public class WallpaperScheduler {
 
     public WorkInfo getState() {
         ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
-                .getWorkInfosForUniqueWork(WORK_NAME_WALLPAPER);
+                .getWorkInfosForUniqueWork(getWorkName());
         try {
             if (futureInfo.get().size() >= 1) {
                 WorkInfo info = futureInfo.get().get(0);
@@ -84,4 +88,5 @@ public class WallpaperScheduler {
             return null;
         }
     }
+
 }

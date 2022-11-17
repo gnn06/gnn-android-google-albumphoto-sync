@@ -29,6 +29,8 @@ class SyncMethod {
         // require Logger was initialized
         Logger logger = Logger.getLogger();
 
+        synchronizer.begin();
+
         synchronizer.resetCurrent();
         logger.fine("get photos of album : " + albumName);
         logger.fine("download photos into folder : " + imageFolder);
@@ -50,6 +52,8 @@ class SyncMethod {
         // delete AFTER download to avoid to delete everything when there is an exception during download
         localService.delete(synchronizer.getToDelete(), imageFolder, synchronizer);
         synchronizer.storeSyncTime();
+
+        synchronizer.end();
     }
 
 }

@@ -52,6 +52,7 @@ import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
+import gnn.com.photos.sync.PersistSyncTime;
 import gnn.com.photos.sync.PersistWallpaperTime;
 import gnn.com.photos.sync.Temp;
 
@@ -160,6 +161,11 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Date lastSyncTime = getSync().retrieveLastSyncTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
         fragment.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
+    }
+
+    private void refreshLastSyncResult() {
+        Temp syncResult = new PersistSyncTime(getProcessFolder()).retrieveTimeWithResult();
+        setSyncResult(syncResult, SyncStep.FINISHED);
     }
 
     @Override
@@ -352,6 +358,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void onWorkerExecuted() {
         Log.d("GNNAPP", "PresenterHome.onWorkerExecuted");
         refreshLastTime();
+        refreshLastSyncResult();
     }
 }
 

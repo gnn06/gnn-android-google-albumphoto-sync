@@ -7,12 +7,13 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import gnn.com.photos.Photo;
+import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.service.SyncProgressObserver;
 
-public abstract class Synchronizer implements SyncData, SyncProgressObserver {
+public abstract class Synchronizer implements SyncProgressObserver {
 
     protected final File cacheFile;
     // 0 = update photo each time
@@ -23,6 +24,15 @@ public abstract class Synchronizer implements SyncData, SyncProgressObserver {
         this.cacheFile = cacheFile;
         this.cacheMaxAgeHour = cacheMaxAgeHour;
         this.processFolder = processFolder;
+    }
+
+    // For test
+    public Synchronizer(PhotosRemoteService remoteService, PhotosLocalService localService) {
+        this.cacheFile = null;
+        this.cacheMaxAgeHour = Cache.DELAY_ALWAYS_EXPIRE;
+        this.processFolder = null;
+        this.remoteService = remoteService;
+        this.localService  = localService;
     }
 
     private PhotosRemoteService remoteService;
@@ -44,15 +54,15 @@ public abstract class Synchronizer implements SyncData, SyncProgressObserver {
         return this.localService;
     }
 
-    public Temp getSyncData() {
+    public SyncData getSyncData() {
         return syncData;
     }
 
-    public void setSyncData(Temp syncData) {
+    public void setSyncData(SyncData syncData) {
         this.syncData = syncData;
     }
 
-    private Temp syncData = new Temp();
+    private SyncData syncData = new SyncData();
 
     /**
      * Main method.
@@ -62,16 +72,43 @@ public abstract class Synchronizer implements SyncData, SyncProgressObserver {
      */
     // TODO: 07/05/2019 manage updated photo if possible
     public void syncAll(String albumName, File folder, String rename) throws IOException, RemoteException {
-        new SyncMethod(this, getRemoteService(), getLocalService())
-                .sync(albumName, folder, rename, -1);
+        sync(albumName, folder, rename, -1);
     }
 
     /**
      * choose one photo and download it, delete previous downloaded photo.
      */
     public void syncRandom(String albumName, File folder, String rename, int quantity) throws IOException, RemoteException {
-        new SyncMethod(this, getRemoteService(), this.getLocalService())
-                .sync(albumName, folder, rename, quantity);
+        sync(albumName, folder, rename, quantity);
+    }
+
+    void sync(String albumName, File imageFolder, String rename, int quantity) throws IOException, RemoteException {
+        // require Logger was initialized
+        gnn.com.googlealbumdownloadappnougat.util.Logger logger = gnn.com.googlealbumdownloadappnougat.util.Logger.getLogger();
+
+        begin();
+        resetCurrent();
+        logger.fine("get photos of album : " + albumName);
+        logger.fine("download photos into folder : " + imageFolder);
+
+        ArrayList<Photo> remote = getRemoteService().getPhotos(albumName, this);
+        ArrayList<Photo> local = getLocalService().getLocalPhotos(imageFolder);
+
+        if (quantity != -1)
+            new SyncPhotoDispatcher().chooseRandom(getSyncData(), local, remote, rename, quantity);
+        else
+            new SyncPhotoDispatcher().chooseFull(getSyncData(), local, remote, rename);
+
+        logger.finest("remote count = " + remote.size());
+        logger.finest("local count = " + local.size());
+        logger.finest("to download count = " + this.getToDownload().size());
+        logger.finest("to delete count = " + this.getToDelete().size());
+
+        remoteService.download(this.getToDownload(), imageFolder, rename, this);
+        // delete AFTER download to avoid to delete everything when there is an exception during download
+        localService.delete(this.getToDelete(), imageFolder, this);
+        this.storeSyncTime();
+        this.end();
     }
 
     public int getTotalDownload() {
@@ -143,7 +180,7 @@ public abstract class Synchronizer implements SyncData, SyncProgressObserver {
     }
 
     void resetCurrent() {
-        this.syncData = new Temp();
+        this.syncData = new SyncData();
     }
 
     void storeSyncTime() throws IOException {

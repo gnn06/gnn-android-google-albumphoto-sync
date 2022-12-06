@@ -114,5 +114,7 @@ dependencies {
 
     // For Rule InstantTaskExecutorRule
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+    testImplementation group: 'commons-io', name: 'commons-io', version: '2.4'
 }
 

@@ -65,6 +65,7 @@ public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {
         super.onPostExecute(voids);
         if (isSuccessful()) {
             presenter.setSyncResult(sync.getSyncData(), SyncStep.FINISHED);
+            presenter.refreshLastTime();
         }
     }
 }

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import gnn.com.photos.Photo;
@@ -29,7 +30,7 @@ import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 
-public class SyncMethodTest {
+public class SynchronizerMethodSyncTest {
 
     ArrayList<Photo> remotePhotos;
     ArrayList<Photo> localPhotos;
@@ -55,7 +56,7 @@ public class SyncMethodTest {
         pls = mock(PhotosLocalService.class);
 
 
-        synchronizer = new Synchronizer(null, 0, null) {
+        synchronizer = spy(new Synchronizer(prs, pls) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -63,7 +64,7 @@ public class SyncMethodTest {
 
             @Override
             public void incAlbumSize() {}
-        };
+        });
 
         folder = mock(File.class);
 
@@ -74,13 +75,12 @@ public class SyncMethodTest {
 
     @Test
     public void sync_all() throws IOException, RemoteException {
-        SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
         // given remote photos that don't be local and local photo was dont't be remote
         when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
-        syncMethod.sync("album", folder, null, -1);
+        synchronizer.sync("album", folder, null, -1);
 
         // then, check download all
         verify(prs).download(remotePhotos, folder, null, synchronizer);
@@ -91,14 +91,12 @@ public class SyncMethodTest {
 
     @Test
     public void sync_observer() throws IOException, RemoteException {
-        Synchronizer synchronizer = mock(Synchronizer.class);
-        SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
         // given remote photos that don't be local and local photo was dont't be remote
         when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
-        syncMethod.sync("album", folder, null, -1);
+        synchronizer.sync("album", folder, null, -1);
 
         // then, check download all
         verify(synchronizer).begin();
@@ -111,10 +109,7 @@ public class SyncMethodTest {
         when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
-
-        // when
-        syncMethod.sync("album", folder, null, 1);
+        synchronizer.sync("album", folder, null, 1);
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
@@ -128,13 +123,12 @@ public class SyncMethodTest {
     @Test
     public void throw_into_sync() throws IOException, RemoteException {
         //given
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
         doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
 
         // when
         try {
-            syncMethod.sync("album", folder, null, 1);
+            synchronizer.sync("album", folder, null, 1);
         } catch (IOException ignored) {}
 
         // then assert that delete was not called
@@ -143,9 +137,7 @@ public class SyncMethodTest {
 
     @Test
     public void test_write_last_sync_time() throws IOException, RemoteException {
-        SyncMethod syncFull = new SyncMethod(mock(Synchronizer.class), mock(PhotosRemoteService.class), mock(PhotosLocalService.class));
-        SyncMethod syncMethod = spy(syncFull);
-        syncMethod.sync("album", mock(File.class), null, 0);
+        synchronizer.storeSyncTime();
     }
 
     @Test

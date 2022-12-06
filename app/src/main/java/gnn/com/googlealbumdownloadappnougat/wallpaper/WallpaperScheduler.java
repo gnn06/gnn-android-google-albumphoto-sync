@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
 public class WallpaperScheduler extends AppScheduler {
@@ -89,4 +90,12 @@ public class WallpaperScheduler extends AppScheduler {
         }
     }
 
+    @Override
+    public void onWorkerChanged(List<WorkInfo> workInfos, PresenterHome presenter) {
+        if (workInfos.size() > 0) {
+            if (workInfos.get(0).getState().equals(WorkInfo.State.ENQUEUED)) {
+                presenter.refreshLastTime();
+            }
+        }
+    }
 }

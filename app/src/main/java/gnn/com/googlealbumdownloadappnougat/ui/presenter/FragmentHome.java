@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,14 +28,12 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.UITextHelper;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
-import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.stat.stat.WallpaperStat;
-import gnn.com.photos.sync.Temp;
+import gnn.com.photos.sync.SyncData;
 
 public class FragmentHome extends FragmentHighlight implements IViewHome {
 
@@ -216,7 +213,7 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
     }
 
     @Override
-    public void updateUI_CallResult(Temp syncData, SyncStep step) {
+    public void updateUI_CallResult(SyncData syncData, SyncStep step) {
         String result = new UITextHelper((MainActivity) getActivity()).getResultString(syncData, step, (MainActivity) getActivity());
         TextView textView = getView().findViewById(R.id.result);
         textView.setText(result);

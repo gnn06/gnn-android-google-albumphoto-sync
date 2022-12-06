@@ -44,7 +44,7 @@ public class SyncMethodRenameTest {
         pls = Mockito.mock(PhotosLocalService.class);
 
 
-        synchronizer = new Synchronizer(null, 0, null) {
+        synchronizer = new Synchronizer(prs, pls) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -66,8 +66,7 @@ public class SyncMethodRenameTest {
         // given
 
         // when
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls);
-        syncMethod.sync("album", folder, "name", -1);
+        synchronizer.sync("album", folder, "name", -1);
 
         // then
         ArrayList<Photo> expectedToDelete = new ArrayList<>(Arrays.asList(

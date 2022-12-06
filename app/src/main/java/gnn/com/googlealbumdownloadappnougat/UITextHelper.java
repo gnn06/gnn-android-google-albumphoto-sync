@@ -4,8 +4,7 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 import gnn.com.photos.stat.stat.WallpaperStat;
-import gnn.com.photos.sync.Synchronizer;
-import gnn.com.photos.sync.Temp;
+import gnn.com.photos.sync.SyncData;
 
 public class UITextHelper {
 
@@ -30,7 +29,10 @@ public class UITextHelper {
         return result;
     }
 
-    public String getResultString(Temp syncData, SyncStep step, MainActivity mainActivity) {
+    public String getResultString(SyncData syncData, SyncStep step, MainActivity mainActivity) {
+        if (syncData == null) {
+            return activity.getResources().getString(R.string.no_result);
+        }
         String result = "";
         switch (step) {
             case STARTING:
@@ -48,18 +50,26 @@ public class UITextHelper {
         return result;
     }
 
-    String getDetailResultText(Temp syncData, boolean finished) {
+    String getDetailResultText(SyncData syncData, boolean finished) {
+        if (syncData == null) return "";
         String result = "";
-        int totalToDelete = syncData.getDeleteCount();
-        int totalToDownload = syncData.getDownloadCount();
-        if (totalToDelete == 0) {
+        // when SyncData is restored, number != null && list == null
+        int totalToDelete = 0;
+        int totalToDownload = 0;
+
+        if (syncData.getToDelete() != null)
             totalToDelete = syncData.getToDelete().size();
-        }
-        if (totalToDownload == 0) {
+        else
+            totalToDelete = syncData.getDeleteCount();
+
+        if (syncData.getToDownload() != null)
             totalToDownload = syncData.getToDownload().size();
-        }
+        else
+            totalToDownload = syncData.getDownloadCount();
+
         if (totalToDelete == 0 && totalToDownload == 0)
             return result;
+
         result += "album size = " + syncData.getAlbumSize() + "\n";
         result += "downloaded = ";
         if (!finished) {

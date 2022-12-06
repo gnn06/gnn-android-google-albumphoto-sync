@@ -26,7 +26,7 @@
     <string name="button_wallpaper_once">Wallpaper une fois</string>
 
     <string name="titleResult">Sync results</string>
-    <string name="result">No result</string>
+    <string name="no_result">No result</string>
     <string name="cancel">Cancel</string>
     <string name="error">An error occurred</string>
 

@@ -11,15 +11,11 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -35,7 +31,6 @@ import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIRequirementBuild
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
@@ -54,7 +49,7 @@ import gnn.com.photos.stat.stat.WallpaperStatProvider;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.PersistSyncTime;
 import gnn.com.photos.sync.PersistWallpaperTime;
-import gnn.com.photos.sync.Temp;
+import gnn.com.photos.sync.SyncData;
 
 public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
@@ -147,7 +142,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
                 (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
         fragment.setWarningWallpaperActive(new MyWallpaperService().isActive(this.activity));
-
+        refreshLastSyncResult();
     }
 
     /**
@@ -163,8 +158,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         fragment.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
     }
 
-    private void refreshLastSyncResult() {
-        Temp syncResult = new PersistSyncTime(getProcessFolder()).retrieveTimeWithResult();
+    public void refreshLastSyncResult() {
+        SyncData syncResult = new PersistSyncTime(getProcessFolder()).retrieveSyncResult();
         setSyncResult(syncResult, SyncStep.FINISHED);
     }
 
@@ -179,7 +174,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     }
 
     @Override
-    public void setSyncResult(Temp syncData, SyncStep step) {
+    public void setSyncResult(SyncData syncData, SyncStep step) {
         fragment.updateUI_CallResult(syncData, step);
     }
 
@@ -324,6 +319,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                 // TODO check folder is not null
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance(getFolder(), getProcessFolder());
                 chooser.chooseOne();
+                refreshLastTime();
             }
         };
         Require require = new WritePermissionRequirement(exec, auth, fragment, userModel);
@@ -353,12 +349,6 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void onSignIn() {
         Require require = SignInGoogleAPIRequirementBuilder.build(null, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(require);
-    }
-
-    public void onWorkerExecuted() {
-        Log.d("GNNAPP", "PresenterHome.onWorkerExecuted");
-        refreshLastTime();
-        refreshLastSyncResult();
     }
 }
 

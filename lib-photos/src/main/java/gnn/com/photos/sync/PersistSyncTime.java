@@ -22,10 +22,15 @@ public class PersistSyncTime extends PersistTime{
         super(processFolder, FILENAME);
     }
 
-    public Temp retrieveTimeWithResult() {
+    /**
+     *
+     * @return list are null
+     */
+    public SyncData retrieveSyncResult() {
         try {
             Reader reader = new FileReader(new File(processFolder, FILENAME));
-            Temp result = gson.fromJson(reader, Temp.class);
+            // Gson use default constructor
+            SyncData result = gson.fromJson(reader, SyncData.class);
             return result;
         } catch (FileNotFoundException e) {
             return null;
@@ -33,7 +38,7 @@ public class PersistSyncTime extends PersistTime{
 
     }
 
-    public void storeTimeWithResult(Temp data) throws IOException {
+    public void storeTimeWithResult(SyncData data) throws IOException {
         // require Logger was initialized
         Logger logger = Logger.getLogger();
         if (processFolder != null) {

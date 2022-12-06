@@ -19,8 +19,11 @@ import java.util.concurrent.TimeUnit;
 import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
+import gnn.com.photos.sync.SyncData;
 
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
@@ -100,6 +103,21 @@ public class SyncScheduler extends AppScheduler {
 //            workManager.cancelAllWorkByTag("gnn.com.googlealbumdownloadappnougat.service.MyWorker");
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "onCreate: worker statut", e);
+        }
+    }
+
+    @Override
+    public void onWorkerChanged(List<WorkInfo> workInfos, PresenterHome presenter) {
+        if (workInfos.size() > 0) {
+            if (workInfos.get(0).getState().equals(WorkInfo.State.ENQUEUED)) {
+                presenter.refreshLastTime();
+                presenter.refreshLastSyncResult();
+            } else if (workInfos.get(0).getState().equals(WorkInfo.State.RUNNING)) {
+                if (workInfos.get(0).getProgress() != null
+                        && workInfos.get(0).getProgress().getString("GOI-STEP") != null) {
+                    presenter.setSyncResult(new SyncData(), SyncStep.valueOf(workInfos.get(0).getProgress().getString("GOI-STEP")));
+                }
+            }
         }
     }
 }

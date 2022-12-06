@@ -40,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
+import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 
 @RunWith(RobolectricTestRunner.class)
@@ -90,7 +91,7 @@ public class AppSchedulerTest {
         scheduler.registerWorkerObserver(presenter, testLifeCycle);
 
         // Then, observer is executed immediately
-        verify(presenter).onWorkerExecuted();
+        verify(presenter).refreshLastTime();
     }
 
     @Test
@@ -100,7 +101,7 @@ public class AppSchedulerTest {
         scheduler.registerWorkerObserver(presenter, testLifeCycle);
 
         // Then
-        verify(presenter, never()).onWorkerExecuted();
+        verify(presenter, never()).refreshLastTime();
     }
 
     @Test
@@ -111,7 +112,7 @@ public class AppSchedulerTest {
         workManager.enqueueUniquePeriodicWork(scheduler.getWorkName(), ExistingPeriodicWorkPolicy.REPLACE, request);
 
         // Then
-        verify(presenter).onWorkerExecuted();
+        verify(presenter).refreshLastTime();
     }
 
     @Test
@@ -123,11 +124,11 @@ public class AppSchedulerTest {
         testDriver.setPeriodDelayMet(request.getId());
 
         // Then
-        verify(presenter).onWorkerExecuted();
+        verify(presenter).refreshLastTime();
     }
 
     @Test
-    public void workerChanged_enqueued() {
+    public void workerChanged_wallpaper_enqueued() {
         // Given
         AppScheduler scheduler = new WallpaperScheduler(context);
         List<WorkInfo> workInfos = new ArrayList<>();
@@ -138,13 +139,49 @@ public class AppSchedulerTest {
         scheduler.onWorkerChanged(workInfos, presenter);
 
         // Then
-        verify(presenter).onWorkerExecuted();
+        verify(presenter).refreshLastTime();
+        verify(presenter, never()).refreshLastSyncResult();
+        verify(presenter, never()).setSyncResult(any(), any());;
     }
 
     @Test
-    public void workerChanged_running_starting() {
+    public void workerChanged_wallpaper_running() {
         // Given
         AppScheduler scheduler = new WallpaperScheduler(context);
+        List<WorkInfo> workInfos = new ArrayList<>();
+        WorkInfo info = new WorkInfo(mock(UUID.class), WorkInfo.State.RUNNING, mock(Data.class), new ArrayList<>(), mock(Data.class), 0);
+        workInfos.add(info);
+
+        // When
+        scheduler.onWorkerChanged(workInfos, presenter);
+
+        // Then
+        verify(presenter, never()).refreshLastTime();
+        verify(presenter, never()).refreshLastSyncResult();
+        verify(presenter, never()).setSyncResult(any(), any());;
+    }
+
+    @Test
+    public void workerChanged_sync_enqueued() {
+        // Given
+        AppScheduler scheduler = new SyncScheduler(context);
+        List<WorkInfo> workInfos = new ArrayList<>();
+        WorkInfo info = new WorkInfo(mock(UUID.class), WorkInfo.State.ENQUEUED, mock(Data.class), new ArrayList<>(), mock(Data.class), 0);
+        workInfos.add(info);
+
+        // When
+        scheduler.onWorkerChanged(workInfos, presenter);
+
+        // Then
+        verify(presenter).refreshLastTime();
+        verify(presenter).refreshLastSyncResult();
+        verify(presenter, never()).setSyncResult(any(), any());
+    }
+
+    @Test
+    public void workerChanged_sync_running_starting() {
+        // Given
+        AppScheduler scheduler = new SyncScheduler(context);
         List<WorkInfo> workInfos = new ArrayList<>();
         Data progress = mock(Data.class);
         when(progress.getString("GOI-STEP")).thenReturn(SyncStep.STARTING.name());
@@ -155,6 +192,9 @@ public class AppSchedulerTest {
         scheduler.onWorkerChanged(workInfos, presenter);
 
         // Then
+        // Check running is called with same step as given
+        verify(presenter, never()).refreshLastTime();
+        verify(presenter, never()).refreshLastSyncResult();
         verify(presenter).setSyncResult(any(), eq(SyncStep.STARTING));
     }
 }

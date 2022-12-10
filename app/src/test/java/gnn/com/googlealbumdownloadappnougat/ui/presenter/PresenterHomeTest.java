@@ -105,14 +105,6 @@ public class PresenterHomeTest {
         verify(permissionHandler).startRequirement(any());
     }
 
-    @Test
-    public void onWorkerRunning() {
-        // when
-        presenter.onWorkerRunning(SyncStep.IN_PRORGESS);
-        // then
-        verify(presenter).setSyncResult(any(), eq(SyncStep.IN_PRORGESS));
-    }
-
     @Rule
     public TemporaryFolder tmpFolder = new TemporaryFolder();
 

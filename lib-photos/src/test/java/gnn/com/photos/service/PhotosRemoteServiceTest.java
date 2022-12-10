@@ -1,6 +1,8 @@
 package gnn.com.photos.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,15 +22,17 @@ public class PhotosRemoteServiceTest {
     private Synchronizer synchronizer;
     private PhotoProvider photoProvider;
     private ArrayList<Photo> photos;
+    private SyncProgressObserver observer;
 
     @Before
     public void setUp() throws Exception {
-        synchronizer = Mockito.mock(Synchronizer.class);
-        photoProvider = Mockito.mock(PhotoProvider.class);
+        synchronizer = mock(Synchronizer.class);
+        photoProvider = mock(PhotoProvider.class);
         photos = new ArrayList<>(Arrays.asList(new Photo("url1", "id1")));
 
         Cache.config(null, -1);
         Cache.getCache().reset();
+        this.observer = mock(SyncProgressObserver.class);
     }
 
     @Test
@@ -40,11 +44,11 @@ public class PhotosRemoteServiceTest {
                 return photoProvider;
             }
         };
-        Mockito.when(photoProvider.getPhotosFromAlbum("album", synchronizer)).thenReturn(photos);
+        Mockito.when(photoProvider.getPhotosFromAlbum("album", observer)).thenReturn(photos);
         Cache.getCache().reset();
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getPhotos("album", synchronizer);
+        ArrayList<Photo> result = service.getPhotos("album", observer);
 
         // then check that obtains an answer and put result into cache
         Assert.assertEquals(photos, result);
@@ -64,11 +68,11 @@ public class PhotosRemoteServiceTest {
         Cache.getCache().put(photos);
 
         // when call remotePhotos
-        ArrayList<Photo> result = service.getPhotos("album", synchronizer);
+        ArrayList<Photo> result = service.getPhotos("album", observer);
 
         // then check that obtains an answer without calling the service
         Assert.assertEquals(photos, result);
-        Mockito.verify(photoProvider, Mockito.times(0)).getPhotosFromAlbum(ArgumentMatchers.anyString(), (Synchronizer) ArgumentMatchers.anyObject());
+        Mockito.verify(photoProvider, Mockito.times(0)).getPhotosFromAlbum(ArgumentMatchers.anyString(), any());
     }
 
     @Test

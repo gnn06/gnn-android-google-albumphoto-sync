@@ -20,19 +20,21 @@ public abstract class Synchronizer implements SyncProgressObserver {
     protected final long cacheMaxAgeHour;
     protected final File processFolder;
 
-    public Synchronizer(File cacheFile, long cacheMaxAgeHour, File processFolder) {
+    public Synchronizer(File cacheFile, long cacheMaxAgeHour, File processFolder, SyncProgressObserver observer) {
         this.cacheFile = cacheFile;
         this.cacheMaxAgeHour = cacheMaxAgeHour;
         this.processFolder = processFolder;
+        this.observer = observer;
     }
 
     // For test
-    public Synchronizer(PhotosRemoteService remoteService, PhotosLocalService localService) {
+    public Synchronizer(PhotosRemoteService remoteService, PhotosLocalService localService, SyncProgressObserver observer) {
         this.cacheFile = null;
         this.cacheMaxAgeHour = Cache.DELAY_ALWAYS_EXPIRE;
         this.processFolder = null;
         this.remoteService = remoteService;
         this.localService  = localService;
+        this.observer = observer;
     }
 
     private PhotosRemoteService remoteService;
@@ -63,6 +65,12 @@ public abstract class Synchronizer implements SyncProgressObserver {
     }
 
     private SyncData syncData = new SyncData();
+
+    private SyncProgressObserver observer;
+
+    public void setObserver(SyncProgressObserver observer) {
+        this.observer = observer;
+    }
 
     /**
      * Main method.
@@ -129,22 +137,29 @@ public abstract class Synchronizer implements SyncProgressObserver {
 
     public void incCurrentDownload() {
         this.syncData.incCurrentDownload();
+        if (this.observer != null) {
+            this.observer.incCurrentDownload();
+        }
     }
 
     public void incCurrentDelete() {
         this.syncData.incCurrentDelete();
+        if (this.observer != null) {
+            this.observer.incCurrentDelete();
+        }
     }
 
     public void incAlbumSize()  {
         this.syncData.incAlbumSize();
+        if (this.observer != null) {
+            this.observer.incAlbumSize();
+        }
     }
 
-    @Override
     public void begin() {
 
     }
 
-    @Override
     public void end() {
 
     }

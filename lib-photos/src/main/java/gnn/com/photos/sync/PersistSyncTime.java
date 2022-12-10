@@ -2,6 +2,7 @@ package gnn.com.photos.sync;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,7 +33,7 @@ public class PersistSyncTime extends PersistTime{
             // Gson use default constructor
             SyncData result = gson.fromJson(reader, SyncData.class);
             return result;
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException|JsonSyntaxException e) {
             return null;
         }
 

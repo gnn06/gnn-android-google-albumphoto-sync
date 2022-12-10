@@ -8,28 +8,25 @@ import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.service.SyncWorker;
+import gnn.com.photos.service.SyncProgressObserver;
 
-public class SynchronizerWorker extends SynchronizerAndroid {
+public class SynchronizerWorker implements SyncProgressObserver {
 
     private final SyncWorker worker;
 
-    public SynchronizerWorker(Context activity, File cacheFile, long cacheMaxAgeHour, File processFolder, SyncWorker worker) {
-        super(activity, cacheFile, cacheMaxAgeHour, processFolder);
+    public SynchronizerWorker(SyncWorker worker) {
         this.worker = worker;
     }
 
     @Override
     public void incCurrentDownload() {
-        super.incCurrentDownload();
         worker.setProgressAsync(new Data.Builder()
-                .putInt("GOI", getCurrentDownload())
                 .putString("GOI-STEP", SyncStep.IN_PRORGESS.name())
                 .build());
     }
 
     @Override
     public void incCurrentDelete() {
-        super.incCurrentDelete();
         worker.setProgressAsync(new Data.Builder()
                 .putString("GOI-STEP", SyncStep.IN_PRORGESS.name())
                 .build());
@@ -37,7 +34,6 @@ public class SynchronizerWorker extends SynchronizerAndroid {
 
     @Override
     public void incAlbumSize() {
-        super.incAlbumSize();
         worker.setProgressAsync(new Data.Builder()
                 .putString("GOI-STEP", SyncStep.IN_PRORGESS.name())
                 .build());

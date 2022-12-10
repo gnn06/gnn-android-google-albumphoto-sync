@@ -67,6 +67,19 @@ public class PersistSyncTimeTest {
     }
 
     @Test
+    public void retrieve_lastsync_format() throws IOException {
+        // given file
+        FileUtils.write(new File(folder, PersistSyncTime.FILENAME), "sync time", "UTF-8");
+
+        // when
+        SyncData result = persistSyncTime.retrieveSyncResult();
+        SyncData expected = null;
+
+        // then
+        assertThat(result, is(equalTo(expected)));
+    }
+
+    @Test
     public void retrieve_nofile() throws IOException {
         // given file
         // no file

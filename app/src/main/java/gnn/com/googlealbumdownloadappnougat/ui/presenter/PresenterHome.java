@@ -31,6 +31,7 @@ import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIRequirementBuild
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.WritePermissionRequirement;
 import gnn.com.googlealbumdownloadappnougat.photos.PhotosRemoteServiceAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.service.SyncScheduler;
 import gnn.com.googlealbumdownloadappnougat.settings.IPresenterSettings;
@@ -153,7 +154,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void refreshLastTime() {
         Log.d(TAG, "refresh UI");
         Date lastUpdateTime = Cache.getLastUpdateTime(getCacheFile());
-        Date lastSyncTime = getSync().retrieveLastSyncTime();
+        Date lastSyncTime = new PersistSyncTime(getProcessFolder()).retrieveTime();
         Date lastWallpaperTime = new PersistWallpaperTime(getProcessFolder()).retrieveTime();
         fragment.updateUI_lastSyncTime(lastUpdateTime, lastSyncTime, lastWallpaperTime);
     }
@@ -240,7 +241,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     @Override
     public void onChooseAlbum(String albumName) {
         this.album = albumName;
-        getSync().resetCache();
+        getSynchronizer().resetCache();
         fragment.onAlbumChosenResult(albumName);
     }
 
@@ -349,6 +350,11 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public void onSignIn() {
         Require require = SignInGoogleAPIRequirementBuilder.build(null, auth, fragment, userModel);
         activity.getPermissionHandler().startRequirement(require);
+    }
+
+    private SynchronizerAndroid getSynchronizer() {
+        PersistPrefMain persistPref = new PersistPrefMain(this.activity);
+        return new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
     }
 }
 

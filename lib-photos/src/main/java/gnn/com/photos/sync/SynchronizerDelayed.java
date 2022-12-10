@@ -6,6 +6,7 @@ import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.service.SyncProgressObserver;
 import gnn.com.util.ExpirationChecker;
 
 /**
@@ -65,4 +66,7 @@ public class SynchronizerDelayed {
     }
 
 
+    public void setObserver(SyncProgressObserver observer) {
+        this.synchronizer.setObserver(observer);
+    }
 }

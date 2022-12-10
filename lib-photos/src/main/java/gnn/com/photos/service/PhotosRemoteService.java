@@ -31,13 +31,12 @@ public abstract class PhotosRemoteService {
         return getPhotoProvider().getAlbums();
     }
 
-    public ArrayList<Photo> getPhotos(String album, Synchronizer synchronizer) throws IOException, RemoteException {
+    public ArrayList<Photo> getPhotos(String album, SyncProgressObserver synchronizer) throws IOException, RemoteException {
         ArrayList<Photo> photos = getCache().get();
         if (photos == null) {
             photos = getPhotoProvider().getPhotosFromAlbum(album, synchronizer);
             getCache().put(photos);
         }
-        synchronizer.setAlbumSize(photos.size());
         return photos;
     }
 

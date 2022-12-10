@@ -12,14 +12,15 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
-import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
-import gnn.com.photos.service.Cache;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.service.SyncProgressObserver;
 import gnn.com.photos.sync.Synchronizer;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class SyncWorker extends Worker {
 
@@ -39,10 +40,15 @@ public class SyncWorker extends Worker {
         int frequencyUpdateHour = persistPrefMain.getFrequencyUpdatePhotos();
         File processFolder = new File(getInputData().getString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH));
 
+        int frequencySyncHour = persistPrefMain.getFrequencyDownload();
+
         int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
+        int delaySyncMin = FrequencyCacheDelayConverter.getFrequencySyncHourMinute(frequencySyncHour);
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerWorker(activity, cacheFile, delayUpdateHour, processFolder, this);
+        SynchronizerDelayed synchronizer = new SynchronizerDelayedAndroid(delaySyncMin, activity, cacheFile, delayUpdateHour, processFolder);
+        SyncProgressObserver observer = new SynchronizerWorker(this);
+        synchronizer.setObserver(observer);
 
         String albumName = getInputData().getString(WallPaperWorker.PARAM_ALBUM);
         String destinationFolder = getInputData().getString(WallPaperWorker.PARAM_FOLDER_PATH);

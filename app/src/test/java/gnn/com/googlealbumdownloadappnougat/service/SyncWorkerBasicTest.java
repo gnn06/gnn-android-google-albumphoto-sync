@@ -2,8 +2,11 @@ package gnn.com.googlealbumdownloadappnougat.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mock;
 
@@ -25,13 +28,14 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.sync.Synchronizer;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(SyncWorker.class)
+@PrepareForTest({SyncWorker.class, SynchronizerDelayedAndroid.class})
 // Mock simplement avec mockito un Worker
 // N'utilise ni WorkManagerTestInitHelper ni TestWorkerBuilderl
 // ca a l'avantage de ne pas avoir à s'éxécuter dans le virtual device
@@ -50,8 +54,9 @@ public class SyncWorkerBasicTest {
     private SyncWorker UT_myWorker;
     private File destinationFolder;
     private Data data;
-    private SynchronizerWorker synchronizerMock;
-
+    private SynchronizerAndroid synchronizerMock;
+    private SynchronizerWorker observer;
+    private SynchronizerDelayedAndroid synchronizerDelayedMock;
 
     @Before
     public void setUp() throws Exception {
@@ -72,16 +77,33 @@ public class SyncWorkerBasicTest {
         // use powerMockito to mock private getFilename method
         // and use doReturn to avoid null pointer exception caused by when-thenReturn
         PowerMockito.doReturn(destinationFolder).when(UT_myWorker, "getDestinationFolder", anyString());
-        synchronizerMock = mock(SynchronizerWorker.class);
+        synchronizerMock = mock(SynchronizerAndroid.class);
+        doCallRealMethod().when(synchronizerMock).setObserver(observer);
+        synchronizerDelayedMock = new SynchronizerDelayedAndroid(12, null, null, -1, null, synchronizerMock);
+        observer = mock(SynchronizerWorker.class);
     }
 
     @Test
     public void test_success() throws Exception {
-        PowerMockito.whenNew(SynchronizerWorker.class).withAnyArguments().thenReturn(synchronizerMock);
+        PowerMockito.whenNew(SynchronizerDelayedAndroid.class).withAnyArguments().thenReturn(synchronizerDelayedMock);
 
-        Context mockContext = mock(Context.class);
-        when(mockContext.getFilesDir()).thenReturn(tmpFolder.newFolder());
-        ApplicationContext.getInstance(mockContext);
+//        Context mockContext = mock(Context.class);
+//        when(mockContext.getFilesDir()).thenReturn(tmpFolder.newFolder());
+//        ApplicationContext.getInstance(mockContext);
+
+        // when
+        ListenableWorker.Result result = UT_myWorker.doWork();
+
+        assertThat(result, is(ListenableWorker.Result.success()));
+    }
+
+    @Test
+    public void delayed() throws Exception {
+        PowerMockito.whenNew(SynchronizerDelayedAndroid.class).withAnyArguments().thenReturn(synchronizerDelayedMock);
+
+//        Context mockContext = mock(Context.class);
+//        when(mockContext.getFilesDir()).thenReturn(tmpFolder.newFolder());
+//        ApplicationContext.getInstance(mockContext);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();
@@ -92,7 +114,7 @@ public class SyncWorkerBasicTest {
     @Test
     public void test_exception() throws Exception {
         doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom("album", destinationFolder, null, -1);
-        PowerMockito.whenNew(SynchronizerWorker.class).withAnyArguments().thenReturn(synchronizerMock);
+        PowerMockito.whenNew(SynchronizerDelayedAndroid.class).withAnyArguments().thenReturn(synchronizerDelayedMock);
 
         // when
         ListenableWorker.Result result = UT_myWorker.doWork();

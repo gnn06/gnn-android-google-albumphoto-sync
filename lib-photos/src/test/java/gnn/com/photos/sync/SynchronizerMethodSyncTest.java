@@ -1,6 +1,8 @@
 package gnn.com.photos.sync;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -29,6 +31,7 @@ import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.service.SyncProgressObserver;
 
 public class SynchronizerMethodSyncTest {
 
@@ -56,7 +59,8 @@ public class SynchronizerMethodSyncTest {
         pls = mock(PhotosLocalService.class);
 
 
-        synchronizer = spy(new Synchronizer(prs, pls) {
+        SyncProgressObserver observer = mock(SyncProgressObserver.class);
+        synchronizer = spy(new Synchronizer(prs, pls, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -65,10 +69,11 @@ public class SynchronizerMethodSyncTest {
             @Override
             public void incAlbumSize() {}
         });
+        synchronizer.setObserver(observer);
 
         folder = mock(File.class);
 
-        when(prs.getPhotos("album", synchronizer)).thenReturn(remotePhotos);
+        when(prs.getPhotos("album", observer)).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
     }
@@ -76,23 +81,23 @@ public class SynchronizerMethodSyncTest {
     @Test
     public void sync_all() throws IOException, RemoteException {
         // given remote photos that don't be local and local photo was dont't be remote
-        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
         synchronizer.sync("album", folder, null, -1);
 
         // then, check download all
-        verify(prs).download(remotePhotos, folder, null, synchronizer);
+        verify(prs).download(eq(remotePhotos), eq(folder), eq(null), any());
 
         // and check delete all
-        verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(eq(localPhotos), eq(folder), any());
     }
 
     @Test
     public void sync_observer() throws IOException, RemoteException {
         // given remote photos that don't be local and local photo was dont't be remote
-        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
@@ -106,25 +111,25 @@ public class SynchronizerMethodSyncTest {
     @Test
     public void sync_chooseOne() throws IOException, RemoteException {
         // given remote photos that don't be local and local photo that don't be remote
-        when(prs.getPhotos(anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
         when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         synchronizer.sync("album", folder, null, 1);
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
-        verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any());
         Assert.assertEquals(1, captor.getValue().size());
 
         // and check delete all
-        verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(eq(localPhotos), eq(folder), any());
     }
 
     @Test
     public void throw_into_sync() throws IOException, RemoteException {
         //given
 
-        doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any());
 
         // when
         try {
@@ -132,7 +137,7 @@ public class SynchronizerMethodSyncTest {
         } catch (IOException ignored) {}
 
         // then assert that delete was not called
-        verify(pls, never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any(Synchronizer.class));
+        verify(pls, never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any());
     }
 
     @Test
@@ -145,7 +150,7 @@ public class SynchronizerMethodSyncTest {
         // given a synchronizer with a processFolder containing a last_sync file
         File tempFile = tempFolder.newFile("last_sync");
 
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;
@@ -169,7 +174,7 @@ public class SynchronizerMethodSyncTest {
     @Test
     public void test_readLastSyncTime_null() {
         // given
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;

@@ -10,7 +10,7 @@ public class SynchronizerCLI extends Synchronizer {
     private final File credentialFolder;
 
     public SynchronizerCLI(File cacheFile, long cacheMaxAge, File processFolder, File credentialFolder) {
-        super(cacheFile, cacheMaxAge, processFolder);
+        super(cacheFile, cacheMaxAge, processFolder, null);
         this.credentialFolder = credentialFolder;
     }
 

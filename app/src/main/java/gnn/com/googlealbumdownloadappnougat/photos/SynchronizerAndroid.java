@@ -14,7 +14,7 @@ public class SynchronizerAndroid extends Synchronizer {
     private final Context activity;
 
     public SynchronizerAndroid(Context activity, File cacheFile, long cacheMaxAgeHour, File processFolder) {
-        super(cacheFile, cacheMaxAgeHour, processFolder);
+        super(cacheFile, cacheMaxAgeHour, processFolder, null);
         this.activity = activity;
     }
 

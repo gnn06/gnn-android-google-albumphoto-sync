@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -181,5 +182,10 @@ public class MainActivity extends AppCompatActivity implements IView {
         } else if (!visible) {
             findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
         }
+    }
+
+    public void setWarningPermissionDenied(boolean active) {
+        TextView view = findViewById(R.id.warning_permission_denied);
+        view.setVisibility(active ? View.VISIBLE : View.GONE);
     }
 }

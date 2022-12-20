@@ -4,9 +4,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
+import gnn.com.googlealbumdownloadappnougat.service.ISyncOauth;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 
-abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> implements ISyncOauth<Result> {
 
     static final String TAG = "goi";
 
@@ -14,11 +17,20 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
     private boolean error = false;
     private String errorMessage;
     protected IPresenterHome presenter;
+    private final PersistOauthError persistOauthError;
 
 
     PhotosAsyncTask(IPresenterHome presenter, Context context) {
         this.presenter = presenter;
         this.context = context;
+        persistOauthError = new PersistOauthError(ApplicationContext.getInstance(context).getProcessFolder());
+    }
+
+    // For test
+    PhotosAsyncTask(IPresenterHome presenter, Context context, PersistOauthError persistOauth) {
+        this.presenter = presenter;
+        this.context = context;
+        persistOauthError = persistOauth;
     }
 
     void markAsError(String message) {
@@ -45,6 +57,11 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
         if (error) {
             presenter.showError(errorMessage);
         }
+    }
+
+    @Override
+    public PersistOauthError getPersistOAuth() {
+        return persistOauthError;
     }
 }
 

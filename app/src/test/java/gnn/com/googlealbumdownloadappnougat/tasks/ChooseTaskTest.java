@@ -13,11 +13,13 @@ import android.content.Context;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
 
+import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
@@ -30,6 +32,8 @@ public class ChooseTaskTest {
 
     private PersistPrefMain preferences;
     private Context context;
+    @Mock
+    private PersistOauthError persistOauth;
 
     @Before
     public void setUp() throws Exception {
@@ -41,7 +45,7 @@ public class ChooseTaskTest {
     public void syncAll() throws IOException, RemoteException {
         SynchronizerTask synchroniser = mock(SynchronizerTask.class);
         IPresenterHome presenter = mock(PresenterHome.class);
-        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context, persistOauth);
         // given
         when(preferences.getQuantity()).thenReturn(-1);
         when(presenter.getAlbum()).thenReturn("album");
@@ -56,7 +60,7 @@ public class ChooseTaskTest {
     public void syncRandom() throws IOException, RemoteException {
         SynchronizerTask synchroniser = mock(SynchronizerTask.class);
         IPresenterHome presenter = mock(PresenterHome.class);
-        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context);
+        SyncTask chooseTask = new SyncTask(presenter, synchroniser, preferences, context, persistOauth);
         // given
         when(preferences.getQuantity()).thenReturn(5);
         when(presenter.getAlbum()).thenReturn("album");

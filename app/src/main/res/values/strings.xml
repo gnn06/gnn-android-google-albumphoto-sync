@@ -83,6 +83,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="error_wallpaper_chooser">impossible de définir le fond d\'écran animé automatiquement</string>
     <string name="warning_wallpaper_not_active">Le fond d\'écran animée n\'est pas actif. Cliquez ici pour le faire.</string>
+    <string name="warning_permission_denied">L\'application a perdu le droit d\'utiliser Google Photos. Cliquez ici pour l\'autoriser de nouveau.</string>
 
     <string name="wallpaper_description">description</string>
     <string name="schedule_details">schedule</string>

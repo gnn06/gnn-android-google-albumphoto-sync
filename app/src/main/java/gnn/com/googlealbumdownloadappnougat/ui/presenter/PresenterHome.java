@@ -26,6 +26,8 @@ import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.SignInWithAuthRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIRequirementBuilder;
 import gnn.com.googlealbumdownloadappnougat.auth.SignInGoogleAPIWriteRequirementBuilder;
@@ -143,6 +145,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         Log.d("GOI-WALLPAPER", "wallpaperinfo.packagename=" +
                 (wlppInfo != null ? wlppInfo.getPackageName() : "no package"));
         fragment.setWarningWallpaperActive(new MyWallpaperService().isActive(this.activity));
+        fragment.setWarningPermissionDenied(new PersistOauthError(getProcessFolder()).isInError());
         refreshLastSyncResult();
     }
 
@@ -207,7 +210,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                     task.execute();
                 }
             };
-            Require signInReq = new GoogleAuthRequirement(exec, auth, fragment, userModel);
+            Require signInReq = new SignInWithAuthRequirement(exec, auth, fragment, userModel);
             activity.getPermissionHandler().startRequirement(signInReq);
         } else {
             Log.d(TAG, "choose albums from cache");
@@ -344,6 +347,12 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
                 Toast.makeText(activity, R.string.error_wallpaper_chooser, Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onWarningPermissionDenied() {
+        Require requirement = new GoogleAuthRequirement(null, auth, activity);
+        activity.getPermissionHandler().startRequirement(requirement);
     }
 
     @Override

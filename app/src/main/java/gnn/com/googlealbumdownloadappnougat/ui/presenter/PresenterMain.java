@@ -1,20 +1,14 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
-import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
+import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
-import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
-import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
@@ -60,7 +54,7 @@ public class PresenterMain implements IPresenterMain {
 
     @Override
     public void onMenuRequestGooglePermission() {
-        Require require = new GoogleAuthRequirement(null, auth, view, userModel);
+        Require require = new GoogleAuthRequirement(null, auth, view);
         permissionHandler.startRequirement(require);
     }
 

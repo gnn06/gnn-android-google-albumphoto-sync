@@ -14,14 +14,14 @@ public class SignInGoogleAPIWriteRequirementBuilder {
             }
         };
         Require writeReq = new WritePermissionRequirement(exec, auth, view, userModel);
-        Require googleAuth = new GoogleAuthRequirement(writeReq, auth, view, userModel);
+        Require googleAuth = new SignInWithAuthRequirement(writeReq, auth, view, userModel);
         Require signInReq = new SignInRequirement(googleAuth, auth, view, userModel);
         return signInReq;
     }
 
     static public Require build(Exec exec, AuthManager auth, IView view, UserModel userModel) {
         Require writeReq = new WritePermissionRequirement(exec, auth, view, userModel);
-        Require googleAuth = new GoogleAuthRequirement(writeReq, auth, view, userModel);
+        Require googleAuth = new SignInWithAuthRequirement(writeReq, auth, view, userModel);
         Require signInReq = new SignInRequirement(googleAuth, auth, view, userModel);
         return signInReq;
     }

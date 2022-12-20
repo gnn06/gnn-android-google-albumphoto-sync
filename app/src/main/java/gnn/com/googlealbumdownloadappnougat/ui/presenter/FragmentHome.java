@@ -90,6 +90,12 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
             }
         });
 
+        getView().findViewById(R.id.warning_permission_denied).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onWarningPermissionDenied();
+            }
+        });
+
         final UserModel userModel = new ViewModelProvider(requireActivity()).get(UserModel.class);
         userModel.getUser().observe(getActivity(), new Observer<GoogleSignInAccount>() {
             @Override
@@ -274,4 +280,8 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
         view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
 
+    public void setWarningPermissionDenied(boolean active) {
+        TextView view = getView().findViewById(R.id.warning_permission_denied);
+        view.setVisibility(active ? View.VISIBLE : View.GONE);
+    }
 }

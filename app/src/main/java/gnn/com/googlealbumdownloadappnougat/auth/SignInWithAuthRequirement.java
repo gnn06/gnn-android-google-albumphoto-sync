@@ -1,18 +1,19 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
-import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
-public class GoogleAuthRequirement extends Require {
+public class SignInWithAuthRequirement extends Require {
 
     private AuthManager auth;
     private IView view;
+    final private UserModel userModel;
 
-    public GoogleAuthRequirement(Exec exec, AuthManager auth, IView view) {
+    public SignInWithAuthRequirement(Exec exec, AuthManager auth, IView view, UserModel userModel) {
         super(exec);
         this.auth = auth;
         this.view = view;
+        this.userModel = userModel;
     }
 
     @Override
@@ -22,14 +23,17 @@ public class GoogleAuthRequirement extends Require {
 
     @Override
     void require() {
-        auth.requestGooglePermission();
+        this.userModel.getUser().setValue(null);
+        auth.signInWithPermission();
     }
 
     @Override
     void postRequireSuccess() {
-        ((MainActivity) view).setWarningPermissionDenied(false);
+        userModel.getUser().setValue(auth.getAccount());
     }
 
     @Override
-    void postRequireFailure() {}
+    void postRequireFailure() {
+        view.showError("message");
+    }
 }

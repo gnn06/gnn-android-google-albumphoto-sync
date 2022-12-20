@@ -46,6 +46,8 @@ public interface IPresenterHome {
 
     void onWarningWallpaperActive();
 
+    void onWarningPermissionDenied();
+
     void refreshLastTime();
 
     void onSignIn();

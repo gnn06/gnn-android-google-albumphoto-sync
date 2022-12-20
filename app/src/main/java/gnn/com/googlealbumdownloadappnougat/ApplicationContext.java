@@ -40,4 +40,9 @@ public class ApplicationContext {
     public File getCacheFile() {
         return new File(getCachePath());
     }
+
+    // For test
+    public void reset() {
+        instance = null;
+    }
 }

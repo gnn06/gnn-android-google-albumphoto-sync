@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
 
@@ -34,6 +35,7 @@ public class SynchronizerDelayedTest {
 
     @Before
     public void setUp() throws Exception {
+        Logger.configure();
         File folder = tempFolder.newFolder();
     }
 

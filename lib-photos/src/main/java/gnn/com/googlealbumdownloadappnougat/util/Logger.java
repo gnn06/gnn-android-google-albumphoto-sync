@@ -8,13 +8,24 @@ public class Logger {
 
     private static Logger _logger;
     static private String _filename;
+    private static boolean _test;
 
     static public void configure(String filename) {
         _filename = filename  + "/gnnapp.log";
+        _test = false;
+    }
+
+    // For test
+    static public void configure() {
+        _filename = null;
+        _test = true;
     }
 
     static public Logger getLogger() {
         if (_logger == null) {
+            if (_test == false && _filename == null) {
+                throw new NullPointerException();
+            }
             _logger = new Logger(_filename);
         }
         return _logger;
@@ -40,19 +51,23 @@ public class Logger {
     }
 
     private void message(String message) {
-        if (_filename != null) {
-            FileWriter fw = null;
-            try {
-                fw = new FileWriter(_filename, true);
-                Date date = new Date();
-                fw.write(date.toString() + " " + message + "\n");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
+        if (_test) {
+            System.out.println(message);
+        } else {
+            if (_filename != null) {
+                FileWriter fw = null;
                 try {
-                    fw.close();
+                    fw = new FileWriter(_filename, true);
+                    Date date = new Date();
+                    fw.write(date.toString() + " " + message + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+                        fw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

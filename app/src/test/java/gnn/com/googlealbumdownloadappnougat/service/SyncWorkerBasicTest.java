@@ -31,6 +31,7 @@ import java.io.File;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.sync.Synchronizer;
 
@@ -60,6 +61,7 @@ public class SyncWorkerBasicTest {
 
     @Before
     public void setUp() throws Exception {
+        Logger.configure();
         UT_myWorker = PowerMockito.spy(new SyncWorker(context, parameters));
         destinationFolder = tmpFolder.newFolder();
         data = new Data.Builder()

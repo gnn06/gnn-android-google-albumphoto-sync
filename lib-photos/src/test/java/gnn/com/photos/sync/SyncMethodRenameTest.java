@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
@@ -42,6 +43,7 @@ public class SyncMethodRenameTest {
 
     @Before
     public void setUp() throws IOException, RemoteException {
+        Logger.configure();
         remotePhotos = new ArrayList<>();
         localPhotos = new ArrayList<>();
 

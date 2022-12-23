@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.hamcrest.core.Is;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -15,10 +16,18 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Date;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
+
 public class PersistWallpaperStatTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
+
+    @Before
+    public void setUp() throws Exception {
+        Logger.configure();
+        Logger.getLogger();
+    }
 
     @Test
     public void write() throws IOException {
@@ -51,6 +60,18 @@ public class PersistWallpaperStatTest {
         PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
         WallpaperStat result = persistent.read();
         assertThat(result, nullValue());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void read_empty_file() throws IOException {
+        // Given
+        File folder = tempFolder.newFolder();
+        final File tempFile = new File(folder, PersistWallpaperStat.STAT_FILENAME);
+        Files.write(tempFile.toPath(), "".getBytes(StandardCharsets.UTF_8));
+        PersistWallpaperStat persistent = new PersistWallpaperStat(folder);
+        // when
+        WallpaperStat result = persistent.read();
+        // then
     }
 
     @Test

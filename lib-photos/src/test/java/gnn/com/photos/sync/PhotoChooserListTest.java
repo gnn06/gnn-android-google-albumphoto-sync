@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -21,6 +22,7 @@ public class PhotoChooserListTest {
 
     @Before
     public void init() {
+        Logger.configure();
         remote = new ArrayList<>();
         remote.add(new Photo("url1", "id1"));
         remote.add(new Photo("url2", "id2"));

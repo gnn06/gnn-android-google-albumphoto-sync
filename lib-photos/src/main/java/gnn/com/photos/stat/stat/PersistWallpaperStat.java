@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
+
 class PersistWallpaperStat {
 
     static final String STAT_FILENAME = "stat_wallpaper.json";
@@ -33,6 +35,11 @@ class PersistWallpaperStat {
         try {
             Reader reader = new FileReader(new File(processFolder, STAT_FILENAME));
             WallpaperStat result = new Gson().fromJson(reader, WallpaperStat.class);
+            if (result == null) {
+                Logger logger = Logger.getLogger();
+                logger.severe("can't read wallpaper stat. Gson returns null. processFolder=" + processFolder + ", filename=" + STAT_FILENAME);
+                throw new NullPointerException("can't read wallpaper stat. processFolder=" + processFolder + ", filename=" + STAT_FILENAME);
+            }
             if (result.getDate() == null) {
                 return null;
             }

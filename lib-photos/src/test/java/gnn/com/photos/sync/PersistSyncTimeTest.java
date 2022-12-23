@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
+
 public class PersistSyncTimeTest {
 
     @Rule
@@ -23,6 +25,7 @@ public class PersistSyncTimeTest {
 
     @Before
     public void setUp() throws Exception {
+        Logger.configure();
         folder = temporaryFolder.newFolder();
         persistSyncTime = new PersistSyncTime(folder);
     }

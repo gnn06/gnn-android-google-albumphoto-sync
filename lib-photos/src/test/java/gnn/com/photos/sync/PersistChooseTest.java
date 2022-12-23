@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.hamcrest.core.Is;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -14,12 +15,18 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Date;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 
 public class PersistChooseTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+    @Before
+    public void setUp() throws Exception {
+        Logger.configure(temporaryFolder.newFolder().getAbsolutePath());
+    }
 
     @Test
     public void read() throws IOException {
@@ -50,6 +57,20 @@ public class PersistChooseTest {
         File folder = temporaryFolder.newFolder();
         final File tempFile = new File(folder, PersistChoose.FILENAME);
         Files.write(tempFile.toPath(), "{\"photoXXX\":{\"url\":\"url1\",\"id\":\"id12\"},\"chooseDateXXX\":\"Feb 1, 2022, 9:44:28 PM\"}".getBytes(StandardCharsets.UTF_8));
+
+        PersistChoose persist = new PersistChoose(folder);
+        // when
+        PhotoChoose photoResult = persist.read();
+        // then
+        assertThat(photoResult, nullValue());
+    }
+
+    @Test
+    public void read_empty() throws IOException {
+        // given
+        File folder = temporaryFolder.newFolder();
+        final File tempFile = new File(folder, PersistChoose.FILENAME);
+        Files.write(tempFile.toPath(), "".getBytes(StandardCharsets.UTF_8));
 
         PersistChoose persist = new PersistChoose(folder);
         // when

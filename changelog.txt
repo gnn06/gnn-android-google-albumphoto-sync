@@ -42,3 +42,14 @@ internal : use serviceLocator to facilitate integration test
 fix : schedule when going in frequence fragment
 change : ask google autorisation when logging
 change : better message in preview live wallpaper when there is no images
+
+1.6.3
+
+1.6.4 25/12/2022
+fix : problème avec les fréquences
+feat : l'interface se met à jour quand les worker travaillent
+feat : affiche le dernier résultat de synchro
+fix : tient compte du délai de synchro dans les worker
+fix : avoid error when gson returns null
+refact : add access token dans les logs
+feat : affiche un warning quand l'application perd l'authentification et permet de redemander les google authorization.

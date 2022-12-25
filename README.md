@@ -17,3 +17,5 @@ You have to activate Google Photo API for the application on Google API console.
 2. Activate the Google Photo API.
 3. Create an client Oauth2 identifier.
 4. To get sha-1 fingerprint, run gradle android signingReport task.
+
+[link](userdataprivacypolicy.md)

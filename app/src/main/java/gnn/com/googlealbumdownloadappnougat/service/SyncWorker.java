@@ -5,39 +5,72 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.work.ListenableWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.File;
 import java.io.IOException;
 
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
-import gnn.com.photos.service.Cache;
+import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
+import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
 import gnn.com.photos.service.RemoteException;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.photos.service.SyncProgressObserver;
+import gnn.com.photos.sync.SynchronizerDelayed;
 
-public class SyncWorker extends Worker {
+public class SyncWorker extends Worker implements  ISyncOauth<Worker.Result> {
 
     private final static String TAG = "MyWorker";
+    private final PersistOauthError persistOauthError;
 
     public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        persistOauthError = new PersistOauthError(ApplicationContext.getInstance(getApplicationContext()).getProcessFolder());
+    }
+
+    // For test
+    public SyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams, PersistOauthError persistOauth) {
+        super(context, workerParams);
+        persistOauthError = persistOauth;
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        File cacheFile = new File(getInputData().getString("cacheAbsolutePath"));
-        long cacheMaxAge = getInputData().getLong("cacheMaxAge", Cache.DELAY_ALWAYS_EXPIRE);
-        File processFolder = new File(getInputData().getString("processAbsolutePath"));
+        try {
+            return execOauth();
+        } catch (RemoteException e) {
+            return Result.failure();
+        }
+    }
+
+    @Override
+    public ListenableWorker.Result execOauthImpl() throws RemoteException {
+        PersistPrefMain persistPrefMain = new PersistPrefMain(getApplicationContext());
+
+        File cacheFile = new File(getInputData().getString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH));
+        int frequencyUpdateHour = persistPrefMain.getFrequencyUpdatePhotos();
+        File processFolder = new File(getInputData().getString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH));
+
+        int frequencySyncHour = persistPrefMain.getFrequencyDownload();
+
+        int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
+        int delaySyncMin = FrequencyCacheDelayConverter.getFrequencySyncHourMinute(frequencySyncHour);
 
         Context activity = getApplicationContext();
-        Synchronizer synchronizer = new SynchronizerAndroid(activity, cacheFile, cacheMaxAge, processFolder);
+        SynchronizerDelayed synchronizer = new SynchronizerDelayedAndroid(delaySyncMin, activity, cacheFile, delayUpdateHour, processFolder);
+        SyncProgressObserver observer = new SynchronizerWorker(this);
+        synchronizer.setObserver(observer);
 
-        String albumName = getInputData().getString("album");
-        String destinationFolder = getInputData().getString("folderPath");
-        String rename = getInputData().getString("rename");
-        int quantity = getInputData().getInt("quantity", -1);
+        String albumName = getInputData().getString(WallPaperWorker.PARAM_ALBUM);
+        String destinationFolder = getInputData().getString(WallPaperWorker.PARAM_FOLDER_PATH);
+        String rename = getInputData().getString(WallPaperWorker.PARAM_RENAME);
+        int quantity = getInputData().getInt(WallPaperWorker.PARAM_QUANTITY, -1);
 
         // Doc Periodic work is never successed, always enqueued
 
@@ -45,11 +78,23 @@ public class SyncWorker extends Worker {
             synchronizer.syncRandom(albumName, getDestinationFolder(destinationFolder), rename, quantity);
             Log.i(TAG, "success");
             // Doc periodic outputData is always empty
+            Log.d("GNNAPP","SyncWork finished");
+            // With a Periodic work, output is always null as (said in android doc) output is only available in FINISHED state
             return Result.success();
-        } catch (IOException | RemoteException e) {
+        } catch (IOException e) {
             Log.e(TAG, e.toString());
             return Result.failure();
         }
+    }
+
+    @Override
+    public PersistOauthError getPersistOAuth() {
+        return persistOauthError;
+    }
+
+    @Override
+    public Result returnFailure() {
+        return Result.failure();
     }
 
     private File getDestinationFolder(String album) {

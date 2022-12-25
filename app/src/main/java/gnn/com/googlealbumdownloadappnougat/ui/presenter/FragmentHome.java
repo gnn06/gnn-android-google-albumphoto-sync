@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,13 +28,12 @@ import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.UITextHelper;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
-import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 import gnn.com.photos.stat.stat.WallpaperStat;
+import gnn.com.photos.sync.SyncData;
 
 public class FragmentHome extends FragmentHighlight implements IViewHome {
 
@@ -89,6 +87,12 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
         getView().findViewById(R.id.warning_wallpaper_active).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 presenter.onWarningWallpaperActive();
+            }
+        });
+
+        getView().findViewById(R.id.warning_permission_denied).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                presenter.onWarningPermissionDenied();
             }
         });
 
@@ -215,8 +219,8 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
     }
 
     @Override
-    public void updateUI_CallResult(SynchronizerAndroid synchronizer, SyncStep step) {
-        String result = new UITextHelper((MainActivity) getActivity()).getResultString(synchronizer, step, (MainActivity) getActivity());
+    public void updateUI_CallResult(SyncData syncData, SyncStep step) {
+        String result = new UITextHelper((MainActivity) getActivity()).getResultString(syncData, step, (MainActivity) getActivity());
         TextView textView = getView().findViewById(R.id.result);
         textView.setText(result);
     }
@@ -276,4 +280,8 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
         view.setVisibility(active ? View.GONE : View.VISIBLE);
     }
 
+    public void setWarningPermissionDenied(boolean active) {
+        TextView view = getView().findViewById(R.id.warning_permission_denied);
+        view.setVisibility(active ? View.VISIBLE : View.GONE);
+    }
 }

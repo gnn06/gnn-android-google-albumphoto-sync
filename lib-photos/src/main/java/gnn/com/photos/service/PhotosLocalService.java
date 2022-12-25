@@ -32,7 +32,7 @@ public class PhotosLocalService {
     /**
      * Delete given local files.
      */
-    public void delete(ArrayList<Photo> toDelete, File folder, Synchronizer synchronizer) {
+    public void delete(ArrayList<Photo> toDelete, File folder, SyncProgressObserver synchronizer) {
         // require Logger was initialized
         Logger logger = Logger.getLogger();
 

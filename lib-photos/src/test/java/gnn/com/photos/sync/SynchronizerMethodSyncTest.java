@@ -1,5 +1,15 @@
 package gnn.com.photos.sync;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,14 +24,17 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
+import gnn.com.photos.service.SyncProgressObserver;
 
-public class SyncMethodTest {
+public class SynchronizerMethodSyncTest {
 
     ArrayList<Photo> remotePhotos;
     ArrayList<Photo> localPhotos;
@@ -35,6 +48,7 @@ public class SyncMethodTest {
 
     @Before
     public void setUp() throws IOException, RemoteException {
+        Logger.configure();
         remotePhotos = new ArrayList<>();
         localPhotos = new ArrayList<>();
 
@@ -43,11 +57,12 @@ public class SyncMethodTest {
 
         localPhotos.add(new Photo("url2", "id2"));
 
-        prs = Mockito.mock(PhotosRemoteService.class);
-        pls = Mockito.mock(PhotosLocalService.class);
+        prs = mock(PhotosRemoteService.class);
+        pls = mock(PhotosLocalService.class);
 
 
-        synchronizer = new Synchronizer(null, 0, null) {
+        SyncProgressObserver observer = mock(SyncProgressObserver.class);
+        synchronizer = spy(new Synchronizer(prs, pls, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return prs;
@@ -55,73 +70,81 @@ public class SyncMethodTest {
 
             @Override
             public void incAlbumSize() {}
-        };
+        });
+        synchronizer.setObserver(observer);
 
-        folder = Mockito.mock(File.class);
+        folder = mock(File.class);
 
-        Mockito.when(prs.getPhotos("album", synchronizer)).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos("album", observer)).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
     }
 
     @Test
     public void sync_all() throws IOException, RemoteException {
-        SyncMethod syncMethod = new SyncMethod(synchronizer,prs,pls);
         // given remote photos that don't be local and local photo was dont't be remote
-        Mockito.when(prs.getPhotos(Mockito.anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
         // when calling sync
-        syncMethod.sync("album", folder, null, -1);
+        synchronizer.sync("album", folder, null, -1);
 
         // then, check download all
-        Mockito.verify(prs).download(remotePhotos, folder, null, synchronizer);
+        verify(prs).download(eq(remotePhotos), eq(folder), eq(null), any());
 
         // and check delete all
-        Mockito.verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(eq(localPhotos), eq(folder), any());
+    }
+
+    @Test
+    public void sync_observer() throws IOException, RemoteException {
+        // given remote photos that don't be local and local photo was dont't be remote
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+
+        // when calling sync
+        synchronizer.sync("album", folder, null, -1);
+
+        // then, check download all
+        verify(synchronizer).begin();
+        verify(synchronizer).end();
     }
 
     @Test
     public void sync_chooseOne() throws IOException, RemoteException {
         // given remote photos that don't be local and local photo that don't be remote
-        Mockito.when(prs.getPhotos(Mockito.anyString(), ArgumentMatchers.any(Synchronizer.class))).thenReturn(remotePhotos);
-        Mockito.when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
+        when(prs.getPhotos(anyString(), ArgumentMatchers.any())).thenReturn(remotePhotos);
+        when(pls.getLocalPhotos(folder)).thenReturn(localPhotos);
 
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
-
-        // when
-        syncMethod.sync("album", folder, null, 1);
+        synchronizer.sync("album", folder, null, 1);
 
         // then, check download was called with a oneList collection
         ArgumentCaptor<ArrayList> captor = ArgumentCaptor.forClass(ArrayList.class);
-        Mockito.verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        verify(prs).download(captor.capture(), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any());
         Assert.assertEquals(1, captor.getValue().size());
 
         // and check delete all
-        Mockito.verify(pls).delete(localPhotos, folder, synchronizer);
+        verify(pls).delete(eq(localPhotos), eq(folder), any());
     }
 
     @Test
     public void throw_into_sync() throws IOException, RemoteException {
         //given
-        SyncMethod syncMethod = new SyncMethod(synchronizer, prs, pls) {};
 
-        Mockito.doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any(Synchronizer.class));
+        doThrow(new IOException()).when(prs).download(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), (String) ArgumentMatchers.isNull(), ArgumentMatchers.any());
 
         // when
         try {
-            syncMethod.sync("album", folder, null, 1);
+            synchronizer.sync("album", folder, null, 1);
         } catch (IOException ignored) {}
 
         // then assert that delete was not called
-        Mockito.verify(pls, Mockito.never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any(Synchronizer.class));
+        verify(pls, never()).delete(ArgumentMatchers.any(ArrayList.class), ArgumentMatchers.any(File.class), ArgumentMatchers.any());
     }
 
     @Test
     public void test_write_last_sync_time() throws IOException, RemoteException {
-        SyncMethod syncFull = new SyncMethod(Mockito.mock(Synchronizer.class), Mockito.mock(PhotosRemoteService.class), Mockito.mock(PhotosLocalService.class));
-        SyncMethod syncMethod = Mockito.spy(syncFull);
-        syncMethod.sync("album", Mockito.mock(File.class), null, 0);
+        synchronizer.storeSyncTime();
     }
 
     @Test
@@ -129,7 +152,7 @@ public class SyncMethodTest {
         // given a synchronizer with a processFolder containing a last_sync file
         File tempFile = tempFolder.newFile("last_sync");
 
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;
@@ -153,7 +176,7 @@ public class SyncMethodTest {
     @Test
     public void test_readLastSyncTime_null() {
         // given
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot()) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;

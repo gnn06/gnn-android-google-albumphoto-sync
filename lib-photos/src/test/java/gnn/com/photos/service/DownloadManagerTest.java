@@ -1,5 +1,7 @@
 package gnn.com.photos.service;
 
+import static org.mockito.Mockito.mock;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,6 +29,7 @@ public class DownloadManagerTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    private SyncProgressObserver observer;
 
     @Before
     public void setUp() throws Exception {
@@ -34,7 +37,9 @@ public class DownloadManagerTest {
         toDownloadList.add(new Photo("http://gn.com/12", "id12"));
         toDownloadList.add(new Photo("http://gn.com/24", "id24"));
 
-        synchronizer = Mockito.mock(Synchronizer.class);
+        synchronizer = mock(Synchronizer.class);
+
+        observer = mock(SyncProgressObserver.class);
     }
 
     @Test
@@ -48,9 +53,9 @@ public class DownloadManagerTest {
         // when
         downloader.download(toDownloadList,
                 temporaryFolder.getRoot(),
-                null, synchronizer);
+                null, observer);
         // then
-        Mockito.verify(synchronizer, Mockito.times(2)).incCurrentDownload();
+        Mockito.verify(observer, Mockito.times(2)).incCurrentDownload();
     }
 
     @Test
@@ -61,7 +66,7 @@ public class DownloadManagerTest {
         // when
         downloader.download(toDownloadList,
                 temporaryFolder.getRoot(),
-                null, synchronizer);
+                null, observer);
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);
@@ -79,7 +84,7 @@ public class DownloadManagerTest {
         // which mock copy
 
         // when calling download
-        downloader.download(toDownloadList, temporaryFolder.getRoot(), "name", synchronizer);
+        downloader.download(toDownloadList, temporaryFolder.getRoot(), "name", observer);
 
         // then
         ArgumentCaptor<File> argument = ArgumentCaptor.forClass(File.class);

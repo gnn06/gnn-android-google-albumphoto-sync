@@ -16,62 +16,68 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
+import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
+import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
+import gnn.com.photos.sync.SyncData;
 
 /**
  * Schedule Synchronizer through Worker via Android WorkManager API
  */
-public class SyncScheduler {
+public class SyncScheduler extends AppScheduler {
 
     private static final String TAG = "Scheduler";
-    static final String WORK_NAME = "mywork";
-
-    private final Context context;
 
     public SyncScheduler(Context context) {
-        this.context = context;
+        super(context);
     }
 
-    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, int intervalUpdateHour, ApplicationContext appContext) {
-        // TODO get CacheMaxAge from persistance
+    @Override
+    public String getWorkName() {
+        return "GNN-WORK-SYNC";
+    }
+
+    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
         Data data = new Data.Builder()
-                .putString("cacheAbsolutePath", appContext.getCachePath())
-                .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", intervalUpdateHour)
-                .putString("album", album)
-                .putString("folderPath", destinationFolder)
-                .putString("rename", rename)
-                .putInt("quantity", quantity)
+                .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
+                .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
+                .putString(WallPaperWorker.PARAM_ALBUM, album)
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putString(WallPaperWorker.PARAM_RENAME, rename)
+                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
 
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
                 .setInputData(data)
+                .addTag("gnn")
                 .build();
         WorkManager.getInstance(context)
-            .enqueueUniquePeriodicWork(WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, work);
+            .enqueueUniquePeriodicWork(getWorkName(), ExistingPeriodicWorkPolicy.KEEP, work);
     }
 
-    public void schedule(int intervalHour, int intervalUpdateHour) {
+    public void schedule(int intervalHour) {
         PersistPrefMain persist = ServiceLocator.getInstance().getPersistMain();
         String album = persist.getAlbum();
         String folder = persist.getPhotoPath();
         String rename = persist.getRename();
         int quantity = persist.getQuantity();
         ApplicationContext appContext = ApplicationContext.getInstance(context);
-        schedule(album, folder, rename, quantity, intervalHour, intervalUpdateHour , appContext);
+        schedule(album, folder, rename, quantity, intervalHour, appContext);
     }
 
     public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
-            .cancelUniqueWork(WORK_NAME);
+            .cancelUniqueWork(getWorkName());
         Log.i(TAG, "work canceled");
     }
 
     WorkInfo getState() {
         ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
-                .getWorkInfosForUniqueWork(WORK_NAME);
+                .getWorkInfosForUniqueWork(getWorkName());
         try {
             if (futureInfo.get().size() >= 1) {
                 WorkInfo info = futureInfo.get().get(0);
@@ -97,6 +103,21 @@ public class SyncScheduler {
 //            workManager.cancelAllWorkByTag("gnn.com.googlealbumdownloadappnougat.service.MyWorker");
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "onCreate: worker statut", e);
+        }
+    }
+
+    @Override
+    public void onWorkerChanged(List<WorkInfo> workInfos, PresenterHome presenter) {
+        if (workInfos.size() > 0) {
+            if (workInfos.get(0).getState().equals(WorkInfo.State.ENQUEUED)) {
+                presenter.refreshLastTime();
+                presenter.refreshLastSyncResult();
+            } else if (workInfos.get(0).getState().equals(WorkInfo.State.RUNNING)) {
+                if (workInfos.get(0).getProgress() != null
+                        && workInfos.get(0).getProgress().getString("GOI-STEP") != null) {
+                    presenter.setSyncResult(new SyncData(), SyncStep.valueOf(workInfos.get(0).getProgress().getString("GOI-STEP")));
+                }
+            }
         }
     }
 }

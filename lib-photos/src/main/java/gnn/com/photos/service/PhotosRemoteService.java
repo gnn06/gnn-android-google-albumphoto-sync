@@ -31,20 +31,19 @@ public abstract class PhotosRemoteService {
         return getPhotoProvider().getAlbums();
     }
 
-    public ArrayList<Photo> getPhotos(String album, Synchronizer synchronizer) throws IOException, RemoteException {
+    public ArrayList<Photo> getPhotos(String album, SyncProgressObserver synchronizer) throws IOException, RemoteException {
         ArrayList<Photo> photos = getCache().get();
         if (photos == null) {
             photos = getPhotoProvider().getPhotosFromAlbum(album, synchronizer);
             getCache().put(photos);
         }
-        synchronizer.setAlbumSize(photos.size());
         return photos;
     }
 
     /**
      * Refresh baseUrl and download photo
      */
-    public void download(ArrayList<Photo> list, File folder, String rename, Synchronizer sync) throws IOException, RemoteException {
+    public void download(ArrayList<Photo> list, File folder, String rename, SyncProgressObserver sync) throws IOException, RemoteException {
         // baseUrl is valid during 60 minutes, refresh them before download
         list = refreshBaseUrl(list);
         new DownloadManager().download(list, folder, rename, sync);

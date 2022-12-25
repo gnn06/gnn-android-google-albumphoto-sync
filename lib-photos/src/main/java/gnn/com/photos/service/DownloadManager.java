@@ -19,7 +19,7 @@ public class DownloadManager {
      * Add .jpg to filename.
      * manage progress status bar
      */
-    public void download(ArrayList<Photo> toDownload, File destinationFolder, String rename, Synchronizer synchronizer) throws IOException {
+    public void download(ArrayList<Photo> toDownload, File destinationFolder, String rename, SyncProgressObserver synchronizer) throws IOException {
         // require Logger was initialized
         Logger logger = Logger.getLogger();
 

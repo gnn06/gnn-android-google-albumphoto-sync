@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
+import android.util.Log;
 import android.view.Gravity;
 
 import androidx.fragment.app.testing.FragmentScenario;
@@ -19,7 +20,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.transition.Slide;
+import androidx.work.Configuration;
+import androidx.work.testing.SynchronousExecutor;
+import androidx.work.testing.WorkManagerTestInitHelper;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -35,9 +40,19 @@ public class PresenterWizardIntTest {
     private Wizard wizard;
     private Context context;
 
+    @Before
+    public void setUp() throws Exception {
+        this.context = ApplicationProvider.getApplicationContext();
+        // Configure Worker because Presenter.onAppStart use WorkManager
+        final Configuration config = new Configuration.Builder()
+                .setMinimumLoggingLevel(Log.DEBUG)
+                .setExecutor(new SynchronousExecutor())
+                .build();
+        WorkManagerTestInitHelper.initializeTestWorkManager(context, config);
+    }
+
     @Test
     public void name() {
-        this.context = ApplicationProvider.getApplicationContext();
         this.persist = new PersistPrefMain(context);
         this.wizard = new Wizard(null, persist, null, null, context);
 

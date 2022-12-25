@@ -3,12 +3,9 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 import android.app.AlertDialog;
 import android.content.Context;
 
-import gnn.com.googlealbumdownloadappnougat.Frequency;
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.ServiceLocator;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IViewFrequencies;
-import gnn.com.photos.service.Cache;
-import gnn.com.photos.sync.SynchronizerDelayed;
 
 public class PresenterFrequencies implements IPresenterFrequencies {
 
@@ -51,6 +48,10 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     @Override
     public void onAppStop() {
+        persistFrequencies();
+    }
+
+    private void persistFrequencies() {
         this.persist.saveFrequencies(getFrequencyWallpaper(), getFrequencySyncHour(), getFrequencyUpdatePhotos());
     }
 
@@ -94,22 +95,6 @@ public class PresenterFrequencies implements IPresenterFrequencies {
 
     /**
      *
-     * int frequencySync fréquence de téléchargement en minute
-     */
-    @Override
-    public int getFrequencySyncMinute() {
-        if (getFrequencySyncHour() == Frequency.NEVER)
-            return SynchronizerDelayed.DELAY_NEVER_SYNC;
-        else if (getFrequencySyncHour() == 0) {
-            return SynchronizerDelayed.DELAY_ALWAYS_SYNC;
-        } else if (getFrequencySyncHour() < Integer.MAX_VALUE)
-            return getFrequencySyncHour() * 60;
-        else
-            return Integer.MAX_VALUE;
-    }
-
-    /**
-     *
      * @return frequence de recupération des nouvelles phtos in days
      */
     @Override
@@ -127,26 +112,29 @@ public class PresenterFrequencies implements IPresenterFrequencies {
         fragment.setFrequencyUpdate(frequency);
     }
 
-    /**
-     * @return fréquence en minute
-     */
-    public int getFrequencyUpdatePhotosHour() {
-        if (getFrequencyUpdatePhotos() == Frequency.NEVER)
-            return Cache.DELAY_NEVER_EXPIRE;
-        else if (getFrequencyUpdatePhotos() == 0) {
-            return Cache.DELAY_ALWAYS_EXPIRE;
-        } else if (getFrequencyUpdatePhotos() < Integer.MAX_VALUE)
-            return getFrequencyUpdatePhotos() * 24;
-        else
-            return Integer.MAX_VALUE;
+    void setFrequencyWallpaperWithSchedule(int value) {
+        setFrequencyWallpaper(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
+    }
+
+    void setFrequencySyncWithSchedule(int value) {
+        setFrequencySyncHour(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
+    }
+
+    void setFrequencyUpdateWithSchedule(int value) {
+        setFrequencyUpdatePhotos(value);
+        persistFrequencies();
+        schedulerFromFreq.scheduleOrCancel();
     }
 
     @Override
     public void chooseFrequencyWallpaper() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencyWallpaper(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencyWallpaperWithSchedule(value);
+        },
             R.array.frequency_wallpaper_value, R.array.frequency_wallpaper_label);
         dialogFrequency.show();
     }
@@ -154,9 +142,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencySync() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencySyncHour(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencySyncWithSchedule(value);
+        },
             R.array.frequency_sync_value, R.array.frequency_sync_label);
         dialogFrequency.show();
     }
@@ -164,9 +151,8 @@ public class PresenterFrequencies implements IPresenterFrequencies {
     @Override
     public void chooseFrequencyUpdate() {
         DialogFrequency dialogFrequency = new DialogFrequency(getContext(), value -> {
-                    setFrequencyUpdatePhotos(value);
-                    schedulerFromFreq.scheduleOrCancel();
-                },
+            setFrequencyUpdateWithSchedule(value);
+        },
                 R.array.frequency_update_value, R.array.frequency_update_label);
         dialogFrequency.show();
     }

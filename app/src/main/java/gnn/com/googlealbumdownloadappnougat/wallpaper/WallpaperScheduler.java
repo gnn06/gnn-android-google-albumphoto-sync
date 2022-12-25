@@ -14,52 +14,54 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import gnn.com.googlealbumdownloadappnougat.AppScheduler;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
-public class WallpaperScheduler {
+public class WallpaperScheduler extends AppScheduler {
 
-    private static final String WORK_NAME_WALLPAPER = "GNN-WORK_WALLPAPER";
-    private static final String TAG = "SchedulerWapper";
-
-    final private Context context;
+    private static final String TAG = "GNNAPP";
 
     public WallpaperScheduler(Context context) {
-        this.context = context;
+        super(context);
+    }
+
+    @Override
+    public String getWorkName() {
+        return "GNN-WORK-WALLPAPER";
     }
 
     /**
      * maxAge in minutes
      */
     public void schedule(String destinationFolder, long wallpaperMaxAgeMinute,
-                         int syncMaxAgeMinute,
-                         String album, int quantity, String rename, long cacheMaxAgeHour,
+                         String album, int quantity, String rename,
                          ApplicationContext appContext) {
         Logger logger = Logger.getLogger();
         logger.fine("schedule");
         // TODO envoi des argmunent trop laborieux
         Data data = new Data.Builder()
-                .putString("cacheAbsolutePath", appContext.getCachePath())
-                .putString("processAbsolutePath", appContext.getProcessPath())
-                .putLong("cacheMaxAge", cacheMaxAgeHour)
-                .putString("folderPath", destinationFolder)
-                .putInt("syncMaxAge", syncMaxAgeMinute)
-                .putString("album", album)
-                .putString("folderPath", destinationFolder)
-                .putInt("quantity", quantity)
-                .putString("rename", rename)
+                .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
+                .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putString(WallPaperWorker.PARAM_ALBUM, album)
+                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
+                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
+                .putString(WallPaperWorker.PARAM_RENAME, rename)
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAgeMinute, TimeUnit.MINUTES)
                 .setInputData(data)
+                .addTag("gnn")
                 .build();
         WorkManager.getInstance(context)
-                .enqueueUniquePeriodicWork(WORK_NAME_WALLPAPER, ExistingPeriodicWorkPolicy.KEEP, work);
+                .enqueueUniquePeriodicWork(getWorkName(), ExistingPeriodicWorkPolicy.KEEP, work);
         Log.i(TAG,"work enqueued");
     }
 
     public void cancel() {
         WorkManager.getInstance(context.getApplicationContext())
-                .cancelUniqueWork(WORK_NAME_WALLPAPER);
+                .cancelUniqueWork(getWorkName());
         Log.i(TAG, "work canceled");
     }
 
@@ -75,7 +77,7 @@ public class WallpaperScheduler {
 
     public WorkInfo getState() {
         ListenableFuture<List<WorkInfo>> futureInfo = WorkManager.getInstance(context.getApplicationContext())
-                .getWorkInfosForUniqueWork(WORK_NAME_WALLPAPER);
+                .getWorkInfosForUniqueWork(getWorkName());
         try {
             if (futureInfo.get().size() >= 1) {
                 WorkInfo info = futureInfo.get().get(0);
@@ -85,6 +87,15 @@ public class WallpaperScheduler {
             }
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    @Override
+    public void onWorkerChanged(List<WorkInfo> workInfos, PresenterHome presenter) {
+        if (workInfos.size() > 0) {
+            if (workInfos.get(0).getState().equals(WorkInfo.State.ENQUEUED)) {
+                presenter.refreshLastTime();
+            }
         }
     }
 }

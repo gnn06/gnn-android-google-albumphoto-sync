@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
-import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
+import gnn.com.photos.sync.SyncData;
 
 public interface IPresenterHome {
 
@@ -34,7 +34,7 @@ public interface IPresenterHome {
 
     void setProgressBarVisibility(int visible);
 
-    void setSyncResult(SynchronizerAndroid sync, SyncStep starting);
+    void setSyncResult(SyncData sync, SyncStep starting);
 
     void onAppStart();
 
@@ -45,6 +45,8 @@ public interface IPresenterHome {
     void onAppForeground();
 
     void onWarningWallpaperActive();
+
+    void onWarningPermissionDenied();
 
     void refreshLastTime();
 

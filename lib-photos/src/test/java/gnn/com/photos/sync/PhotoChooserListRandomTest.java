@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,6 +27,11 @@ public class PhotoChooserListRandomTest {
 
     @Mock
     ThreadLocalRandom randomiser;
+
+    @Before
+    public void setUp() throws Exception {
+        Logger.configure();
+    }
 
     @Test
     public void choose_same_element_twice() {

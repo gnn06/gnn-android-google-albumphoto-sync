@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Date;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.util.DateProvider;
 
@@ -38,7 +39,9 @@ public class PersistChoose {
         try {
             Reader reader = new FileReader(new File(processFolder, FILENAME));
             PhotoChoose choose = new Gson().fromJson(reader, PhotoChoose.class);
-            if (choose.photo == null || choose.chooseDate == null) {
+            if (choose == null || choose.photo == null || choose.chooseDate == null) {
+                Logger logger = Logger.getLogger();
+                logger.severe("Gson return null with " + processFolder + "/" + FILENAME);
                 return null;
             } else {
                 return choose;

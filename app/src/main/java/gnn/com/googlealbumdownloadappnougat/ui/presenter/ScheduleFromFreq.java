@@ -26,14 +26,11 @@ public class ScheduleFromFreq {
     public void scheduleOrCancel() {
         if (presenter.getFrequencyWallpaper() != Frequency.NEVER) {
             wlppScheduler.schedule(
-                    presenter.getFrequencyWallpaper(),
-                    presenter.getFrequencySyncMinute(),
-                    presenter.getFrequencyUpdatePhotosHour());
+                    presenter.getFrequencyWallpaper());
             syncScheduler.cancel();
         } else if (presenter.getFrequencySyncHour() != Frequency.NEVER) {
             wlppScheduler.cancel();
-            syncScheduler.schedule(presenter.getFrequencySyncHour(),
-                    presenter.getFrequencyUpdatePhotosHour());
+            syncScheduler.schedule(presenter.getFrequencySyncHour());
         } else {
             wlppScheduler.cancel();
             syncScheduler.cancel();

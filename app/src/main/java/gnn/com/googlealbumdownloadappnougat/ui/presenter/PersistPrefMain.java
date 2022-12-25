@@ -153,12 +153,8 @@ public class PersistPrefMain {
         return getData().getRename();
     }
 
-    /**
-     * @return fréquence en minute
-     */
-    public int getFrequencyUpdatePhotosHour() {
-        return getData().getFrequencyUpdatePhotos() < Cache.DELAY_NEVER_EXPIRE ?
-                    getData().getFrequencyUpdatePhotos() * 24 : Cache.DELAY_NEVER_EXPIRE;
+    public int getFrequencyUpdatePhotos() {
+        return getData().getFrequencyUpdatePhotos();
     }
 
     public int getFrequencyDownload() {

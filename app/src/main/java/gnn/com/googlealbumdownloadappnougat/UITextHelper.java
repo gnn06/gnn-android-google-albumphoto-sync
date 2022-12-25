@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 import gnn.com.photos.stat.stat.WallpaperStat;
-import gnn.com.photos.sync.Synchronizer;
+import gnn.com.photos.sync.SyncData;
 
 public class UITextHelper {
 
@@ -29,7 +29,10 @@ public class UITextHelper {
         return result;
     }
 
-    public String getResultString(Synchronizer synchronizer, SyncStep step, MainActivity mainActivity) {
+    public String getResultString(SyncData syncData, SyncStep step, MainActivity mainActivity) {
+        if (syncData == null) {
+            return activity.getResources().getString(R.string.no_result);
+        }
         String result = "";
         switch (step) {
             case STARTING:
@@ -37,30 +40,48 @@ public class UITextHelper {
                 break;
             case IN_PRORGESS:
                 result += activity.getResources().getString(R.string.sync_in_progress) + "\n";
-                result += getDetailResultText(synchronizer, false);
+                result += getDetailResultText(syncData, false);
                 break;
             case FINISHED:
                 result += activity.getResources().getString(R.string.sync_finished) + "\n";
-                result += getDetailResultText(synchronizer, true);
+                result += getDetailResultText(syncData, true);
                 break;
         }
         return result;
     }
 
-    String getDetailResultText(Synchronizer synchronizer, boolean finished) {
+    String getDetailResultText(SyncData syncData, boolean finished) {
+        if (syncData == null) return "";
         String result = "";
-        result += "album size = " + synchronizer.getAlbumSize() + "\n";
+        // when SyncData is restored, number != null && list == null
+        int totalToDelete = 0;
+        int totalToDownload = 0;
+
+        if (syncData.getToDelete() != null)
+            totalToDelete = syncData.getToDelete().size();
+        else
+            totalToDelete = syncData.getDeleteCount();
+
+        if (syncData.getToDownload() != null)
+            totalToDownload = syncData.getToDownload().size();
+        else
+            totalToDownload = syncData.getDownloadCount();
+
+        if (totalToDelete == 0 && totalToDownload == 0)
+            return result;
+
+        result += "album size = " + syncData.getAlbumSize() + "\n";
         result += "downloaded = ";
         if (!finished) {
-            result += synchronizer.getCurrentDownload() + " / ";
+            result += syncData.getCurrentDownload() + " / ";
         }
-        result += synchronizer.getTotalDownload();
+        result += totalToDownload;
         result += "\n";
         result += "deleted = ";
         if (!finished) {
-            result += synchronizer.getCurrentDelete() + " / ";
+            result += syncData.getCurrentDelete() + " / ";
         }
-        result += synchronizer.getTotalDelete();
+        result += totalToDelete;
         return result;
     }
 

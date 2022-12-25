@@ -2,6 +2,7 @@ package gnn.com.googlealbumdownloadappnougat.ui.presenter;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -10,8 +11,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.ContextWrapper;
-
-import androidx.fragment.app.FragmentActivity;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -25,6 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
@@ -41,6 +41,8 @@ public class PresenterHomeTest {
     private UserModel userModel;
     private FolderModel folderModel;
     private FragmentHome fragmentHome;
+    private MainActivity activity;
+    private PresenterHome presenter;
 
     @Before
     public void setUp() throws Exception {
@@ -49,14 +51,14 @@ public class PresenterHomeTest {
         userModel = mock(UserModel.class);
         folderModel = mock(FolderModel.class);
         fragmentHome = mock(FragmentHome.class);
+        activity = Mockito.mock(MainActivity.class);
+        presenter = spy(new PresenterHome(view, activity, fragmentHome, userModel, folderModel));
     }
 
     @Test
     public void onSyncClick_NoAlbum() {
-        MainActivity activity = Mockito.mock(MainActivity.class);
         IViewHome view = spy(IViewHome.class);
         UserModel userModel = mock (UserModel.class);
-        PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         presenter.setAlbum(null);
         presenter.onButtonSyncOnce();
         verify(fragmentHome, Mockito.atLeastOnce()).alertNoAlbum();
@@ -65,9 +67,7 @@ public class PresenterHomeTest {
     @Test
     @Ignore
     public void onSyncClick_AllGrantedPermission() {
-        MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
-        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(true);
@@ -79,10 +79,8 @@ public class PresenterHomeTest {
     @Test
     @Ignore
     public void onSyncClick_store_requirement() {
-        MainActivity activity = Mockito.mock(MainActivity.class);
         when(activity.getApplicationContext()).thenReturn(mock(ContextWrapper.class));
         PermissionHandler permissionHandler = new PermissionHandler();
-        PresenterHome presenter = spy(new PresenterHome(activity, fragmentHome));
         presenter.setAlbum("test");
         AuthManager authMock = Mockito.mock(AuthManager.class);
         Mockito.when(authMock.isSignIn()).thenReturn(false);
@@ -95,10 +93,8 @@ public class PresenterHomeTest {
 
     @Test
     public void onShowAlbumList_store_requirement () throws IOException {
-        MainActivity activity = Mockito.mock(MainActivity.class);
         PermissionHandler permissionHandler = mock(PermissionHandler.class);
         when(activity.getPermissionHandler()).thenReturn(permissionHandler);
-        PresenterHome presenter = new PresenterHome(view, activity, fragmentHome, userModel, folderModel);
         AuthManager authMock = Mockito.mock(AuthManager.class);
         presenter.setAuth(authMock);
         when(activity.getFilesDir()).thenReturn(tmpFolder.newFolder());

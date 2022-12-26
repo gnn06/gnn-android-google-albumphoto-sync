@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.file.Files;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 
@@ -35,14 +34,15 @@ class PersistWallpaperStat {
      * @return null if no file exists, null if file not contains date
      */
     WallpaperStat read() {
+        Reader reader = null;
         try {
-            Reader reader = new FileReader(new File(processFolder, STAT_FILENAME));
+            reader = new FileReader(new File(processFolder, STAT_FILENAME));
             WallpaperStat result = new Gson().fromJson(reader, WallpaperStat.class);
             if (result == null) {
                 Logger logger = Logger.getLogger();
                 try {
                     logger.severe("can't read wallpaper stat. Gson returns null. processFolder=" + processFolder + ", filename=" + STAT_FILENAME + "(file=" +
-                                    FileUtils.readFileToString(new File(processFolder, PersistWallpaperStat.STAT_FILENAME), "UTF-8") + ")");
+                            FileUtils.readFileToString(new File(processFolder, PersistWallpaperStat.STAT_FILENAME), "UTF-8") + ")");
                 } catch (IOException e) {
                     logger.severe("can't read wallpaper stat. Gson returns null. can't read file " + processFolder + ", filename=" + STAT_FILENAME);
                 }
@@ -54,6 +54,12 @@ class PersistWallpaperStat {
             return result;
         } catch (FileNotFoundException e) {
             return null;
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ignored) {}
+            }
         }
     }
 }

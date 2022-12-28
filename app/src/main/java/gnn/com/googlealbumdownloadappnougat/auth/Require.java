@@ -8,7 +8,7 @@ public abstract class Require extends Exec {
     public static final int SUCCESS = 1;
     public static final int FAILURE = -1;
 
-    private Exec exec;
+    private final Exec exec;
 
     Require(Exec exec) {
         this.exec = exec;
@@ -16,7 +16,6 @@ public abstract class Require extends Exec {
 
     /**
      * called to check if requirement is meet
-     * @return
      */
     abstract boolean check();
 
@@ -48,7 +47,6 @@ public abstract class Require extends Exec {
 
     /**
      * have to be called after require
-     * @param result
      */
     public void resumeRequirement(int result) {
         if (result == SUCCESS) {

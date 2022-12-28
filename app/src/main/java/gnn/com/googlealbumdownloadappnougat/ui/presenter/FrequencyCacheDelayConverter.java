@@ -8,7 +8,6 @@ public class FrequencyCacheDelayConverter {
 
     /**
      * int frequencySync fréquence de téléchargement en minute
-     * @param frequencyHour
      */
     static public int getFrequencySyncHourMinute(int frequencyHour) {
         if (frequencyHour == Frequency.NEVER)
@@ -23,7 +22,6 @@ public class FrequencyCacheDelayConverter {
 
     /**
      * @return fréquence in hour
-     * @param frequencyDay
      */
     static public int getFrequencyUpdatePhotosDayHour(int frequencyDay) {
         if (frequencyDay == Frequency.NEVER)
@@ -38,7 +36,6 @@ public class FrequencyCacheDelayConverter {
 
     /**
      * @return fréquence in hour
-     * @param frequencyHour
      */
     static public int getFrequencyUpdatePhotosHourHour(int frequencyHour) {
         if (frequencyHour == Frequency.NEVER)

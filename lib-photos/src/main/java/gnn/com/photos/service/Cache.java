@@ -47,7 +47,6 @@ public class Cache {
     /**
      * if no cache file, store only in memory
      * @return null if cache no cache or expired
-     * @throws IOException
      */
     public ArrayList<Photo> get() throws IOException {
         Logger logger = Logger.getLogger();

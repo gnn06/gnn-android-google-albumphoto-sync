@@ -1,11 +1,9 @@
 package gnn.com.photos.service;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -14,7 +12,6 @@ import com.google.auth.oauth2.OAuth2Credentials;
 import com.google.photos.library.v1.PhotosLibraryClient;
 import com.google.photos.library.v1.PhotosLibrarySettings;
 
-import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 
 public class PhotoProviderAndroid extends PhotoProvider {
 

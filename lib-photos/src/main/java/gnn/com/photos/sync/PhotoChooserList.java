@@ -15,7 +15,6 @@ class PhotoChooserList {
     /**
      * try to choose photo that was not previously chosen
      * @param quantity should be > 0
-     * @param previousPhotos
      */
     public ArrayList<Photo> chooseOneList(ArrayList<Photo> remoteLst, int quantity, ArrayList<Photo> previousPhotos) {
         Logger logger = Logger.getLogger();

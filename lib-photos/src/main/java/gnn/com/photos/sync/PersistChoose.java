@@ -53,7 +53,7 @@ public class PersistChoose {
             if (reader != null)
                 try {
                     reader.close();
-                } catch (IOException ignored) {};
+                } catch (IOException ignored) {}
         }
     }
 

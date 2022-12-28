@@ -16,7 +16,6 @@ public class UITextHelper {
 
     /**
      * @param lastSyncTime can be null
-     * @param lastWallpaperTime
      */
     String getLastTimesString(String lastSyncTime, String lastWallpaperTime) {
         String result = "";

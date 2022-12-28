@@ -1,10 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat.photos;
 
-import android.content.Context;
-
 import androidx.work.Data;
-
-import java.io.File;
 
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.service.SyncWorker;

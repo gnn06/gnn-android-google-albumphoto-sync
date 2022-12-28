@@ -2,7 +2,6 @@ package gnn.com.googlealbumdownloadappnougat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -53,13 +52,9 @@ public class MainActivity extends AppCompatActivity implements IView {
     private final UITextHelper UITextHelper = new UITextHelper(this);
 
     private PresenterMain presenter;
-    private PresenterWizard presenterWizard;
 
     private PermissionHandler permissionHandler;
 
-    private AuthManager auth;
-    private UserModel userModel;
-    private FolderModel folderModel;
     private ViewModelWizard wizardModel;
     private PresenterHome presenterHome;
     private AppBarConfiguration appBarConfiguration;
@@ -76,14 +71,14 @@ public class MainActivity extends AppCompatActivity implements IView {
         ServiceLocator.getInstance().setPersistMain(new PersistPrefMain(getApplicationContext()));
 
         permissionHandler = new PermissionHandler();
-        auth = new AuthManager(this);
+        AuthManager auth = new AuthManager(this);
 
-        userModel = new ViewModelProvider(this).get(UserModel.class);
-        folderModel = new ViewModelProvider(this).get(FolderModel.class);
+        UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
+        FolderModel folderModel = new ViewModelProvider(this).get(FolderModel.class);
         wizardModel = new ViewModelProvider(this).get(ViewModelWizard.class);
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
-        presenterWizard = new PresenterWizard(this, null, wizardModel);
+        PresenterWizard presenterWizard = new PresenterWizard(this, null, wizardModel);
         presenterWizard.onAppStart();
 
         new Notification(this).createNotificationChannel();
@@ -179,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         TransitionManager.beginDelayedTransition(parent, transition);
         if (visible) {
             findViewById(R.id.fragment_container_wizard).setVisibility(View.VISIBLE);
-        } else if (!visible) {
+        } else {
             findViewById(R.id.fragment_container_wizard).setVisibility(View.GONE);
         }
     }

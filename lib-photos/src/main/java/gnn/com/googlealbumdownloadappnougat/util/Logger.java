@@ -59,7 +59,7 @@ public class Logger {
                 try {
                     fw = new FileWriter(_filename, true);
                     Date date = new Date();
-                    fw.write(date.toString() + " " + message + "\n");
+                    fw.write(date + " " + message + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {

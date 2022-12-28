@@ -5,8 +5,8 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 public class SignInWithAuthRequirement extends Require {
 
-    private AuthManager auth;
-    private IView view;
+    private final AuthManager auth;
+    private final IView view;
     final private UserModel userModel;
 
     public SignInWithAuthRequirement(Exec exec, AuthManager auth, IView view, UserModel userModel) {

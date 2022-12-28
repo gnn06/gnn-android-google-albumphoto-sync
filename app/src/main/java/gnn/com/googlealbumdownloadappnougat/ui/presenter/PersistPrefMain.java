@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
-import gnn.com.photos.service.Cache;
 
 /**
  * Default values are taken from Presenter
@@ -40,7 +39,6 @@ public class PersistPrefMain {
 
     /**
      * Get data from UI throught Persenter and store then into preferences
-     * @param presenter
      */
     public void save(IPresenterHome presenter) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
@@ -81,7 +79,6 @@ public class PersistPrefMain {
 
     /**
      * retrieves data from Preferences and inject into Presenter
-     * @param presenter
      */
     public void restore(IPresenterHome presenter) {
         // Restore data
@@ -113,7 +110,6 @@ public class PersistPrefMain {
      * Used to restore main UI and from schedule UI to enqueue work
      * UI Unit and Préference Unit are the same
      * If no data are préviously saved, return default values
-     * @return
      */
     SyncData getData() {
         SyncData data = new SyncData();

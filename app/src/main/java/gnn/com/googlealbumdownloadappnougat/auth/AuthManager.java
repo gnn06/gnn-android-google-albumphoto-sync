@@ -24,7 +24,7 @@ public class AuthManager {
         this.activity = activity;
     }
 
-    private Activity activity;
+    private final Activity activity;
 
     public boolean isSignIn() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);

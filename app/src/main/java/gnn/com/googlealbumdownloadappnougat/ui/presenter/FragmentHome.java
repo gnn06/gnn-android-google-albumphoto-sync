@@ -39,7 +39,6 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
 
     private static final String TAG = "FRAGMENTHOME";
     private IPresenterHome presenter;
-    private FolderModel folderModel;
 
     public FragmentHome() {
         super(R.layout.fragment_home);
@@ -104,7 +103,7 @@ public class FragmentHome extends FragmentHighlight implements IViewHome {
             }
         });
 
-        this.folderModel = new ViewModelProvider(requireActivity()).get(FolderModel.class);
+        FolderModel folderModel = new ViewModelProvider(requireActivity()).get(FolderModel.class);
         folderModel.getFolder().observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(String folder) {

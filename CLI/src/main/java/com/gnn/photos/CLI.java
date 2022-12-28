@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.photos.service.RemoteException;
-import gnn.com.photos.sync.Synchronizer;
 
 public class CLI {
     public static void main(String[] args) {

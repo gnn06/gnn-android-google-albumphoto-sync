@@ -12,7 +12,7 @@ import gnn.com.photos.service.RemoteException;
 
 public class GetAlbumsTask extends PhotosAsyncTask<Void, Void, ArrayList<String>> {
 
-    private PhotosRemoteService prs;
+    private final PhotosRemoteService prs;
 
     public GetAlbumsTask(IPresenterHome presenter, PhotosRemoteService prs, Context context) {
         super(presenter, context);

@@ -40,7 +40,7 @@ public class PersistSyncTime extends PersistTime{
             if (reader != null)
                 try {
                     reader.close();
-                } catch (IOException ignored) {};
+                } catch (IOException ignored) {}
         }
 
     }

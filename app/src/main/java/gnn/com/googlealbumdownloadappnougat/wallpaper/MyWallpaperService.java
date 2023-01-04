@@ -60,45 +60,45 @@ public class MyWallpaperService extends WallpaperService {
         public void onSurfaceCreated(SurfaceHolder holder) {
             super.onSurfaceCreated(holder);
             Log.d("GOI-WALLPAPER","onSurfaceCreated");
-            WallpaperSetter wallpapersetter = new WallpaperSetter(getApplicationContext());
-            wallpapersetter.refreshFromCurrent(holder);
         }
 
-        @Override
-        public void onOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset) {
-            // called quand on fait glisser le desktop pour voir les icones des apps de gauche et droite
-            super.onOffsetsChanged(xOffset, yOffset, xOffsetStep, yOffsetStep, xPixelOffset, yPixelOffset);
-            Log.d("GOI-WALLPAPER","onOffsetsChanged");
-        }
+//        @Override
+//        public void onOffsetsChanged(float xOffset, float yOffset, float xOffsetStep, float yOffsetStep, int xPixelOffset, int yPixelOffset) {
+//            // called quand on fait glisser le desktop pour voir les icones des apps de gauche et droite
+//            super.onOffsetsChanged(xOffset, yOffset, xOffsetStep, yOffsetStep, xPixelOffset, yPixelOffset);
+//            Log.d("GOI-WALLPAPER","onOffsetsChanged");
+//        }
 
-        @Override
-        public void onSurfaceRedrawNeeded(SurfaceHolder holder) {
-            super.onSurfaceRedrawNeeded(holder);
-            Log.d("GOI-WALLPAPER", "onSurfaceRedrawNeeded");
-        }
+//        @Override
+//        public void onSurfaceRedrawNeeded(SurfaceHolder holder) {
+//            super.onSurfaceRedrawNeeded(holder);
+//            Log.d("GOI-WALLPAPER", "onSurfaceRedrawNeeded");
+//        }
 
-        @Override
-        public void onVisibilityChanged(boolean visible) {
-            super.onVisibilityChanged(visible);
-            Log.d("GOI-WALLPAPER","onVisibility" + visible);
-        }
+//        @Override
+//        public void onVisibilityChanged(boolean visible) {
+//            super.onVisibilityChanged(visible);
+//            Log.d("GOI-WALLPAPER","onVisibility" + visible);
+//        }
 
-        @Override
-        public void onSurfaceDestroyed(SurfaceHolder holder) {
-            super.onSurfaceDestroyed(holder);
-            Log.d("GOI-WALLPAPER","onSurfaceDestroyed, isPreview=" + isPreview());
-        }
+//        @Override
+//        public void onSurfaceDestroyed(SurfaceHolder holder) {
+//            super.onSurfaceDestroyed(holder);
+//            Log.d("GOI-WALLPAPER","onSurfaceDestroyed, isPreview=" + isPreview());
+//        }
 
-        @Override
-        public void onDesiredSizeChanged(int desiredWidth, int desiredHeight) {
-            super.onDesiredSizeChanged(desiredWidth, desiredHeight);
-            Log.d("GOI-WALLPAPER","onDesiredSizeChanged");
-        }
+//        @Override
+//        public void onDesiredSizeChanged(int desiredWidth, int desiredHeight) {
+//            super.onDesiredSizeChanged(desiredWidth, desiredHeight);
+//            Log.d("GOI-WALLPAPER","onDesiredSizeChanged");
+//        }
 
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             super.onSurfaceChanged(holder, format, width, height);
-            Log.d("GOI-WALLPAPER","onSurfaceChanged");
+            Log.d("GOI-WALLPAPER","onSurfaceChanged" + format + "," + width + "x" + height);
+            WallpaperSetter wallpapersetter = new WallpaperSetter(getApplicationContext());
+            wallpapersetter.refreshFromCurrent(holder);
         }
     }
 

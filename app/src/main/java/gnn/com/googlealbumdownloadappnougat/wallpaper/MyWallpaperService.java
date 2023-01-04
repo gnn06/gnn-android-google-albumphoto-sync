@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 
 import java.io.File;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 import gnn.com.photos.sync.WallpaperObserver;
 
@@ -32,6 +33,8 @@ public class MyWallpaperService extends WallpaperService {
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
             Log.d("GOI","onCreate, isPreview=" + isPreview());
+            // to avoid nullPointer when phone restarts
+            Logger.configure(getCacheDir().getAbsolutePath());
             if (!isPreview()) {
                 ChooseOneLocalPhotoPersist chooser = ChooseOneLocalPhotoPersist.getInstance();
                 chooser.addObserver(this);

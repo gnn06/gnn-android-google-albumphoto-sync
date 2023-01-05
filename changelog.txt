@@ -54,3 +54,10 @@ fix : tient compte du délai de synchro dans les worker
 fix : avoid error when gson returns null
 refact : add access token dans les logs
 feat : affiche un warning quand l'application perd l'authentification et permet de redemander les google authorization.
+
+1.6.5 05/01/2023
+fix : livewallpaper not active on phone restart
+fix : poorly resized image on landscape rotation
+fix : random error on bad close reader
+fix : livewallpaper warning always on android 13
+fix : avoid error on wrongstat file

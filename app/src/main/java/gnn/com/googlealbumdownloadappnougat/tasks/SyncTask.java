@@ -3,8 +3,6 @@ package gnn.com.googlealbumdownloadappnougat.tasks;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.api.gax.rpc.PermissionDeniedException;
-
 import java.io.File;
 import java.io.IOException;
 

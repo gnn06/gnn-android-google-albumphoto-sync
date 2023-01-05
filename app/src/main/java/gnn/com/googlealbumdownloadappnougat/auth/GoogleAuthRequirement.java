@@ -1,13 +1,12 @@
 package gnn.com.googlealbumdownloadappnougat.auth;
 
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
-import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 public class GoogleAuthRequirement extends Require {
 
-    private AuthManager auth;
-    private IView view;
+    private final AuthManager auth;
+    private final IView view;
 
     public GoogleAuthRequirement(Exec exec, AuthManager auth, IView view) {
         super(exec);

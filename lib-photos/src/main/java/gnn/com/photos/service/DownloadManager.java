@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
-import gnn.com.photos.sync.Synchronizer;
 
 public class DownloadManager {
 
@@ -39,7 +38,7 @@ public class DownloadManager {
                 count++;
                 synchronizer.incCurrentDownload();
             } catch (MalformedURLException e) {
-                logger.severe("erreur " + photo + e.toString());
+                logger.severe("erreur " + photo + e);
             }
         }
         logger.fine("downloaded count = " + count);

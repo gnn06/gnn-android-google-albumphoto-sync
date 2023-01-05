@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.io.File;
 
-import gnn.com.googlealbumdownloadappnougat.tasks.SyncTask;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.sync.Synchronizer;
 

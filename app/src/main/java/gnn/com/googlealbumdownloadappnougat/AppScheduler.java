@@ -1,7 +1,6 @@
 package gnn.com.googlealbumdownloadappnougat;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;

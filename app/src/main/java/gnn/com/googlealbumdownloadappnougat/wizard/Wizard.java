@@ -9,18 +9,10 @@ import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 
 public class Wizard {
 
-    final private AuthManager authManager;
     private final PersistPrefMain persistPrefMain;
-    private final MyWallpaperService wallpaperService;
-    private final WallpaperScheduler wallpaperScheduler;
-    private final Context context;
 
     public Wizard(AuthManager authManager, PersistPrefMain persistPrefMain, MyWallpaperService wallpaperService, WallpaperScheduler wallpaperScheduler, Context context) {
-        this.authManager = authManager;
         this.persistPrefMain = persistPrefMain;
-        this.wallpaperService = wallpaperService;
-        this.wallpaperScheduler = wallpaperScheduler;
-        this.context = context;
     }
 
 //    public WizardStep getNextStepDynamic() {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gnn.com.photos.Photo;
-import gnn.com.photos.sync.Synchronizer;
 
 public abstract class PhotoProvider {
 

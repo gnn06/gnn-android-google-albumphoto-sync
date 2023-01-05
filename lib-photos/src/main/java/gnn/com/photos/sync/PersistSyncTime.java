@@ -28,13 +28,19 @@ public class PersistSyncTime extends PersistTime{
      * @return list are null
      */
     public SyncData retrieveSyncResult() {
+        Reader reader = null;
         try {
-            Reader reader = new FileReader(new File(processFolder, FILENAME));
+            reader = new FileReader(new File(processFolder, FILENAME));
             // Gson use default constructor
             SyncData result = gson.fromJson(reader, SyncData.class);
             return result;
         } catch (FileNotFoundException|JsonSyntaxException e) {
             return null;
+        } finally {
+            if (reader != null)
+                try {
+                    reader.close();
+                } catch (IOException ignored) {}
         }
 
     }

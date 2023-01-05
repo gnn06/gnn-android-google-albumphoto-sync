@@ -9,7 +9,7 @@ import gnn.com.googlealbumdownloadappnougat.R;
 
 /**
  * Choose a frequency
- * @return call the callback as presenter.setFrequencexxx(frequency value from array)
+ * call the callback as presenter.setFrequencexxx(frequency value from array)
  *
  */
 class DialogFrequency {

@@ -7,8 +7,8 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 
 public class WritePermissionRequirement extends Require {
 
-    private AuthManager auth;
-    private IView view;
+    private final AuthManager auth;
+    private final IView view;
     final private UserModel userModel;
 
     public WritePermissionRequirement(@Nonnull Exec exec, AuthManager auth, IView view, UserModel userModel) {

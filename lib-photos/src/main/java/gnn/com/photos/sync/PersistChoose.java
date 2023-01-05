@@ -36,8 +36,9 @@ public class PersistChoose {
      * @return null if FileNotFound, null if file mal formated
      */
     PhotoChoose read() {
+        Reader reader = null;
         try {
-            Reader reader = new FileReader(new File(processFolder, FILENAME));
+            reader = new FileReader(new File(processFolder, FILENAME));
             PhotoChoose choose = new Gson().fromJson(reader, PhotoChoose.class);
             if (choose == null || choose.photo == null || choose.chooseDate == null) {
                 Logger logger = Logger.getLogger();
@@ -48,6 +49,11 @@ public class PersistChoose {
             }
         } catch (FileNotFoundException e) {
             return null;
+        } finally {
+            if (reader != null)
+                try {
+                    reader.close();
+                } catch (IOException ignored) {}
         }
     }
 

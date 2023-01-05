@@ -15,7 +15,7 @@ public class PresenterWizard {
     final private FragmentActivity activity;
     private final PersistPrefMain persist;
     private final ViewModelWizard viewModelWizard;
-    private Wizard wizard;
+    private final Wizard wizard;
 
     public PresenterWizard(FragmentActivity activity, FragmentWizard view, ViewModelWizard viewModel) {
         this.view = view;

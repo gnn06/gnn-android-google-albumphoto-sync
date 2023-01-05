@@ -17,7 +17,6 @@ import gnn.com.photos.stat.stat.WallpaperStatProvider;
 public class ChooseOneLocalPhotoPersist {
 
     private File photoFolder;
-    private File processFolder;
     private PersistWallpaperTime persistChooseTime;
     private PersistChoose persistChoose;
     private WallpaperStatProvider statProvider;
@@ -50,10 +49,9 @@ public class ChooseOneLocalPhotoPersist {
     private void config(File photoFolder, File processFolder) {
         this.isConfigured = true;
         this.photoFolder = photoFolder;
-        this.processFolder = processFolder;
-        this.persistChooseTime = new PersistWallpaperTime(this.processFolder);
-        this.persistChoose = new PersistChoose(this.processFolder);
-        this.statProvider = new WallpaperStatProvider(this.processFolder);
+        this.persistChooseTime = new PersistWallpaperTime(processFolder);
+        this.persistChoose = new PersistChoose(processFolder);
+        this.statProvider = new WallpaperStatProvider(processFolder);
     }
 
     public void chooseOne() {
@@ -86,7 +84,6 @@ public class ChooseOneLocalPhotoPersist {
     /**
      *
      * @return null if no photo found
-     * @param folder
      */
     private Photo chooseLocalPhoto(File folder) {
         PhotosLocalService pls = new PhotosLocalService();

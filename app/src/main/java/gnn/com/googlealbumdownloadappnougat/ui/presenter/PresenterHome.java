@@ -60,8 +60,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private final MainActivity activity;
     private final FragmentHome fragment;
-    private UserModel userModel;
-    private FolderModel folderModel;
+    private final UserModel userModel;
+    private final FolderModel folderModel;
 
     public PresenterHome(MainActivity activity, FragmentHome fragmentHome) {
         this.activity = activity;
@@ -254,7 +254,7 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
      * default value = "Pictures"
      * persistant data
      */
-    private String defaultFolderHuman = Environment.DIRECTORY_PICTURES;
+    private final String defaultFolderHuman = Environment.DIRECTORY_PICTURES;
 
     @Override
     public String getDefaultFolderHuman() {

@@ -11,12 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import gnn.com.googlealbumdownloadappnougat.R;
 import gnn.com.googlealbumdownloadappnougat.wizard.ViewModelWizard;
-import gnn.com.googlealbumdownloadappnougat.wizard.Wizard;
 import gnn.com.googlealbumdownloadappnougat.wizard.WizardStep;
 
 public class FragmentHighlight extends Fragment {
-
-    private ViewModelWizard modelWizard;
 
     public FragmentHighlight(int fragment_home) {
         super(fragment_home);
@@ -25,7 +22,7 @@ public class FragmentHighlight extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        modelWizard = new ViewModelProvider(requireActivity()).get(ViewModelWizard.class);
+        ViewModelWizard modelWizard = new ViewModelProvider(requireActivity()).get(ViewModelWizard.class);
         modelWizard.getLiveStep().observe(getViewLifecycleOwner(), new Observer<WizardStep>() {
             @Override
             public void onChanged(WizardStep step) {

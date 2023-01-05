@@ -6,12 +6,11 @@ import java.util.GregorianCalendar;
 
 public class ExpirationChecker {
 
-    private Date cacheDate;
-    private int maxAgeMinute;
+    private final Date cacheDate;
+    private final int maxAgeMinute;
 
     /**
      *
-     * @param cacheDate
      * @param maxAgeMinute in minutes
      */
     public ExpirationChecker(Date cacheDate, int maxAgeMinute) {

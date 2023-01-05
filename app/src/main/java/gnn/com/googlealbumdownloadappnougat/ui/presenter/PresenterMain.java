@@ -22,7 +22,6 @@ public class PresenterMain implements IPresenterMain {
     private final PermissionHandler permissionHandler;
     private final Activity activity;
     private final ApplicationContext applicationContext;
-    private final PresenterHome presenterHome;
 
     public PresenterMain(AuthManager auth, IView view, UserModel userModel, PermissionHandler permissionHandler, Activity activity, PresenterHome presenterHome) {
         this.auth = auth;
@@ -30,7 +29,6 @@ public class PresenterMain implements IPresenterMain {
         this.userModel = userModel;
         this.permissionHandler = permissionHandler;
         this.activity = activity;
-        this.presenterHome = presenterHome;
         applicationContext = ApplicationContext.getInstance(this.activity);
     }
 

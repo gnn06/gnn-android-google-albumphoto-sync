@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
-import gnn.com.photos.sync.Synchronizer;
 
 public class PhotosLocalService {
 

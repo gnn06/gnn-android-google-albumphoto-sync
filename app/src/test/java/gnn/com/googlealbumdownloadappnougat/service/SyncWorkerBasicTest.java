@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.inOrder;
@@ -135,7 +136,7 @@ public class SyncWorkerBasicTest {
 
     @Test
     public void test_exception() throws Exception {
-        doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom("album", destinationFolder, null, -1);
+        doThrow(new RemoteException(null)).when(synchronizerMock).syncRandom(null, null, null, 0);
         PowerMockito.whenNew(SynchronizerDelayedAndroid.class).withAnyArguments().thenReturn(synchronizerDelayedMock);
 
         // when
@@ -159,7 +160,7 @@ public class SyncWorkerBasicTest {
         // then
         assertThat(result, is(ListenableWorker.Result.success()));
         inOrder.verify(persistOauth).reset();
-        inOrder.verify(synchronizerDelayedMock).syncRandom(anyString(), any(), eq(null), anyInt());
+        inOrder.verify(synchronizerDelayedMock).syncRandom(any(), any(), any(), anyInt());
     }
 
 }

@@ -37,15 +37,7 @@ public class WallpaperSchedulerWithPermission {
             @Override
             public void exec() {
                 ApplicationContext appContext = ApplicationContext.getInstance(context);
-                PersistPrefMain preferences = new PersistPrefMain(context);
-                scheduler.schedule(
-                        preferences.getPhotoPath(),
-                        frequencyWallpaperMinute,
-                        preferences.getAlbum(), preferences.getQuantity(), preferences.getRename(),
-                        appContext);
-//                view.enableFrequencyWallpaper(checked);
-//                view.enableFrequencySync(checked);
-//                view.enableFrequencyUpdatePhotos(checked);
+                scheduler.schedule(frequencyWallpaperMinute, appContext);
             }
         };
         Require require = SignInGoogleAPIWriteRequirementBuilder.build(exec, authManager, view, userModel);

@@ -67,10 +67,10 @@ public class SyncWorker extends Worker implements  ISyncOauth<Worker.Result> {
         SyncProgressObserver observer = new SynchronizerWorker(this);
         synchronizer.setObserver(observer);
 
-        String albumName = getInputData().getString(WallPaperWorker.PARAM_ALBUM);
-        String destinationFolder = getInputData().getString(WallPaperWorker.PARAM_FOLDER_PATH);
-        String rename = getInputData().getString(WallPaperWorker.PARAM_RENAME);
-        int quantity = getInputData().getInt(WallPaperWorker.PARAM_QUANTITY, -1);
+        String destinationFolder = persistPrefMain.getPhotoPath();
+        String albumName = persistPrefMain.getAlbum();
+        String rename = persistPrefMain.getRename();
+        int quantity = persistPrefMain.getQuantity();
 
         // Doc Periodic work is never successed, always enqueued
 

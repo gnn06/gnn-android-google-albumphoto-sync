@@ -35,8 +35,7 @@ public class WallpaperScheduler extends AppScheduler {
     /**
      * maxAge in minutes
      */
-    public void schedule(String destinationFolder, long wallpaperMaxAgeMinute,
-                         String album, int quantity, String rename,
+    public void schedule(long wallpaperMaxAgeMinute,
                          ApplicationContext appContext) {
         Logger logger = Logger.getLogger();
         logger.fine("schedule");
@@ -44,11 +43,6 @@ public class WallpaperScheduler extends AppScheduler {
         Data data = new Data.Builder()
                 .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
                 .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
-                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
-                .putString(WallPaperWorker.PARAM_ALBUM, album)
-                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
-                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
-                .putString(WallPaperWorker.PARAM_RENAME, rename)
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(WallPaperWorker.class, wallpaperMaxAgeMinute, TimeUnit.MINUTES)
                 .setInputData(data)

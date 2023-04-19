@@ -26,12 +26,8 @@ import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
  */
 public class WallPaperWorker extends Worker {
 
-    public static final String PARAM_FOLDER_PATH = "folderPath";
     public static final String PARAM_CACHE_ABSOLUTE_PATH = "cacheAbsolutePath";
     public static final String PARAM_PROCESS_ABSOLUTE_PATH = "processAbsolutePath";
-    public static final String PARAM_ALBUM = "album";
-    public static final String PARAM_RENAME = "rename";
-    public static final String PARAM_QUANTITY = "quantity";
 
     public WallPaperWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -45,11 +41,11 @@ public class WallPaperWorker extends Worker {
         try {
                 logger.info("start wallpaper worker, @WallPaperWork=" + this.hashCode());
 
-                String destinationPath = getInputData().getString(PARAM_FOLDER_PATH);
-                File destinationFolder = getDestinationFolder(destinationPath);
-
                 // TODO Need that frequencies was persisted before schedule
                 PersistPrefMain persistMain = new PersistPrefMain(getApplicationContext());
+
+                String destinationPath = persistMain.getPhotoPath();
+                File destinationFolder = getDestinationFolder(destinationPath);
 
                 int frequencySyncHour = persistMain.getFrequencyDownload();
                 int frequencyUpdateHour = persistMain.getFrequencyUpdatePhotos();
@@ -62,9 +58,9 @@ public class WallPaperWorker extends Worker {
                 int delaySyncMin = FrequencyCacheDelayConverter.getFrequencySyncHourMinute(frequencySyncHour);
                 int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
 
-                String albumName = getInputData().getString(PARAM_ALBUM);
-                String rename = getInputData().getString(PARAM_RENAME);
-                int quantity = getInputData().getInt(PARAM_QUANTITY, -1);
+                String albumName = persistMain.getAlbum();
+                String rename = persistMain.getRename();
+                int quantity = persistMain.getQuantity();
 
                 try {
                     // make a sync to download photo if necessary
@@ -88,6 +84,9 @@ public class WallPaperWorker extends Worker {
             }
     }
 
+    /**
+     * Transform "Pictures/wallpaper" into "/storage/emulated/0/Pictures/wallpaper"
+     */
     private File getDestinationFolder(String album) {
         return Environment.getExternalStoragePublicDirectory(album);
     }

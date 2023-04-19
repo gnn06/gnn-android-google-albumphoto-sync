@@ -41,14 +41,10 @@ public class SyncScheduler extends AppScheduler {
         return "GNN-WORK-SYNC";
     }
 
-    void schedule(String album, String destinationFolder, String rename, int quantity, int intervalHour, ApplicationContext appContext) {
+    void schedule(int intervalHour, ApplicationContext appContext) {
         Data data = new Data.Builder()
                 .putString(WallPaperWorker.PARAM_CACHE_ABSOLUTE_PATH, appContext.getCachePath())
                 .putString(WallPaperWorker.PARAM_PROCESS_ABSOLUTE_PATH, appContext.getProcessPath())
-                .putString(WallPaperWorker.PARAM_ALBUM, album)
-                .putString(WallPaperWorker.PARAM_FOLDER_PATH, destinationFolder)
-                .putString(WallPaperWorker.PARAM_RENAME, rename)
-                .putInt(WallPaperWorker.PARAM_QUANTITY, quantity)
 
                 .build();
         PeriodicWorkRequest work = new PeriodicWorkRequest.Builder(SyncWorker.class, intervalHour, TimeUnit.HOURS)
@@ -60,13 +56,8 @@ public class SyncScheduler extends AppScheduler {
     }
 
     public void schedule(int intervalHour) {
-        PersistPrefMain persist = ServiceLocator.getInstance().getPersistMain();
-        String album = persist.getAlbum();
-        String folder = persist.getPhotoPath();
-        String rename = persist.getRename();
-        int quantity = persist.getQuantity();
         ApplicationContext appContext = ApplicationContext.getInstance(context);
-        schedule(album, folder, rename, quantity, intervalHour, appContext);
+        schedule(intervalHour, appContext);
     }
 
     public void cancel() {

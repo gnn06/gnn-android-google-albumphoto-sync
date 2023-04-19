@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -99,7 +98,7 @@ public class SyncSchedulerTest {
         assertThat(info.get().size(), is(0));
 
         // when
-        UT_SyncScheduler.schedule("album", "folder", null, -1, 24, ApplicationContext.getInstance(context));
+        UT_SyncScheduler.schedule(24, ApplicationContext.getInstance(context));
 
         // inutile de testDrver.setPeroidDelay car en mode syncExecutor
         // testDriver.setPeriodDelayMet(info.get().get(0).getId());

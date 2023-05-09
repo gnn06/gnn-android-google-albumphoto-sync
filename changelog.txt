@@ -61,3 +61,6 @@ fix : poorly resized image on landscape rotation
 fix : random error on bad close reader
 fix : livewallpaper warning always on android 13
 fix : avoid error on wrongstat file
+
+1.6.6 25/05/2023
+feat : download photos at the screen size

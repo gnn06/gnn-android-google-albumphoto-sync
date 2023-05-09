@@ -13,12 +13,14 @@ import java.io.File;
 import java.io.IOException;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerWorker;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallPaperWorker;
+import gnn.com.photos.LibContext;
 import gnn.com.photos.service.RemoteException;
 import gnn.com.photos.service.SyncProgressObserver;
 import gnn.com.photos.sync.SynchronizerDelayed;
@@ -62,8 +64,9 @@ public class SyncWorker extends Worker implements  ISyncOauth<Worker.Result> {
         int delayUpdateHour = FrequencyCacheDelayConverter.getFrequencyUpdatePhotosHourHour(frequencyUpdateHour);
         int delaySyncMin = FrequencyCacheDelayConverter.getFrequencySyncHourMinute(frequencySyncHour);
 
+        ScreenSizeAccessor screenSizeAccessor = new ScreenSizeAccessor(getApplicationContext());
         Context activity = getApplicationContext();
-        SynchronizerDelayed synchronizer = new SynchronizerDelayedAndroid(delaySyncMin, activity, cacheFile, delayUpdateHour, processFolder);
+        SynchronizerDelayed synchronizer = new SynchronizerDelayedAndroid(delaySyncMin, activity, cacheFile, delayUpdateHour, processFolder, screenSizeAccessor);
         SyncProgressObserver observer = new SynchronizerWorker(this);
         synchronizer.setObserver(observer);
 

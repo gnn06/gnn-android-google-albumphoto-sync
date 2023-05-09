@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.auth.GoogleAuthRequirement;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
@@ -13,6 +14,7 @@ import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerAndroid;
 import gnn.com.googlealbumdownloadappnougat.service.ActivitySchedule;
 import gnn.com.googlealbumdownloadappnougat.ui.view.IView;
 import gnn.com.photos.service.CacheManager;
+import gnn.com.photos.service.IScreenSizeAccessor;
 
 public class PresenterMain implements IPresenterMain {
 
@@ -68,7 +70,8 @@ public class PresenterMain implements IPresenterMain {
 
     public SynchronizerAndroid getSync() {
         PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-        return new SynchronizerAndroid(activity, applicationContext.getCacheFile(), persistPref.getFrequencyUpdatePhotos(), applicationContext.getProcessFolder());
+        IScreenSizeAccessor screenSize = new ScreenSizeAccessor(activity);
+        return new SynchronizerAndroid(activity, applicationContext.getCacheFile(), persistPref.getFrequencyUpdatePhotos(), applicationContext.getProcessFolder(), screenSize);
     }
 
 }

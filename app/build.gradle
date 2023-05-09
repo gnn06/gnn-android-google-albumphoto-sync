@@ -16,7 +16,7 @@ android {
         // targetSdkVersion à 30 depuis Novembre 2021
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.6.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

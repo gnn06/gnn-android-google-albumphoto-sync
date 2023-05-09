@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.MainActivity;
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.Exec;
@@ -46,6 +47,7 @@ import gnn.com.googlealbumdownloadappnougat.ui.view.IViewHome;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.MyWallpaperService;
 import gnn.com.googlealbumdownloadappnougat.wallpaper.WallpaperScheduler;
 import gnn.com.photos.service.Cache;
+import gnn.com.photos.service.IScreenSizeAccessor;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.stat.stat.WallpaperStat;
 import gnn.com.photos.stat.stat.WallpaperStatProvider;
@@ -93,7 +95,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
     public SynchronizerTask getSync() {
         if (this.sync == null) {
             PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-            this.sync = new SynchronizerTask(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
+            ScreenSizeAccessor screenSize = new ScreenSizeAccessor(this.activity);
+            this.sync = new SynchronizerTask(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder(), screenSize);
         }
         return sync;
     }
@@ -363,7 +366,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
 
     private SynchronizerAndroid getSynchronizer() {
         PersistPrefMain persistPref = new PersistPrefMain(this.activity);
-        return new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder());
+        IScreenSizeAccessor screenSize = new ScreenSizeAccessor(this.activity);
+        return new SynchronizerAndroid(activity, getCacheFile(), persistPref.getFrequencyUpdatePhotos(), getProcessFolder(), screenSize);
     }
 }
 

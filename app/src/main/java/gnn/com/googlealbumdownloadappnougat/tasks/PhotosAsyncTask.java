@@ -13,7 +13,7 @@ abstract class PhotosAsyncTask<Params, Progress, Result> extends AsyncTask<Param
 
     static final String TAG = "goi";
 
-    private final Context context;
+    protected final Context context;
     private boolean error = false;
     private String errorMessage;
     protected IPresenterHome presenter;

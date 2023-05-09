@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
@@ -23,10 +22,12 @@ import javax.annotation.Nonnull;
 
 import gnn.com.googlealbumdownloadappnougat.ApplicationContext;
 import gnn.com.googlealbumdownloadappnougat.R;
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.PersistChoose;
+import gnn.com.util.ScreenSize;
 
 /**
  * Set a wallpaper. Called by Chooser.
@@ -71,11 +72,11 @@ public class WallpaperSetter {
     private void setWallpaper(Bitmap bitmap, SurfaceHolder holder) {
         // WallpaperManager.setBitmap set bitmap but unset current live wallpaper
         Logger logger = Logger.getLogger();
-        Point point = getScreenSize();
+        ScreenSize point = getScreenSize();
         // WindowManager.getSize = portail = 1080x1977 and paysage = 1977x1080
         // surface = 1080x2280
-        logger.finest("screen size " + point.x + "x" + point.y);
-        Log.i(TAG, "screen size " + point.x + "x" + point.y);
+        logger.finest("screen size " + point.width + "x" + point.height);
+        Log.i(TAG, "screen size " + point.width + "x" + point.height);
         if (holder != null) {
             Canvas canvas = holder.lockCanvas();
             Paint paint = new Paint();
@@ -94,12 +95,12 @@ public class WallpaperSetter {
             Canvas canvas = holder.lockCanvas();
             if (canvas != null) {
                 Paint paint = new Paint();
-                Point point = getScreenSize();
+                ScreenSize point = getScreenSize();
                 paint.setColor(Color.WHITE);
                 paint.setTextAlign(Paint.Align.CENTER);
                 double relation = Math.sqrt(canvas.getWidth() * canvas.getHeight()) / 20;
                 paint.setTextSize((float) (relation));
-                canvas.drawText("Pas de photo", point.x/2, point.y/2, paint);
+                canvas.drawText("Pas de photo", point.width/2, point.height/2, paint);
 
                 LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View view = inflater.inflate(R.layout.livewallpaper_preview, null);
@@ -109,7 +110,7 @@ public class WallpaperSetter {
                 view.layout(0,0,view.getMeasuredWidth(),view.getMeasuredHeight());
                 System.out.println("layout"+view.getMeasuredWidth()+","+view.getWidth());
                 canvas.save();
-                canvas.translate((point.x - view.getWidth())/2, (point.y - view.getHeight())/2);
+                canvas.translate((point.width - view.getWidth())/2, (point.height - view.getHeight())/2);
                 view.draw(canvas);
                 canvas.restore();
                 // start   = 0,0
@@ -121,11 +122,7 @@ public class WallpaperSetter {
     }
 
     @NonNull
-    Point getScreenSize() {
-        // As not un activity, get windowsmanager throught SystemService and not Activity.getWiindowManager
-        WindowManager wm = (WindowManager)activity.getSystemService(Context.WINDOW_SERVICE);
-        Point point = new Point();
-        wm.getDefaultDisplay().getSize(point);
-        return point;
+    ScreenSize getScreenSize() {
+        return new ScreenSizeAccessor(activity).get();
     }
 }

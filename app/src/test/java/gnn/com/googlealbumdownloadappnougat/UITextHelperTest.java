@@ -101,7 +101,7 @@ public class UITextHelperTest {
     @Test
     public void getDetailResultText_inProgress() {
         UITextHelper UITextHelper = new UITextHelper(activityMock);
-        SynchronizerTask synchronizer = new SynchronizerTask(activityMock, null, 24 * 60 * 60 * 1000, null);
+        SynchronizerTask synchronizer = new SynchronizerTask(activityMock, null, 24 * 60 * 60 * 1000, null, null);
         ArrayList<Photo> toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("aze", "12"));
         toDownloadList.add(new Photo("ZER", "13"));

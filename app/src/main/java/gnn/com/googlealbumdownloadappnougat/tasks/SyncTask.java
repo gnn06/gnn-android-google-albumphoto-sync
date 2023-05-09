@@ -6,11 +6,14 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.SyncStep;
 import gnn.com.googlealbumdownloadappnougat.auth.PersistOauthError;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerTask;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.IPresenterHome;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
+import gnn.com.photos.LibContext;
+import gnn.com.photos.service.IScreenSizeAccessor;
 import gnn.com.photos.service.RemoteException;
 
 public class SyncTask extends PhotosAsyncTask<Void, Void, Void> {

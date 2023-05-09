@@ -10,10 +10,12 @@ import androidx.work.WorkerParameters;
 
 import java.io.File;
 
+import gnn.com.googlealbumdownloadappnougat.ScreenSizeAccessor;
 import gnn.com.googlealbumdownloadappnougat.photos.SynchronizerDelayedAndroid;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.FrequencyCacheDelayConverter;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.photos.LibContext;
 import gnn.com.photos.sync.ChooseOneLocalPhotoPersist;
 
 /**
@@ -61,10 +63,11 @@ public class WallPaperWorker extends Worker {
                 String albumName = persistMain.getAlbum();
                 String rename = persistMain.getRename();
                 int quantity = persistMain.getQuantity();
+                ScreenSizeAccessor screenSizeAccessor = new ScreenSizeAccessor(getApplicationContext());
 
-                try {
+            try {
                     // make a sync to download photo if necessary
-                    SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delaySyncMin, getApplicationContext(), cacheFile, delayUpdateHour, processFolder);
+                    SynchronizerDelayedAndroid sync = new SynchronizerDelayedAndroid(delaySyncMin, getApplicationContext(), cacheFile, delayUpdateHour, processFolder, screenSizeAccessor);
                     sync.syncRandom(albumName, destinationFolder, rename, quantity);
                 } catch (Exception e) {
                     logger.severe(e.getMessage());

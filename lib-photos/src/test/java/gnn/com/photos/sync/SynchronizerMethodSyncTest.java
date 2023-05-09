@@ -17,14 +17,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
@@ -152,7 +150,7 @@ public class SynchronizerMethodSyncTest {
         // given a synchronizer with a processFolder containing a last_sync file
         File tempFile = tempFolder.newFile("last_sync");
 
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;
@@ -176,7 +174,7 @@ public class SynchronizerMethodSyncTest {
     @Test
     public void test_readLastSyncTime_null() {
         // given
-        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null) {
+        Synchronizer synchronizer = new Synchronizer(null, 24 * 60 * 60 * 1000, tempFolder.getRoot(), null, null) {
             @Override
             protected PhotosRemoteService getRemoteServiceImpl() {
                 return null;

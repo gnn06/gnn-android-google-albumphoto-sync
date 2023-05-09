@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import gnn.com.photos.LibContext;
 import gnn.com.photos.Photo;
 import gnn.com.photos.service.Cache;
+import gnn.com.photos.service.IScreenSizeAccessor;
 import gnn.com.photos.service.PhotosLocalService;
 import gnn.com.photos.service.PhotosRemoteService;
 import gnn.com.photos.service.RemoteException;
@@ -20,11 +22,12 @@ public abstract class Synchronizer implements SyncProgressObserver {
     protected final long cacheMaxAgeHour;
     protected final File processFolder;
 
-    public Synchronizer(File cacheFile, long cacheMaxAgeHour, File processFolder, SyncProgressObserver observer) {
+    public Synchronizer(File cacheFile, long cacheMaxAgeHour, File processFolder, SyncProgressObserver observer, IScreenSizeAccessor screenSize) {
         this.cacheFile = cacheFile;
         this.cacheMaxAgeHour = cacheMaxAgeHour;
         this.processFolder = processFolder;
         this.observer = observer;
+        LibContext.initialize(screenSize);
     }
 
     // For test

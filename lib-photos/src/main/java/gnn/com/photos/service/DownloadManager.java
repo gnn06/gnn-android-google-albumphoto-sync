@@ -9,9 +9,25 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.photos.LibContext;
 import gnn.com.photos.Photo;
+import gnn.com.util.ScreenSize;
 
 public class DownloadManager {
+
+    final private PhotoSizeUrl photoSizer;
+    final ScreenSize screenSize;
+
+    public DownloadManager() {
+        photoSizer = new PhotoSizeUrl();
+        screenSize = LibContext.getScreenSizeAccessor().get();
+    }
+
+    // TEST
+    public DownloadManager(PhotoSizeUrl photoSizer, ScreenSize screenSize) {
+        this.photoSizer = photoSizer;
+        this.screenSize = screenSize;
+    }
 
     /**
      * Download given photo into given folder.
@@ -33,6 +49,7 @@ public class DownloadManager {
             try {
                 // TODO: 06/05/2019 manage downloading photo resolution
                 source = new URL(photo.getUrl());
+                source = photoSizer.getUrl(source, screenSize);
                 File destination = photo.getPhotoLocalFile(destinationFolder);
                 copy(source, destination);
                 count++;

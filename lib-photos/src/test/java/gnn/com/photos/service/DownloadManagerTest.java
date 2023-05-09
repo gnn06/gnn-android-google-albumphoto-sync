@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -19,8 +18,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import gnn.com.googlealbumdownloadappnougat.util.Logger;
+import gnn.com.photos.LibContext;
 import gnn.com.photos.Photo;
 import gnn.com.photos.sync.Synchronizer;
+import gnn.com.util.ScreenSize;
 
 public class DownloadManagerTest {
 
@@ -33,6 +35,7 @@ public class DownloadManagerTest {
 
     @Before
     public void setUp() throws Exception {
+        Logger.configure();
         toDownloadList = new ArrayList<>();
         toDownloadList.add(new Photo("http://gn.com/12", "id12"));
         toDownloadList.add(new Photo("http://gn.com/24", "id24"));
@@ -40,6 +43,13 @@ public class DownloadManagerTest {
         synchronizer = mock(Synchronizer.class);
 
         observer = mock(SyncProgressObserver.class);
+
+        LibContext.initialize(new IScreenSizeAccessor() {
+            @Override
+            public ScreenSize get() {
+                return new ScreenSize(1024, 1024);
+            }
+        });
     }
 
     @Test

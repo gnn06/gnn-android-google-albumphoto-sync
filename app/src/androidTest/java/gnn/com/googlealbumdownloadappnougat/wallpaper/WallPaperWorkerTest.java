@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import gnn.com.util.ScreenSize;
+
 @RunWith(AndroidJUnit4.class)
 public class WallPaperWorkerTest {
 
@@ -53,8 +55,8 @@ public class WallPaperWorkerTest {
     public void test_getScreenSize() throws IOException {
         // , tmpFolder.newFolder()
         WallpaperSetter wallpaperSetter = new WallpaperSetter(context);
-        Point size = wallpaperSetter.getScreenSize();
-        assertThat("width", size.x, equalTo(1080));
+        ScreenSize size = wallpaperSetter.getScreenSize();
+        assertThat("width", size.width, equalTo(1080));
     }
 
 //    @Test

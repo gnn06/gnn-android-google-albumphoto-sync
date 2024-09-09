@@ -94,7 +94,7 @@ public class SyncSchedulerTest {
     @Test
     public void schedule() throws ExecutionException, InterruptedException, FileNotFoundException {
         // given an empty queue
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(0));
 
         // when
@@ -104,7 +104,7 @@ public class SyncSchedulerTest {
         // testDriver.setPeriodDelayMet(info.get().get(0).getId());
 
         // then assert enqueued
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(1));
 
         // then assert work was created with input
@@ -115,10 +115,10 @@ public class SyncSchedulerTest {
     @Ignore
     public void cancel() throws ExecutionException, InterruptedException {
         // given an enqueued work (state == enqueued)
-        workManager.enqueueUniquePeriodicWork(SyncScheduler.WORK_NAME,
+        workManager.enqueueUniquePeriodicWork("GNN-WORK-SYNC",
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
 
@@ -126,7 +126,7 @@ public class SyncSchedulerTest {
         UT_SyncScheduler.cancel();
 
         // then
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(1));
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.CANCELLED));
     }
@@ -135,14 +135,14 @@ public class SyncSchedulerTest {
     @Ignore
     public void cancel_empty() throws ExecutionException, InterruptedException {
         // given an empty queue
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(0));
 
         // when cancel work
         UT_SyncScheduler.cancel();
 
         // then still empty queue
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().size(), is(0));
 
     }
@@ -151,11 +151,11 @@ public class SyncSchedulerTest {
     @Ignore
     public void getState() throws ExecutionException, InterruptedException {
         // given a finished work
-        workManager.enqueueUniquePeriodicWork(SyncScheduler.WORK_NAME,
+        workManager.enqueueUniquePeriodicWork("GNN-WORK-SYNC",
                 ExistingPeriodicWorkPolicy.REPLACE,
                 request);
 
-        info = workManager.getWorkInfosForUniqueWork(SyncScheduler.WORK_NAME);
+        info = workManager.getWorkInfosForUniqueWork("GNN-WORK-SYNC");
         assertThat(info.get().get(0).getState(), is(WorkInfo.State.ENQUEUED));
         UUID id = request.getId();
 

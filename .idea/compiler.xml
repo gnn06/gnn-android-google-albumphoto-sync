@@ -2,10 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="gnn-android-google-albumphoto-sync.app" target="11" />
-      <module name="gnn-android-google-albumphoto-sync.CLI" target="11" />
-      <module name="gnn-android-google-albumphoto-sync.CLI.main" target="11" />
-      <module name="gnn-android-google-albumphoto-sync.CLI.test" target="11" />
+      <module name="gnn-android-google-albumphoto-sync.app" target="17" />
+      <module name="gnn-android-google-albumphoto-sync.CLI" target="17" />
+      <module name="gnn-android-google-albumphoto-sync.CLI.main" target="17" />
+      <module name="gnn-android-google-albumphoto-sync.CLI.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

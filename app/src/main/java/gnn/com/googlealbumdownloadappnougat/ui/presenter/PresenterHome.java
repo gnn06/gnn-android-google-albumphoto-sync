@@ -69,8 +69,8 @@ public class PresenterHome implements IPresenterHome, IPresenterSettings {
         this.activity = activity;
         this.auth = new AuthManager(activity);
         this.fragment = fragmentHome;
-        userModel = new ViewModelProvider(fragmentHome).get(UserModel.class);
-        folderModel = new ViewModelProvider(fragmentHome).get(FolderModel.class);
+        userModel = new ViewModelProvider(activity).get(UserModel.class);
+        folderModel = new ViewModelProvider(activity).get(FolderModel.class);
     }
 
     public PresenterHome(IViewHome view, MainActivity activity, FragmentHome fragmentHome,

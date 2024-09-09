@@ -29,7 +29,6 @@ import androidx.navigation.ui.NavigationUI;
 import gnn.com.googlealbumdownloadappnougat.auth.AuthManager;
 import gnn.com.googlealbumdownloadappnougat.auth.PermissionHandler;
 import gnn.com.googlealbumdownloadappnougat.auth.Require;
-import gnn.com.googlealbumdownloadappnougat.ui.FolderModel;
 import gnn.com.googlealbumdownloadappnougat.ui.UserModel;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PersistPrefMain;
 import gnn.com.googlealbumdownloadappnougat.ui.presenter.PresenterHome;
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements IView {
         AuthManager auth = new AuthManager(this);
 
         UserModel userModel = new ViewModelProvider(this).get(UserModel.class);
-        FolderModel folderModel = new ViewModelProvider(this).get(FolderModel.class);
         wizardModel = new ViewModelProvider(this).get(ViewModelWizard.class);
 
         presenter = new PresenterMain(auth, this, userModel, permissionHandler, this, presenterHome);
